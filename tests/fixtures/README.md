@@ -43,8 +43,17 @@ with no `players?id`. So:
 Id map (Candidate B §9's readable placeholders → this fixture):
 `ys:nunez`→`syn:away:1`, `ys:donahue`→`syn:away:2`, `ys:phillips`→`syn:away:3`,
 `ys:carlson`→`syn:away:4`, `ys:castaneda`→`syn:away:5`, `ys:kirchner`→`syn:away:6`,
-`lbc:p1`→`4bs3tvwryvtzrvpa`. Team ids (read from the on-disk sample): away
-(Yuba-Sutter) `ndn2a2djbgbd0lh4`, home (Long Beach Coast) `maotayco79j2g2lx`.
+`lbc:p1`→`4bs3tvwryvtzrvpa`. Team ids: the home (Long Beach Coast) id
+`maotayco79j2g2lx` is **real**, verified present throughout the on-disk HTML (28
+`teams?id` links). The away (Yuba-Sutter) team id is the honest synthetic
+`syn:team:away` — the on-disk 7/9 boxscore is the **team-site (longbeachcoast.com)
+copy**, which links only its own team's id and carries **no away team id at all**
+(Yuba-Sutter appears only as plain text). So there is no Presto id for the away team
+in this source, and it gets a `syn:team:away` fallback under the **same**
+synthetic-fallback rationale as the away player pids above (the team site links only
+its own team). This extends the ratified synthetic-pid-fallback decision (see
+`docs/design/DECISION.md`) from player identity to the away team id, for the same
+reason, without weakening the schema (`team.id` is a plain string).
 
 ### 3. `_derived` is hand-computed
 
@@ -64,12 +73,12 @@ that data is whole-game or 6-player context, never fabricated:
   `[1,1,1,0,0,1,0,0,0]`, home `[1,1,0,4,1,6,0,0,null]` (`null` = the "X" unbatted home
   9th), totals away `{R:4,H:8,E:3}`, home `{R:13,H:11,E:0}`. This is whole-game context,
   not Top-1st-only — the Top 1st alone accounts for only `away[0] == 1` run.
-- **`box.batting[ndn2a2djbgbd0lh4]`** — the REAL **whole-game** away batting lines for the
+- **`box.batting[syn:team:away]`** — the REAL **whole-game** away batting lines for the
   6 batters who appear (AB/R/H/RBI/BB/SO/LOB/AVG verbatim from the batting table,
   lines 2780-2869). E.g. Nunez shows `AB:5` — a full-game total, not his Top-1st line.
 - **`box.pitching[maotayco79j2g2lx]`** — VanDeventer's REAL **whole-game** pitching line
   (`IP:"6.2", H:8, R:4, ER:4, BB:3, SO:6`, lines 3867-3877).
-- **`lineups[ndn2a2djbgbd0lh4]`** — a **partial** batting order: slots 1-6 only, for the 6
+- **`lineups[syn:team:away]`** — a **partial** batting order: slots 1-6 only, for the 6
   away batters who appear in the Top 1st (positions ss/2b/dh/3b/1b/rf from lines
   2783-2858). Slots 7-9 and `home` are omitted because those players are never referenced
   in this Top-1st fixture; adding them would require inventing pids/order not exercised by
