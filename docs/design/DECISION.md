@@ -1,0 +1,73 @@
+# Design Decision — game-file JSON Schema (issue #16, epic #15)
+
+## 1. Convergence verdict (human, fredcai6, 2026-07-11)
+
+> **Hybrid: Candidate B as the base, plus three grafts from Candidate C.** B's asserted-primitives
+> spine + regenerable `_derived` cache; grafting C's (1) player-ref objects so a future
+> cross-season `person_id` lands in one place, (2) `source.league_id`, (3) `meta.parse` integrity
+> block (replayable / unparsed_count / warnings).
+
+Human standing guidance:
+
+> "if we learn any lessons we shouldn't feel bad to go back and update this with more knowledge" —
+> schema evolution via additive MINOR bumps and labeled re-parse commits is expected and welcome.
+
+## 2. The three candidates
+
+- **A — MINIMAL-INTERFACE.** A single `events[]` spine; the other blocks are verification oracles
+  and initial conditions rather than parallel truths.
+- **B — ANALYSIS-CALLER-FIRST** *(chosen base)*. Asserted primitives lifted directly from the
+  source, plus a regenerable `_derived` cache that carries base-out state for fast analysis.
+- **C — MAX-FORWARD-FLEXIBILITY.** State-snapshot events and a graftable `source` block, designed
+  to absorb future needs without breaking write-once files.
+
+Full texts are the sibling `SCHEMA_CANDIDATE_A.md`, `SCHEMA_CANDIDATE_B.md`, and
+`SCHEMA_CANDIDATE_C.md` files in this directory.
+
+## 3. The precise hybrid definition (what the schema implements)
+
+- Top-level shape, the `players` table, `linescore`, `box`, `lineups`, `events[]` (the common
+  envelope, `kind`, `runners[]` as from→to primitives with causes, the closed outcome taxonomy
+  per Candidate B §6.4), `unparsed[]`, the `_derived` cache semantics (excluded from semantic
+  equality; never hand-authored; CI-stamped), and the reference materializer: **all from
+  Candidate B.**
+- **GRAFT 1 — player refs are C-style objects** but keep B's field names `{player_id, name_raw,
+  resolved}`. A future cross-season `person_id` is an additive MINOR field on the players-table
+  entry (the per-game identity home).
+- **GRAFT 2 — a root `source` object** `{provider: "prestosports", league_id: "pioneer", site}`.
+  B's `meta.source_url` / `source_sha256` stay in `meta` as provenance.
+- **GRAFT 3 — `meta.parse` integrity block from C:** `{events_count, unparsed_count, replayable,
+  warnings[]}`.
+- **Versioning:** B's semver `schema_version` at root, with C's MAJOR.MINOR additive-evolution
+  rules (§5 below).
+- **NOT grafted:** C's `x` escape hatches and C's open `type` enum. The taxonomy stays
+  **CLOSED** — unknown lines go to `unparsed[]`, loudly.
+
+## 4. Semantic-equality definition (caller-visible contract)
+
+Two files are the same game **iff** they are deep-equal after deleting `meta` and every `_derived`
+block. (This also appears in the README and in the schema's root `$comment`.)
+
+## 5. Schema evolution rules (MAJOR.MINOR)
+
+- **MINOR = additive only:** a new optional property, a new stat column, a new `_derived` key.
+  Old external readers ignore unknown fields and keep working. No file is invalidated.
+- **MAJOR = anything else** (remove/rename/retype a field, change a unit, redefine a closed enum,
+  change a value's meaning). A MAJOR bump is the ONLY thing that may invalidate an existing file,
+  and it is exactly the "labeled re-parse commit" case. Later MINOR / labeled-re-parse updates are
+  EXPECTED and welcome — do not over-freeze.
+
+## 6. B/C conflict log (resolved under the Admiral's prefer-B pre-ruling)
+
+- **Where B and C conflict on a detail the hybrid definition does not settle, prefer B.**
+- **Synthetic player-id fallback (forced by real data + zero-fetch).** Candidate B assumed the
+  file is parsed from the pioneerleague.com copy, which links BOTH teams' players with 16-char
+  Presto ids. The only on-disk sample (`boxscore_20260709_final.html`) is the **team-site**
+  (longbeachcoast.com) copy: it links only the home team's players (12 ids); away batters render
+  as plain text with NO id. With zero network fetches allowed, the schema must be able to encode
+  this real game. Resolution: the `player_id` (file-local join key) pattern admits BOTH a 16-char
+  Presto id AND a file-local synthetic `syn:<side>:<n>` (adopted from Candidate A). This keeps the
+  event→player join TOTAL and records identity honestly (a `syn:` prefix signals "no source id"),
+  WITHOUT weakening the schema. A future `person_id` (cross-season identity) still lands on the
+  players-table entry as an additive MINOR field. This refinement was surfaced to the Admiral for
+  ratification (join-key format is caller-visible).
