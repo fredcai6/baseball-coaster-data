@@ -1,0 +1,555 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseball-coaster/schema/game.schema.json",
+  "title": "baseball-coaster per-game file (games/<season>/<game_id>.json)",
+  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine — the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "game_id",
+    "season",
+    "status",
+    "date",
+    "source",
+    "teams",
+    "players",
+    "linescore",
+    "box",
+    "lineups",
+    "events",
+    "unparsed",
+    "meta"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine."
+    },
+    "game_id": {
+      "type": "string",
+      "description": "Presto boxscore stem; unique within season, e.g. \"20260709_h94w\"."
+    },
+    "season": {
+      "type": "integer",
+      "description": "Season key (e.g. 2026), not a date range."
+    },
+    "status": {
+      "type": "string",
+      "const": "final",
+      "description": "Only finals are written to games/**; literal const."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO local game date (source pane has no timezone)."
+    },
+    "source": { "$ref": "#/$defs/source" },
+    "teams": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["home", "away"],
+      "properties": {
+        "home": { "$ref": "#/$defs/team" },
+        "away": { "$ref": "#/$defs/team" }
+      }
+    },
+    "players": {
+      "type": "object",
+      "description": "The per-game identity table: keys are file-local pids (the `pid` $def), each value is the player entry whose player_id MUST equal its map key. GRAFT 1's stated identity home.",
+      "propertyNames": { "$ref": "#/$defs/pid" },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([a-z0-9]{16}|syn:(home|away):[0-9]+)$": { "$ref": "#/$defs/player_entry" }
+      }
+    },
+    "linescore": { "$ref": "#/$defs/linescore" },
+    "box": { "$ref": "#/$defs/box" },
+    "lineups": {
+      "type": "object",
+      "description": "Batting order + substitutions per team_id.",
+      "additionalProperties": { "$ref": "#/$defs/lineup_side" }
+    },
+    "events": {
+      "type": "array",
+      "description": "The ordered spine; strictly ordered by seq, mixing all event kinds.",
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "unparsed": {
+      "type": "array",
+      "description": "Verbatim source lines the parser could not classify, with location. A non-empty array means events[] is not a complete reconstruction; the file is still published (finals are not blocked on a perfect parse) but flagged.",
+      "items": { "$ref": "#/$defs/unparsed_line" }
+    },
+    "meta": { "$ref": "#/$defs/meta" }
+  },
+  "$defs": {
+    "pid": {
+      "type": "string",
+      "pattern": "^([a-z0-9]{16}|syn:(home|away):[0-9]+)$",
+      "description": "File-local player id: a 16-char Presto boxscore id, OR a synthetic key `syn:<home|away>:<n>` for a team-site copy where the opponent has no Presto id."
+    },
+    "player_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "GRAFT 1: a player reference is an OBJECT (B field names). A future cross-season person_id attaches to the PLAYERS TABLE entry (the identity home), NOT here.",
+      "required": ["player_id", "name_raw", "resolved"],
+      "properties": {
+        "player_id": { "$ref": "#/$defs/pid" },
+        "name_raw": {
+          "type": ["string", "null"],
+          "description": "Raw narrative token, or null when the source region does not name the player (e.g. pitcher-of-record resolved from the lineup)."
+        },
+        "resolved": {
+          "type": "boolean",
+          "description": "false only when the last-name token could not be resolved to a boxscore player (e.g. same-last-name teammates); such lines also land in unparsed[]."
+        }
+      }
+    },
+    "player_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Per-game identity home (GRAFT 1's stated home). player_id MUST equal this entry's map key in `players`. A future cross-season person_id is an ADDITIVE MINOR field here — this entry is where it lands, not player_ref.",
+      "required": ["player_id", "name", "last_name", "team_id", "positions"],
+      "properties": {
+        "player_id": { "$ref": "#/$defs/pid" },
+        "name": { "type": "string", "description": "Display name from boxscore link text." },
+        "last_name": { "type": "string", "description": "Token PBP narrative uses; the join surface." },
+        "team_id": { "type": "string" },
+        "bats_side": {
+          "type": ["string", "null"],
+          "description": "Not in source; reserved, null for now."
+        },
+        "positions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Positions seen in box/lineup this game."
+        }
+      }
+    },
+    "team": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["team_id", "name"],
+      "properties": {
+        "team_id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "GRAFT 2: competition identity, so a multi-league query never has to guess.",
+      "required": ["provider", "league_id"],
+      "properties": {
+        "provider": { "type": "string", "enum": ["prestosports"] },
+        "league_id": { "type": "string", "description": "e.g. \"pioneer\"." },
+        "site": { "type": "string", "description": "Host the file was scraped from, e.g. \"pioneerleague.com\"." }
+      }
+    },
+    "rhe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["R", "H", "E"],
+      "properties": {
+        "R": { "type": "integer" },
+        "H": { "type": "integer" },
+        "E": { "type": "integer" }
+      }
+    },
+    "linescore": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The primary oracle. null in an innings array encodes the literal \"X\" (that half was not batted — walk-off/unbatted).",
+      "required": ["innings", "totals"],
+      "properties": {
+        "innings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["away", "home"],
+          "properties": {
+            "away": { "type": "array", "items": { "type": ["integer", "null"] } },
+            "home": { "type": "array", "items": { "type": ["integer", "null"] } }
+          }
+        },
+        "totals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["away", "home"],
+          "properties": {
+            "away": { "$ref": "#/$defs/rhe" },
+            "home": { "$ref": "#/$defs/rhe" }
+          }
+        }
+      }
+    },
+    "batting_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["player_id", "pos", "AB", "R", "H", "RBI", "BB", "SO", "LOB", "AVG"],
+      "properties": {
+        "player_id": { "$ref": "#/$defs/pid" },
+        "pos": { "type": "string" },
+        "AB": { "type": "integer" },
+        "R": { "type": "integer" },
+        "H": { "type": "integer" },
+        "RBI": { "type": "integer" },
+        "BB": { "type": "integer" },
+        "SO": { "type": "integer" },
+        "LOB": { "type": "integer" },
+        "AVG": { "type": "string", "description": "Season-to-date rate, verbatim source string (e.g. \".395\")." }
+      }
+    },
+    "pitching_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["player_id", "IP", "H", "R", "ER", "BB", "SO"],
+      "properties": {
+        "player_id": { "$ref": "#/$defs/pid" },
+        "IP": { "type": "string", "description": "Baseball notation (e.g. \"5.2\"); kept a string to avoid a lossy float cast." },
+        "H": { "type": "integer" },
+        "R": { "type": "integer" },
+        "ER": { "type": "integer" },
+        "BB": { "type": "integer" },
+        "SO": { "type": "integer" }
+      }
+    },
+    "box": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Secondary oracle + season-rate context. Keyed by team_id.",
+      "required": ["batting", "pitching"],
+      "properties": {
+        "batting": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/batting_line" }
+          }
+        },
+        "pitching": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/pitching_line" }
+          }
+        }
+      }
+    },
+    "lineup_side": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batting_order", "substitutions"],
+      "properties": {
+        "batting_order": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slot", "player_id"],
+            "properties": {
+              "slot": { "type": "integer", "minimum": 1, "maximum": 9 },
+              "player_id": { "$ref": "#/$defs/pid" }
+            }
+          }
+        },
+        "substitutions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/substitution" }
+        }
+      }
+    },
+    "substitution": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "B §5 substitution shape, reused in lineups[].substitutions and in the substitution event body.",
+      "required": ["slot", "player_out", "player_in", "kind", "after_event_seq"],
+      "properties": {
+        "slot": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "player_out": { "$ref": "#/$defs/pid" },
+        "player_in": { "$ref": "#/$defs/pid" },
+        "kind": {
+          "type": "string",
+          "enum": ["offensive", "defensive", "pitching"],
+          "description": "Closed substitution kind. B names \"offensive\" and \"pitching\"; \"defensive\" is the grounded complement."
+        },
+        "after_event_seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Ties the sub to its position in events[]."
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "modifiers", "fielders", "outs_recorded", "location"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "CLOSED taxonomy (B §6.4). Anything outside this set routes the line to unparsed[] and CI fails until the taxonomy is extended.",
+          "enum": [
+            "single",
+            "double",
+            "triple",
+            "home_run",
+            "walk",
+            "intentional_walk",
+            "hit_by_pitch",
+            "strikeout_swinging",
+            "strikeout_looking",
+            "groundout",
+            "flyout",
+            "lineout",
+            "popout",
+            "fielders_choice",
+            "reached_on_error",
+            "grounded_into_double_play",
+            "sacrifice"
+          ]
+        },
+        "modifiers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "e.g. RBI, SAC, unearned, intentional, unassisted, DP, FC, error. Not a frozen enum."
+        },
+        "fielders": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Fielding chain as position tokens, in order; [] when none."
+        },
+        "outs_recorded": { "type": "integer", "minimum": 0, "description": "Outs THIS event adds." },
+        "location": { "type": ["string", "null"], "description": "Free-text hit location, or null." }
+      }
+    },
+    "count": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["balls", "strikes"],
+      "properties": {
+        "balls": { "type": "integer", "minimum": 0 },
+        "strikes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "runner": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "B §6.3 from→to primitive. player_id is a BARE pid (not a player_ref).",
+      "required": ["player_id", "from", "to", "cause", "out", "scored"],
+      "properties": {
+        "player_id": { "$ref": "#/$defs/pid" },
+        "from": {
+          "type": "integer",
+          "enum": [-1, 0, 1, 2, 3, 4],
+          "description": "0=box (batter origin), 1|2|3=bases, 4=home, -1=off the bases (retired)."
+        },
+        "to": {
+          "type": "integer",
+          "enum": [-1, 0, 1, 2, 3, 4],
+          "description": "Same domain as `from`."
+        },
+        "cause": {
+          "type": "string",
+          "description": "CLOSED runner-cause taxonomy (B §6.3), the asserted mechanism from the runner clause verb.",
+          "enum": [
+            "batted_ball",
+            "advance",
+            "stolen_base",
+            "wild_pitch",
+            "passed_ball",
+            "balk",
+            "error",
+            "fielders_choice",
+            "pickoff",
+            "caught_stealing",
+            "force_out",
+            "putout"
+          ]
+        },
+        "out": { "type": "boolean" },
+        "scored": { "type": "boolean" },
+        "earned": { "type": "boolean", "description": "Per-run asserted flag; present for a scored run." },
+        "rbi": { "type": "boolean", "description": "Per-run asserted flag; present for a scored run." }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["R", "H", "E", "LOB"],
+      "properties": {
+        "R": { "type": "integer" },
+        "H": { "type": "integer" },
+        "E": { "type": "integer" },
+        "LOB": { "type": "integer" }
+      }
+    },
+    "_derived": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Regenerable base-out CACHE (B §6.5). CI-stamped by the canonical replayer, NEVER hand-authored, validated against the linescore/box/inning_summary oracles before it may persist. EXCLUDED from semantic equality. New analytic keys accrete here — this is the SOLE object in the schema that carries additionalProperties:true.",
+      "properties": {
+        "outs_before": { "type": "integer" },
+        "bases_before": { "type": "array", "items": { "type": "boolean" } },
+        "bases_before_ids": { "type": "array", "items": { "type": ["string", "null"] } },
+        "base_out_state": { "type": "string" },
+        "away_score_before": { "type": "integer" },
+        "home_score_before": { "type": "integer" },
+        "outs_after": { "type": "integer" },
+        "bases_after": { "type": "array", "items": { "type": "boolean" } },
+        "runs_on_play": { "type": "integer" },
+        "re24_state_before": { "type": "string" },
+        "pa_number_of_batter": { "type": "integer" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seq",
+        "inning",
+        "half",
+        "kind",
+        "batting_team",
+        "fielding_team",
+        "narrative",
+        "scoring_play"
+      ],
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0, "description": "0-based global order; the sort key and sub-anchor." },
+        "inning": { "type": "integer", "minimum": 1 },
+        "half": { "type": "string", "enum": ["top", "bottom"] },
+        "kind": {
+          "type": "string",
+          "enum": ["plate_appearance", "runner_event", "substitution", "inning_summary"]
+        },
+        "batting_team": { "type": "string" },
+        "fielding_team": { "type": "string" },
+        "narrative": { "type": "string", "description": "Verbatim source line; the ground truth every structured field derives from." },
+        "scoring_play": { "type": "boolean", "description": "Source rendered this line <strong> (a run scored); asserted flag." },
+        "_derived": { "$ref": "#/$defs/_derived" },
+        "batter": { "$ref": "#/$defs/player_ref" },
+        "pitcher": { "$ref": "#/$defs/player_ref" },
+        "outcome": { "$ref": "#/$defs/outcome" },
+        "count": { "$ref": "#/$defs/count" },
+        "pitches": {
+          "type": ["string", "null"],
+          "pattern": "^[BFKSH]*$",
+          "description": "Pitch-result string over the observed alphabet, or null when the source omits it (first-pitch ball in play)."
+        },
+        "runners": { "type": "array", "items": { "$ref": "#/$defs/runner" } },
+        "substitution": { "$ref": "#/$defs/substitution" },
+        "summary": { "$ref": "#/$defs/summary" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "plate_appearance" } } },
+          "then": {
+            "required": ["batter", "pitcher", "outcome", "count", "pitches", "runners"],
+            "properties": {
+              "summary": false,
+              "substitution": false
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "runner_event" } } },
+          "then": {
+            "required": ["runners"],
+            "properties": {
+              "batter": false,
+              "pitcher": false,
+              "outcome": false,
+              "count": false,
+              "pitches": false,
+              "summary": false,
+              "substitution": false
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "substitution" } } },
+          "then": {
+            "required": ["substitution"],
+            "properties": {
+              "batter": false,
+              "pitcher": false,
+              "outcome": false,
+              "count": false,
+              "pitches": false,
+              "runners": false,
+              "summary": false
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "inning_summary" } } },
+          "then": {
+            "required": ["summary"],
+            "properties": {
+              "batter": false,
+              "pitcher": false,
+              "outcome": false,
+              "count": false,
+              "pitches": false,
+              "runners": false,
+              "substitution": false
+            }
+          }
+        }
+      ]
+    },
+    "unparsed_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "raw", "reason"],
+      "properties": {
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["inning", "half", "line_index"],
+          "properties": {
+            "inning": { "type": "integer" },
+            "half": { "type": "string", "enum": ["top", "bottom"] },
+            "line_index": { "type": "integer" }
+          }
+        },
+        "raw": { "type": "string", "description": "The verbatim missed line." },
+        "reason": { "type": "string" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Provenance. EXCLUDED from semantic equality — a re-parse by the same parser version reproduces a byte-identical file except this block and every _derived cache.",
+      "required": [
+        "parser_version",
+        "source_url",
+        "source_sha256",
+        "fetched_at",
+        "parsed_at",
+        "derived_replayer_version",
+        "parse"
+      ],
+      "properties": {
+        "parser_version": { "type": "string" },
+        "source_url": { "type": "string" },
+        "source_sha256": { "type": "string", "description": "Hash of the fetched HTML; the reproducibility anchor." },
+        "fetched_at": { "type": "string", "format": "date-time" },
+        "parsed_at": { "type": "string", "format": "date-time" },
+        "derived_replayer_version": { "type": "string", "description": "Which replayer stamped _derived.*; the cache-invalidation key." },
+        "parse": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "GRAFT 3: parse-integrity signals.",
+          "required": ["events_count", "unparsed_count", "replayable", "warnings"],
+          "properties": {
+            "events_count": { "type": "integer" },
+            "unparsed_count": { "type": "integer" },
+            "replayable": { "type": "boolean" },
+            "warnings": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}
