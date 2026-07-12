@@ -1,5 +1,7 @@
 # Raw scraped HTML lives on the PC, outside git — never committed (caller contract clause 3).
 *.html
+# Exception: committed zero-fetch test fixtures (archived samples, not live-scraped).
+!tests/samples/*.html
 
 # Python noise
 __pycache__/
