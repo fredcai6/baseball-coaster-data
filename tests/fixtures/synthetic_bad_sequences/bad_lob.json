@@ -1,0 +1,397 @@
+{
+  "description": "SYNTHETIC. Breaks ONLY check_lob: inning_summary claims LOB=2 but the fold's end-of-half base state (only 2nd base occupied) implies 1. Every other check is untouched by this field.",
+  "game": {
+    "teams": {
+      "home": {
+        "team_id": "HOME",
+        "name": "Home Team"
+      },
+      "away": {
+        "team_id": "AWAY",
+        "name": "Away Team"
+      }
+    },
+    "players": {
+      "p1": {
+        "player_id": "p1",
+        "name": "Batter One",
+        "last_name": "One",
+        "team_id": "AWAY",
+        "bats_side": null,
+        "positions": [
+          "ss"
+        ]
+      },
+      "p2": {
+        "player_id": "p2",
+        "name": "Batter Two",
+        "last_name": "Two",
+        "team_id": "AWAY",
+        "bats_side": null,
+        "positions": [
+          "2b"
+        ]
+      },
+      "p3": {
+        "player_id": "p3",
+        "name": "Batter Three",
+        "last_name": "Three",
+        "team_id": "AWAY",
+        "bats_side": null,
+        "positions": [
+          "3b"
+        ]
+      },
+      "p4": {
+        "player_id": "p4",
+        "name": "Batter Four",
+        "last_name": "Four",
+        "team_id": "AWAY",
+        "bats_side": null,
+        "positions": [
+          "1b"
+        ]
+      },
+      "p5": {
+        "player_id": "p5",
+        "name": "Batter Five",
+        "last_name": "Five",
+        "team_id": "AWAY",
+        "bats_side": null,
+        "positions": [
+          "rf"
+        ]
+      }
+    },
+    "events": [
+      {
+        "seq": 0,
+        "inning": 1,
+        "half": "top",
+        "kind": "plate_appearance",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC batter p1 single",
+        "scoring_play": false,
+        "batter": {
+          "player_id": "p1",
+          "name_raw": "p1",
+          "resolved": true
+        },
+        "pitcher": {
+          "player_id": "pitcher1",
+          "name_raw": null,
+          "resolved": true
+        },
+        "outcome": {
+          "type": "single",
+          "modifiers": [],
+          "fielders": [],
+          "outs_recorded": 0,
+          "location": null
+        },
+        "count": {
+          "balls": 0,
+          "strikes": 0
+        },
+        "pitches": null,
+        "runners": [
+          {
+            "player_id": "p1",
+            "from": 0,
+            "to": 1,
+            "cause": "batted_ball",
+            "out": false,
+            "scored": false
+          }
+        ]
+      },
+      {
+        "seq": 1,
+        "inning": 1,
+        "half": "top",
+        "kind": "plate_appearance",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC batter p2 double",
+        "scoring_play": true,
+        "batter": {
+          "player_id": "p2",
+          "name_raw": "p2",
+          "resolved": true
+        },
+        "pitcher": {
+          "player_id": "pitcher1",
+          "name_raw": null,
+          "resolved": true
+        },
+        "outcome": {
+          "type": "double",
+          "modifiers": [
+            "RBI"
+          ],
+          "fielders": [],
+          "outs_recorded": 0,
+          "location": null
+        },
+        "count": {
+          "balls": 0,
+          "strikes": 0
+        },
+        "pitches": null,
+        "runners": [
+          {
+            "player_id": "p2",
+            "from": 0,
+            "to": 2,
+            "cause": "batted_ball",
+            "out": false,
+            "scored": false
+          },
+          {
+            "player_id": "p1",
+            "from": 1,
+            "to": 4,
+            "cause": "advance",
+            "out": false,
+            "scored": true,
+            "earned": true,
+            "rbi": true
+          }
+        ]
+      },
+      {
+        "seq": 2,
+        "inning": 1,
+        "half": "top",
+        "kind": "plate_appearance",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC batter p3 strikeout_swinging",
+        "scoring_play": false,
+        "batter": {
+          "player_id": "p3",
+          "name_raw": "p3",
+          "resolved": true
+        },
+        "pitcher": {
+          "player_id": "pitcher1",
+          "name_raw": null,
+          "resolved": true
+        },
+        "outcome": {
+          "type": "strikeout_swinging",
+          "modifiers": [],
+          "fielders": [],
+          "outs_recorded": 1,
+          "location": null
+        },
+        "count": {
+          "balls": 0,
+          "strikes": 0
+        },
+        "pitches": null,
+        "runners": [
+          {
+            "player_id": "p3",
+            "from": 0,
+            "to": -1,
+            "cause": "putout",
+            "out": true,
+            "scored": false
+          }
+        ]
+      },
+      {
+        "seq": 3,
+        "inning": 1,
+        "half": "top",
+        "kind": "plate_appearance",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC batter p4 flyout",
+        "scoring_play": false,
+        "batter": {
+          "player_id": "p4",
+          "name_raw": "p4",
+          "resolved": true
+        },
+        "pitcher": {
+          "player_id": "pitcher1",
+          "name_raw": null,
+          "resolved": true
+        },
+        "outcome": {
+          "type": "flyout",
+          "modifiers": [],
+          "fielders": [],
+          "outs_recorded": 1,
+          "location": null
+        },
+        "count": {
+          "balls": 0,
+          "strikes": 0
+        },
+        "pitches": null,
+        "runners": [
+          {
+            "player_id": "p4",
+            "from": 0,
+            "to": -1,
+            "cause": "putout",
+            "out": true,
+            "scored": false
+          }
+        ]
+      },
+      {
+        "seq": 4,
+        "inning": 1,
+        "half": "top",
+        "kind": "plate_appearance",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC batter p5 groundout",
+        "scoring_play": false,
+        "batter": {
+          "player_id": "p5",
+          "name_raw": "p5",
+          "resolved": true
+        },
+        "pitcher": {
+          "player_id": "pitcher1",
+          "name_raw": null,
+          "resolved": true
+        },
+        "outcome": {
+          "type": "groundout",
+          "modifiers": [],
+          "fielders": [],
+          "outs_recorded": 1,
+          "location": null
+        },
+        "count": {
+          "balls": 0,
+          "strikes": 0
+        },
+        "pitches": null,
+        "runners": [
+          {
+            "player_id": "p5",
+            "from": 0,
+            "to": -1,
+            "cause": "putout",
+            "out": true,
+            "scored": false
+          }
+        ]
+      },
+      {
+        "seq": 5,
+        "inning": 1,
+        "half": "top",
+        "kind": "inning_summary",
+        "batting_team": "AWAY",
+        "fielding_team": "HOME",
+        "narrative": "SYNTHETIC Inning Summary",
+        "scoring_play": false,
+        "summary": {
+          "R": 1,
+          "H": 2,
+          "E": 0,
+          "LOB": 2
+        }
+      }
+    ]
+  },
+  "oracle": {
+    "linescore": {
+      "innings": {
+        "away": [
+          1
+        ],
+        "home": [
+          null
+        ]
+      },
+      "totals": {
+        "away": {
+          "R": 1,
+          "H": 2,
+          "E": 0
+        },
+        "home": {
+          "R": 0,
+          "H": 0,
+          "E": 0
+        }
+      }
+    },
+    "box": {
+      "batting": {
+        "AWAY": [
+          {
+            "player_id": "p1",
+            "pos": "ss",
+            "AB": 1,
+            "R": 1,
+            "H": 1,
+            "RBI": 0,
+            "BB": 0,
+            "SO": 0,
+            "LOB": 0,
+            "AVG": ".300"
+          },
+          {
+            "player_id": "p2",
+            "pos": "2b",
+            "AB": 1,
+            "R": 0,
+            "H": 1,
+            "RBI": 1,
+            "BB": 0,
+            "SO": 0,
+            "LOB": 0,
+            "AVG": ".300"
+          },
+          {
+            "player_id": "p3",
+            "pos": "3b",
+            "AB": 1,
+            "R": 0,
+            "H": 0,
+            "RBI": 0,
+            "BB": 0,
+            "SO": 1,
+            "LOB": 0,
+            "AVG": ".300"
+          },
+          {
+            "player_id": "p4",
+            "pos": "1b",
+            "AB": 1,
+            "R": 0,
+            "H": 0,
+            "RBI": 0,
+            "BB": 0,
+            "SO": 0,
+            "LOB": 0,
+            "AVG": ".300"
+          },
+          {
+            "player_id": "p5",
+            "pos": "rf",
+            "AB": 1,
+            "R": 0,
+            "H": 0,
+            "RBI": 0,
+            "BB": 0,
+            "SO": 0,
+            "LOB": 0,
+            "AVG": ".300"
+          }
+        ]
+      }
+    }
+  }
+}
