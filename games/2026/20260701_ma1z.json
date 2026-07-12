@@ -5279,6 +5279,23 @@
       "seq": 95
     },
     {
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "fielding_team": "toa4e66upwknb2r7",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Michael Mugan pinch ran for Max Handron.",
+      "scoring_play": false,
+      "seq": 96,
+      "substitution": {
+        "after_event_seq": 95,
+        "kind": "offensive",
+        "player_in": "myvbodhng61elxyz",
+        "player_out": "2y16esu8w84t2090",
+        "slot": 2
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 4,
         "base_out_state": "100|0",
@@ -5337,7 +5354,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "_derived": {
@@ -5408,7 +5425,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
@@ -5469,7 +5486,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
@@ -5558,7 +5575,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
@@ -5621,7 +5638,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -5631,7 +5648,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5647,9 +5664,9 @@
       "kind": "substitution",
       "narrative": "Aaron Moreno to p for Preston Kelly.",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "substitution": {
-        "after_event_seq": 101,
+        "after_event_seq": 102,
         "kind": "pitching",
         "player_in": "jubt433kbyomhqfs",
         "player_out": "si8cg6t1pnyul1f5",
@@ -5717,7 +5734,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
@@ -5782,7 +5799,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -5843,7 +5860,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "batting_team": "toa4e66upwknb2r7",
@@ -5853,7 +5870,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5950,7 +5967,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 101,
+          "after_event_seq": 95,
+          "kind": "offensive",
+          "player_in": "myvbodhng61elxyz",
+          "player_out": "2y16esu8w84t2090",
+          "slot": 2
+        },
+        {
+          "after_event_seq": 102,
           "kind": "pitching",
           "player_in": "jubt433kbyomhqfs",
           "player_out": "si8cg6t1pnyul1f5",
@@ -6026,9 +6050,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:36:26Z",
     "parse": {
-      "events_count": 107,
+      "events_count": 108,
       "replayable": false,
-      "unparsed_count": 10,
+      "unparsed_count": 9,
       "warnings": [
         "[linescore] linescore: away inning 6 computed 1 != oracle 3",
         "[linescore] linescore: away inning 8 computed 0 != oracle 1",
@@ -6051,11 +6075,11 @@
         "[pa_counts] pa_counts: player cbuq7j2rxnjic6tp events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player mdwjkaxf4vrzor5w events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player 62r3h5cc9435ya57 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 97 runner myvbodhng61elxyz advances from base 3 which was not occupied at event start"
+        "[illegal_transitions] illegal_transition: seq 98 runner myvbodhng61elxyz advances from base 3 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:35Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:21Z",
+    "parser_version": "0.2.0",
     "source_sha256": "ccc1245544db925fd3acdfbf187c703de4285f6b625c514fb96acdb2ac213937",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260701_ma1z.xml"
   },
@@ -6315,7 +6339,7 @@
       "team_id": "ndn2a2djbgbd0lh4"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6408,21 +6432,12 @@
     },
     {
       "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "Michael Mugan pinch ran for Max Handron.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Michael Mugan pinch ran for Max Handron'"
-    },
-    {
-      "location": {
         "half": "bottom",
         "inning": 9,
         "line_index": 0
       },
       "raw": "Max Handron to 3b for Michael Mugan.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Max Handron to 3b for Michael Mugan'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Max Handron to 3b for Michael Mugan'"
     }
   ]
 }

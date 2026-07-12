@@ -6193,11 +6193,28 @@
       "half": "top",
       "inning": 9,
       "kind": "substitution",
-      "narrative": "Aaron Moreno to p for Johan Castillo.",
+      "narrative": "Jaylen Edmonds pinch ran for Cuba Bess.",
       "scoring_play": false,
       "seq": 110,
       "substitution": {
         "after_event_seq": 109,
+        "kind": "offensive",
+        "player_in": "eo4y1z8utlgye73g",
+        "player_out": "vqkuwm8ezcpz7g4u",
+        "slot": 4
+      }
+    },
+    {
+      "batting_team": "maotayco79j2g2lx",
+      "fielding_team": "ndn2a2djbgbd0lh4",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Aaron Moreno to p for Johan Castillo.",
+      "scoring_play": false,
+      "seq": 111,
+      "substitution": {
+        "after_event_seq": 110,
         "kind": "pitching",
         "player_in": "jubt433kbyomhqfs",
         "player_out": "9ajj8xjshpjwjn96",
@@ -6263,7 +6280,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -6273,7 +6290,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 4 Runs, 4 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "summary": {
         "E": 0,
         "H": 4,
@@ -6389,6 +6406,13 @@
           "player_in": "urxa9mmchubhb8h6",
           "player_out": "pgzu59edzgcd9im3",
           "slot": null
+        },
+        {
+          "after_event_seq": 109,
+          "kind": "offensive",
+          "player_in": "eo4y1z8utlgye73g",
+          "player_out": "vqkuwm8ezcpz7g4u",
+          "slot": 4
         }
       ]
     },
@@ -6440,7 +6464,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 109,
+          "after_event_seq": 110,
           "kind": "pitching",
           "player_in": "jubt433kbyomhqfs",
           "player_out": "9ajj8xjshpjwjn96",
@@ -6453,9 +6477,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:32:50Z",
     "parse": {
-      "events_count": 113,
+      "events_count": 114,
       "replayable": false,
-      "unparsed_count": 8,
+      "unparsed_count": 7,
       "warnings": [
         "[linescore] linescore: away inning 9 computed 1 != oracle 4",
         "[linescore] linescore: home inning 1 computed 0 != oracle 2",
@@ -6475,8 +6499,8 @@
         "[illegal_transitions] illegal_transition: seq 108 runner 3865oyuz5l2pj51r advances from base 3 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:29Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:18Z",
+    "parser_version": "0.2.0",
     "source_sha256": "81ab7212623010a3b96383958bd045becf25811a5680485c3139ed16788c6717",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260628_r1po.xml"
   },
@@ -6754,7 +6778,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6816,7 +6840,7 @@
         "line_index": 0
       },
       "raw": "Patrick Roche Jr. to 3b for Johnny Pappas.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Patrick Roche Jr. to 3b for Johnny Pappas'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Patrick Roche Jr. to 3b for Johnny Pappas'"
     },
     {
       "location": {
@@ -6826,15 +6850,6 @@
       },
       "raw": "Eddy Pelc doubled to center field, 2 RBI (2-2 FFBFB); Patrick Roche Jr. scored; Derek Laferriere scored.",
       "reason": "primary verb not recognized: 'Eddy Pelc doubled to center field, 2 RBI'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 8
-      },
-      "raw": "Jaylen Edmonds pinch ran for Cuba Bess.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Jaylen Edmonds pinch ran for Cuba Bess'"
     },
     {
       "location": {

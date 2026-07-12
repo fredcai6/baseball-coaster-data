@@ -5377,6 +5377,23 @@
       }
     },
     {
+      "batting_team": "p36jpi9icfitpai5",
+      "fielding_team": "gwwjqo5s6nki4x8c",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Josh Johnson pinch ran for Tyler Stone.",
+      "scoring_play": false,
+      "seq": 95,
+      "substitution": {
+        "after_event_seq": 94,
+        "kind": "offensive",
+        "player_in": "zmop3kj40l8uoirm",
+        "player_out": "347td5ul6pm19016",
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 1,
         "base_out_state": "111|1",
@@ -5437,7 +5454,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "_derived": {
@@ -5500,7 +5517,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -5510,7 +5527,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 97,
+      "seq": 98,
       "summary": {
         "E": 0,
         "H": 2,
@@ -5675,6 +5692,13 @@
           "player_in": "dac4sfhr54b4mala",
           "player_out": "x1ku6e1x2phxjjd8",
           "slot": null
+        },
+        {
+          "after_event_seq": 94,
+          "kind": "offensive",
+          "player_in": "zmop3kj40l8uoirm",
+          "player_out": "347td5ul6pm19016",
+          "slot": null
         }
       ]
     }
@@ -5683,9 +5707,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:41:37Z",
     "parse": {
-      "events_count": 98,
+      "events_count": 99,
       "replayable": false,
-      "unparsed_count": 11,
+      "unparsed_count": 10,
       "warnings": [
         "[linescore] linescore: away inning 9 computed 1 != oracle 5",
         "[linescore] linescore: home inning 3 computed 0 != oracle 1",
@@ -5708,8 +5732,8 @@
         "[pa_counts] pa_counts: player 347td5ul6pm19016 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:38Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:26Z",
+    "parser_version": "0.2.0",
     "source_sha256": "fbbf5d50b63f7168f5ca7c0e4223369a89cffab189e4903fd1661449d206b0ea",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260705_e9ne.xml"
   },
@@ -5989,7 +6013,7 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6024,7 +6048,7 @@
         "line_index": 2
       },
       "raw": "Emilio Barrera pinch hit for Ty Dooley.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Emilio Barrera pinch hit for Ty Dooley'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Emilio Barrera pinch hit for Ty Dooley'"
     },
     {
       "location": {
@@ -6033,7 +6057,7 @@
         "line_index": 0
       },
       "raw": "Emilio Barrera to ss.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Emilio Barrera to ss'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Emilio Barrera to ss'"
     },
     {
       "location": {
@@ -6087,16 +6111,7 @@
         "line_index": 0
       },
       "raw": "Sergio Gutierrez pinch hit for Joskar Feliciano.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Sergio Gutierrez pinch hit for Joskar Feliciano'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 6
-      },
-      "raw": "Josh Johnson pinch ran for Tyler Stone.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Josh Johnson pinch ran for Tyler Stone'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Sergio Gutierrez pinch hit for Joskar Feliciano'"
     },
     {
       "location": {

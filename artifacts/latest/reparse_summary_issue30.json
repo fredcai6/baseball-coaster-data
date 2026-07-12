@@ -1,0 +1,54 @@
+{
+  "issue": 30,
+  "parser_version_before": "0.1.0",
+  "parser_version_after": "0.2.0",
+  "schema_version_after": "1.2.0",
+  "games_reparsed": 1267,
+  "league": {
+    "unparsed_rate_before": 0.6115,
+    "unparsed_rate_after": 0.10379578541514325,
+    "unparsed_rate_delta": -0.507705,
+    "replayable_before": 2,
+    "replayable_after": 5,
+    "replayable_delta": 3
+  },
+  "by_season": {
+    "2024": {
+      "games": 498,
+      "unparsed_rate_before": 0.753611,
+      "unparsed_rate_after": 0.11096954148659584,
+      "unparsed_rate_delta": -0.642642,
+      "replayable_before": 0,
+      "replayable_after": 1,
+      "replayable_delta": 1
+    },
+    "2025": {
+      "games": 488,
+      "unparsed_rate_before": 0.757694,
+      "unparsed_rate_after": 0.09850451760307405,
+      "unparsed_rate_delta": -0.659189,
+      "replayable_before": 0,
+      "replayable_after": 2,
+      "replayable_delta": 2
+    },
+    "2026": {
+      "games": 281,
+      "unparsed_rate_before": 0.128525,
+      "unparsed_rate_after": 0.10058709546808572,
+      "unparsed_rate_delta": -0.027938,
+      "replayable_before": 2,
+      "replayable_after": 2,
+      "replayable_delta": 0
+    }
+  },
+  "event_type_count_deltas": {
+    "plate_appearance": 74461,
+    "runner_event": 441,
+    "substitution": 1472
+  },
+  "notes": [
+    "Replayable count barely moved (2->5 of 1267) -- this issue targeted PARSING/line coverage (grammar + identity), not the independent linescore/box/LOB/PA-count/illegal-transition replay oracle, which is a separate, harder correctness problem out of this issue scope. Honest residue per the Honest-Null Clause.",
+    "Family 1/2/3 all landed: count-tail-optional PA fallback, pinch-run + DH-slot-bare STANDALONE_RULES rows (plus a real batting/fielding-side resolution bug fix found while closing this out), singled location-phrase variants, trailing-whitespace normalization, comma-suffix + truncated-surname name resolution.",
+    "Long-tail residue remains (league unparsed_rate ~10.4%, not 0%) -- genuine one-off shapes not covered by this grammar expansion; left honestly unparsed rather than force-matched."
+  ]
+}

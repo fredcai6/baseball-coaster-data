@@ -5423,6 +5423,23 @@
       "seq": 95
     },
     {
+      "batting_team": "na6t5g8htwf89dsc",
+      "fielding_team": "fs5kcreudvyx5quq",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "substitution",
+      "narrative": "A. Collins pinch ran for D. Ratfield.",
+      "scoring_play": false,
+      "seq": 96,
+      "substitution": {
+        "after_event_seq": 95,
+        "kind": "offensive",
+        "player_in": "a4x9809wbva3u0yi",
+        "player_out": "pb4j4o4tl4zsiriu",
+        "slot": 3
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 2,
         "base_out_state": "100|1",
@@ -5483,7 +5500,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "_derived": {
@@ -5521,7 +5538,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
@@ -5559,7 +5576,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
@@ -5620,7 +5637,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -5630,7 +5647,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 100,
+      "seq": 101,
       "summary": {
         "E": 0,
         "H": 2,
@@ -5646,9 +5663,9 @@
       "kind": "substitution",
       "narrative": "J. Maruskin to p for L. Wade.",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "substitution": {
-        "after_event_seq": 100,
+        "after_event_seq": 101,
         "kind": "pitching",
         "player_in": "iohaj5ddzeilt0kf",
         "player_out": "bs3gwpouiectmksv",
@@ -5714,7 +5731,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "batting_team": "fs5kcreudvyx5quq",
@@ -5724,7 +5741,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5877,7 +5894,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 100,
+          "after_event_seq": 95,
+          "kind": "offensive",
+          "player_in": "a4x9809wbva3u0yi",
+          "player_out": "pb4j4o4tl4zsiriu",
+          "slot": 3
+        },
+        {
+          "after_event_seq": 101,
           "kind": "pitching",
           "player_in": "iohaj5ddzeilt0kf",
           "player_out": "bs3gwpouiectmksv",
@@ -5890,9 +5914,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:39:08Z",
     "parse": {
-      "events_count": 104,
+      "events_count": 105,
       "replayable": false,
-      "unparsed_count": 16,
+      "unparsed_count": 15,
       "warnings": [
         "[linescore] linescore: away inning 5 computed 0 != oracle 2",
         "[linescore] linescore: home inning 2 computed 1 != oracle 3",
@@ -5909,11 +5933,11 @@
         "[pa_counts] pa_counts: player 4x83ba341uur4vft events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player g2gfwgjmgw0wumz0 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
         "[illegal_transitions] illegal_transition: seq 18 runner g2gfwgjmgw0wumz0 advances from base 3 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 97 runner a4x9809wbva3u0yi advances from base 2 which was not occupied at event start"
+        "[illegal_transitions] illegal_transition: seq 98 runner a4x9809wbva3u0yi advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:37Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:24Z",
+    "parser_version": "0.2.0",
     "source_sha256": "86758f4e7507229233a05f0cf884a05c4c85d679f4b00091e586b4bbcffe4ba9",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260703_t3hf.xml"
   },
@@ -6181,7 +6205,7 @@
       "team_id": "fs5kcreudvyx5quq"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6297,7 +6321,7 @@
         "line_index": 0
       },
       "raw": "J.C. Coronado to p for E. Ross.",
-      "reason": "substitution names did not resolve uniquely on the fielding side: out='E. Ross' in='J.C. Coronado'"
+      "reason": "substitution names did not resolve uniquely on the away side: out='E. Ross' in='J.C. Coronado'"
     },
     {
       "location": {
@@ -6306,16 +6330,7 @@
         "line_index": 0
       },
       "raw": "R. Coronado to p for J.C. Coronado.",
-      "reason": "substitution names did not resolve uniquely on the fielding side: out='J.C. Coronado' in='R. Coronado'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 5
-      },
-      "raw": "A. Collins pinch ran for D. Ratfield.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'A. Collins pinch ran for D. Ratfield'"
+      "reason": "substitution names did not resolve uniquely on the away side: out='J.C. Coronado' in='R. Coronado'"
     },
     {
       "location": {
@@ -6324,7 +6339,7 @@
         "line_index": 0
       },
       "raw": "D. Ratfield to c for A. Collins.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Ratfield to c for A. Collins'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'D. Ratfield to c for A. Collins'"
     },
     {
       "location": {

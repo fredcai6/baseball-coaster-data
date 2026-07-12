@@ -4017,6 +4017,23 @@
       "seq": 67
     },
     {
+      "batting_team": "tlqlpupbujjreauc",
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "top",
+      "inning": 7,
+      "kind": "substitution",
+      "narrative": "Bodee Wright pinch ran for Pat Mills.",
+      "scoring_play": false,
+      "seq": 68,
+      "substitution": {
+        "after_event_seq": 67,
+        "kind": "offensive",
+        "player_in": "hxoxu8l6i2hp77yc",
+        "player_out": "3o1d4ejqjxj9802j",
+        "slot": 4
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 2,
         "base_out_state": "100|0",
@@ -4085,7 +4102,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 68
+      "seq": 69
     },
     {
       "_derived": {
@@ -4162,7 +4179,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 69
+      "seq": 70
     },
     {
       "_derived": {
@@ -4225,7 +4242,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 70
+      "seq": 71
     },
     {
       "_derived": {
@@ -4308,7 +4325,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 71
+      "seq": 72
     },
     {
       "_derived": {
@@ -4346,7 +4363,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 72
+      "seq": 73
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -4356,7 +4373,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 73,
+      "seq": 74,
       "summary": {
         "E": 0,
         "H": 3,
@@ -4425,7 +4442,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 74
+      "seq": 75
     },
     {
       "_derived": {
@@ -4489,7 +4506,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 75
+      "seq": 76
     },
     {
       "_derived": {
@@ -4552,7 +4569,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 76
+      "seq": 77
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -4562,7 +4579,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 77,
+      "seq": 78,
       "summary": {
         "E": 0,
         "H": 1,
@@ -4709,16 +4726,24 @@
           "slot": 9
         }
       ],
-      "substitutions": []
+      "substitutions": [
+        {
+          "after_event_seq": 67,
+          "kind": "offensive",
+          "player_in": "hxoxu8l6i2hp77yc",
+          "player_out": "3o1d4ejqjxj9802j",
+          "slot": 4
+        }
+      ]
     }
   },
   "meta": {
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:31:16Z",
     "parse": {
-      "events_count": 78,
+      "events_count": 79,
       "replayable": false,
-      "unparsed_count": 10,
+      "unparsed_count": 9,
       "warnings": [
         "[linescore] linescore: away inning 2 computed 0 != oracle 2",
         "[linescore] linescore: away inning 3 computed 0 != oracle 4",
@@ -4743,11 +4768,11 @@
         "[pa_counts] pa_counts: player p2w9sx75b8r25jmk events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player 1xorg2l0v9lraecu events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player 347td5ul6pm19016 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 68 runner hxoxu8l6i2hp77yc advances from base 2 which was not occupied at event start"
+        "[illegal_transitions] illegal_transition: seq 69 runner hxoxu8l6i2hp77yc advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:28Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:17Z",
+    "parser_version": "0.2.0",
     "source_sha256": "00cf3b79336e69819adea8aa0f35b28b0a04a3b3d824000b2519215633f4752a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260627_aebu.xml"
   },
@@ -4989,7 +5014,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -5070,15 +5095,6 @@
       },
       "raw": "Kyle Micklus infield fly to ss (1-0 B).\n                                                                                                                                \t\t\t\t\t(1 out)",
       "reason": "primary verb not recognized: 'Kyle Micklus infield fly to ss'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 1
-      },
-      "raw": "Bodee Wright pinch ran for Pat Mills.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Bodee Wright pinch ran for Pat Mills'"
     },
     {
       "location": {
