@@ -72,26 +72,29 @@ question this metric answers. A simple average of per-game rates would
 instead weight every GAME equally regardless of size, which is a different
 (and less honest, for this purpose) question.
 
-**Threshold mechanism** (provisional, see ``DEFAULT_THRESHOLD`` below): the
-full multi-season corpus this report will eventually score does not exist
-yet at development time (this gate runs before g3's slice validation), so a
-hand-picked placeholder is used. The threshold and CLI nonzero-exit are
-keyed on the LINE-level ``league.unparsed_rate`` (not ``failure_rate`` --
-the game-level number is still reported, but it does not gate the run).
-Because a line-level "share of narrative lines unparsed" is a much finer-
-grained quantity than a game-level "share of games that failed outright",
-the two are not on the same scale, so the placeholder value itself had to
-be re-derived rather than reused: **0.02 (2%)**. The intended mechanism,
-once real data exists, is the same as before -- "observed line-level
-unparsed_rate across the full backfill slice + a fixed safety margin (e.g.
-+1 percentage point)" -- i.e. re-derive this constant from g3's actual
-numbers rather than guessing forever. Until then, ``--threshold`` lets a
-real run override this constant without a code change (see ``main``/
-``build_arg_parser`` below), and 0.02 is deliberately generous (rather than
-tight) so a provisional value does not spuriously fail an otherwise healthy
-early run, while still being tight enough to mean something at line
-granularity (a game-level 5% placeholder would be far too loose applied to
-individual narrative lines).
+**Threshold mechanism** (evidence-grounded, see ``DEFAULT_THRESHOLD`` below):
+g3's zero-fetch slice validation (issue #20) ran this exact pipeline against
+all 10 already-archived real games and observed a league-wide LINE-level
+``unparsed_rate`` of **0.1457** (182 unparsed lines / 1249 total narrative
+lines) -- a known, diagnosed "grammar tail" (illegal base-runner
+transitions, PA-count/linescore/LOB mismatches on a subset of plays; filed
+as issue #30, to be closed by a labeled re-parse once the full corpus's
+unparsed inventory is available). ``DEFAULT_THRESHOLD`` is set to
+**0.20 (20%)** -- the observed 0.1457 plus a ~0.054 safety margin, rounded
+up -- so the overnight full-corpus run (which is *expected* to reproduce
+this same grammar tail across ~1,257 games) exits 0 against the known
+baseline and only exits loud (nonzero) if the corpus-wide rate is
+materially WORSE than what g3 already characterized -- i.e. a genuinely new
+regression, not the already-diagnosed and already-filed residue. The
+threshold and CLI nonzero-exit are keyed on the LINE-level
+``league.unparsed_rate`` (not ``failure_rate`` -- the game-level number is
+still reported, but it does not gate the run: g3's slice, for reference,
+had ``failure_rate`` 1.0 (10/10 games not fully replayable) alongside the
+much smaller *line*-level 0.1457, which is exactly why the two are tracked
+as separate, differently-scaled numbers rather than one conflated metric).
+``--threshold`` still lets any run override this constant without a code
+change (see ``main``/``build_arg_parser`` below) if the observed
+distribution shifts again.
 """
 
 from __future__ import annotations
@@ -112,11 +115,11 @@ __all__ = [
     "main",
 ]
 
-#: Provisional threshold for the LINE-level ``unparsed_rate`` -- see module
-#: docstring's "Threshold mechanism" for the justification and the plan to
-#: replace this with an evidence-grounded value once the full backfill
-#: corpus exists (g3).
-DEFAULT_THRESHOLD: float = 0.02
+#: Evidence-grounded threshold for the LINE-level ``unparsed_rate`` -- see
+#: module docstring's "Threshold mechanism": g3's real zero-fetch slice
+#: (issue #20) observed 0.1457 league-wide; this is that value + a ~0.054
+#: safety margin, rounded up.
+DEFAULT_THRESHOLD: float = 0.20
 
 #: Outcomes that count as "not alarming" and are tracked separately from
 #: ``enumerated_failures`` -- see ``non_final_games`` below.

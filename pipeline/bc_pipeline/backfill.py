@@ -393,7 +393,17 @@ def run_backfill(
     by a unit test -- tests always inject a fake). Never pushes; pushing (if
     any) is the CLI wrapper's job.
     """
-    repo_root = Path(repo_root)
+    # Resolve to absolute up front: out_path below is computed from
+    # repo_root and later passed BOTH as a `git add` argument and (via
+    # _default_commit_fn) as the subprocess's cwd. A relative repo_root left
+    # unresolved makes those two uses interpret the same string relative to
+    # two different working directories (the caller's cwd for the path math,
+    # repo_root itself for the subprocess cwd) -- a real bug hit live in
+    # g3's slice validation: `--repo-root ..` produced `git add ..\games\...`
+    # run with cwd=`..`, which resolves one directory too far up and fails
+    # with a nonzero git exit. Resolving here makes every downstream use
+    # consistent regardless of what the caller passed.
+    repo_root = Path(repo_root).resolve()
     if commit_fn is None:
         commit_fn = lambda paths, message: _default_commit_fn(  # noqa: E731
             paths, message, repo_root=repo_root

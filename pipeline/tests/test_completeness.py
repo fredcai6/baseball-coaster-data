@@ -287,8 +287,10 @@ def test_multiple_backfill_results_aggregate():
     assert report["league"]["games_parse_failed"] == 2
 
 
-def test_threshold_default_is_provisional_and_documented():
-    assert completeness.DEFAULT_THRESHOLD == pytest.approx(0.02)
+def test_threshold_default_is_evidence_grounded_from_g3_slice():
+    # g3's zero-fetch slice (issue #20) observed 0.1457 league-wide; the
+    # default is that + a ~0.054 safety margin, rounded up to 0.20.
+    assert completeness.DEFAULT_THRESHOLD == pytest.approx(0.20)
 
 
 def test_threshold_not_exceeded_under_generous_threshold():

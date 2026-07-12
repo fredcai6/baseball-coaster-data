@@ -361,6 +361,41 @@ def test_season_boundary_flushes_a_short_batch(tmp_path: Path) -> None:
     assert commits[1][1] == "backfill(2025): games 1–2"
 
 
+def test_relative_repo_root_resolved_to_absolute_before_use(tmp_path: Path, monkeypatch) -> None:
+    """A relative ``repo_root`` (e.g. ``".."``, as a CLI caller running from a
+    subdirectory would pass) must be resolved to absolute before it is used
+    for both the written game path AND the default git commit_fn's cwd --
+    hit live in g3's slice validation as a real ``git add`` failure
+    (CalledProcessError, exit 128) when the same relative string was
+    interpreted relative to two different working directories."""
+    subdir = tmp_path / "cwd_subdir"
+    subdir.mkdir()
+    monkeypatch.chdir(subdir)
+
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+
+    call_log: list[str] = []
+    commits: list = []
+    result = run(
+        config, response_map, call_log, FakeClock(), "..", commits, limit=None
+    )
+
+    assert result.seasons[2026].parsed == 1
+    (paths, _message) = commits[0]
+    assert len(paths) == 1
+    assert Path(paths[0]).is_absolute(), (
+        f"committed path must be absolute regardless of the relative repo_root "
+        f"passed in, got {paths[0]!r}"
+    )
+    assert Path(paths[0]) == tmp_path / "games" / "2026" / "20260401_g1.json"
+
+
 # --- challenge stops the run immediately, no further seasons walked --------
 
 
