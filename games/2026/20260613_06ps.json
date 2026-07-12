@@ -5726,6 +5726,23 @@
       "seq": 100
     },
     {
+      "batting_team": "gnd7gosh9l5fc5us",
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "T.J. McKenzie pinch ran for Nick Leehey.",
+      "scoring_play": false,
+      "seq": 101,
+      "substitution": {
+        "after_event_seq": 100,
+        "kind": "offensive",
+        "player_in": "s35939a0kgbmsi1b",
+        "player_out": "ly42v4qy0of9uuxa",
+        "slot": 9
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 5,
         "base_out_state": "010|2",
@@ -5786,7 +5803,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -5796,7 +5813,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "summary": {
         "E": 1,
         "H": 2,
@@ -5865,7 +5882,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
@@ -5928,7 +5945,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -5999,7 +6016,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -6064,7 +6081,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -6074,7 +6091,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6183,6 +6200,13 @@
           "player_in": "anqwislsmg1sa1kp",
           "player_out": "fsg8xwia78d3udz8",
           "slot": null
+        },
+        {
+          "after_event_seq": 100,
+          "kind": "offensive",
+          "player_in": "s35939a0kgbmsi1b",
+          "player_out": "ly42v4qy0of9uuxa",
+          "slot": 9
         }
       ]
     },
@@ -6254,9 +6278,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:15:53Z",
     "parse": {
-      "events_count": 108,
+      "events_count": 109,
       "replayable": false,
-      "unparsed_count": 15,
+      "unparsed_count": 14,
       "warnings": [
         "[linescore] linescore: away inning 4 computed 0 != oracle 3",
         "[linescore] linescore: home inning 8 computed 1 != oracle 4",
@@ -6277,8 +6301,8 @@
         "[pa_counts] pa_counts: player sfm8anb9r6cy80fy events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:14Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:02Z",
+    "parser_version": "0.2.0",
     "source_sha256": "0d1250413d42c9741bb427479c535c9f104ed6a30f0d3f1f1e7be818ee6da83e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260613_06ps.xml"
   },
@@ -6556,7 +6580,7 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6600,7 +6624,7 @@
         "line_index": 0
       },
       "raw": "Charles (CJ) Dean to 1b.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Charles (CJ) Dean to 1b'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Charles (CJ) Dean to 1b'"
     },
     {
       "location": {
@@ -6609,7 +6633,7 @@
         "line_index": 1
       },
       "raw": "Garrett Gores to lf for Joskar Feliciano.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Garrett Gores to lf for Joskar Feliciano'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Garrett Gores to lf for Joskar Feliciano'"
     },
     {
       "location": {
@@ -6618,7 +6642,7 @@
         "line_index": 2
       },
       "raw": "Nich Klemp to dh.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Nich Klemp to dh'"
+      "reason": "substitution names did not resolve uniquely on the away side: out=None in='Nich Klemp'"
     },
     {
       "location": {
@@ -6694,21 +6718,12 @@
     },
     {
       "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 7
-      },
-      "raw": "T.J. McKenzie pinch ran for Nick Leehey.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'T.J. McKenzie pinch ran for Nick Leehey'"
-    },
-    {
-      "location": {
         "half": "bottom",
         "inning": 9,
         "line_index": 0
       },
       "raw": "Nick Leehey to 2b for T.J. McKenzie.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Nick Leehey to 2b for T.J. McKenzie'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Nick Leehey to 2b for T.J. McKenzie'"
     }
   ]
 }

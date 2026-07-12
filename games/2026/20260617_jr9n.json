@@ -6702,6 +6702,23 @@
       "seq": 115
     },
     {
+      "batting_team": "tlqlpupbujjreauc",
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Cole Calnon pinch ran for John McHenry.",
+      "scoring_play": false,
+      "seq": 116,
+      "substitution": {
+        "after_event_seq": 115,
+        "kind": "offensive",
+        "player_in": "r50usx1awaxcwqbx",
+        "player_out": "uujsp0ot0j7oa9x2",
+        "slot": 7
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 5,
         "base_out_state": "100|0",
@@ -6772,7 +6789,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "_derived": {
@@ -6847,7 +6864,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
@@ -6908,7 +6925,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6946,7 +6963,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
@@ -7007,7 +7024,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -7017,7 +7034,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7084,7 +7101,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "_derived": {
@@ -7147,7 +7164,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 123
+      "seq": 124
     },
     {
       "_derived": {
@@ -7208,7 +7225,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 124
+      "seq": 125
     },
     {
       "_derived": {
@@ -7246,7 +7263,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 125
+      "seq": 126
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -7256,7 +7273,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 126,
+      "seq": 127,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7272,7 +7289,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 127,
+      "seq": 128,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7467,6 +7484,13 @@
           "player_in": "fjamjfppm8jod9nu",
           "player_out": "vvqhdd14qwz21se5",
           "slot": null
+        },
+        {
+          "after_event_seq": 115,
+          "kind": "offensive",
+          "player_in": "r50usx1awaxcwqbx",
+          "player_out": "uujsp0ot0j7oa9x2",
+          "slot": 7
         }
       ]
     }
@@ -7475,9 +7499,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:20:03Z",
     "parse": {
-      "events_count": 128,
+      "events_count": 129,
       "replayable": false,
-      "unparsed_count": 15,
+      "unparsed_count": 14,
       "warnings": [
         "[linescore] linescore: away inning 4 computed 2 != oracle 4",
         "[linescore] linescore: away inning 7 computed 1 != oracle 4",
@@ -7505,11 +7529,11 @@
         "[pa_counts] pa_counts: player luhh4geplba01e05 events PA 6 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player p2w9sx75b8r25jmk events PA 5 != box-implied PA 6 (AB=4 BB=2 HBP=0 SAC=0)",
         "[illegal_transitions] illegal_transition: seq 54 runner 347td5ul6pm19016 advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 116 runner r50usx1awaxcwqbx advances from base 2 which was not occupied at event start"
+        "[illegal_transitions] illegal_transition: seq 117 runner r50usx1awaxcwqbx advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:17Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:07Z",
+    "parser_version": "0.2.0",
     "source_sha256": "cd26709c92aa95adaa230725e2423f905a4d8b3b21ff0b971c2e2b8a76841a28",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260617_jr9n.xml"
   },
@@ -7809,7 +7833,7 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7835,7 +7859,7 @@
         "line_index": 0
       },
       "raw": "Michael Ball to 2b.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Michael Ball to 2b'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Michael Ball to 2b'"
     },
     {
       "location": {
@@ -7920,21 +7944,12 @@
     },
     {
       "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "Cole Calnon pinch ran for John McHenry.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cole Calnon pinch ran for John McHenry'"
-    },
-    {
-      "location": {
         "half": "bottom",
         "inning": 9,
         "line_index": 0
       },
       "raw": "John McHenry to 2b for Cole Calnon.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'John McHenry to 2b for Cole Calnon'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'John McHenry to 2b for Cole Calnon'"
     },
     {
       "location": {
@@ -7943,7 +7958,7 @@
         "line_index": 4
       },
       "raw": "Charles (CJ) Dean pinch hit for Joskar Feliciano.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Charles (CJ) Dean pinch hit for Joskar Feliciano'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Charles (CJ) Dean pinch hit for Joskar Feliciano'"
     },
     {
       "location": {
@@ -7952,7 +7967,7 @@
         "line_index": 0
       },
       "raw": "Joskar Feliciano pinch hit for Charles (CJ) Dean.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Joskar Feliciano pinch hit for Charles (CJ) Dean'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Joskar Feliciano pinch hit for Charles (CJ) Dean'"
     },
     {
       "location": {
@@ -7961,7 +7976,7 @@
         "line_index": 1
       },
       "raw": "Joskar Feliciano to c.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Joskar Feliciano to c'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Joskar Feliciano to c'"
     }
   ]
 }

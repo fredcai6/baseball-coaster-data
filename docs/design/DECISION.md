@@ -84,3 +84,18 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   slots) still validates under 1.1.0; only new files use `null`. This is the fixture-promotion
   protocol's first real exercise (unparsed line → schema/rule lands → real event); the sample
   re-parses from events 117 / unparsed 5 to events 122 / unparsed 0.
+- **2026-07-12 — `schema_version` 1.1.0 → 1.2.0 (additive MINOR).** `$defs.count` (the
+  `plate_appearance` event's `count` field) and `$defs.substitution.player_out` both made nullable.
+  `count: null` means the source PBP line carries no count-tail at all (the historical league
+  template omits it for some rows, not just the pitch-sequence letters — distinct from the
+  pre-existing `pitches: null` case, which is a real 0-0 count with no observed pitch sequence).
+  `player_out: null` means a bare DH-slot-entry line (`"<name> to dh."`) names only the incoming
+  player, with no honest way to supply an outgoing one. **Why:** both shapes were falling to
+  `unparsed[]` under 1.1.0 (count-less plate-appearance lines caused a `parse.build_events` crash
+  once grammar-level support landed in g1/g2; the DH-slot-bare line had no grammar rule at all
+  because the schema could not yet encode it). Ratified by the human via the Admiral (issue #30
+  float, this is not the implementer's own decision). Additive-only: every existing 1.1.0 file
+  (`count` and `player_out` always present as objects/strings, never null) still validates under
+  1.2.0; only new parses may emit `null` for either field. The two-name `"<in> to dh for <out>."`
+  variant remains intentionally unimplemented (out of this gate's authorized scope) and still falls
+  to `unparsed[]` unchanged.

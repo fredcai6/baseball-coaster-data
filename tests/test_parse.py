@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from _support import SAMPLES_DIR, load_fixture, validate_game
 
-from bc_pipeline import parse, serialize
+from bc_pipeline import identity, parse, serialize
 
 
 def _load(name: str) -> str:
@@ -153,5 +153,250 @@ def test_idempotency_key_is_hash_plus_parser_version():
     assert parse.PARSER_VERSION in key
 
 
+# --- count-assembly guard (schema 1.2.0, issue #30 g2b) ---------------------
+#
+# grammar.py already emits PrimaryClause(count=None, pitches=None) for a
+# plate-appearance line whose source PBP row carries no count-tail at all
+# (the historical league template -- see tests/test_grammar.py
+# test_count_tail_optional_*). Pre-fix, parse.build_events crashed reading
+# `p.count.balls` on that None (a pre-existing blocker flagged by g1's
+# implementer result, re-confirmed by the synthetic_taxonomy_tail fixtures).
+# Schema 1.2.0 makes the event's `count` field nullable so this can be
+# encoded as a real event instead.
+
+
+def _build_events_for_line(text: str):
+    away = identity.TeamIdentity(
+        team_id="syn:team:away",
+        name="Synthetic Away",
+        players={
+            "syn:away:1": identity.PlayerEntry(
+                player_id="syn:away:1",
+                name="Kyle Schmack",
+                last_name="Schmack",
+                team_id="syn:team:away",
+                positions=["cf"],
+            ),
+        },
+    )
+    home = identity.TeamIdentity(
+        team_id="syn:team:home",
+        name="Synthetic Home",
+        players={
+            f"syn:home:{i}": identity.PlayerEntry(
+                player_id=f"syn:home:{i}",
+                name=f"Home Player {i}",
+                last_name=f"Player{i}",
+                team_id="syn:team:home",
+                positions=["1b"],
+            )
+            for i in range(1, 10)
+        }
+        | {
+            "syn:home:10": identity.PlayerEntry(
+                player_id="syn:home:10",
+                name="Jordan Lee",
+                last_name="Lee",
+                team_id="syn:team:home",
+                positions=["p"],
+            ),
+        },
+    )
+    player_table = identity.PlayerTable(home=home, away=away)
+    line = parse.PbpLine(inning=1, half="top", line_index=0, text=text, is_strong=False)
+    return parse.build_events([line], player_table)
+
+
+def test_count_tail_optional_line_no_longer_crashes_build_events():
+    events, unparsed, _subs = _build_events_for_line(
+        "Kyle Schmack singled up the middle."
+    )
+    assert unparsed == []
+    assert len(events) == 1
+    assert events[0]["kind"] == "plate_appearance"
+
+
+def test_count_tail_optional_line_emits_count_none_and_pitches_none():
+    events, _unparsed, _subs = _build_events_for_line(
+        "Kyle Schmack singled up the middle."
+    )
+    assert events[0]["count"] is None
+    assert events[0]["pitches"] is None
+
+
+# --- DH-slot-bare substitution end-to-end (schema 1.2.0, issue #30 g2b,
+# Commander-authorized scope extension closing the m3 stop condition) ------
+#
+# The new grammar.py STANDALONE_RULES row for "<name> to dh." builds a
+# Substitution(player_out=None, ...). Pre-fix, parse.build_events's
+# substitution branch called _last_name_token(None) unconditionally and
+# crashed. This proves the line now reaches a real events[] entry, not just
+# a grammar-level ClauseGroup.
+
+
+def _build_events_for_dh_slot_bare_line(text: str):
+    # half="top" -> the AWAY side is batting (parse.py:345) -- an "offensive"
+    # substitution (pinch-run, DH-slot entry) resolves against the BATTING
+    # side, so the DH-entering player must be on the away roster here. (A
+    # prior version of this fixture put the player on the home/fielding
+    # roster, which only "passed" because of a since-fixed bug that resolved
+    # every substitution against the fielding side regardless of kind.)
+    away = identity.TeamIdentity(
+        team_id="syn:team:away",
+        name="Synthetic Away",
+        players={
+            "syn:away:1": identity.PlayerEntry(
+                player_id="syn:away:1",
+                name="Kyle Schmack",
+                last_name="Schmack",
+                team_id="syn:team:away",
+                positions=["cf"],
+            ),
+            "syn:away:2": identity.PlayerEntry(
+                player_id="syn:away:2",
+                name="Cole Robinson",
+                last_name="Robinson",
+                team_id="syn:team:away",
+                positions=["dh"],
+            ),
+        },
+    )
+    home = identity.TeamIdentity(
+        team_id="syn:team:home",
+        name="Synthetic Home",
+        players={
+            "syn:home:1": identity.PlayerEntry(
+                player_id="syn:home:1",
+                name="Jordan Lee",
+                last_name="Lee",
+                team_id="syn:team:home",
+                positions=["p"],
+            ),
+        },
+    )
+    player_table = identity.PlayerTable(home=home, away=away)
+    line = parse.PbpLine(inning=1, half="top", line_index=0, text=text, is_strong=False)
+    return parse.build_events([line], player_table)
+
+
+def test_pinch_run_substitution_resolves_against_batting_side_not_fielding_side():
+    # Regression for a real bug found while implementing g2b: the
+    # substitution-assembly branch predated the "offensive" Substitution.kind
+    # (added for pinch-run in g1) and unconditionally resolved every
+    # substitution against the FIELDING side. A real pinch-run line names two
+    # players on the BATTING side, so every real pinch-run line silently
+    # landed in unparsed[] (or worse, could false-match an unrelated
+    # same-surname player on the wrong team) despite grammar.py correctly
+    # parsing the clause. half="top" -> away bats; both named players are on
+    # the away roster here, matching how the real corpus actually looks.
+    away = identity.TeamIdentity(
+        team_id="syn:team:away",
+        name="Synthetic Away",
+        players={
+            "syn:away:1": identity.PlayerEntry(
+                player_id="syn:away:1",
+                name="Pat Smith",
+                last_name="Smith",
+                team_id="syn:team:away",
+                positions=["cf"],
+            ),
+            "syn:away:2": identity.PlayerEntry(
+                player_id="syn:away:2",
+                name="Sam Runner",
+                last_name="Runner",
+                team_id="syn:team:away",
+                positions=["pr"],
+            ),
+        },
+    )
+    home = identity.TeamIdentity(
+        team_id="syn:team:home",
+        name="Synthetic Home",
+        players={
+            "syn:home:1": identity.PlayerEntry(
+                player_id="syn:home:1",
+                name="Jordan Lee",
+                last_name="Lee",
+                team_id="syn:team:home",
+                positions=["p"],
+            ),
+        },
+    )
+    player_table = identity.PlayerTable(home=home, away=away)
+    line = parse.PbpLine(
+        inning=1,
+        half="top",
+        line_index=0,
+        text="Sam Runner pinch ran for Pat Smith.",
+        is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], player_table)
+    assert unparsed == []
+    assert len(events) == 1
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "offensive"
+    assert sub["player_in"] == "syn:away:2"
+    assert sub["player_out"] == "syn:away:1"
+
+
+def test_dh_slot_bare_line_no_longer_crashes_build_events():
+    events, unparsed, _subs = _build_events_for_dh_slot_bare_line(
+        "Cole Robinson to dh."
+    )
+    assert unparsed == []
+    assert len(events) == 1
+    assert events[0]["kind"] == "substitution"
+
+
+def test_dh_slot_bare_line_emits_player_out_none_and_offensive_kind():
+    events, _unparsed, _subs = _build_events_for_dh_slot_bare_line(
+        "Cole Robinson to dh."
+    )
+    sub = events[0]["substitution"]
+    assert sub["player_out"] is None
+    assert sub["player_in"] == "syn:away:2"
+    assert sub["kind"] == "offensive"
+
+
+def test_dh_slot_bare_event_is_schema_valid():
+    fixture = load_fixture("game_20260709_h94w_top1.json")
+    events, _unparsed, _subs = _build_events_for_dh_slot_bare_line(
+        "Cole Robinson to dh."
+    )
+    game = dict(fixture)
+    game["events"] = fixture["events"] + [events[0]]
+    validate_game(game)
+
+
+def test_count_tail_optional_event_is_schema_valid():
+    # Embed the count-less event into the frozen hand fixture (which supplies
+    # every other required top-level field) and validate the whole file.
+    fixture = load_fixture("game_20260709_h94w_top1.json")
+    events, _unparsed, _subs = _build_events_for_line(
+        "Kyle Schmack singled up the middle."
+    )
+    game = dict(fixture)
+    game["events"] = fixture["events"] + [events[0]]
+    validate_game(game)
+
+
 def test_idempotency_key_changes_with_different_html():
     assert parse.idempotency_key(FINAL_HTML) != parse.idempotency_key(FINAL_HTML + " ")
+
+
+# --- _last_name_token: narrative-name join tokenizer (Family 2) -------------
+
+
+def test_last_name_token_strips_trailing_comma_before_suffix():
+    # "Rojas, Jr" -> tokens ["Rojas,", "Jr"]: "Jr" is recognized as a
+    # trailing suffix, but the returned surname token must NOT retain the
+    # comma left dangling from the narrative's "Surname, Suffix" shape.
+    assert parse._last_name_token("Rojas, Jr") == "Rojas"
+
+
+def test_last_name_token_suffix_without_comma_unaffected():
+    assert parse._last_name_token("Patrick Roche Jr.") == "Roche"
+
+
+def test_last_name_token_plain_name_unaffected():
+    assert parse._last_name_token("J. McLaughli") == "McLaughli"

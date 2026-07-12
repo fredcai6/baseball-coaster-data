@@ -1,0 +1,59 @@
+{
+  "description": "SYNTHETIC (roster subset re-created with identity.PlayerEntry, matching the real corpus roster's ids/last_names verbatim). Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for issue #30 gate g2's identity/parse fix: the comma-suffix narrative name shape 'Surname, Suffix' (e.g. 'Rojas, Jr'). NOT a whole fake game and NOT a games/** entry.",
+  "family": "Family 2 (abbreviated/truncated/suffix-comma player-name resolution)",
+  "taxonomy_tail_shape": "runner_event whose lone runner-movement clause names the runner via the 'Surname, Suffix' comma shape ('Rojas, Jr advanced to second on a wild pitch.') -- chosen for this fixture (over a plate-appearance shape, e.g. 'Rojas, Jr walked.') because a plate-appearance line with no count-tail hits the ALREADY-FLAGGED, pre-existing, out-of-scope build_events crash on PrimaryClause.count=None (see tests/fixtures/synthetic_taxonomy_tail/singled_up_the_middle_promotion.json's 'count_tail_optional_family' note and this gate's g2 implementer result); this runner_event shape has no count-tail dependency at all, so it exercises the name-resolution fix cleanly.",
+  "live_corpus_provenance": "verbatim real line from games/2025/20250528_c2r3.json unparsed[] (pre-fix): 'Rojas, Jr advanced to second on a wild pitch.' -- that game's committed players[] table has real player_id 'fgyxjb0r734dgsdl', name 'Freddy Rojas Jr.', last_name 'Rojas', team_id '9fugocpa5h6ockn6' (home, Great Falls Voyagers). The same 'Rojas, Jr' comma-suffix shape recurs across 39+ games/2025/** files for the same real player (e.g. games/2025/20250520_4bkm.json, games/2025/20250521_kepy.json, games/2025/20250529_8hdk.json).",
+  "sibling_shapes_covered_by_the_same_gate_not_separately_promoted_here": {
+    "truncated_surname_substitution": "'C. Richardso to p for L. Short.' (games/2025/20250520_u80r.json; real roster last_name 'Richardson', team_id 'zgzmksngghvq54yy' home) -- now resolves via resolve()'s new prefix-match fallback; see tests/test_identity.py test_resolve_prefix_match_resolves_truncated_surname and tests/test_family2_name_resolution.py.",
+    "truncated_surname_runner_event": "'J. McLaughli stole second.' (games/2025/20250520_4bkm.json; real roster last_name 'McLaughlin', team_id '93ghf5gj458jgt7g' home) -- same prefix-match fallback; see tests/test_family2_name_resolution.py.",
+    "truncated_hyphenated_surname_runner_event": "'T. Clark-Chi advanced to second on a wild pitch.' (games/2024/20240521_gq1b.json; real roster last_name 'Clark-Chiapparelli', team_id '56cu2zsze70qcfrx' home) -- same prefix-match fallback, hyphenated-surname variant; see tests/test_family2_name_resolution.py.",
+    "count_tail_optional_family": "grammar-level, out of this gate's scope -- parse.build_events still crashes on PrimaryClause.count=None for ANY plate-appearance line lacking a count-tail (reproduced with a trivially-resolvable name, e.g. 'Smith walked.', so it is unrelated to name resolution); pre-existing, already flagged by g1's implementer result, re-confirmed live here."
+  },
+  "step_a_hypothetical_pre_rule_unparsed": {
+    "note": "Pre-fix, '_last_name_token(\"Rojas, Jr\")' returned 'Rojas,' (comma retained) because the function only stripped a trailing '.' before checking the suffix-token set, not a trailing comma; PlayerTable.resolve('Rojas,', 'home') then found zero exact matches against the roster's comma-free last_name 'Rojas' and had no fallback, so build_events() routed the line to unparsed[] with reason \"runner clause name did not resolve uniquely\" (reproduced by temporarily reverting the parse.py/identity.py fix).",
+    "raw": "Rojas, Jr advanced to second on a wild pitch."
+  },
+  "step_b_rule_already_in_closed_taxonomy": {
+    "module": "bc_pipeline.grammar",
+    "table": "RUNNER_RULES",
+    "note": "The 'X advanced to <base> on a wild pitch' runner-movement shape (outcome.runner.cause 'wild_pitch') already existed in the closed taxonomy before this gate; this gate's fix is entirely in the identity/parse name-JOIN layer (identity.PlayerTable.resolve's new prefix-match fallback + parse._last_name_token's comma-strip), not a new grammar row."
+  },
+  "step_c_and_d_promoted_fixture": {
+    "synthetic_input": {
+      "player_table": "one player matching the real corpus roster entry verbatim (home player_id 'fgyxjb0r734dgsdl', name 'Freddy Rojas Jr.', last_name 'Rojas') + one synthetic away player so both sides of PlayerTable are populated; see reproduce_with below for the exact identity.PlayerTable construction",
+      "pbp_line": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 0,
+        "text": "Rojas, Jr advanced to second on a wild pitch.",
+        "is_strong": false
+      }
+    },
+    "build_events_output": {
+      "events": [
+        {
+          "seq": 0,
+          "inning": 1,
+          "half": "bottom",
+          "kind": "runner_event",
+          "batting_team": "syn:team:home",
+          "fielding_team": "syn:team:away",
+          "narrative": "Rojas, Jr advanced to second on a wild pitch.",
+          "scoring_play": false,
+          "runners": [
+            {
+              "player_id": "fgyxjb0r734dgsdl",
+              "from": 2,
+              "to": 2,
+              "cause": "wild_pitch",
+              "out": false,
+              "scored": false
+            }
+          ]
+        }
+      ],
+      "unparsed": []
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"from bc_pipeline import identity, parse as parse_mod; home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'fgyxjb0r734dgsdl': identity.PlayerEntry(player_id='fgyxjb0r734dgsdl', name='Freddy Rojas Jr.', last_name='Rojas', team_id='syn:team:home', positions=['dh'])}); away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'syn:away:1': identity.PlayerEntry(player_id='syn:away:1', name='Alex Preece', last_name='Preece', team_id='syn:team:away', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=1, half='bottom', line_index=0, text='Rojas, Jr advanced to second on a wild pitch.', is_strong=False); print(parse_mod.build_events([line], player_table))\""
+  }
+}

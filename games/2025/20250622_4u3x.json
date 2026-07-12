@@ -412,61 +412,13 @@
   "date": "2025-06-22",
   "events": [
     {
-      "batting_team": "93ghf5gj458jgt7g",
-      "fielding_team": "zgzmksngghvq54yy",
-      "half": "top",
-      "inning": 1,
-      "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
-      "scoring_play": false,
-      "seq": 0,
-      "summary": {
-        "E": 0,
-        "H": 1,
-        "LOB": 1,
-        "R": 0
-      }
-    },
-    {
-      "batting_team": "zgzmksngghvq54yy",
-      "fielding_team": "93ghf5gj458jgt7g",
-      "half": "bottom",
-      "inning": 1,
-      "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
-      "scoring_play": false,
-      "seq": 1,
-      "summary": {
-        "E": 0,
-        "H": 0,
-        "LOB": 0,
-        "R": 0
-      }
-    },
-    {
-      "batting_team": "93ghf5gj458jgt7g",
-      "fielding_team": "zgzmksngghvq54yy",
-      "half": "top",
-      "inning": 2,
-      "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
-      "scoring_play": false,
-      "seq": 2,
-      "summary": {
-        "E": 0,
-        "H": 0,
-        "LOB": 0,
-        "R": 0
-      }
-    },
-    {
       "_derived": {
         "away_score_before": 0,
         "base_out_state": "000|0",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -474,58 +426,238 @@
           false
         ],
         "home_score_before": 0,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
-      "batting_team": "zgzmksngghvq54yy",
-      "fielding_team": "93ghf5gj458jgt7g",
-      "half": "bottom",
-      "inning": 2,
-      "kind": "runner_event",
-      "narrative": "R. Pierce advanced to third on a balk.",
+      "batter": {
+        "name_raw": "T. Clarkson",
+        "player_id": "11a5p1fuq8hjx1cv",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "T. Clarkson struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "balk",
-          "from": 3,
-          "out": false,
-          "player_id": "uw2qjvqi611w450j",
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "11a5p1fuq8hjx1cv",
           "scored": false,
-          "to": 3
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 0
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "L. Beard singled to center field.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "vui2grvaoogibo28",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 1
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "X. Casserill",
+        "player_id": "n1g3t4whz1ke0muf",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "X. Casserill struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "n1g3t4whz1ke0muf",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 2
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Levari",
+        "player_id": "m3la5solkouolx72",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "K. Levari struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "m3la5solkouolx72",
+          "scored": false,
+          "to": -1
         }
       ],
       "scoring_play": false,
       "seq": 3
     },
     {
-      "batting_team": "zgzmksngghvq54yy",
-      "fielding_team": "93ghf5gj458jgt7g",
-      "half": "bottom",
-      "inning": 2,
+      "batting_team": "93ghf5gj458jgt7g",
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 1,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 4 Runs, 3 Hits, 0 Errors, 0 LOB",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
       "seq": 4,
       "summary": {
         "E": 0,
-        "H": 3,
-        "LOB": 0,
-        "R": 4
-      }
-    },
-    {
-      "batting_team": "93ghf5gj458jgt7g",
-      "fielding_team": "zgzmksngghvq54yy",
-      "half": "top",
-      "inning": 3,
-      "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 0 LOB",
-      "scoring_play": false,
-      "seq": 5,
-      "summary": {
-        "E": 0,
         "H": 1,
-        "LOB": 0,
+        "LOB": 1,
         "R": 0
       }
     },
@@ -535,7 +667,7 @@
         "base_out_state": "000|0",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -544,50 +676,174 @@
           false
         ],
         "home_score_before": 0,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "Cobb, Jr",
+        "player_id": "cfetr828oix8pp6g",
+        "resolved": true
+      },
       "batting_team": "zgzmksngghvq54yy",
+      "count": null,
       "fielding_team": "93ghf5gj458jgt7g",
       "half": "bottom",
-      "inning": 3,
-      "kind": "runner_event",
-      "narrative": "E. Santos stole second.",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "Cobb, Jr popped up to lf.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "stolen_base",
-          "from": 2,
-          "out": false,
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 5
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Santos",
+        "player_id": "4woeenyn10mjj560",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "E. Santos popped up to 2b.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
           "player_id": "4woeenyn10mjj560",
           "scored": false,
-          "to": 2
+          "to": -1
         }
       ],
       "scoring_play": false,
       "seq": 6
     },
     {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Harris IV",
+        "player_id": "vkeltex4ceuf8kjs",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 1,
+      "kind": "plate_appearance",
+      "narrative": "Harris IV struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 7
+    },
+    {
       "batting_team": "zgzmksngghvq54yy",
       "fielding_team": "93ghf5gj458jgt7g",
       "half": "bottom",
-      "inning": 3,
-      "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
-      "scoring_play": false,
-      "seq": 7,
-      "summary": {
-        "E": 0,
-        "H": 1,
-        "LOB": 1,
-        "R": 0
-      }
-    },
-    {
-      "batting_team": "93ghf5gj458jgt7g",
-      "fielding_team": "zgzmksngghvq54yy",
-      "half": "top",
-      "inning": 4,
+      "inning": 1,
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
@@ -605,7 +861,199 @@
         "base_out_state": "000|0",
         "bases_after": [
           false,
-          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Liniak",
+        "player_id": "9m10xvuvf3o8hg1f",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "K. Liniak struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 9
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "G. Howell",
+        "player_id": "9vmpqa5bj8u8rq45",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "G. Howell popped up to p.",
+      "outcome": {
+        "fielders": [
+          "p"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9vmpqa5bj8u8rq45",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 10
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 0,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Manzo",
+        "player_id": "1ez1bfmgg2fguiyu",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "E. Manzo struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "1ez1bfmgg2fguiyu",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 11
+    },
+    {
+      "batting_team": "93ghf5gj458jgt7g",
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 2,
+      "kind": "inning_summary",
+      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
+      "scoring_play": false,
+      "seq": 12,
+      "summary": {
+        "E": 0,
+        "H": 0,
+        "LOB": 0,
+        "R": 0
+      }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
           false
         ],
         "bases_before": [
@@ -616,26 +1064,654 @@
         "home_score_before": 0,
         "outs_after": 0,
         "outs_before": 0,
-        "runs_on_play": 0
+        "pa_number_of_batter": 1,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "C. Bufford",
+        "player_id": "ndqc0h3j170spypq",
+        "resolved": true
       },
       "batting_team": "zgzmksngghvq54yy",
+      "count": null,
       "fielding_team": "93ghf5gj458jgt7g",
       "half": "bottom",
-      "inning": 4,
-      "kind": "runner_event",
-      "narrative": "D. Buggs advanced to second on a wild pitch.",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "C. Bufford homered to left field, RBI.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "home_run"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "wild_pitch",
-          "from": 2,
+          "cause": "batted_ball",
+          "earned": true,
+          "from": 0,
           "out": false,
-          "player_id": "rqibaab795yyg29r",
+          "player_id": "ndqc0h3j170spypq",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 13
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "R. Pierce",
+        "player_id": "uw2qjvqi611w450j",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "R. Pierce hit by pitch.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "hit_by_pitch"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "advance",
+          "from": 0,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 14
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "N. Leehey",
+        "player_id": "ctm99vma4pub5ygl",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "N. Leehey grounded out to 2b; R. Pierce advanced to second.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
           "scored": false,
           "to": 2
         }
       ],
       "scoring_play": false,
-      "seq": 9
+      "seq": 15
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "010|1",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Tatum",
+        "player_id": "8phcki62wnpcaou7",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "D. Tatum lined out to 2b.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "8phcki62wnpcaou7",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 16
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 0
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "runner_event",
+      "narrative": "R. Pierce advanced to third on a balk.",
+      "runners": [
+        {
+          "cause": "balk",
+          "from": 2,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 17
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "001|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
+        ],
+        "home_score_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "D. Buggs",
+        "player_id": "rqibaab795yyg29r",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "D. Buggs singled to left field, RBI; R. Pierce scored.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 18
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Cobb, Jr",
+        "player_id": "cfetr828oix8pp6g",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "Cobb, Jr flied out to cf.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 19
+    },
+    {
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "inning_summary",
+      "narrative": "Inning Summary: 4 Runs, 3 Hits, 0 Errors, 0 LOB",
+      "scoring_play": false,
+      "seq": 20,
+      "summary": {
+        "E": 0,
+        "H": 3,
+        "LOB": 0,
+        "R": 4
+      }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "A. Barranca",
+        "player_id": "o7yhvm7622kxgs3m",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "A. Barranca struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "o7yhvm7622kxgs3m",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 21
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "T. Clarkson",
+        "player_id": "11a5p1fuq8hjx1cv",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "T. Clarkson struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "11a5p1fuq8hjx1cv",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 22
+    },
+    {
+      "batting_team": "93ghf5gj458jgt7g",
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 3,
+      "kind": "inning_summary",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 0 LOB",
+      "scoring_play": false,
+      "seq": 23,
+      "summary": {
+        "E": 0,
+        "H": 1,
+        "LOB": 0,
+        "R": 0
+      }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Santos",
+        "player_id": "4woeenyn10mjj560",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "E. Santos singled to center field.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 24
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 0,
+        "outs_before": 0,
+        "runs_on_play": 0
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 3,
+      "kind": "runner_event",
+      "narrative": "E. Santos stole second.",
+      "runners": [
+        {
+          "cause": "stolen_base",
+          "from": 1,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 25
     },
     {
       "_derived": {
@@ -651,9 +1727,559 @@
           true,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Harris IV",
+        "player_id": "vkeltex4ceuf8kjs",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "Harris IV grounded out to 1b unassisted; E. Santos advanced to third.",
+      "outcome": {
+        "fielders": [
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [
+          "unassisted"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 26
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "001|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "C. Bufford",
+        "player_id": "ndqc0h3j170spypq",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "C. Bufford struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "ndqc0h3j170spypq",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 27
+    },
+    {
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 3,
+      "kind": "inning_summary",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
+      "scoring_play": false,
+      "seq": 28,
+      "summary": {
+        "E": 0,
+        "H": 1,
+        "LOB": 1,
+        "R": 0
+      }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "L. Beard struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "vui2grvaoogibo28",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 29
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "X. Casserill",
+        "player_id": "n1g3t4whz1ke0muf",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "X. Casserill flied out to rf.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "n1g3t4whz1ke0muf",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 30
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Levari",
+        "player_id": "m3la5solkouolx72",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "K. Levari lined out to 2b.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "m3la5solkouolx72",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 31
+    },
+    {
+      "batting_team": "93ghf5gj458jgt7g",
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 4,
+      "kind": "inning_summary",
+      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
+      "scoring_play": false,
+      "seq": 32,
+      "summary": {
+        "E": 0,
+        "H": 0,
+        "LOB": 0,
+        "R": 0
+      }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "N. Leehey",
+        "player_id": "ctm99vma4pub5ygl",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "N. Leehey walked.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "walk"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "advance",
+          "from": 0,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 33
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Buggs",
+        "player_id": "rqibaab795yyg29r",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "D. Buggs singled to pitcher.",
+      "outcome": {
+        "fielders": [],
+        "location": "pitcher",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 34
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 0,
+        "outs_before": 0,
+        "runs_on_play": 0
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "runner_event",
+      "narrative": "D. Buggs advanced to second on a wild pitch.",
+      "runners": [
+        {
+          "cause": "wild_pitch",
+          "from": 1,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 35
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "010|0",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "P. Monteith",
+        "player_id": "b8zstqntejn7kuv8",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "P. Monteith struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "b8zstqntejn7kuv8",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 36
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "010|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 1,
         "runs_on_play": 0
       },
       "batting_team": "zgzmksngghvq54yy",
@@ -673,7 +2299,139 @@
         }
       ],
       "scoring_play": false,
-      "seq": 10
+      "seq": 37
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "001|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Cobb, Jr",
+        "player_id": "cfetr828oix8pp6g",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "Cobb, Jr grounded out to 2b, RBI; D. Buggs scored.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 38
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Santos",
+        "player_id": "4woeenyn10mjj560",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 4,
+      "kind": "plate_appearance",
+      "narrative": "E. Santos flied out to rf.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 39
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -683,13 +2441,263 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 2 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 11,
+      "seq": 40,
       "summary": {
         "E": 0,
         "H": 2,
         "LOB": 0,
         "R": 3
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Liniak",
+        "player_id": "9m10xvuvf3o8hg1f",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "K. Liniak singled to left field.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 41
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 2,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "G. Howell",
+        "player_id": "9vmpqa5bj8u8rq45",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "G. Howell grounded into double play 2b to ss to 1b; K. Liniak out on the play.",
+      "outcome": {
+        "fielders": [
+          "2b",
+          "ss",
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "grounded_into_double_play"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9vmpqa5bj8u8rq45",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 1,
+          "out": true,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 42
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Manzo",
+        "player_id": "1ez1bfmgg2fguiyu",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "E. Manzo reached first on an error by 1b.",
+      "outcome": {
+        "fielders": [
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [
+          "error"
+        ],
+        "outs_recorded": 0,
+        "type": "reached_on_error"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "error",
+          "from": 0,
+          "out": false,
+          "player_id": "1ez1bfmgg2fguiyu",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 43
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "A. Barranca",
+        "player_id": "o7yhvm7622kxgs3m",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "A. Barranca struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "o7yhvm7622kxgs3m",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 44
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -699,7 +2707,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 12,
+      "seq": 45,
       "summary": {
         "E": 1,
         "H": 1,
@@ -715,14 +2723,194 @@
       "kind": "substitution",
       "narrative": "N. Owen to p for T. Bothwell.",
       "scoring_play": false,
-      "seq": 13,
+      "seq": 46,
       "substitution": {
-        "after_event_seq": 12,
+        "after_event_seq": 45,
         "kind": "pitching",
         "player_in": "3k7ysfgsjmtc8kqq",
         "player_out": "z7vqsp4wka40666m",
         "slot": null
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Harris IV",
+        "player_id": "vkeltex4ceuf8kjs",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "Harris IV grounded out to ss.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "3k7ysfgsjmtc8kqq",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 47
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "C. Bufford",
+        "player_id": "ndqc0h3j170spypq",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "C. Bufford popped up to rf.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "3k7ysfgsjmtc8kqq",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "ndqc0h3j170spypq",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 48
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "R. Pierce",
+        "player_id": "uw2qjvqi611w450j",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "R. Pierce grounded out to 3b.",
+      "outcome": {
+        "fielders": [
+          "3b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "3k7ysfgsjmtc8kqq",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 49
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -732,13 +2920,193 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 14,
+      "seq": 50,
       "summary": {
         "E": 0,
         "H": 0,
         "LOB": 0,
         "R": 0
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "J. Mabry",
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "J. Mabry flied out to cf.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "33n032zzxvy70gh9",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 51
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "T. Clarkson",
+        "player_id": "11a5p1fuq8hjx1cv",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "T. Clarkson lined out to lf.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "11a5p1fuq8hjx1cv",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 52
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "L. Beard grounded out to ss.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "vui2grvaoogibo28",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 53
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -748,7 +3116,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 15,
+      "seq": 54,
       "summary": {
         "E": 0,
         "H": 0,
@@ -764,9 +3132,9 @@
       "kind": "substitution",
       "narrative": "D. Pratt to p for N. Owen.",
       "scoring_play": false,
-      "seq": 16,
+      "seq": 55,
       "substitution": {
-        "after_event_seq": 15,
+        "after_event_seq": 54,
         "kind": "pitching",
         "player_in": "022ejfb0u8jqfybm",
         "player_out": "3k7ysfgsjmtc8kqq",
@@ -778,8 +3146,8 @@
         "away_score_before": 0,
         "base_out_state": "000|0",
         "bases_after": [
-          false,
           true,
+          false,
           false
         ],
         "bases_before": [
@@ -787,9 +3155,209 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 3,
         "outs_after": 0,
         "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "N. Leehey",
+        "player_id": "ctm99vma4pub5ygl",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "N. Leehey singled to center field.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "022ejfb0u8jqfybm",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 56
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Tatum",
+        "player_id": "8phcki62wnpcaou7",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "D. Tatum reached on a fielder's choice; N. Leehey advanced to second on an error by ss.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "022ejfb0u8jqfybm",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "8phcki62wnpcaou7",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "error",
+          "from": 1,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 57
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|0",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Buggs",
+        "player_id": "rqibaab795yyg29r",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "D. Buggs reached on a fielder's choice; D. Tatum out at second 2b to ss; N. Leehey advanced to third.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "022ejfb0u8jqfybm",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "force_out",
+          "from": 1,
+          "out": true,
+          "player_id": "8phcki62wnpcaou7",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 58
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "101|1",
+        "bases_after": [
+          false,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          false,
+          true
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 1,
         "runs_on_play": 0
       },
       "batting_team": "zgzmksngghvq54yy",
@@ -801,7 +3369,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "rqibaab795yyg29r",
           "scored": false,
@@ -809,7 +3377,135 @@
         }
       ],
       "scoring_play": false,
-      "seq": 17
+      "seq": 59
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "011|1",
+        "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "P. Monteith",
+        "player_id": "b8zstqntejn7kuv8",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "P. Monteith walked.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "walk"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "022ejfb0u8jqfybm",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "advance",
+          "from": 0,
+          "out": false,
+          "player_id": "b8zstqntejn7kuv8",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 60
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "111|1",
+        "bases_after": [
+          false,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Cobb, Jr",
+        "player_id": "cfetr828oix8pp6g",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "Cobb, Jr grounded into double play 2b to ss to 1b; P. Monteith out on the play.",
+      "outcome": {
+        "fielders": [
+          "2b",
+          "ss",
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "grounded_into_double_play"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "022ejfb0u8jqfybm",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 1,
+          "out": true,
+          "player_id": "b8zstqntejn7kuv8",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 61
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -819,13 +3515,191 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 18,
+      "seq": 62,
       "summary": {
         "E": 1,
         "H": 1,
         "LOB": 2,
         "R": 0
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "X. Casserill",
+        "player_id": "n1g3t4whz1ke0muf",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "X. Casserill flied out to lf.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "n1g3t4whz1ke0muf",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 63
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Levari",
+        "player_id": "m3la5solkouolx72",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "K. Levari flied out to cf.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "flyout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "m3la5solkouolx72",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 64
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Liniak",
+        "player_id": "9m10xvuvf3o8hg1f",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "K. Liniak struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 65
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -835,7 +3709,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 19,
+      "seq": 66,
       "summary": {
         "E": 0,
         "H": 0,
@@ -851,14 +3725,494 @@
       "kind": "substitution",
       "narrative": "J. Hasty to p for D. Pratt.",
       "scoring_play": false,
-      "seq": 20,
+      "seq": 67,
       "substitution": {
-        "after_event_seq": 19,
+        "after_event_seq": 66,
         "kind": "pitching",
         "player_in": "ntczqf48tuaih7y0",
         "player_out": "022ejfb0u8jqfybm",
         "slot": null
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Santos",
+        "player_id": "4woeenyn10mjj560",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "E. Santos singled to right field.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": "right field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 68
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|0",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Harris IV",
+        "player_id": "vkeltex4ceuf8kjs",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "Harris IV singled to left field; E. Santos advanced to second.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 69
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|0",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "C. Bufford",
+        "player_id": "ndqc0h3j170spypq",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "C. Bufford singled to right field, RBI; Harris IV advanced to second; E. Santos scored.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": "right field",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "ndqc0h3j170spypq",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 70
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|0",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 4,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "R. Pierce",
+        "player_id": "uw2qjvqi611w450j",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "R. Pierce lined out to cf.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 71
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|1",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "N. Leehey",
+        "player_id": "ctm99vma4pub5ygl",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "N. Leehey reached on a fielder's choice; C. Bufford out at second ss to 2b; Harris IV advanced to third.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "force_out",
+          "from": 1,
+          "out": true,
+          "player_id": "ndqc0h3j170spypq",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "vkeltex4ceuf8kjs",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 72
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "101|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          true
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "D. Tatum",
+        "player_id": "8phcki62wnpcaou7",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "D. Tatum singled to left field, RBI; N. Leehey advanced to second; Harris IV scored.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "8phcki62wnpcaou7",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "vkeltex4ceuf8kjs",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 73
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Buggs",
+        "player_id": "rqibaab795yyg29r",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "D. Buggs struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ntczqf48tuaih7y0",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 74
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -868,13 +4222,329 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 4 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 21,
+      "seq": 75,
       "summary": {
         "E": 0,
         "H": 4,
         "LOB": 2,
         "R": 2
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "G. Howell",
+        "player_id": "9vmpqa5bj8u8rq45",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "G. Howell struck out looking.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_looking"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9vmpqa5bj8u8rq45",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 76
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "J. Lynch",
+        "player_id": "xnrud4czc7dqzl8h",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "J. Lynch singled to center field.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "xnrud4czc7dqzl8h",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 77
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "A. Barranca",
+        "player_id": "o7yhvm7622kxgs3m",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "A. Barranca walked; J. Lynch advanced to second.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "walk"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "advance",
+          "from": 0,
+          "out": false,
+          "player_id": "o7yhvm7622kxgs3m",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "xnrud4czc7dqzl8h",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 78
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "J. Mabry",
+        "player_id": "33n032zzxvy70gh9",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "J. Mabry struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "33n032zzxvy70gh9",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 79
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "T. Clarkson",
+        "player_id": "11a5p1fuq8hjx1cv",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "T. Clarkson hit by pitch; A. Barranca advanced to second; J. Lynch advanced to third.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "hit_by_pitch"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "y93tig5ow0mslgob",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "advance",
+          "from": 0,
+          "out": false,
+          "player_id": "11a5p1fuq8hjx1cv",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "o7yhvm7622kxgs3m",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "xnrud4czc7dqzl8h",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 80
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -884,14 +4554,74 @@
       "kind": "substitution",
       "narrative": "C. Franzen to p for L. Short.",
       "scoring_play": false,
-      "seq": 22,
+      "seq": 81,
       "substitution": {
-        "after_event_seq": 21,
+        "after_event_seq": 80,
         "kind": "pitching",
         "player_in": "6c0kdp98jaqljb7a",
         "player_out": "y93tig5ow0mslgob",
         "slot": null
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "111|2",
+        "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 5,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "X. Casserill",
+        "player_id": "n1g3t4whz1ke0muf",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "X. Casserill grounded out to ss.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "6c0kdp98jaqljb7a",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "n1g3t4whz1ke0muf",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 82
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -901,7 +4631,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 23,
+      "seq": 83,
       "summary": {
         "E": 0,
         "H": 2,
@@ -917,14 +4647,446 @@
       "kind": "substitution",
       "narrative": "N. Cole to p for J. Hasty.",
       "scoring_play": false,
-      "seq": 24,
+      "seq": 84,
       "substitution": {
-        "after_event_seq": 23,
+        "after_event_seq": 83,
         "kind": "pitching",
         "player_in": "e4scjrueax679wk9",
         "player_out": "ntczqf48tuaih7y0",
         "slot": null
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "P. Monteith",
+        "player_id": "b8zstqntejn7kuv8",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "P. Monteith grounded out to 2b.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "b8zstqntejn7kuv8",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 85
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Cobb, Jr",
+        "player_id": "cfetr828oix8pp6g",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Cobb, Jr singled to shortstop.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 86
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Santos",
+        "player_id": "4woeenyn10mjj560",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "E. Santos singled to center field; Cobb, Jr advanced to second.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "4woeenyn10mjj560",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "cfetr828oix8pp6g",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 87
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "C. Bufford",
+        "player_id": "ndqc0h3j170spypq",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "C. Bufford struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "ndqc0h3j170spypq",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 88
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "R. Pierce",
+        "player_id": "uw2qjvqi611w450j",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "R. Pierce singled to left field.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 89
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "N. Leehey",
+        "player_id": "ctm99vma4pub5ygl",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "N. Leehey singled to center field; R. Pierce advanced to second.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "ctm99vma4pub5ygl",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "uw2qjvqi611w450j",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 90
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Buggs",
+        "player_id": "rqibaab795yyg29r",
+        "resolved": true
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "count": null,
+      "fielding_team": "93ghf5gj458jgt7g",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "D. Buggs struck out swinging.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "e4scjrueax679wk9",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 91
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -934,7 +5096,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 6 Runs, 6 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 25,
+      "seq": 92,
       "summary": {
         "E": 0,
         "H": 6,
@@ -950,14 +5112,204 @@
       "kind": "substitution",
       "narrative": "G. Tanner to p for C. Franzen.",
       "scoring_play": false,
-      "seq": 26,
+      "seq": 93,
       "substitution": {
-        "after_event_seq": 25,
+        "after_event_seq": 92,
         "kind": "pitching",
         "player_in": "ah5xs6ri7rw1as3k",
         "player_out": "6c0kdp98jaqljb7a",
         "slot": null
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Levari",
+        "player_id": "m3la5solkouolx72",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "K. Levari grounded out to ss.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ah5xs6ri7rw1as3k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "m3la5solkouolx72",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 94
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "000|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "K. Liniak",
+        "player_id": "9m10xvuvf3o8hg1f",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "K. Liniak singled to center field.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ah5xs6ri7rw1as3k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 95
+    },
+    {
+      "_derived": {
+        "away_score_before": 0,
+        "base_out_state": "100|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 3,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "G. Howell",
+        "player_id": "9vmpqa5bj8u8rq45",
+        "resolved": true
+      },
+      "batting_team": "93ghf5gj458jgt7g",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "G. Howell grounded into double play ss to 2b to 1b; K. Liniak out on the play.",
+      "outcome": {
+        "fielders": [
+          "ss",
+          "2b",
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "grounded_into_double_play"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ah5xs6ri7rw1as3k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9vmpqa5bj8u8rq45",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 1,
+          "out": true,
+          "player_id": "9m10xvuvf3o8hg1f",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 96
     },
     {
       "batting_team": "93ghf5gj458jgt7g",
@@ -967,7 +5319,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 27,
+      "seq": 97,
       "summary": {
         "E": 0,
         "H": 1,
@@ -1057,28 +5409,28 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 12,
+          "after_event_seq": 45,
           "kind": "pitching",
           "player_in": "3k7ysfgsjmtc8kqq",
           "player_out": "z7vqsp4wka40666m",
           "slot": null
         },
         {
-          "after_event_seq": 15,
+          "after_event_seq": 54,
           "kind": "pitching",
           "player_in": "022ejfb0u8jqfybm",
           "player_out": "3k7ysfgsjmtc8kqq",
           "slot": null
         },
         {
-          "after_event_seq": 19,
+          "after_event_seq": 66,
           "kind": "pitching",
           "player_in": "ntczqf48tuaih7y0",
           "player_out": "022ejfb0u8jqfybm",
           "slot": null
         },
         {
-          "after_event_seq": 23,
+          "after_event_seq": 83,
           "kind": "pitching",
           "player_in": "e4scjrueax679wk9",
           "player_out": "ntczqf48tuaih7y0",
@@ -1127,14 +5479,14 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 21,
+          "after_event_seq": 80,
           "kind": "pitching",
           "player_in": "6c0kdp98jaqljb7a",
           "player_out": "y93tig5ow0mslgob",
           "slot": null
         },
         {
-          "after_event_seq": 25,
+          "after_event_seq": 92,
           "kind": "pitching",
           "player_in": "ah5xs6ri7rw1as3k",
           "player_out": "6c0kdp98jaqljb7a",
@@ -1147,42 +5499,31 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:28:22Z",
     "parse": {
-      "events_count": 28,
+      "events_count": 98,
       "replayable": false,
-      "unparsed_count": 78,
+      "unparsed_count": 8,
       "warnings": [
-        "[linescore] linescore: away inning 1 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 2 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 3 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 4 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 5 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 6 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 7 has no folded events but oracle expects 0",
-        "[linescore] linescore: away inning 8 has no folded events but oracle expects 3",
-        "[linescore] linescore: away inning 9 has no folded events but oracle expects 0",
-        "[linescore] linescore: home inning 1 has no folded events but oracle expects 0",
-        "[linescore] linescore: home inning 2 computed 0 != oracle 4",
-        "[linescore] linescore: home inning 4 computed 0 != oracle 3",
-        "[linescore] linescore: home inning 5 has no folded events but oracle expects 0",
-        "[linescore] linescore: home inning 7 has no folded events but oracle expects 2",
-        "[linescore] linescore: home inning 8 has no folded events but oracle expects 6",
+        "[linescore] linescore: away inning 8 computed 0 != oracle 3",
+        "[linescore] linescore: home inning 2 computed 2 != oracle 4",
+        "[linescore] linescore: home inning 4 computed 1 != oracle 3",
+        "[linescore] linescore: home inning 8 computed 0 != oracle 6",
         "[linescore] linescore: computed away final R 0 != oracle total 3",
-        "[linescore] linescore: computed home final R 0 != oracle total 15",
-        "[outs_per_half] outs_per_half: inning 2 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 3 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 4 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 6 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
+        "[linescore] linescore: computed home final R 5 != oracle total 15",
+        "[outs_per_half] outs_per_half: inning 3 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
+        "[outs_per_half] outs_per_half: inning 3 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 2 bottom folded LOB 1 != inning_summary LOB 0",
-        "[lob] lob: inning 4 bottom folded LOB 1 != inning_summary LOB 0",
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 3 runner uw2qjvqi611w450j advances from base 3 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 6 runner 4woeenyn10mjj560 advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 9 runner rqibaab795yyg29r advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 17 runner rqibaab795yyg29r advances from base 2 which was not occupied at event start"
+        "[lob] lob: inning 8 top folded LOB 3 != inning_summary LOB 1",
+        "[lob] lob: inning 8 bottom folded LOB 2 != inning_summary LOB 0",
+        "[pa_counts] pa_counts: player vui2grvaoogibo28 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
+        "[pa_counts] pa_counts: player 33n032zzxvy70gh9 events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0)",
+        "[pa_counts] pa_counts: player vkeltex4ceuf8kjs events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
+        "[pa_counts] pa_counts: player uw2qjvqi611w450j events PA 4 != box-implied PA 5 (AB=4 BB=0 HBP=1 SAC=0)",
+        "[pa_counts] pa_counts: player 8phcki62wnpcaou7 events PA 3 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
+        "[pa_counts] pa_counts: player b8zstqntejn7kuv8 events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)"
       ]
     },
-    "parsed_at": "2026-07-12T17:40:01Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:09:55Z",
+    "parser_version": "0.2.0",
     "source_sha256": "e9d582e7fdf6c0067d8032e85564c257dc5e69d79f17931b7b07f41686cf7e49",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250622_4u3x.xml"
   },
@@ -1458,7 +5799,7 @@
       "team_id": "93ghf5gj458jgt7g"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -1479,165 +5820,12 @@
   "unparsed": [
     {
       "location": {
-        "half": "top",
-        "inning": 1,
-        "line_index": 0
-      },
-      "raw": "T. Clarkson struck out swinging.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'T. Clarkson struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 1,
-        "line_index": 1
-      },
-      "raw": "L. Beard singled to center field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'L. Beard singled to center field'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 1,
-        "line_index": 2
-      },
-      "raw": "X. Casserill struck out looking.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'X. Casserill struck out looking'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 1,
-        "line_index": 3
-      },
-      "raw": "K. Levari struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Levari struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 1,
-        "line_index": 0
-      },
-      "raw": "Cobb, Jr popped up to lf.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cobb, Jr popped up to lf'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 1,
-        "line_index": 1
-      },
-      "raw": "E. Santos popped up to 2b.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Santos popped up to 2b'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 1,
-        "line_index": 2
-      },
-      "raw": "Harris IV struck out looking.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Harris IV struck out looking'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 2,
-        "line_index": 0
-      },
-      "raw": "K. Liniak struck out looking.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Liniak struck out looking'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 2,
-        "line_index": 1
-      },
-      "raw": "G. Howell popped up to p.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'G. Howell popped up to p'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 2,
-        "line_index": 2
-      },
-      "raw": "E. Manzo struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Manzo struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 0
-      },
-      "raw": "C. Bufford homered to left field, RBI.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'C. Bufford homered to left field, RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 1
-      },
-      "raw": "R. Pierce hit by pitch.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'R. Pierce hit by pitch'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 2
-      },
-      "raw": "N. Leehey grounded out to 2b; R. Pierce advanced to second.\n                                                                                                                                                                                    \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'N. Leehey grounded out to 2b'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 3
-      },
-      "raw": "D. Tatum lined out to 2b.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Tatum lined out to 2b'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 5
-      },
-      "raw": "D. Buggs singled to left field, RBI; R. Pierce scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Buggs singled to left field, RBI'"
-    },
-    {
-      "location": {
         "half": "bottom",
         "inning": 2,
         "line_index": 6
       },
       "raw": "P. Monteith homered to left field, 2 RBI; D. Buggs scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'P. Monteith homered to left field, 2 RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 7
-      },
-      "raw": "Cobb, Jr flied out to cf.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cobb, Jr flied out to cf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 3,
-        "line_index": 0
-      },
-      "raw": "A. Barranca struck out swinging.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'A. Barranca struck out swinging'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'P. Monteith homered to left field, 2 RBI'"
     },
     {
       "location": {
@@ -1650,84 +5838,12 @@
     },
     {
       "location": {
-        "half": "top",
-        "inning": 3,
-        "line_index": 2
-      },
-      "raw": "T. Clarkson struck out looking.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'T. Clarkson struck out looking'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 3,
-        "line_index": 0
-      },
-      "raw": "E. Santos singled to center field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Santos singled to center field'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 3,
-        "line_index": 2
-      },
-      "raw": "Harris IV grounded out to 1b unassisted; E. Santos advanced to third.\n                                                                                                                                                                                    \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Harris IV grounded out to 1b unassisted'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 3,
-        "line_index": 3
-      },
-      "raw": "C. Bufford struck out swinging.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'C. Bufford struck out swinging'"
-    },
-    {
-      "location": {
         "half": "bottom",
         "inning": 3,
         "line_index": 4
       },
       "raw": "R. Pierce fouled out to 2b.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'R. Pierce fouled out to 2b'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 4,
-        "line_index": 0
-      },
-      "raw": "L. Beard struck out swinging.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'L. Beard struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 4,
-        "line_index": 1
-      },
-      "raw": "X. Casserill flied out to rf.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'X. Casserill flied out to rf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 4,
-        "line_index": 2
-      },
-      "raw": "K. Levari lined out to 2b.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Levari lined out to 2b'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 4,
-        "line_index": 0
-      },
-      "raw": "N. Leehey walked.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'N. Leehey walked'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'R. Pierce fouled out to 2b'"
     },
     {
       "location": {
@@ -1736,79 +5852,7 @@
         "line_index": 1
       },
       "raw": "D. Tatum homered to left field, 2 RBI; N. Leehey scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Tatum homered to left field, 2 RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 4,
-        "line_index": 2
-      },
-      "raw": "D. Buggs singled to pitcher.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Buggs singled to pitcher'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 4,
-        "line_index": 4
-      },
-      "raw": "P. Monteith struck out swinging.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'P. Monteith struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 4,
-        "line_index": 6
-      },
-      "raw": "Cobb, Jr grounded out to 2b, RBI; D. Buggs scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cobb, Jr grounded out to 2b, RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 4,
-        "line_index": 7
-      },
-      "raw": "E. Santos flied out to rf.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Santos flied out to rf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 0
-      },
-      "raw": "K. Liniak singled to left field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Liniak singled to left field'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 1
-      },
-      "raw": "G. Howell grounded into double play 2b to ss to 1b; K. Liniak out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'G. Howell grounded into double play 2b to ss to 1b'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 2
-      },
-      "raw": "E. Manzo reached first on an error by 1b.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Manzo reached first on an error by 1b'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 3
-      },
-      "raw": "A. Barranca struck out looking.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'A. Barranca struck out looking'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'D. Tatum homered to left field, 2 RBI'"
     },
     {
       "location": {
@@ -1817,241 +5861,7 @@
         "line_index": 1
       },
       "raw": "J. Lynch to 3b for E. Manzo.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'J. Lynch to 3b for E. Manzo'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 5,
-        "line_index": 2
-      },
-      "raw": "Harris IV grounded out to ss.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Harris IV grounded out to ss'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 5,
-        "line_index": 3
-      },
-      "raw": "C. Bufford popped up to rf.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'C. Bufford popped up to rf'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 5,
-        "line_index": 4
-      },
-      "raw": "R. Pierce grounded out to 3b.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'R. Pierce grounded out to 3b'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 6,
-        "line_index": 0
-      },
-      "raw": "J. Mabry flied out to cf.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'J. Mabry flied out to cf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 6,
-        "line_index": 1
-      },
-      "raw": "T. Clarkson lined out to lf.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'T. Clarkson lined out to lf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 6,
-        "line_index": 2
-      },
-      "raw": "L. Beard grounded out to ss.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'L. Beard grounded out to ss'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 1
-      },
-      "raw": "N. Leehey singled to center field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'N. Leehey singled to center field'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 2
-      },
-      "raw": "D. Tatum reached on a fielder's choice; N. Leehey advanced to second on an error by ss.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: \"D. Tatum reached on a fielder's choice\""
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 3
-      },
-      "raw": "D. Buggs reached on a fielder's choice; D. Tatum out at second 2b to ss; N. Leehey advanced to third.\n                                                                                                                                                                                                                                            \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: \"D. Buggs reached on a fielder's choice\""
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 5
-      },
-      "raw": "P. Monteith walked.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'P. Monteith walked'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 6
-      },
-      "raw": "Cobb, Jr grounded into double play 2b to ss to 1b; P. Monteith out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cobb, Jr grounded into double play 2b to ss to 1b'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 0
-      },
-      "raw": "X. Casserill flied out to lf.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'X. Casserill flied out to lf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 1
-      },
-      "raw": "K. Levari flied out to cf.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Levari flied out to cf'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 2
-      },
-      "raw": "K. Liniak struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Liniak struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 1
-      },
-      "raw": "E. Santos singled to right field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Santos singled to right field'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 2
-      },
-      "raw": "Harris IV singled to left field; E. Santos advanced to second.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Harris IV singled to left field'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 3
-      },
-      "raw": "C. Bufford singled to right field, RBI; Harris IV advanced to second; E. Santos scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'C. Bufford singled to right field, RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 4
-      },
-      "raw": "R. Pierce lined out to cf.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'R. Pierce lined out to cf'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 5
-      },
-      "raw": "N. Leehey reached on a fielder's choice; C. Bufford out at second ss to 2b; Harris IV advanced to third.\n                                                                                                                                                                                                                                            \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: \"N. Leehey reached on a fielder's choice\""
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 6
-      },
-      "raw": "D. Tatum singled to left field, RBI; N. Leehey advanced to second; Harris IV scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Tatum singled to left field, RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 7
-      },
-      "raw": "D. Buggs struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Buggs struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 0
-      },
-      "raw": "G. Howell struck out looking.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'G. Howell struck out looking'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 1
-      },
-      "raw": "J. Lynch singled to center field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'J. Lynch singled to center field'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 2
-      },
-      "raw": "A. Barranca walked; J. Lynch advanced to second.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'A. Barranca walked'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 3
-      },
-      "raw": "J. Mabry struck out swinging.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'J. Mabry struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 4
-      },
-      "raw": "T. Clarkson hit by pitch; A. Barranca advanced to second; J. Lynch advanced to third.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'T. Clarkson hit by pitch'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'J. Lynch to 3b for E. Manzo'"
     },
     {
       "location": {
@@ -2060,43 +5870,7 @@
         "line_index": 5
       },
       "raw": "L. Beard doubled to center field, 3 RBI; T. Clarkson scored; A. Barranca scored; J. Lynch scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'L. Beard doubled to center field, 3 RBI'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 7
-      },
-      "raw": "X. Casserill grounded out to ss.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'X. Casserill grounded out to ss'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 1
-      },
-      "raw": "P. Monteith grounded out to 2b.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'P. Monteith grounded out to 2b'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 2
-      },
-      "raw": "Cobb, Jr singled to shortstop.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Cobb, Jr singled to shortstop'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 3
-      },
-      "raw": "E. Santos singled to center field; Cobb, Jr advanced to second.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'E. Santos singled to center field'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'L. Beard doubled to center field, 3 RBI'"
     },
     {
       "location": {
@@ -2105,34 +5879,7 @@
         "line_index": 4
       },
       "raw": "Harris IV homered to left field, 3 RBI; E. Santos scored; Cobb, Jr scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'Harris IV homered to left field, 3 RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 5
-      },
-      "raw": "C. Bufford struck out swinging.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'C. Bufford struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 6
-      },
-      "raw": "R. Pierce singled to left field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'R. Pierce singled to left field'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 7
-      },
-      "raw": "N. Leehey singled to center field; R. Pierce advanced to second.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'N. Leehey singled to center field'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Harris IV homered to left field, 3 RBI'"
     },
     {
       "location": {
@@ -2141,43 +5888,7 @@
         "line_index": 8
       },
       "raw": "D. Tatum homered to left field, 3 RBI; N. Leehey scored; R. Pierce scored.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Tatum homered to left field, 3 RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 9
-      },
-      "raw": "D. Buggs struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Buggs struck out swinging'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 1
-      },
-      "raw": "K. Levari grounded out to ss.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Levari grounded out to ss'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "K. Liniak singled to center field.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'K. Liniak singled to center field'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 3
-      },
-      "raw": "G. Howell grounded into double play ss to 2b to 1b; K. Liniak out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'G. Howell grounded into double play ss to 2b to 1b'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'D. Tatum homered to left field, 3 RBI'"
     }
   ]
 }

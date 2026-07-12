@@ -4542,6 +4542,23 @@
       "seq": 79
     },
     {
+      "batting_team": "na6t5g8htwf89dsc",
+      "fielding_team": "fs5kcreudvyx5quq",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "substitution",
+      "narrative": "D. Collins pinch ran for J. Millan.",
+      "scoring_play": false,
+      "seq": 80,
+      "substitution": {
+        "after_event_seq": 79,
+        "kind": "offensive",
+        "player_in": "a4x9809wbva3u0yi",
+        "player_out": "iru12spt2m5gmc5n",
+        "slot": 7
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 0,
         "base_out_state": "110|0",
@@ -4616,7 +4633,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 80
+      "seq": 81
     },
     {
       "_derived": {
@@ -4679,7 +4696,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 81
+      "seq": 82
     },
     {
       "_derived": {
@@ -4742,7 +4759,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 82
+      "seq": 83
     },
     {
       "_derived": {
@@ -4803,7 +4820,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 83
+      "seq": 84
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -4813,7 +4830,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 0 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 84,
+      "seq": 85,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4829,9 +4846,9 @@
       "kind": "substitution",
       "narrative": "C. Housley to p for Davis Pratt.",
       "scoring_play": false,
-      "seq": 85,
+      "seq": 86,
       "substitution": {
-        "after_event_seq": 84,
+        "after_event_seq": 85,
         "kind": "pitching",
         "player_in": "zhcbjv7y3bqzgdps",
         "player_out": "kqw9wtceq4h1lzpw",
@@ -4899,7 +4916,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "_derived": {
@@ -4960,7 +4977,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 87
+      "seq": 88
     },
     {
       "_derived": {
@@ -4998,7 +5015,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "_derived": {
@@ -5069,7 +5086,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 89
+      "seq": 90
     },
     {
       "_derived": {
@@ -5130,7 +5147,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 91
     },
     {
       "batting_team": "fs5kcreudvyx5quq",
@@ -5140,7 +5157,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 91,
+      "seq": 92,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5285,7 +5302,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 84,
+          "after_event_seq": 79,
+          "kind": "offensive",
+          "player_in": "a4x9809wbva3u0yi",
+          "player_out": "iru12spt2m5gmc5n",
+          "slot": 7
+        },
+        {
+          "after_event_seq": 85,
           "kind": "pitching",
           "player_in": "zhcbjv7y3bqzgdps",
           "player_out": "kqw9wtceq4h1lzpw",
@@ -5298,9 +5322,9 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:40:43Z",
     "parse": {
-      "events_count": 92,
+      "events_count": 93,
       "replayable": false,
-      "unparsed_count": 7,
+      "unparsed_count": 6,
       "warnings": [
         "[linescore] linescore: home inning 3 computed 0 != oracle 2",
         "[linescore] linescore: home inning 4 computed 0 != oracle 2",
@@ -5312,8 +5336,8 @@
         "[pa_counts] pa_counts: player g2gfwgjmgw0wumz0 events PA 2 != box-implied PA 4 (AB=1 BB=2 HBP=1 SAC=0)"
       ]
     },
-    "parsed_at": "2026-07-12T15:49:38Z",
-    "parser_version": "0.1.0",
+    "parsed_at": "2026-07-12T22:11:24Z",
+    "parser_version": "0.2.0",
     "source_sha256": "db65673f5a2fe6c793d313c4f34bec76f10b6aca054b68715f24fbf0a4395517",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260704_fn0w.xml"
   },
@@ -5581,7 +5605,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -5625,7 +5649,7 @@
         "line_index": 0
       },
       "raw": "J.C. Coronado to p for K. Walker.",
-      "reason": "substitution names did not resolve uniquely on the fielding side: out='K. Walker' in='J.C. Coronado'"
+      "reason": "substitution names did not resolve uniquely on the away side: out='K. Walker' in='J.C. Coronado'"
     },
     {
       "location": {
@@ -5634,16 +5658,7 @@
         "line_index": 0
       },
       "raw": "R. Coronado to p for J.C. Coronado.",
-      "reason": "substitution names did not resolve uniquely on the fielding side: out='J.C. Coronado' in='R. Coronado'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 4
-      },
-      "raw": "D. Collins pinch ran for J. Millan.",
-      "reason": "no count-tail on primary clause, and clause did not match any runner rule either: 'D. Collins pinch ran for J. Millan'"
+      "reason": "substitution names did not resolve uniquely on the away side: out='J.C. Coronado' in='R. Coronado'"
     },
     {
       "location": {
@@ -5661,7 +5676,7 @@
         "line_index": 7
       },
       "raw": "E. Ross to p for R. Coronado.",
-      "reason": "substitution names did not resolve uniquely on the fielding side: out='R. Coronado' in='E. Ross'"
+      "reason": "substitution names did not resolve uniquely on the away side: out='R. Coronado' in='E. Ross'"
     }
   ]
 }
