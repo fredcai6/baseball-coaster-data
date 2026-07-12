@@ -155,3 +155,21 @@ def test_idempotency_key_is_hash_plus_parser_version():
 
 def test_idempotency_key_changes_with_different_html():
     assert parse.idempotency_key(FINAL_HTML) != parse.idempotency_key(FINAL_HTML + " ")
+
+
+# --- _last_name_token: narrative-name join tokenizer (Family 2) -------------
+
+
+def test_last_name_token_strips_trailing_comma_before_suffix():
+    # "Rojas, Jr" -> tokens ["Rojas,", "Jr"]: "Jr" is recognized as a
+    # trailing suffix, but the returned surname token must NOT retain the
+    # comma left dangling from the narrative's "Surname, Suffix" shape.
+    assert parse._last_name_token("Rojas, Jr") == "Rojas"
+
+
+def test_last_name_token_suffix_without_comma_unaffected():
+    assert parse._last_name_token("Patrick Roche Jr.") == "Roche"
+
+
+def test_last_name_token_plain_name_unaffected():
+    assert parse._last_name_token("J. McLaughli") == "McLaughli"

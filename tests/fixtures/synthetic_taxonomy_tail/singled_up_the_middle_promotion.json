@@ -1,0 +1,78 @@
+{
+  "description": "SYNTHETIC. Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for issue #30 gate g1's `singled` location-phrase extension: 'up the middle' (and, by the same new PRIMARY_RULES alternation, 'through the (left|right) side' and the bare no-location shape). NOT a whole fake game and NOT a games/** entry.",
+  "taxonomy_tail_shape": "single with an 'up the middle' location phrase (outcome_type 'single', same closed taxonomy value as the pre-existing 'to <loc>' shape) -- chosen for this fixture because the live sample game (game_20260709_h94w, 0 unparsed) has no line of this exact shape, so reparse_summary against the live sample shows a zero delta (see the g1 implementer result) and this is a genuine 'shape not in the sample' per PROMOTION_PROTOCOL.md step 4's second bullet.",
+  "live_corpus_provenance": "verbatim real line from games/2026/20260519_dpzk.json unparsed[] (pre-fix): 'Kyle Schmack singled up the middle (2-0 BB).' -- also occurs, same shape, in games/2026/20260604_427j.json, games/2026/20260623_6sc6.json, games/2026/20260630_59o0.json, and 133+ 'singled up the middle' / 'singled through the (left|right) side' lines across games/2024-2026 (many of those additionally lack a count-tail entirely, exercising this gate's Family 1 fix simultaneously -- see e.g. games/2024/20240521_7sf7.json 'B. Blackford singled up the middle.').",
+  "step_a_hypothetical_pre_rule_unparsed": {
+    "note": "Pre-fix, this line matched no PRIMARY_RULES row (the only `singled` row required 'to <loc>') and had a count-tail, so it fell through to the RUNNER_RULES-only path, which also does not match a primary-clause-shaped string -- build_events() routed it to unparsed[] with reason \"primary verb not recognized: 'Kyle Schmack singled up the middle'\" (reproduced by temporarily reverting the PRIMARY_RULES row edit).",
+    "raw": "Kyle Schmack singled up the middle (2-0 BB)."
+  },
+  "step_b_rule_now_in_closed_taxonomy": {
+    "module": "bc_pipeline.grammar",
+    "table": "PRIMARY_RULES",
+    "outcome_type": "single",
+    "regex": "^(?P<name>.+?) singled(?: to (?P<loc>[a-z][a-z ]*?)|(?P<middle> up the middle)| through the (?P<side>left|right) side)?(?:, (?P<mod>RBI))?$",
+    "extractor": "_x_single -- loc if present, else 'up the middle' if the middle branch matched, else '<side> side' if the side branch matched, else None (bare)"
+  },
+  "step_c_and_d_promoted_fixture": {
+    "synthetic_input": {
+      "player_table": "one synthetic away batter (syn:away:1, last_name Schmack) + one synthetic home player (syn:home:1, last_name Lee); see PROMOTION_PROTOCOL.md for the exact identity.PlayerTable construction",
+      "pbp_line": {
+        "inning": 1,
+        "half": "top",
+        "line_index": 0,
+        "text": "Kyle Schmack singled up the middle (2-0 BB).",
+        "is_strong": false
+      }
+    },
+    "build_events_output": {
+      "events": [
+        {
+          "seq": 0,
+          "inning": 1,
+          "half": "top",
+          "kind": "plate_appearance",
+          "batting_team": "syn:team:away",
+          "fielding_team": "syn:team:home",
+          "narrative": "Kyle Schmack singled up the middle (2-0 BB).",
+          "scoring_play": false,
+          "batter": {
+            "player_id": "syn:away:1",
+            "name_raw": "Kyle Schmack",
+            "resolved": true
+          },
+          "pitcher": {
+            "player_id": null,
+            "name_raw": null,
+            "resolved": false
+          },
+          "outcome": {
+            "type": "single",
+            "modifiers": [],
+            "fielders": [],
+            "outs_recorded": 0,
+            "location": "up the middle"
+          },
+          "count": {"balls": 2, "strikes": 0},
+          "pitches": "BB",
+          "runners": [
+            {
+              "player_id": "syn:away:1",
+              "from": 0,
+              "to": 1,
+              "cause": "batted_ball",
+              "out": false,
+              "scored": false
+            }
+          ]
+        }
+      ],
+      "unparsed": []
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"from bc_pipeline import identity, parse as parse_mod; away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'syn:away:1': identity.PlayerEntry(player_id='syn:away:1', name='Kyle Schmack', last_name='Schmack', team_id='syn:team:away', positions=['cf'])}); home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'syn:home:1': identity.PlayerEntry(player_id='syn:home:1', name='Jordan Lee', last_name='Lee', team_id='syn:team:home', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=1, half='top', line_index=0, text='Kyle Schmack singled up the middle (2-0 BB).', is_strong=False); print(parse_mod.build_events([line], player_table))\""
+  },
+  "sibling_shapes_covered_by_the_same_gate_not_separately_promoted_here": {
+    "singled_through_the_side": "'Garret Ostrander singled through the right side (2-2 BKFB).' -> outcome.location 'right side'; see tests/test_grammar.py test_singled_through_the_right_side / test_singled_through_the_left_side.",
+    "singled_bare": "'Kyle Schmack singled (0-0).' -> outcome.location null; see tests/test_grammar.py test_singled_bare_no_location.",
+    "count_tail_optional_family": "grammar-level only (parse.build_events crashes on PrimaryClause.count=None today -- see the g1 implementer result's reported blocker); see tests/test_grammar.py test_count_tail_optional_*."
+  }
+}

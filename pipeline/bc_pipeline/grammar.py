@@ -59,7 +59,7 @@ class PrimaryClause:
     fielders: List[str]
     location: Optional[str]
     modifiers: List[str]
-    count: Count
+    count: Optional[Count]
     pitches: Optional[str]
 
 
@@ -85,6 +85,17 @@ class InningSummary:
 class Substitution:
     player_in: str
     player_out: str
+    # One of the schema's closed `substitution.kind` enum values
+    # ("offensive", "defensive", "pitching") -- which side/role the
+    # substitution applies to. g5 (parse.py) currently resolves every
+    # substitution's names against the FIELDING side and hardcodes
+    # `kind: "pitching"` on the emitted event (its only STANDALONE_RULES row
+    # used to be the "<in> to p for <out>" pitching-change shape, so that was
+    # always correct); wiring g5 to read this field instead, and to resolve
+    # an "offensive" substitution's names against the BATTING side, is a
+    # separate gate's job (identity/name-resolution call sites), not this
+    # module's -- this field only carries the honest answer forward.
+    kind: str
 
 
 @dataclass(frozen=True)
@@ -138,6 +149,25 @@ _CAUSEPHRASE = {
     "balk": "balk",
 }
 _DEST_ALT = r"(?:second|third|home)"
+
+# Any run of plain spaces/tabs/carriage-returns/newlines, for the MATCHING
+# path only (see _normalize_ws).
+_WS_RUN_RE = re.compile(r"[ \t\r\n]+")
+
+
+def _normalize_ws(text: str) -> str:
+    """Collapse any run of whitespace/tab/newline characters to a single
+    space and strip the ends, for use ONLY on the text fed to a rule table's
+    ``fullmatch`` -- never on the verbatim line stored in ``GrammarMiss.raw``
+    or surfaced downstream as the event's narrative (that always comes from
+    the caller's own untouched copy of the original line, never from this
+    module's internal working copy). StatCrew renders trailing "(N out)"
+    trailers (and, on some rows, the inter-clause boundary) via CSS layout
+    padding rather than narrative prose, so a run of tabs/newlines there is
+    layout noise, not meaningful content -- collapsing it to one space never
+    changes what a rule table's regex needs to see.
+    """
+    return _WS_RUN_RE.sub(" ", text).strip()
 
 
 def _modifiers_from_tail(tail: str) -> List[str]:
@@ -218,8 +248,16 @@ def _x_reached_on_error(m: re.Match):
 
 
 def _x_single(m: re.Match):
+    if m.group("loc") is not None:
+        loc = m.group("loc")
+    elif m.group("middle") is not None:
+        loc = "up the middle"
+    elif m.group("side") is not None:
+        loc = f"{m.group('side')} side"
+    else:
+        loc = None
     mods = [m.group("mod")] if m.group("mod") else []
-    return (m.group("name"), [], m.group("loc"), mods)
+    return (m.group("name"), [], loc, mods)
 
 
 def _x_double(m: re.Match):
@@ -319,8 +357,11 @@ PRIMARY_RULES: List[PrimaryRule] = [
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) singled to (?P<loc>[a-z][a-z ]*?)"
-            r"(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) singled(?:"
+            r" to (?P<loc>[a-z][a-z ]*?)"
+            r"|(?P<middle> up the middle)"
+            r"| through the (?P<side>left|right) side"
+            r")?(?:, (?P<mod>RBI))?$"
         ),
         "single",
         _x_single,
@@ -633,12 +674,22 @@ RUNNER_RULES: List[RunnerRule] = [
 
 # ---------------------------------------------------------------------------
 # STANDALONE_RULES -- whole-line shapes that are neither a PA nor a bare
-# sequence of runner-movement clauses: an inning-recap line and a defensive
-# substitution line. (Whole-line runner-movement-only shapes -- "X stole
-# second.", "X Failed pickoff attempt.", "X advanced to Y on a wild pitch."
-# and multi-clause variants thereof -- fall out of the SAME RUNNER_RULES
-# table via the no-count-tail fallback path below; they need no separate
-# regex here.)
+# sequence of runner-movement clauses: an inning-recap line, a pitching
+# substitution line ("<in> to p for <out>."), and a pinch-run substitution
+# line ("<in> pinch ran for <out>."). (Whole-line runner-movement-only shapes
+# -- "X stole second.", "X Failed pickoff attempt.", "X advanced to Y on a
+# wild pitch." and multi-clause variants thereof -- fall out of the SAME
+# RUNNER_RULES table via the no-count-tail fallback path below; they need no
+# separate regex here.)
+#
+# NOT covered here: the bare "<name> to dh." DH-slot-entry shape (no outgoing
+# player named in the text at all) -- the schema's substitution shape
+# requires a non-nullable `player_out`, and this module has no honest way to
+# supply one from this single line alone (see the module's stop-condition
+# note near BATTER_OUTCOME_CAUSE... actually see g1's implementer result: a
+# reported blocker, not implemented). The "<in> to dh for <out>." variant
+# (both names present) DOES fit this table's shape but was not requested by
+# this gate's authorized scope, so it is intentionally left unimplemented too.
 # ---------------------------------------------------------------------------
 
 StandaloneBuilder = Callable[[re.Match, Optional[int]], ClauseGroup]
@@ -649,6 +700,7 @@ _INNING_SUMMARY_RE = re.compile(
     r"(?P<e>\d+)\s*Errors\s*,\s*(?P<lob>\d+)\s*LOB\s*$"
 )
 _SUBSTITUTION_RE = re.compile(r"^(?P<in>.+?) to p for (?P<out>.+?)\.?$")
+_PINCH_RUN_RE = re.compile(r"^(?P<in>.+?) pinch ran for (?P<out>.+?)\.?$")
 
 
 def _build_inning_summary(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
@@ -668,7 +720,17 @@ def _build_substitution(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
     return ClauseGroup(
         kind="substitution",
         substitution=Substitution(
-            player_in=m.group("in"), player_out=m.group("out")
+            player_in=m.group("in"), player_out=m.group("out"), kind="pitching"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
+def _build_pinch_run(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("in"), player_out=m.group("out"), kind="offensive"
         ),
         trailing_outs=trailing_outs,
     )
@@ -677,6 +739,7 @@ def _build_substitution(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
 STANDALONE_RULES: List[StandaloneRule] = [
     (_INNING_SUMMARY_RE, None, _build_inning_summary),
     (_SUBSTITUTION_RE, None, _build_substitution),
+    (_PINCH_RUN_RE, None, _build_pinch_run),
 ]
 
 
@@ -713,6 +776,42 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
 # ---------------------------------------------------------------------------
 
 
+def _match_runner_clauses(
+    clauses: List[str], raw_line: str
+) -> Union[List[RunnerMovement], GrammarMiss]:
+    """Match each of ``clauses`` (untrimmed clause strings) against
+    RUNNER_RULES in order, in a single pass. Returns the flattened list of
+    ``RunnerMovement`` on full success, or a ``GrammarMiss`` (never raises)
+    citing the first clause that matches no row.
+
+    Shared by both the runner-only standalone path and the trailing runner
+    clauses of a plate appearance -- one table, one matching loop, applied to
+    whichever clause list the caller has.
+    """
+    runners: List[RunnerMovement] = []
+    for clause in clauses:
+        clause = clause.strip()
+        if not clause:
+            continue
+        matched = False
+        for regex, _causes, builder in RUNNER_RULES:
+            rm = regex.fullmatch(clause)
+            if rm:
+                result = builder(rm)
+                if isinstance(result, list):
+                    runners.extend(result)
+                else:
+                    runners.append(result)
+                matched = True
+                break
+        if not matched:
+            return GrammarMiss(
+                raw=raw_line,
+                reason=f"runner clause not recognized: {clause!r}",
+            )
+    return runners
+
+
 def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
 
@@ -728,7 +827,12 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
         body = line
         trailing_outs = None
 
-    stripped = body.strip()
+    # Whitespace/tab-run normalization is for THIS matching path only --
+    # `raw_line` (stored verbatim on a GrammarMiss, and never touched again
+    # here) is the caller's own untouched copy; the narrative shown
+    # downstream always comes from the caller's original line, never from
+    # this normalized working copy.
+    stripped = _normalize_ws(body)
 
     for regex, _label, builder in STANDALONE_RULES:
         sm = regex.fullmatch(stripped)
@@ -744,37 +848,57 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
 
     tail_m = _COUNT_TAIL_RE.fullmatch(primary_raw)
     if not tail_m:
-        # No PA count-tail on the first clause -- this is not a plate
-        # appearance at all, but it may still be a standalone runner-event
-        # line (e.g. "X advanced to second on a balk.", "X stole second.",
-        # "X Failed pickoff attempt.", or several such clauses chained with
-        # ';', e.g. three runners advancing on one wild pitch). Every part
-        # must match a RUNNER_RULES row for this to count -- otherwise it's
-        # a genuine miss.
-        runner_only: List[RunnerMovement] = []
-        for clause in parts:
-            clause = clause.strip()
-            if not clause:
-                continue
-            matched = False
-            for regex, _causes, builder in RUNNER_RULES:
-                rm = regex.fullmatch(clause)
-                if rm:
-                    result = builder(rm)
-                    if isinstance(result, list):
-                        runner_only.extend(result)
-                    else:
-                        runner_only.append(result)
-                    matched = True
-                    break
-            if not matched:
-                return GrammarMiss(
-                    raw=raw_line,
-                    reason=(
-                        "no count-tail on primary clause, and clause did not "
-                        f"match any runner rule either: {clause!r}"
-                    ),
+        # No PA count-tail on the first clause. Tried in order:
+        #  (a) the primary clause is still a recognized PA verb, just with no
+        #      observed count at all -- StatCrew omits the WHOLE count-tail
+        #      for some rows, not just the pitch-sequence letters (that case
+        #      is `pitches is None` below with a real Count) -- emit
+        #      count=None, pitches=None rather than mis-count it as 0-0.
+        #  (b) failing that, this may still be a standalone runner-event line
+        #      (e.g. "X advanced to second on a balk.", "X stole second.",
+        #      "X Failed pickoff attempt.", or several such clauses chained
+        #      with ';'). Every part must match a RUNNER_RULES row for this
+        #      to count -- otherwise it's a genuine miss.
+        primary: Optional[PrimaryClause] = None
+        for regex, outcome_type, extractor in PRIMARY_RULES:
+            pm = regex.fullmatch(primary_raw)
+            if pm:
+                name, fielders, location, modifiers = extractor(pm)
+                primary = PrimaryClause(
+                    name_token=name,
+                    outcome_type=outcome_type,
+                    fielders=fielders,
+                    location=location,
+                    modifiers=modifiers,
+                    count=None,
+                    pitches=None,
                 )
+                break
+
+        if primary is not None:
+            runners_or_miss = _match_runner_clauses(parts[1:], raw_line)
+            if isinstance(runners_or_miss, GrammarMiss):
+                return runners_or_miss
+            return ClauseGroup(
+                kind="plate_appearance",
+                primary=primary,
+                runners=tuple(runners_or_miss),
+                trailing_outs=trailing_outs,
+            )
+
+        # No PRIMARY_RULES row matched the (count-tail-less) primary clause
+        # either -- fall back to trying the WHOLE clause group as a bare
+        # sequence of runner-movement clauses.
+        runner_only = _match_runner_clauses(parts, raw_line)
+        if isinstance(runner_only, GrammarMiss):
+            return GrammarMiss(
+                raw=raw_line,
+                reason=(
+                    "no count-tail on primary clause, primary verb not "
+                    "recognized without a count either, and clause did not "
+                    f"match any runner rule: {runner_only.reason}"
+                ),
+            )
         if not runner_only:
             return GrammarMiss(raw=raw_line, reason="empty clause body")
         return ClauseGroup(
@@ -787,7 +911,7 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     strikes = int(tail_m.group("strikes"))
     pitches = tail_m.group("pitches")
 
-    primary: Optional[PrimaryClause] = None
+    primary = None
     for regex, outcome_type, extractor in PRIMARY_RULES:
         pm = regex.fullmatch(rest)
         if pm:
@@ -808,31 +932,13 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
             raw=raw_line, reason=f"primary verb not recognized: {rest!r}"
         )
 
-    runners: List[RunnerMovement] = []
-    for runner_raw in parts[1:]:
-        runner_raw = runner_raw.strip()
-        if not runner_raw:
-            continue
-        matched = False
-        for regex, _causes, builder in RUNNER_RULES:
-            rm = regex.fullmatch(runner_raw)
-            if rm:
-                result = builder(rm)
-                if isinstance(result, list):
-                    runners.extend(result)
-                else:
-                    runners.append(result)
-                matched = True
-                break
-        if not matched:
-            return GrammarMiss(
-                raw=raw_line,
-                reason=f"runner clause not recognized: {runner_raw!r}",
-            )
+    runners_or_miss = _match_runner_clauses(parts[1:], raw_line)
+    if isinstance(runners_or_miss, GrammarMiss):
+        return runners_or_miss
 
     return ClauseGroup(
         kind="plate_appearance",
         primary=primary,
-        runners=tuple(runners),
+        runners=tuple(runners_or_miss),
         trailing_outs=trailing_outs,
     )

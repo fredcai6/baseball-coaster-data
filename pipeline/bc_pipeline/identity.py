@@ -98,11 +98,28 @@ class PlayerTable:
         Returns ``(player_id, True)`` on a unique match, else ``(None,
         False)`` -- for no match AND for a same-last-name collision alike.
         Never guesses.
+
+        Tries an EXACT match first. When that path finds no unique
+        candidate (0 or 2+ matches), falls back to a prefix match --
+        ``last_name.startswith(token)`` (handles the historical template's
+        TRUNCATED surnames, e.g. narrative token ``"Richardso"`` -> real
+        ``last_name`` ``"Richardson"``) or ``token.startswith(last_name)``
+        (the reverse direction) -- across the side's roster. The fallback
+        result is used ONLY if it too yields exactly ONE candidate; any
+        remaining ambiguity under either matching mode still returns
+        ``(None, False)``. Never guesses.
         """
         team = self.home if side == "home" else self.away
-        matches = [pid for pid, p in team.players.items() if p.last_name == last_name]
-        if len(matches) == 1:
-            return matches[0], True
+        exact = [pid for pid, p in team.players.items() if p.last_name == last_name]
+        if len(exact) == 1:
+            return exact[0], True
+        prefix = [
+            pid
+            for pid, p in team.players.items()
+            if p.last_name.startswith(last_name) or last_name.startswith(p.last_name)
+        ]
+        if len(prefix) == 1:
+            return prefix[0], True
         return None, False
 
 

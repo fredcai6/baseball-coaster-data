@@ -207,3 +207,80 @@ def test_synthetic_home_side_unaffected_by_away_collision():
     pid, resolved = table.resolve("Smith", "home")
     assert resolved is True
     assert pid == "aaaaaaaaaaaaaaaa"
+
+
+# --- resolve() prefix-match fallback (Family 2: truncated surnames) --------
+#
+# The historical template narrative sometimes TRUNCATES a surname (e.g.
+# "Richardso" for "Richardson"). The exact-match path in resolve() finds no
+# candidate for the truncated token, so an ADDITIVE prefix-match fallback
+# (real_last_name.startswith(token) or token.startswith(real_last_name))
+# runs next -- but ONLY ever returns a result when it finds EXACTLY ONE
+# candidate; any remaining ambiguity still returns (None, False), never a
+# guess.
+
+
+def _one_side_table(players: "Dict[str, identity.PlayerEntry]") -> identity.PlayerTable:
+    away = identity.TeamIdentity(
+        team_id="syn:team:away", name="Synthetic Away", players=players
+    )
+    home = identity.TeamIdentity(team_id="syn:team:home", name="Synthetic Home", players={})
+    return identity.PlayerTable(home=home, away=away)
+
+
+def test_resolve_prefix_match_resolves_truncated_surname():
+    # Real corpus shape: games/2025/20250520_u80r.json roster has
+    # "Conner Richardson" (last_name "Richardson"); the narrative substitution
+    # line "C. Richardso to p for L. Short." truncates it to "Richardso".
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1",
+            name="Conner Richardson",
+            last_name="Richardson",
+            team_id="syn:team:away",
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("Richardso", "away")
+    assert resolved is True
+    assert pid == "p1"
+
+
+def test_resolve_prefix_match_deliberately_ambiguous_collision_stays_unresolved():
+    # Two players whose truncated forms collide on a shared prefix
+    # ("Richardson" and "Richards" both truncate to "Richard...") -- the
+    # fallback must correctly refuse to guess, exactly like the exact-match
+    # same-last-name collision case above.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1",
+            name="Conner Richardson",
+            last_name="Richardson",
+            team_id="syn:team:away",
+        ),
+        "p2": identity.PlayerEntry(
+            player_id="p2",
+            name="Pat Richards",
+            last_name="Richards",
+            team_id="syn:team:away",
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("Richard", "away")
+    assert resolved is False
+    assert pid is None
+
+
+def test_resolve_prefix_match_reverse_direction_token_longer_than_last_name():
+    # The reverse direction: a narrative token longer than the roster's
+    # last_name (token.startswith(last_name)) -- still resolves uniquely
+    # when there is exactly one candidate.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1", name="Kyle Chi", last_name="Chi", team_id="syn:team:away"
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("Chian", "away")
+    assert resolved is True
+    assert pid == "p1"

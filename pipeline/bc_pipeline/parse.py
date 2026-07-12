@@ -159,7 +159,11 @@ def _last_name_token(full_name: str) -> str:
     """
     tokens = full_name.split()
     if len(tokens) >= 2 and tokens[-1].strip(".").lower() in _SUFFIX_TOKENS:
-        return tokens[-2]
+        # The surname token can carry a trailing comma left over from the
+        # "Surname, Suffix" narrative shape (e.g. "Rojas, Jr" splits into
+        # ["Rojas,", "Jr"]) -- strip it so the join token matches the
+        # roster's comma-free last_name.
+        return tokens[-2].rstrip(",")
     return tokens[-1] if tokens else full_name
 
 

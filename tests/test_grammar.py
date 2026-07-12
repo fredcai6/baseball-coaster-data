@@ -383,6 +383,208 @@ def test_lineout_and_popout():
 
 
 # ---------------------------------------------------------------------------
+# Family 1 -- count-tail-optional PRIMARY_RULES fallback (issue #30 g1).
+# Real corpus lines where the primary clause has NO "(balls-strikes ...)"
+# tail at all; PRIMARY_RULES is now tried directly against the bare clause,
+# emitting count=None, pitches=None, rather than only trying RUNNER_RULES.
+# ---------------------------------------------------------------------------
+
+
+def test_count_tail_optional_walked():
+    # verbatim games/2025/20250522_o568.json unparsed[] entry
+    result = parse_clause_group("E. Scavotto walked; M. Piotrowsk advanced to second")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "plate_appearance"
+    p = result.primary
+    assert p.outcome_type == "walk"
+    assert p.name_token == "E. Scavotto"
+    assert p.count is None
+    assert p.pitches is None
+    assert len(result.runners) == 1
+    assert result.runners[0].name_token == "M. Piotrowsk"
+
+
+def test_count_tail_optional_struck_out_swinging():
+    # verbatim games/2025/20250520_yrgi.json unparsed[] entry (trailing
+    # whitespace/tab-run before the "(1 out)" trailer, per Family 3).
+    line = (
+        "C. Booth struck out swinging.\n"
+        "                                                                "
+        "                                                \t\t\t\t\t(1 out)"
+    )
+    result = parse_clause_group(line)
+    assert isinstance(result, ClauseGroup)
+    p = result.primary
+    assert p.outcome_type == "strikeout_swinging"
+    assert p.count is None
+    assert p.pitches is None
+    assert result.trailing_outs == 1
+
+
+def test_count_tail_optional_flied_out_to_cf():
+    # verbatim games/2025/20250520_4bkm.json unparsed[] entry.
+    line = (
+        "T. Specht flied out to cf.\n"
+        "                                                                "
+        "                                                \t\t\t\t\t(3 out)"
+    )
+    result = parse_clause_group(line)
+    assert isinstance(result, ClauseGroup)
+    p = result.primary
+    assert p.outcome_type == "flyout"
+    assert p.fielders == ["cf"]
+    assert p.count is None
+    assert result.trailing_outs == 3
+
+
+def test_count_tail_optional_singled_to_center_field():
+    # verbatim games/2025/20250520_4bkm.json unparsed[] entry.
+    result = parse_clause_group("R. Kuntz singled to center field.")
+    assert isinstance(result, ClauseGroup)
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "center field"
+    assert p.count is None
+    assert p.pitches is None
+
+
+def test_count_tail_optional_falls_back_to_runner_only_when_no_primary_matches():
+    # No count-tail AND no PRIMARY_RULES row matches -> still falls back to
+    # the runner-only path exactly as before this gate's change.
+    result = parse_clause_group("Isaac Nunez Failed pickoff attempt.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "runner_event"
+
+
+def test_count_tail_optional_still_misses_when_nothing_matches():
+    result = parse_clause_group("The umpire ordered a rain delay for weather.")
+    assert isinstance(result, GrammarMiss)
+
+
+# ---------------------------------------------------------------------------
+# Family 2 -- two new STANDALONE_RULES rows: pinch-run substitution.
+# (The DH-slot bare "<name> to dh." shape is a genuine schema-fit blocker --
+# see the g1 implementer result -- and is intentionally NOT implemented.)
+# ---------------------------------------------------------------------------
+
+
+def test_standalone_pinch_run_substitution():
+    # verbatim games/2026/20260519_0ibc.json unparsed[] entry.
+    result = parse_clause_group("Bodee Wright pinch ran for Pat Mills.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "Bodee Wright"
+    assert result.substitution.player_out == "Pat Mills"
+    assert result.substitution.kind == "offensive"
+
+
+def test_standalone_pitching_substitution_kind_still_pitching():
+    # Regression: the pre-existing pitching-sub row's `kind` is now an
+    # explicit field rather than an absent one -- must stay "pitching".
+    result = parse_clause_group("Isaiah Williams to p for Chase Martinez.")
+    assert result.substitution.kind == "pitching"
+
+
+def test_dh_slot_bare_shape_is_still_a_grammar_miss():
+    # Documents the blocker: "<name> to dh." names only ONE player, but the
+    # schema's substitution shape requires a non-nullable player_out this
+    # module cannot honestly supply from this single line. Not implemented.
+    result = parse_clause_group("Cole Robinson to dh.")
+    assert isinstance(result, GrammarMiss)
+
+
+# ---------------------------------------------------------------------------
+# Family 3 -- extended `singled` coverage: bare, up the middle, through the
+# (left|right) side.
+# ---------------------------------------------------------------------------
+
+
+def test_singled_bare_no_location():
+    # verbatim-shape games/2026 unparsed[] entry (real corpus: 'Kyle Schmack
+    # singled (0-0).').
+    result = parse_clause_group("Kyle Schmack singled (0-0).")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location is None
+    assert p.count.balls == 0 and p.count.strikes == 0
+
+
+def test_singled_up_the_middle():
+    # verbatim games/2026/20260519_dpzk.json unparsed[] entry.
+    result = parse_clause_group("Kyle Schmack singled up the middle (2-0 BB).")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "up the middle"
+    assert p.count.balls == 2 and p.count.strikes == 0
+    assert p.pitches == "BB"
+
+
+def test_singled_through_the_right_side():
+    # verbatim games/2026/20260604_427j.json (or sibling) unparsed[] entry.
+    result = parse_clause_group(
+        "Garret Ostrander singled through the right side (2-2 BKFB)."
+    )
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "right side"
+
+
+def test_singled_through_the_left_side():
+    result = parse_clause_group("K. Dugan singled through the left side, RBI.")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "left side"
+    assert "RBI" in p.modifiers
+    # No count-tail on this real corpus shape -- exercises Family 1 too.
+    assert p.count is None
+
+
+def test_singled_up_the_middle_no_count_tail_at_all():
+    # verbatim games/2024/20240521_7sf7.json unparsed[] entry -- exercises
+    # Family 1 (no count-tail) and Family 3 (up the middle) together.
+    result = parse_clause_group("B. Blackford singled up the middle.")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "up the middle"
+    assert p.count is None
+
+
+# ---------------------------------------------------------------------------
+# Family 4 -- trailing whitespace/tab-run tolerance before fullmatch
+# anchoring, verified beyond the trailing "(N out)" trailer already covered
+# above (test_count_tail_optional_struck_out_swinging /
+# test_count_tail_optional_flied_out_to_cf).
+# ---------------------------------------------------------------------------
+
+
+def test_whitespace_tab_runs_do_not_break_matching_and_narrative_is_untouched():
+    line = (
+        "Josh Phillips grounded out to 1b unassisted (0-1 K).\n"
+        "            \t\t\t\t(2 out)"
+    )
+    result = parse_clause_group(line)
+    assert isinstance(result, ClauseGroup)
+    assert result.primary.outcome_type == "groundout"
+    assert result.trailing_outs == 2
+    # GrammarMiss.raw always preserves the exact original text -- proven
+    # here via the nonsense-line miss test elsewhere; here we additionally
+    # confirm a WHITESPACE-only variant of an already-passing line changes
+    # nothing about the extracted fields (matching tolerance only).
+    clean = parse_clause_group(
+        "Josh Phillips grounded out to 1b unassisted (0-1 K). (2 out)"
+    )
+    assert result.primary == clean.primary
+    assert result.trailing_outs == clean.trailing_outs
+
+
+def test_grammar_miss_preserves_verbatim_raw_with_embedded_whitespace():
+    line = "Some nonsense.\n            \t\t\t\t(1 out)"
+    result = parse_clause_group(line)
+    assert isinstance(result, GrammarMiss)
+    assert result.raw == line
+
+
+# ---------------------------------------------------------------------------
 # Real-sample coverage: every <td class="text"> cell of the archived final
 # boxscore must parse -- 0 GrammarMiss.
 # ---------------------------------------------------------------------------
