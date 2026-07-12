@@ -130,6 +130,11 @@ def test_resolve_absent_name_is_unresolved():
 
 _SYNTHETIC_HTML = """
 <html><body>
+<div class="linescore"><table>
+<tr><th></th><th>1</th><th>2</th><th>R</th><th>H</th><th>E</th></tr>
+<tr><td>Synthetic Away</td><td>1</td><td>1</td><td>2</td><td>5</td><td>0</td></tr>
+<tr><td>Synthetic Home</td><td>2</td><td>1</td><td>3</td><td>7</td><td>1</td></tr>
+</table></div>
 <table class="table table-striped striped">
 <caption class="caption"><h2>
 <a href="/x/teams?id=abcdefgh12345678" class="team-name">Synthetic Home</a>
