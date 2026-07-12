@@ -46,23 +46,32 @@ def test_full_sample_events_plus_unparsed_account_for_every_pbp_cell():
     assert len(game["events"]) + len(game["unparsed"]) == 122
 
 
-def test_full_sample_unparsed_is_only_the_dh_pitching_subs():
-    # This sample's only unparsed residue is the 5 pure pitching
-    # substitutions under the two-way-DH rule (neither player ever holds a
-    # batting-order slot -- see parse.py's build_events substitution
-    # handling and the IMPLEMENTER_RESULT for the full grounding).
+def test_full_sample_has_no_unparsed_residue():
+    # Schema 1.1.0 made substitution.slot nullable, so the 5 DH pitching
+    # changes (pitcher not in the batting order) are now real substitution
+    # events. This game therefore has ZERO unparsed residue.
     game = _parse_final()
-    assert len(game["unparsed"]) == 5
-    for u in game["unparsed"]:
-        assert "pitching substitution" in u["reason"]
-        assert u["raw"].strip().endswith(".")
+    assert len(game["unparsed"]) == 0
 
 
-def test_full_sample_kind_counts_match_grammar_coverage_minus_subs():
+def test_full_sample_dh_pitching_subs_are_slotless_events():
+    # The 5 "<in> to p for <out>" pitching changes are encoded as
+    # substitution events with slot=null (DH: pitcher not in the batting
+    # order) and kind="pitching" -- honest, not fabricated.
+    game = _parse_final()
+    subs = [e for e in game["events"] if e["kind"] == "substitution"]
+    assert len(subs) == 5
+    for e in subs:
+        sub = e["substitution"]
+        assert sub["slot"] is None
+        assert sub["kind"] == "pitching"
+        assert sub["player_out"] and sub["player_in"]
+        assert "to p for" in e["narrative"]
+
+
+def test_full_sample_kind_counts_match_grammar_coverage():
     # g4's coverage evidence: plate_appearance 87, runner_event 13,
-    # inning_summary 17, substitution 5 (total 122). Substitutions all
-    # route to unparsed here (see above), so events[] kind counts are the
-    # first three, unchanged.
+    # inning_summary 17, substitution 5 (total 122). All now encoded as events.
     game = _parse_final()
     kinds: dict = {}
     for e in game["events"]:
@@ -71,6 +80,7 @@ def test_full_sample_kind_counts_match_grammar_coverage_minus_subs():
         "plate_appearance": 87,
         "runner_event": 13,
         "inning_summary": 17,
+        "substitution": 5,
     }
 
 

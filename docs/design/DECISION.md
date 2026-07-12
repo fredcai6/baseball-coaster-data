@@ -71,3 +71,16 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   WITHOUT weakening the schema. A future `person_id` (cross-season identity) still lands on the
   players-table entry as an additive MINOR field. This refinement was surfaced to the Admiral for
   ratification (join-key format is caller-visible).
+
+## 7. Schema evolution addendum
+
+- **2026-07-12 — `schema_version` 1.0.0 → 1.1.0 (additive MINOR).** `$defs.substitution.slot`
+  made nullable (`["integer","null"]`, min/max still constrain the integer branch); `null` means
+  the substitute is not in the batting order — a DH-game pitching change. **Why:** the 1.0.0 shape
+  required `slot: 1-9`, but a pitching change in a DH game (effectively every Pioneer League game)
+  puts a new pitcher on the mound with no batting-order slot. Under 1.0.0 those lines could not be
+  honestly encoded and fell to `unparsed[]` (issue #19 found 5 in the sole sample). Ratified by the
+  human via the Admiral (issue #19 float). Additive-only: every existing 1.0.0 file (all integer
+  slots) still validates under 1.1.0; only new files use `null`. This is the fixture-promotion
+  protocol's first real exercise (unparsed line → schema/rule lands → real event); the sample
+  re-parses from events 117 / unparsed 5 to events 122 / unparsed 0.

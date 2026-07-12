@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://baseball-coaster/schema/game.schema.json",
   "title": "baseball-coaster per-game file (games/<season>/<game_id>.json)",
-  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine — the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality.",
+  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine — the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -265,7 +265,7 @@
       "description": "B §5 substitution shape, reused in lineups[].substitutions and in the substitution event body.",
       "required": ["slot", "player_out", "player_in", "kind", "after_event_seq"],
       "properties": {
-        "slot": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "slot": { "type": ["integer", "null"], "minimum": 1, "maximum": 9, "description": "Batting-order slot (1-9), or null = the substitute is not in the batting order (a DH-game pitching change). Added nullable in 1.1.0 (additive MINOR); min/max constrain only the integer branch." },
         "player_out": { "$ref": "#/$defs/pid" },
         "player_in": { "$ref": "#/$defs/pid" },
         "kind": {

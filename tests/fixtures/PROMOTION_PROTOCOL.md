@@ -68,8 +68,9 @@ has no rule yet, and the day a rule lands for it.
 `tests/fixtures/synthetic_taxonomy_tail/triple_promotion_exercise.json` is
 this protocol run once end-to-end against a SYNTHETIC taxonomy-tail shape —
 a **triple** (`outcome_type: "triple"`), chosen because it does not occur
-anywhere in the live sample (117 events / 5 unparsed, all 5 unrelated to
-this shape), so it is a genuine "shape not in the sample":
+anywhere in the live sample (now 122 events / 0 unparsed after the DH
+promotion below, all unrelated to this shape), so it is a genuine "shape not
+in the sample":
 
 - **(a)** the file's `step_a_hypothetical_pre_rule_unparsed` block shows what
   `build_events` would have emitted to `unparsed[]` if no rule existed yet
@@ -101,13 +102,17 @@ print(parse_mod.build_events([line], player_table))
 "
 ```
 
-## The live pending-promotion example (not yet exercised — real, not synthetic)
+## The live promotion example — EXERCISED (real, not synthetic)
 
 The 5 `unparsed[]` lines in `game_20260709_h94w` (a DH-team pitching
-substitution with no batting-order slot) are today's REAL, live analog of
-step (a) above — genuinely unparsed, not hypothetical. They are the
-next lines this protocol will run on for real: once the two-way-DH schema
-gap (floated separately, outside this gate's scope) is resolved with a
-grammar/schema change, those 5 lines follow steps 2-5 above, and the live
-sample's golden fixture gets regenerated (gated, per step 4) to include
-their now-real events.
+substitution with no batting-order slot) were this protocol's FIRST REAL run
+on genuinely-unparsed live data. Originally (schema 1.0.0) they were step (a) —
+genuinely unparsed because `$defs.substitution.slot` required 1-9. The gap was
+floated to and ratified by the human (issue #19), the schema evolved additively
+(1.0.0 → 1.1.0, `substitution.slot` made nullable — see `docs/design/DECISION.md`
+§7), and those 5 lines then followed steps 2-5: they are now real substitution
+events (`slot: null`, `kind: "pitching"`), and the golden fixture was
+regenerated (gated, per step 4). The reparse-summary delta that gated the
+regeneration was `{"event_type_count_deltas": {"substitution": 5},
+"unparsed_rate_delta": -0.041, "replay_delta": 0.0}` — the sample went from
+117 events / 5 unparsed to 122 events / 0 unparsed.

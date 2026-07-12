@@ -48,13 +48,13 @@ def test_summarize_shape_and_known_sample_counts():
         "unparsed_rate",
         "event_type_counts",
     }
-    # Known live-sample shape (see g7 handoff): 117 events, 5 unparsed (the 5
-    # DH pitching-sub lines -- the floated schema gap, live pending-promotion
-    # example; see tests/fixtures/PROMOTION_PROTOCOL.md).
-    assert sum(summary["event_type_counts"].values()) == 117
-    assert summary["unparsed_count"] == 5
-    total_lines = 117 + 5
-    assert summary["unparsed_rate"] == 5 / total_lines
+    # Known live-sample shape: after schema 1.1.0 made substitution.slot
+    # nullable, the 5 DH pitching-sub lines are real substitution events, so
+    # the game is 122 events / 0 unparsed (the promotion protocol's first real
+    # exercise; see tests/fixtures/PROMOTION_PROTOCOL.md).
+    assert sum(summary["event_type_counts"].values()) == 122
+    assert summary["unparsed_count"] == 0
+    assert summary["unparsed_rate"] == 0.0
     assert isinstance(summary["replayable"], bool)
     assert summary["replay_pass_rate"] in (0.0, 1.0)
 

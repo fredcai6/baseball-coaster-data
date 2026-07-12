@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.1.0"
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -395,30 +395,23 @@ def build_events(
                 if pid == out_pid:
                     slot = s
                     break
-            if slot is None:
-                # Pure pitching change under a two-way-DH rule: neither
-                # player ever holds a batting-order slot, so the schema's
-                # substitution shape (which requires slot 1-9) cannot be
-                # honestly populated here without fabricating a number.
-                # Pitcher-of-record tracking still MUST update (later PAs'
-                # `pitcher` field depends on it) -- only the schema EVENT
-                # is skipped; the line is preserved verbatim in unparsed[].
+            # Pitcher-of-record tracking updates regardless of whether the
+            # outgoing player holds a batting-order slot (later PAs' `pitcher`
+            # field depends on it).
+            if slot is None or out_pid in pitching_pool[team_id] or out_pid == current_pitcher[team_id]:
                 current_pitcher[team_id] = in_pid
-                _unparsed(
-                    line,
-                    "pitching substitution with no batting-order slot "
-                    "(two-way DH rule); schema substitution shape requires "
-                    "slot 1-9 which cannot be honestly derived here",
-                )
-                continue
-            slot_occupant[team_id][slot] = in_pid
-            if out_pid in pitching_pool[team_id] or out_pid == current_pitcher[team_id]:
-                current_pitcher[team_id] = in_pid
+            if slot is not None:
+                slot_occupant[team_id][slot] = in_pid
+            # The grammar only recognizes "<in> to p for <out>" lines, so every
+            # substitution here is a pitching change. Under a DH rule the pitcher
+            # is not in the batting order -> slot=None (schema 1.1.0 made
+            # substitution.slot nullable, so this is now a real event, not an
+            # unparsed[] residue).
             sub_obj = {
                 "slot": slot,
                 "player_out": out_pid,
                 "player_in": in_pid,
-                "kind": "defensive",
+                "kind": "pitching",
                 "after_event_seq": seq - 1 if seq > 0 else 0,
             }
             events.append(
