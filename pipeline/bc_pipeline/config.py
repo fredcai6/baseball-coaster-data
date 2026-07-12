@@ -26,11 +26,18 @@ DEFAULT_MIN_INTERVAL_SECONDS: float = 12.0
 #: Default jitter range, in seconds, added on top of the minimum interval.
 DEFAULT_JITTER_SECONDS: float = 3.0
 
-#: Default local (non-git) root for raw archived HTML.
-DEFAULT_ARCHIVE_ROOT: str = "pipeline/_raw_archive"
+#: Default PC-local root for raw archived HTML -- deliberately OUTSIDE this
+#: git repository (launch-order Pre-Ruling: "PC-local, outside the git
+#: repo"). Do not change this default to a path under the repo working tree
+#: (e.g. "pipeline/..."), even though .gitignore's *.html rule would still
+#: keep the raw HTML itself out of git -- the checkpoint JSON alongside it
+#: would not be excluded, and the contract is "outside the repo", not
+#: "gitignored within the repo".
+DEFAULT_ARCHIVE_ROOT: str = "C:/PRograms/bc-raw-archive"
 
-#: Default local (non-git) checkpoint file path (resume progress marker).
-DEFAULT_CHECKPOINT_PATH: str = "pipeline/_raw_archive/checkpoint.json"
+#: Default PC-local checkpoint file path (resume progress marker) -- same
+#: outside-the-repo rationale as DEFAULT_ARCHIVE_ROOT above.
+DEFAULT_CHECKPOINT_PATH: str = "C:/PRograms/bc-raw-archive/checkpoint.json"
 
 
 @dataclass
