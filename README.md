@@ -98,6 +98,22 @@ python -m bc_pipeline.fetch --config my-config.json --limit 20
 - `--limit N` caps the number of URLs *actually fetched* this run. URLs already marked `done` in
   the checkpoint are skipped and never count against the limit — a second run with `--limit 5`
   against a fully-populated checkpoint reports 0 fetched, it does not refuse to run.
+
+  **`--limit` is a continue-crawl bound, not a fetch-count assertion.** It caps how many *new*
+  URLs one invocation fetches; it does not stop the crawl at "N total archived so far." Concretely:
+  if a season has more not-yet-done final games than `N`, a same-args re-run does **not** report
+  "0 fetched" — it *advances the crawl*, fetching the next `N` not-yet-done games, because
+  checkpoint-skipped URLs are passed over without stopping the loop. **Per-URL idempotency is still
+  guaranteed** (a URL already in the checkpoint is never re-fetched, ever), but "a same-args run
+  fetches nothing new" is only literally true once every reachable URL for the configured
+  `seasons` is already `done` — i.e. the backlog is exhausted, not merely "at least `N`
+  already-archived." A caller that wants "prove nothing changed" semantics should re-run against
+  a config/season scope it has already fully exhausted, not assume a small bounded run implies one.
+  (Proven at the unit level in `pipeline/tests/test_fetch.py`:
+  `test_second_run_against_same_checkpoint_fetches_zero_new` and
+  `test_same_bounded_limit_rerun_against_exhausted_backlog_fetches_zero` use a fully-exhaustible
+  fixture backlog; a live run against the real, much larger season backlog will keep advancing
+  instead, as observed during issue #18's live demo.)
 - `--dry-run` walks each season's schedule page (still fetched over the same paced/challenge-aware
   seam, since that's how the FINAL-game boxscore URLs are enumerated) and prints every boxscore URL
   that would be fetched, but never fetches a boxscore page itself.

@@ -139,6 +139,45 @@ def test_second_run_against_same_checkpoint_fetches_zero_new(tmp_path: Path) -> 
     assert SCHEDULE_URL in call_log
 
 
+def test_same_bounded_limit_rerun_against_exhausted_backlog_fetches_zero(
+    tmp_path: Path,
+) -> None:
+    """Literal acceptance-criterion-2 shape: identical ``--limit N`` args on
+    both invocations (not ``None`` then a different number), where N is
+    large enough to exhaust the fixture's whole boxscore backlog on the
+    first run. The second run, with the SAME limit, must report 0 fetched.
+
+    This is the compensating fake-fetcher test for a real gap discovered
+    live in issue #18: ``--limit`` only counts actual fetches (checkpoint-
+    skipped URLs don't count against it and don't stop the loop), so a
+    same-args rerun against a REAL season -- whose backlog vastly exceeds
+    any small bounded run -- advances into unfetched games instead of
+    reporting 0. The criterion's literal wording ("a second run with same
+    args fetches nothing new") is true once the reachable backlog is
+    exhausted, which this test proves with a small, fully-exhaustible fixture
+    rather than a live crawl of ~1000+ real games. See README's "Raw archive
+    & fetching" section, "``--limit`` is a continue-crawl bound, not a
+    fetch-count assertion" paragraph, for the caller-facing statement of
+    this same fact.
+    """
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+    response_map = make_response_map()
+
+    # limit=5 > the fixture's 3 boxscore URLs, so the backlog is fully
+    # exhausted on the first run -- nothing is left for a same-args rerun
+    # to advance into.
+    first = run(config, response_map, call_log, FakeClock(), limit=5)
+    assert first.fetched == [BOX_A, BOX_B, BOX_C]
+
+    call_log.clear()
+    second = run(config, response_map, call_log, FakeClock(), limit=5)
+
+    assert second.fetched == []
+    assert set(second.skipped_already_done) == {BOX_A, BOX_B, BOX_C}
+    assert BOX_A not in call_log and BOX_B not in call_log and BOX_C not in call_log
+
+
 def test_limit_does_not_count_already_done_urls_against_it(tmp_path: Path) -> None:
     """`--limit 1` on a fully-populated checkpoint must report 0 fetched, not
     refuse to run because URLs were "already limited out"."""
