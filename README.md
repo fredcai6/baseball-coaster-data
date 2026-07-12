@@ -55,6 +55,83 @@ version) and `_derived` is a regenerable cache — neither is part of the game's
 the rule the write-once / re-parse discipline is checked against, and it also appears in the
 schema's root `$comment`.
 
+## Raw archive & fetching
+
+The raw HTML this pipeline scrapes is never committed to this repo (see the caller contract
+above). It lives on the local PC instead, under a single configurable root.
+
+- **Archive root (default):** `C:/PRograms/bc-raw-archive` — PC-local, outside this git working
+  tree. This is a *default*, not a hard-coded path: pass `--config` (see below) with an
+  `archive_root` override to use a different location.
+- **Checkpoint file (default):** `C:/PRograms/bc-raw-archive/checkpoint.json` — a JSON map of
+  `source-url -> {archived_path, fetched_at, content_hash, status}`. This checkpoint, not the
+  archive directory's filenames, is the sole authority on "have I already fetched this URL" — a
+  URL is skipped only when its checkpoint entry has `status: "done"`.
+- **Archive filename contract:** `<url-slug>__<fetched-at-microseconds>__<content-hash>.html` —
+  the source URL (slugified), the fetch timestamp (integer microseconds since the epoch, so two
+  fetches of the same URL are always distinguishable), and a truncated sha256 of the body. A name
+  collision refuses to overwrite (`FileExistsError`) rather than silently clobbering data.
+
+### Config shape (`PipelineConfig`)
+
+| Field                  | Default                                    | Meaning                                              |
+|------------------------|---------------------------------------------|-------------------------------------------------------|
+| `min_interval_seconds` | `12.0`                                      | Minimum seconds between the start of any two fetches (must be `>= 10`, per an observed WAF trip). |
+| `jitter_seconds`       | `3.0`                                       | Extra random seconds (0..this) added on top of the minimum interval. |
+| `seasons`              | `[2026, 2025, 2024]`                        | Season years walked, in this order (2026 first).       |
+| `archive_root`         | `C:/PRograms/bc-raw-archive`                | Local filesystem root for archived raw HTML.            |
+| `checkpoint_path`      | `C:/PRograms/bc-raw-archive/checkpoint.json`| Local filesystem path to the checkpoint/resume file.    |
+
+Override any subset of these via a small JSON file passed to `--config`; omitted fields keep their
+default.
+
+### Running the CLI
+
+From the `pipeline/` directory:
+
+```bash
+python -m bc_pipeline.fetch --dry-run                    # walk schedules, print what WOULD be fetched
+python -m bc_pipeline.fetch --limit 5                    # fetch and archive up to 5 new boxscore pages
+python -m bc_pipeline.fetch --config my-config.json --limit 20
+```
+
+- `--limit N` caps the number of URLs *actually fetched* this run. URLs already marked `done` in
+  the checkpoint are skipped and never count against the limit — a second run with `--limit 5`
+  against a fully-populated checkpoint reports 0 fetched, it does not refuse to run.
+
+  **`--limit` is a continue-crawl bound, not a fetch-count assertion.** It caps how many *new*
+  URLs one invocation fetches; it does not stop the crawl at "N total archived so far." Concretely:
+  if a season has more not-yet-done final games than `N`, a same-args re-run does **not** report
+  "0 fetched" — it *advances the crawl*, fetching the next `N` not-yet-done games, because
+  checkpoint-skipped URLs are passed over without stopping the loop. **Per-URL idempotency is still
+  guaranteed** (a URL already in the checkpoint is never re-fetched, ever), but "a same-args run
+  fetches nothing new" is only literally true once every reachable URL for the configured
+  `seasons` is already `done` — i.e. the backlog is exhausted, not merely "at least `N`
+  already-archived." A caller that wants "prove nothing changed" semantics should re-run against
+  a config/season scope it has already fully exhausted, not assume a small bounded run implies one.
+  (Proven at the unit level in `pipeline/tests/test_fetch.py`:
+  `test_second_run_against_same_checkpoint_fetches_zero_new` and
+  `test_same_bounded_limit_rerun_against_exhausted_backlog_fetches_zero` use a fully-exhaustible
+  fixture backlog; a live run against the real, much larger season backlog will keep advancing
+  instead, as observed during issue #18's live demo.)
+- `--dry-run` walks each season's schedule page (still fetched over the same paced/challenge-aware
+  seam, since that's how the FINAL-game boxscore URLs are enumerated) and prints every boxscore URL
+  that would be fetched, but never fetches a boxscore page itself.
+- On a detected challenge (HTTP 202 / AWS WAF JS-challenge page / empty body), the run stops
+  immediately — no internal retry, no further URLs attempted — and exits non-zero. The checkpoint
+  reflects only what completed before the challenge; back off at least 60 seconds before
+  re-running (the resumed run picks up exactly where the checkpoint left off).
+
+### Why pioneerleague.com specifically
+
+The schedule walker targets `pioneerleague.com` (the league site) rather than an individual team's
+site, even though both are PrestoSports-hosted sites with identical schedule-page markup. This is
+because pioneerleague.com's boxscore pages carry both teams' real 16-character player IDs, while a
+team-site copy of the same boxscore only carries the home team's real player ID (the visiting
+team's players are unresolved on a team site). Since the downstream advanced-stats pipeline needs a
+real player ID for both teams in every game, the league-site copy is the only canonical fetch
+source for this pipeline.
+
 ## Parsing & replay
 
 The pipeline turns a raw StatCrew boxscore page into a schema-valid `final` game file
