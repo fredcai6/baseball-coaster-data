@@ -205,6 +205,11 @@ def build_events(
     # partially-updated mid-line state (which would otherwise let one
     # clause's write clobber the very entry the next clause needs to read).
     line_snapshot: Dict[int, str] = {}
+    # Per-line record of each runner's LATEST within-event destination base,
+    # so a second clause for the same runner on one line chains off the first
+    # (distinct DIFFERENT runners still read line_snapshot, above). Reset per
+    # line.
+    event_pos: Dict[str, int] = {}
     cur_half_key: Optional[Tuple[int, str]] = None
     seq = 0
 
@@ -230,13 +235,21 @@ def build_events(
         pid, ok = player_table.resolve(last, batting_side)
         if not ok:
             return None
-        from_base = next((b for b, occ_pid in line_snapshot.items() if occ_pid == pid), None)
-        if from_base is None:
-            # Not currently tracked on base (e.g. a runner clause naming a
-            # player whose prior base-reaching event wasn't itself
-            # trackable) -- fall back to the destination's own base as a
-            # best-known "from", since we have no other asserted state.
-            from_base = _DEST_BASE.get(rm.destination, 0) if rm.destination else 0
+        # `from` chains WITHIN an event: if this runner already moved earlier
+        # in THIS line, its origin is that prior clause's destination
+        # (event_pos), NOT its event-start base -- e.g. "Mata advanced to
+        # second on a passed ball, advanced to third" is 1->2 then 2->3, not
+        # 1->2 and 1->3. Only the FIRST clause for a runner in an event reads
+        # the pre-line occupancy snapshot; falls back to the destination's own
+        # base when the runner isn't tracked at all.
+        if pid in event_pos:
+            from_base = event_pos[pid]
+        else:
+            from_base = next(
+                (b for b, occ_pid in line_snapshot.items() if occ_pid == pid), None
+            )
+            if from_base is None:
+                from_base = _DEST_BASE.get(rm.destination, 0) if rm.destination else 0
         if rm.destination is not None:
             to_base = _DEST_BASE[rm.destination]
         elif rm.out:
@@ -260,12 +273,65 @@ def build_events(
             record["rbi"] = bool(
                 modifiers and "RBI" in modifiers and rm.cause != "error"
             )
-        # Update base occupancy for subsequent clauses/events.
+        # Record this runner's within-event position so a later clause for the
+        # SAME runner on this line chains off it. -1 (retired) is kept so a
+        # subsequent clause doesn't re-place an out runner on a base.
+        event_pos[pid] = -1 if rm.out else to_base
+        # Update the live cross-event base occupancy: vacate the base this
+        # clause left (only if the runner still holds it), and occupy the
+        # destination (unless out, scored, or off the bases).
         if from_base in base_occ and base_occ[from_base] == pid:
             del base_occ[from_base]
         if not rm.out and to_base not in (-1, 4):
             base_occ[to_base] = pid
         return record
+
+    def _merge_same_runner(records: List[dict]) -> List[dict]:
+        """Collapse multiple clauses for the SAME runner in ONE event into a
+        single net-path record (first clause's `from` + cause, last clause's
+        `to`/`out`/`scored` + per-run flags).
+
+        StatCrew occasionally narrates one runner's advance in two clauses on
+        one line ("advanced to second on a passed ball, advanced to third").
+        The internal event_pos chain already asserts each hop's true origin,
+        but the g6 replayer validates every emitted `from` against the base
+        occupancy AS OF THE START of the event (a single frozen array) -- so a
+        second emitted entry with `from` = the intermediate base (2), which
+        was NOT occupied before the event, reads as an illegal transition. The
+        runner only ever HAD one net move this event (1 -> 3), so we emit one
+        record for it; cross-event occupancy is unaffected (base_occ was
+        already folded hop-by-hop inside _resolve_runner)."""
+        order: List[str] = []
+        grouped: Dict[str, List[dict]] = {}
+        for rec in records:
+            pid = rec["player_id"]
+            if pid not in grouped:
+                grouped[pid] = []
+                order.append(pid)
+            grouped[pid].append(rec)
+        merged: List[dict] = []
+        for pid in order:
+            recs = grouped[pid]
+            if len(recs) == 1:
+                merged.append(recs[0])
+                continue
+            first, last = recs[0], recs[-1]
+            net = {
+                "player_id": pid,
+                "from": first["from"],
+                "to": last["to"],
+                "cause": first["cause"],
+                "out": last["out"],
+                "scored": last["scored"],
+            }
+            # Preserve per-run flags from whichever hop carried them (the
+            # scoring hop) so a run driven across two clauses keeps earned/rbi.
+            for key in ("earned", "rbi"):
+                for rec in recs:
+                    if key in rec:
+                        net[key] = rec[key]
+            merged.append(net)
+        return merged
 
     for line in lines:
         half_key = (line.inning, line.half)
@@ -277,6 +343,7 @@ def build_events(
         batting_team_id = away_id if line.half == "top" else home_id
         fielding_team_id = home_id if line.half == "top" else away_id
         line_snapshot = dict(base_occ)
+        event_pos = {}
 
         cg = parse_clause_group(line.text)
         if isinstance(cg, GrammarMiss):
@@ -393,7 +460,7 @@ def build_events(
                     "fielding_team": fielding_team_id,
                     "narrative": _display_narrative(line.text),
                     "scoring_play": line.is_strong,
-                    "runners": runners,
+                    "runners": _merge_same_runner(runners),
                 }
             )
             seq += 1
@@ -443,6 +510,7 @@ def build_events(
         if not out_flag and to_base not in (-1, 4):
             base_occ[to_base] = batter_pid
 
+        runner_records = _merge_same_runner(runner_records)
         outs_recorded = (1 if out_flag else 0) + sum(
             1 for r in runner_records[1:] if r["out"]
         )

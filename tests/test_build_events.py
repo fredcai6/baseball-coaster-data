@@ -231,6 +231,126 @@ def test_rbi_and_earned_are_asserted_on_the_scoring_runner_only():
     assert "rbi" not in non_scorer
 
 
+# --- same-runner multi-clause chaining WITHIN one event ---------------------
+
+
+def test_same_runner_two_clauses_one_event_chains_from_previous_to():
+    # Regression for the seq50/seq51 Mata bug (found via g6 replay): a single
+    # event names ONE runner twice ("advanced to second on a passed ball,
+    # advanced to third"). g4 grammar correctly emits TWO RunnerMovements
+    # (to second cause passed_ball, then to third cause advance). build_events
+    # must CHAIN them: the second clause's `from` is the first clause's `to`
+    # (2), NOT the runner's event-start base (1) -- and the runner's tracked
+    # final base must be 3 so the NEXT event sees him on third (where he then
+    # scores from).
+    table = _make_table()
+    lines = [
+        # Alpha leads off and reaches 1st.
+        _line(1, "top", 0, "Alpha One singled to left field (1-0 B)."),
+        # seq50 analogue: batter walks; Alpha (on 1st) takes two bases on one
+        # play across two chained clauses.
+        _line(
+            1,
+            "top",
+            1,
+            "Beta Two walked (3-2 BBBFFB); Alpha One advanced to second on a passed ball, advanced to third.",
+        ),
+        # seq51 analogue: next batter doubles; Alpha scores FROM THIRD.
+        _line(
+            1,
+            "top",
+            2,
+            "Gamma Three doubled to center field, RBI (1-0 B); Alpha One scored.",
+        ),
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+
+    # seq50 analogue: Alpha's two same-event clauses collapse to ONE net-path
+    # record 1 -> 3 (the collapsed form the commander blessed, and the ONLY
+    # form g6's replayer accepts: it validates every emitted `from` against the
+    # base occupancy frozen at event START, so a second entry with from=2 -- a
+    # base not occupied before the event -- reads as an illegal transition).
+    alpha_clauses = [r for r in events[1]["runners"] if r["player_id"] == "a1"]
+    assert len(alpha_clauses) == 1
+    assert alpha_clauses[0] == {
+        "player_id": "a1",
+        "from": 1,  # the runner's true event-start base
+        "to": 3,  # his final base this event, NOT the intermediate 2
+        "cause": "passed_ball",  # the initiating mechanism (first clause's cause)
+        "out": False,
+        "scored": False,
+    }
+
+    # seq51 analogue: Alpha scores from THIRD (his correct tracked final base) --
+    # the whole point of the fix: before it, he'd have scored from the stale
+    # penultimate base (2).
+    alpha_score = [r for r in events[2]["runners"] if r["player_id"] == "a1"]
+    assert len(alpha_score) == 1
+    assert alpha_score[0]["from"] == 3
+    assert alpha_score[0]["to"] == 4
+    assert alpha_score[0]["scored"] is True
+
+
+def test_runner_from_is_always_a_base_the_runner_currently_occupies():
+    # Strict transition invariant over the whole chained sequence: replay the
+    # asserted runner primitives forward and confirm every runner.from equals
+    # the base that runner occupied immediately before the clause fired (0 for
+    # a batter out of the box; a real base 1-3 for someone already on; -1 is
+    # never a valid `from` here). This is exactly the illegal-transition check
+    # g6 performs independently.
+    table = _make_table()
+    lines = [
+        _line(1, "top", 0, "Alpha One singled to left field (1-0 B)."),
+        _line(
+            1,
+            "top",
+            1,
+            "Beta Two walked (3-2 BBBFFB); Alpha One advanced to second on a passed ball, advanced to third.",
+        ),
+        _line(
+            1,
+            "top",
+            2,
+            "Gamma Three doubled to center field, RBI (1-0 B); Alpha One scored.",
+        ),
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+
+    occ: dict = {}  # base -> pid, folded from the asserted primitives alone
+    half = None
+    for e in events:
+        if (e["inning"], e["half"]) != half:
+            occ = {}
+            half = (e["inning"], e["half"])
+        runners = e.get("runners", [])
+        # Two-phase per event, mirroring g6's own replayer: FIRST validate
+        # every `from` against the occupancy frozen at the START of the event
+        # (a batter forcing the runner ahead means one runner's destination is
+        # briefly another's origin mid-apply -- checking against the frozen
+        # snapshot, not a partially-mutated map, is the correct model). THEN
+        # apply vacate+occupy.
+        snapshot = dict(occ)
+        for r in runners:
+            frm, pid = r["from"], r["player_id"]
+            if frm == 0:
+                assert pid not in snapshot.values(), (
+                    f"{pid} claims from=0 but was already on base {snapshot}"
+                )
+            else:
+                assert snapshot.get(frm) == pid, (
+                    f"{pid} claims from={frm} but base {frm} held "
+                    f"{snapshot.get(frm)!r} at event start (occupancy {snapshot})"
+                )
+        for r in runners:
+            frm, pid, to = r["from"], r["player_id"], r["to"]
+            if frm in (1, 2, 3) and occ.get(frm) == pid:
+                del occ[frm]
+            if not r["out"] and to not in (-1, 4):
+                occ[to] = pid
+
+
 # --- unrecognized clauses route to unparsed[], never dropped/guessed -------
 
 
