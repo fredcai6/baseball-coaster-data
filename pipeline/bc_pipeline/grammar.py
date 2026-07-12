@@ -84,7 +84,7 @@ class InningSummary:
 @dataclass(frozen=True)
 class Substitution:
     player_in: str
-    player_out: str
+    player_out: Optional[str]
     # One of the schema's closed `substitution.kind` enum values
     # ("offensive", "defensive", "pitching") -- which side/role the
     # substitution applies to. g5 (parse.py) currently resolves every
@@ -682,14 +682,16 @@ RUNNER_RULES: List[RunnerRule] = [
 # RUNNER_RULES table via the no-count-tail fallback path below; they need no
 # separate regex here.)
 #
-# NOT covered here: the bare "<name> to dh." DH-slot-entry shape (no outgoing
-# player named in the text at all) -- the schema's substitution shape
-# requires a non-nullable `player_out`, and this module has no honest way to
-# supply one from this single line alone (see the module's stop-condition
-# note near BATTER_OUTCOME_CAUSE... actually see g1's implementer result: a
-# reported blocker, not implemented). The "<in> to dh for <out>." variant
+# The bare "<name> to dh." DH-slot-entry shape (no outgoing player named in
+# the text at all) is now covered below: schema 1.2.0 made
+# `$defs.substitution.player_out` nullable (issue #30, g2b), so this line can
+# honestly be encoded as a real substitution event with player_out=None
+# instead of an `unparsed[]` residue. The "<in> to dh for <out>." variant
 # (both names present) DOES fit this table's shape but was not requested by
-# this gate's authorized scope, so it is intentionally left unimplemented too.
+# this gate's authorized scope, so it remains intentionally unimplemented --
+# `_DH_SLOT_BARE_RE` requires the line end right after "dh" (only an optional
+# trailing period), so it does NOT match the two-name "... to dh for ..."
+# shape; that shape still falls through to a GrammarMiss unchanged.
 # ---------------------------------------------------------------------------
 
 StandaloneBuilder = Callable[[re.Match, Optional[int]], ClauseGroup]
@@ -701,6 +703,7 @@ _INNING_SUMMARY_RE = re.compile(
 )
 _SUBSTITUTION_RE = re.compile(r"^(?P<in>.+?) to p for (?P<out>.+?)\.?$")
 _PINCH_RUN_RE = re.compile(r"^(?P<in>.+?) pinch ran for (?P<out>.+?)\.?$")
+_DH_SLOT_BARE_RE = re.compile(r"^(?P<in>.+?) to dh\.?$")
 
 
 def _build_inning_summary(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
@@ -736,10 +739,26 @@ def _build_pinch_run(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
     )
 
 
+def _build_dh_slot_bare(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    # Bare DH-slot-entry: the line names only the incoming player. Schema
+    # 1.2.0 (issue #30) made substitution.player_out nullable so this is a
+    # real "offensive" lineup-slot activation, same kind convention as the
+    # pinch-run row above -- never guess an outgoing player from a line that
+    # does not name one.
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("in"), player_out=None, kind="offensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
 STANDALONE_RULES: List[StandaloneRule] = [
     (_INNING_SUMMARY_RE, None, _build_inning_summary),
     (_SUBSTITUTION_RE, None, _build_substitution),
     (_PINCH_RUN_RE, None, _build_pinch_run),
+    (_DH_SLOT_BARE_RE, None, _build_dh_slot_bare),
 ]
 
 

@@ -284,3 +284,22 @@ def test_resolve_prefix_match_reverse_direction_token_longer_than_last_name():
     pid, resolved = table.resolve("Chian", "away")
     assert resolved is True
     assert pid == "p1"
+
+
+# --- empty-string guard (issue #30 g2b) -------------------------------------
+
+
+def test_resolve_empty_string_never_vacuously_matches():
+    # A single-player roster: `last_name.startswith("")` is trivially True for
+    # ANY player, so without an explicit guard the prefix-fallback path would
+    # "resolve" an empty token to whichever lone player happens to be on the
+    # roster -- a guess, not a resolution. resolve("", side) must always
+    # return (None, False), regardless of roster size.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1", name="Only Player", last_name="Player", team_id="syn:team:away"
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("", "away")
+    assert (pid, resolved) == (None, False)

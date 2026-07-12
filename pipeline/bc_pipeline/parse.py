@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.1.0"
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.2.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -377,45 +377,74 @@ def build_events(
             continue
 
         if cg.kind == "substitution":
-            # Substitutions embedded in a half's cell list are the
-            # FIELDING team's pitching change (the mound belongs to the
-            # side not currently batting) -- resolve against that side.
-            side = fielding_side
-            team_id = fielding_team_id
-            out_last = _last_name_token(cg.substitution.player_out)
+            # A "pitching" substitution changes the FIELDING side's pitcher
+            # (the mound belongs to the side not currently batting). An
+            # "offensive" substitution (pinch-run, DH-slot entry -- issue #30
+            # g1/g2b) changes the BATTING side's lineup instead -- resolve
+            # against the side the grammar's own `kind` names. A hardcoded
+            # fielding-side assumption here predates the "offensive" kind and
+            # would silently mis-resolve every real pinch-run/DH-slot line
+            # against the wrong roster (either a spurious unparsed miss, or
+            # worse, a false match against an unrelated same-surname player
+            # on the wrong team).
+            if cg.substitution.kind == "offensive":
+                side = batting_side
+                team_id = batting_team_id
+            else:
+                side = fielding_side
+                team_id = fielding_team_id
             in_last = _last_name_token(cg.substitution.player_in)
-            out_pid, out_ok = player_table.resolve(out_last, side)
             in_pid, in_ok = player_table.resolve(in_last, side)
+            if cg.substitution.player_out is None:
+                # Bare DH-slot-entry (schema 1.2.0, issue #30 g2b): the line
+                # names only the incoming player. Never guess an outgoing
+                # player from a line that does not name one -- emit
+                # player_out: None directly, mirroring the p.count is None
+                # guard above, instead of calling _last_name_token/resolve()
+                # on a value that was never there.
+                out_pid, out_ok = None, True
+            else:
+                out_last = _last_name_token(cg.substitution.player_out)
+                out_pid, out_ok = player_table.resolve(out_last, side)
             if not out_ok or not in_ok:
                 _unparsed(
                     line,
-                    "substitution names did not resolve uniquely on the "
-                    f"fielding side: out={cg.substitution.player_out!r} "
+                    f"substitution names did not resolve uniquely on the "
+                    f"{side} side: out={cg.substitution.player_out!r} "
                     f"in={cg.substitution.player_in!r}",
                 )
                 continue
             slot = None
-            for s, pid in slot_occupant[team_id].items():
-                if pid == out_pid:
-                    slot = s
-                    break
+            if out_pid is not None:
+                for s, pid in slot_occupant[team_id].items():
+                    if pid == out_pid:
+                        slot = s
+                        break
             # Pitcher-of-record tracking updates regardless of whether the
             # outgoing player holds a batting-order slot (later PAs' `pitcher`
-            # field depends on it).
-            if slot is None or out_pid in pitching_pool[team_id] or out_pid == current_pitcher[team_id]:
+            # field depends on it). A bare DH-slot entry (out_pid is None)
+            # names no outgoing player at all, so it is never a pitching
+            # change and never updates pitcher-of-record bookkeeping.
+            if out_pid is not None and (
+                slot is None or out_pid in pitching_pool[team_id] or out_pid == current_pitcher[team_id]
+            ):
                 current_pitcher[team_id] = in_pid
             if slot is not None:
                 slot_occupant[team_id][slot] = in_pid
-            # The grammar only recognizes "<in> to p for <out>" lines, so every
-            # substitution here is a pitching change. Under a DH rule the pitcher
-            # is not in the batting order -> slot=None (schema 1.1.0 made
-            # substitution.slot nullable, so this is now a real event, not an
-            # unparsed[] residue).
+            # Under a DH rule the pitcher is not in the batting order ->
+            # slot=None (schema 1.1.0 made substitution.slot nullable, so
+            # this is now a real event, not an unparsed[] residue). `kind`
+            # is read from the grammar's own Substitution.kind (issue #30
+            # g2b) rather than hardcoded, since the new bare DH-slot-entry
+            # row builds kind="offensive" -- stamping "pitching" on it here
+            # would contradict the pitcher-of-record bookkeeping just above,
+            # which already treats a null player_out as never a pitching
+            # change.
             sub_obj = {
                 "slot": slot,
                 "player_out": out_pid,
                 "player_in": in_pid,
-                "kind": "pitching",
+                "kind": cg.substitution.kind,
                 "after_event_seq": seq - 1 if seq > 0 else 0,
             }
             events.append(
@@ -539,7 +568,11 @@ def build_events(
                     "outs_recorded": outs_recorded,
                     "location": p.location,
                 },
-                "count": {"balls": p.count.balls, "strikes": p.count.strikes},
+                "count": (
+                    {"balls": p.count.balls, "strikes": p.count.strikes}
+                    if p.count is not None
+                    else None
+                ),
                 "pitches": p.pitches,
                 "runners": runner_records,
             }

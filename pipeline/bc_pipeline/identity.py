@@ -108,7 +108,18 @@ class PlayerTable:
         result is used ONLY if it too yields exactly ONE candidate; any
         remaining ambiguity under either matching mode still returns
         ``(None, False)``. Never guesses.
+
+        An empty ``last_name`` token always returns ``(None, False)`` before
+        any matching is attempted -- ``"".startswith("")`` (and
+        ``anything.startswith("")``) is trivially True, so without this
+        explicit guard the prefix fallback would vacuously "resolve" an empty
+        token to any lone player on the side. Added in 1.2.0/g2b hardening.
         """
+        if not last_name:
+            # An empty token would make the prefix fallback's
+            # `last_name.startswith("")` trivially True for every player on
+            # the side -- a vacuous match, not a resolution. Never guess.
+            return None, False
         team = self.home if side == "home" else self.away
         exact = [pid for pid, p in team.players.items() if p.last_name == last_name]
         if len(exact) == 1:

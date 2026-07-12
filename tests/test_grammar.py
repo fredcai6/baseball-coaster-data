@@ -462,9 +462,9 @@ def test_count_tail_optional_still_misses_when_nothing_matches():
 
 
 # ---------------------------------------------------------------------------
-# Family 2 -- two new STANDALONE_RULES rows: pinch-run substitution.
-# (The DH-slot bare "<name> to dh." shape is a genuine schema-fit blocker --
-# see the g1 implementer result -- and is intentionally NOT implemented.)
+# Family 2 -- STANDALONE_RULES rows: pinch-run substitution, and (schema
+# 1.2.0, issue #30 g2b) the bare DH-slot-entry "<name> to dh." shape, now
+# that substitution.player_out is nullable.
 # ---------------------------------------------------------------------------
 
 
@@ -485,11 +485,25 @@ def test_standalone_pitching_substitution_kind_still_pitching():
     assert result.substitution.kind == "pitching"
 
 
-def test_dh_slot_bare_shape_is_still_a_grammar_miss():
-    # Documents the blocker: "<name> to dh." names only ONE player, but the
-    # schema's substitution shape requires a non-nullable player_out this
-    # module cannot honestly supply from this single line. Not implemented.
+def test_dh_slot_bare_shape_parses_to_a_substitution_with_player_out_none():
+    # Schema 1.2.0 (issue #30) made substitution.player_out nullable, so the
+    # bare DH-slot-entry line -- naming only the incoming player -- is now a
+    # real offensive substitution event, never a guessed outgoing player.
+    # verbatim games/2026/20260519_0ibc.json unparsed[] entry (pre-fix).
     result = parse_clause_group("Cole Robinson to dh.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "Cole Robinson"
+    assert result.substitution.player_out is None
+    assert result.substitution.kind == "offensive"
+
+
+def test_dh_slot_two_name_form_still_a_grammar_miss():
+    # Regression: "<in> to dh for <out>." (both players named) is NOT
+    # requested by this gate's authorized scope and remains unimplemented --
+    # the new bare-DH regex must not accidentally swallow this shape.
+    # verbatim games/2024/20240524_91ql.json unparsed[] entry.
+    result = parse_clause_group("P. DePasqual to dh for J. Impedugli.")
     assert isinstance(result, GrammarMiss)
 
 
