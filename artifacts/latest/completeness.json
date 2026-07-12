@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-07-12T13:55:28Z"
+    "generated_at": "2026-07-12T00:00:00Z"
   },
   "league": {
     "games_discovered": 7,
@@ -10,7 +10,8 @@
     "games_non_final": 1,
     "games_parse_failed": 1,
     "games_skipped_already_committed": 1,
-    "unparsed_rate": 0.2857142857142857
+    "failure_rate": 0.2857142857142857,
+    "unparsed_rate": 0.05454545454545454
   },
   "by_season": {
     "2024": {
@@ -21,7 +22,8 @@
       "games_non_final": 1,
       "games_parse_failed": 1,
       "games_skipped_already_committed": 0,
-      "unparsed_rate": 0.6666666666666666
+      "failure_rate": 0.6666666666666666,
+      "unparsed_rate": 0.2
     },
     "2025": {
       "games_discovered": 4,
@@ -31,7 +33,8 @@
       "games_non_final": 0,
       "games_parse_failed": 0,
       "games_skipped_already_committed": 1,
-      "unparsed_rate": 0.0
+      "failure_rate": 0.0,
+      "unparsed_rate": 0.04
     }
   },
   "enumerated_failures": [
@@ -47,11 +50,12 @@
     {
       "game_id": "h2",
       "season": 2024,
-      "url": "https://example.com/2024/boxscores/h2.xml"
+      "url": "https://example.com/2024/boxscores/h2.xml",
+      "reason": "no PBP pane yet"
     }
   ],
   "threshold": {
-    "value": 0.05,
+    "value": 0.02,
     "exceeded": true
   }
 }

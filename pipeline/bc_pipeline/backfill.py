@@ -126,6 +126,13 @@ class GameOutcome:
     reason: str | None = None
     replayable: bool | None = None
     warnings: list[str] = field(default_factory=list)
+    #: Line-level PBP counts from ``meta.parse.events_count``/
+    #: ``meta.parse.unparsed_count`` (see ``parse.py``), populated only for
+    #: the ``"parsed"`` outcome -- ``None`` for ``non_final``, ``parse_failed``,
+    #: and ``skipped_already_committed`` (this run never parsed those games,
+    #: so it has no line counts to report; never fabricate a 0).
+    unparsed_count: int | None = None
+    events_count: int | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -136,6 +143,8 @@ class GameOutcome:
             "reason": self.reason,
             "replayable": self.replayable,
             "warnings": list(self.warnings),
+            "unparsed_count": self.unparsed_count,
+            "events_count": self.events_count,
         }
 
 
@@ -323,8 +332,11 @@ def _process_boxscore_url(
         return outcome, None, None
 
     game = replay.replay_game(game, html)
-    replayable = bool(game["meta"]["parse"]["replayable"])
-    warnings = list(game["meta"]["parse"].get("warnings", []))
+    parse_meta = game["meta"]["parse"]
+    replayable = bool(parse_meta["replayable"])
+    warnings = list(parse_meta.get("warnings", []))
+    events_count = parse_meta.get("events_count")
+    unparsed_count = parse_meta.get("unparsed_count")
 
     outcome = GameOutcome(
         url=url,
@@ -333,6 +345,8 @@ def _process_boxscore_url(
         outcome="parsed",
         replayable=replayable,
         warnings=warnings,
+        events_count=events_count,
+        unparsed_count=unparsed_count,
     )
     summary.parsed += 1
     if replayable:

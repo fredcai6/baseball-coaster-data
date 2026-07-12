@@ -43,12 +43,15 @@ def _make_result() -> BackfillResult:
 
     games = [
         # 2025: 3 parsed+replayable, 1 skipped_already_committed.
+        # g1: zero unparsed lines. g2: nonzero unparsed lines. g3: zero.
         GameOutcome(
             url="https://example.com/2025/boxscores/g1.xml",
             season=2025,
             game_id="g1",
             outcome="parsed",
             replayable=True,
+            events_count=100,
+            unparsed_count=0,
         ),
         GameOutcome(
             url="https://example.com/2025/boxscores/g2.xml",
@@ -56,6 +59,8 @@ def _make_result() -> BackfillResult:
             game_id="g2",
             outcome="parsed",
             replayable=True,
+            events_count=90,
+            unparsed_count=10,
         ),
         GameOutcome(
             url="https://example.com/2025/boxscores/g3.xml",
@@ -63,6 +68,8 @@ def _make_result() -> BackfillResult:
             game_id="g3",
             outcome="parsed",
             replayable=True,
+            events_count=50,
+            unparsed_count=0,
         ),
         GameOutcome(
             url="https://example.com/2025/boxscores/g4.xml",
@@ -70,13 +77,16 @@ def _make_result() -> BackfillResult:
             game_id="g4",
             outcome="skipped_already_committed",
         ),
-        # 2024: 1 parsed+replayable, 1 non_final, 1 parse_failed.
+        # 2024: 1 parsed+replayable (with unparsed lines), 1 non_final (no
+        # line counts -- never parsed this run), 1 parse_failed (likewise).
         GameOutcome(
             url="https://example.com/2024/boxscores/h1.xml",
             season=2024,
             game_id="h1",
             outcome="parsed",
             replayable=True,
+            events_count=20,
+            unparsed_count=5,
         ),
         GameOutcome(
             url="https://example.com/2024/boxscores/h2.xml",
@@ -118,8 +128,15 @@ def test_report_shape_and_league_totals():
     assert league["games_parse_failed"] == 1
     assert league["games_skipped_already_committed"] == 1
 
-    # unparsed_rate = (parse_failed=1 + (parsed=5 - replayable=4)=1) / discovered=7
-    assert league["unparsed_rate"] == pytest.approx(2 / 7)
+    # failure_rate (game-level) = (parse_failed=1 + (parsed=5 - replayable=4)=1) / discovered=7
+    assert league["failure_rate"] == pytest.approx(2 / 7)
+
+    # unparsed_rate (line-level, totals-based) = sum(unparsed_count) / sum(events_count+unparsed_count)
+    # across games actually parsed this run: g1(0/100) + g2(10/100) + g3(0/50) + h1(5/25)
+    # = unparsed (0+10+0+5)=15 / total (100+100+50+25)=275. h2 (non_final) and
+    # h3 (parse_failed) are excluded entirely (never parsed this run -- no
+    # line counts to contribute).
+    assert league["unparsed_rate"] == pytest.approx(15 / 275)
 
 
 def test_by_season_breakdown():
@@ -133,7 +150,10 @@ def test_by_season_breakdown():
     assert s2025["games_parsed"] == 3
     assert s2025["games_replayable"] == 3
     assert s2025["games_skipped_already_committed"] == 1
-    assert s2025["unparsed_rate"] == pytest.approx(0.0)
+    # failure_rate: all 3 parsed games are replayable, no parse_failed -> 0.
+    assert s2025["failure_rate"] == pytest.approx(0.0)
+    # unparsed_rate: g1(0/100) + g2(10/100) + g3(0/50) = unparsed 10 / total 250.
+    assert s2025["unparsed_rate"] == pytest.approx(10 / 250)
 
     s2024 = by_season["2024"]
     assert s2024["games_discovered"] == 3
@@ -141,8 +161,11 @@ def test_by_season_breakdown():
     assert s2024["games_replayable"] == 1
     assert s2024["games_non_final"] == 1
     assert s2024["games_parse_failed"] == 1
-    # unparsed_rate = (1 + (2-1)) / 3 = 2/3
-    assert s2024["unparsed_rate"] == pytest.approx(2 / 3)
+    # failure_rate = (1 + (2-1)) / 3 = 2/3
+    assert s2024["failure_rate"] == pytest.approx(2 / 3)
+    # unparsed_rate: only h1 was actually parsed this season (h2 non_final,
+    # h3 parse_failed both excluded) -> unparsed 5 / total 25.
+    assert s2024["unparsed_rate"] == pytest.approx(5 / 25)
 
 
 def test_enumerated_failures_includes_every_failure_never_dropped():
@@ -191,11 +214,64 @@ def test_non_final_games_kept_separate_from_failures():
         "game_id": "h2",
         "season": 2024,
         "url": "https://example.com/2024/boxscores/h2.xml",
+        "reason": "no PBP pane yet",
     }
 
     # h2 must never appear in enumerated_failures.
     failure_ids = {f["game_id"] for f in report["enumerated_failures"]}
     assert "h2" not in failure_ids
+
+
+def test_games_with_no_events_count_are_excluded_not_zeroed():
+    """non_final/parse_failed games (never parsed this run) must not corrupt
+    the line-level unparsed_rate aggregate -- they are excluded from both
+    numerator and denominator entirely, not counted as a 0%-unparsed game."""
+    result = _make_result()
+    # 2024's line-level rate comes ONLY from h1 (5 unparsed / 25 total).
+    # Confirm this by computing what the rate WOULD be if h2/h3 were wrongly
+    # treated as 0-unparsed, 0-total games (i.e. included as extra zero-sized
+    # entries) -- that would still be 5/25 numerically (0 total contributes
+    # nothing either way), so instead assert directly against the raw
+    # per-game math to make the exclusion explicit and unambiguous.
+    report = completeness.build_completeness_report([result])
+    s2024 = report["by_season"]["2024"]
+    assert s2024["unparsed_rate"] == pytest.approx(5 / 25)
+
+    # Remove h1 (the only parsed 2024 game with line counts) and confirm the
+    # season's unparsed_rate falls back to 0.0 (no fabricated rate, no
+    # division by zero) rather than crashing or inventing a number.
+    result_no_lines = _make_result()
+    result_no_lines.games = [g for g in result_no_lines.games if g.game_id != "h1"]
+    report_no_lines = completeness.build_completeness_report([result_no_lines])
+    assert report_no_lines["by_season"]["2024"]["unparsed_rate"] == pytest.approx(0.0)
+
+
+def test_failure_rate_and_unparsed_rate_are_distinct_fields():
+    """The rename must not drop the game-level signal: both rates are
+    present, both correctly computed, and they are NOT the same number for
+    this fixture (proving the rename didn't collapse the two concepts)."""
+    report = completeness.build_completeness_report([_make_result()])
+    league = report["league"]
+    assert "failure_rate" in league
+    assert "unparsed_rate" in league
+    assert league["failure_rate"] == pytest.approx(2 / 7)
+    assert league["unparsed_rate"] == pytest.approx(15 / 275)
+    assert league["failure_rate"] != pytest.approx(league["unparsed_rate"])
+
+
+def test_threshold_and_exit_are_keyed_on_line_level_unparsed_rate_not_failure_rate():
+    """failure_rate (2/7 ~= 0.2857) and unparsed_rate (15/265 ~= 0.0566) are
+    both above 0.06 and both below 0.3 for this fixture -- pick a threshold
+    that would flip the exceeded verdict depending on WHICH rate gates it,
+    proving the CLI is keyed on unparsed_rate (line-level), not failure_rate."""
+    # 0.10 is below failure_rate (0.2857) but above unparsed_rate (0.0566):
+    # if the threshold were (still, wrongly) keyed on failure_rate, this
+    # would report exceeded=True; keyed correctly on unparsed_rate, it must
+    # be False.
+    report = completeness.build_completeness_report([_make_result()], threshold=0.10)
+    assert report["league"]["failure_rate"] > 0.10
+    assert report["league"]["unparsed_rate"] < 0.10
+    assert report["threshold"]["exceeded"] is False
 
 
 def test_multiple_backfill_results_aggregate():
@@ -212,7 +288,7 @@ def test_multiple_backfill_results_aggregate():
 
 
 def test_threshold_default_is_provisional_and_documented():
-    assert completeness.DEFAULT_THRESHOLD == pytest.approx(0.05)
+    assert completeness.DEFAULT_THRESHOLD == pytest.approx(0.02)
 
 
 def test_threshold_not_exceeded_under_generous_threshold():

@@ -17,6 +17,7 @@ correctness (already covered elsewhere).
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -173,6 +174,9 @@ def test_non_final_page_recorded_not_stubbed(tmp_path: Path) -> None:
     assert len(non_final_outcomes) == 1
     assert non_final_outcomes[0].game_id == "20260402_notfinal"
     assert non_final_outcomes[0].reason  # a reason string was recorded
+    # non_final never got parsed this run -- no line counts to report.
+    assert non_final_outcomes[0].events_count is None
+    assert non_final_outcomes[0].unparsed_count is None
 
     # No stub file for the non-final game.
     assert not (tmp_path / "games" / "2026" / "20260402_notfinal.json").exists()
@@ -199,8 +203,44 @@ def test_other_parse_exception_recorded_as_parse_failed(tmp_path: Path) -> None:
     failed = [g for g in result.games if g.outcome == "parse_failed"]
     assert len(failed) == 1
     assert failed[0].reason  # raw is already kept by the fetch side; reason is recorded here
+    # parse_failed never produced a parsed game -- no line counts to report.
+    assert failed[0].events_count is None
+    assert failed[0].unparsed_count is None
 
     assert not (tmp_path / "games" / "2026" / "20260401_broken.json").exists()
+
+
+# --- (g2 rework) parsed outcomes carry line-level counts from meta.parse ---
+
+
+def test_parsed_outcome_carries_unparsed_and_events_count(tmp_path: Path) -> None:
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+
+    call_log: list[str] = []
+    commits: list = []
+    result = run(config, response_map, call_log, FakeClock(), tmp_path, commits, limit=None)
+
+    outcome = result.games[0]
+    assert outcome.outcome == "parsed"
+    assert outcome.events_count is not None
+    assert outcome.unparsed_count is not None
+
+    written = json.loads(
+        (tmp_path / "games" / "2026" / "20260401_g1.json").read_text(encoding="utf-8")
+    )
+    assert outcome.events_count == written["meta"]["parse"]["events_count"]
+    assert outcome.unparsed_count == written["meta"]["parse"]["unparsed_count"]
+
+    # to_dict() round-trips both fields.
+    outcome_dict = outcome.to_dict()
+    assert outcome_dict["events_count"] == outcome.events_count
+    assert outcome_dict["unparsed_count"] == outcome.unparsed_count
 
 
 # --- (c) games/** write-once: repeat run skips, never overwrites ------------

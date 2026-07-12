@@ -221,32 +221,63 @@ python -m bc_pipeline.completeness --input season2024.json season2025.json --thr
 
 - `league.*` — league-wide totals across every season in the input: `games_discovered`,
   `games_fetched`, `games_parsed`, `games_replayable`, `games_non_final`, `games_parse_failed`,
-  `games_skipped_already_committed`, and `unparsed_rate` (see definition below).
+  `games_skipped_already_committed`, `failure_rate` (game-level, see below), and `unparsed_rate`
+  (line-level, the real UNPARSED metric, see below).
 - `by_season["<year>"]` — the same shape as `league`, scoped to one season.
 - `enumerated_failures` — one entry per game whose outcome is `parse_failed`, or whose outcome is
   `parsed` with `replayable: false` — `{game_id, season, url, outcome, reason}`. Every such game is
   listed here; none are ever dropped, truncated, or summarized away.
-- `non_final_games` — one entry per game that hit `NonFinalPageError` (`{game_id, season, url}`) —
-  an expected, non-alarming outcome, kept separate from `enumerated_failures`.
+- `non_final_games` — one entry per game that hit `NonFinalPageError` (`{game_id, season, url,
+  reason}`) — an expected, non-alarming outcome, kept separate from `enumerated_failures`.
 - `threshold.value` / `threshold.exceeded` — the threshold this run was scored against, and whether
-  the league-wide `unparsed_rate` crossed it.
+  the league-wide LINE-level `unparsed_rate` crossed it.
 
-**UNPARSED-rate definition.** A game counts against the rate if its outcome is `parse_failed`, OR
-its outcome is `parsed` but `replayable` is `false`. `non_final` games are excluded from the
+This report deliberately carries **two distinct rates**, neither one dropping the other:
+
+**`failure_rate` (game-level).** A game counts against this rate if its outcome is `parse_failed`,
+OR its outcome is `parsed` but `replayable` is `false`. `non_final` games are excluded from the
 numerator (an unfinished game is an expected negative, not a parse failure) but still count in the
 denominator (`games_discovered`), since they were genuinely discovered and looked at this run.
 `skipped_already_committed` games are likewise excluded from the numerator (they succeeded in a
 previous run) but count in the denominator. Concretely:
 
 ```
-unparsed_rate = (games_parse_failed + (games_parsed - games_replayable)) / games_discovered
+failure_rate = (games_parse_failed + (games_parsed - games_replayable)) / games_discovered
 ```
 
-**Threshold mechanism.** The CLI exits nonzero when the league-wide `unparsed_rate` exceeds
-`--threshold` (default **0.05**, i.e. 5%). This default is a **provisional placeholder** — the full
-multi-season backfill corpus this report is meant to score does not exist yet at the time this gate
-was built. The intended mechanism, once real data exists, is: take the observed league-wide
-`unparsed_rate` across the actual backfill slice and add a fixed safety margin (e.g. +2 percentage
-points), rather than a hand-picked constant. `--threshold` lets a real run supply that
-evidence-grounded value without any code change. 0.05 was chosen deliberately generous (not tight)
-so a provisional value does not spuriously fail an otherwise-healthy early run.
+This is a valuable, honestly-reported number in its own right — it is reported, just not what the
+CLI threshold gates on (see below).
+
+**`unparsed_rate` (line-level — the real UNPARSED metric).** `parse.py` stamps
+`meta.parse.events_count` / `meta.parse.unparsed_count` on every successfully parsed game (the
+number of PBP narrative lines it turned into structured events, and the number it could not parse
+and dropped into `unparsed[]`); `bc_pipeline.backfill.GameOutcome` threads both numbers through as
+`events_count` / `unparsed_count` (`None` for any outcome that never went through a parse this run:
+`non_final`, `parse_failed`, `skipped_already_committed`). Per game, when both counts are available:
+
+```
+line_unparsed_rate = unparsed_count / (events_count + unparsed_count)
+```
+
+`league.unparsed_rate` and each `by_season["<year>"].unparsed_rate` are **totals-based**, not an
+average of per-game rates — they weight every narrative line equally regardless of which game
+produced it, rather than weighting every game equally regardless of size:
+
+```
+unparsed_rate = sum(unparsed_count over parsed games) / sum(events_count + unparsed_count over parsed games)
+```
+
+A game with no `events_count`/`unparsed_count` is excluded entirely from both the numerator and the
+denominator — never treated as a 0%-unparsed game, never fabricated.
+
+**Threshold mechanism.** The CLI exits nonzero when the league-wide LINE-level `unparsed_rate`
+exceeds `--threshold` (default **0.02**, i.e. 2%) — `failure_rate` is reported but does not gate the
+run. This default is a **provisional placeholder** — the full multi-season backfill corpus this
+report is meant to score does not exist yet at the time this gate was built, and a line-level rate
+is a much finer-grained quantity than a game-level failure rate, so the placeholder had to be
+re-derived rather than reused at the old game-level magnitude. The intended mechanism, once real
+data exists, is: take the observed line-level `unparsed_rate` across the actual backfill slice and
+add a fixed safety margin (e.g. +1 percentage point), rather than a hand-picked constant.
+`--threshold` lets a real run supply that evidence-grounded value without any code change. 0.02 was
+chosen deliberately generous (not tight) so a provisional value does not spuriously fail an
+otherwise-healthy early run, while still meaning something at line granularity.
