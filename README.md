@@ -186,3 +186,67 @@ test fixtures are exempt.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Backfill
+
+`bc_pipeline.backfill` is the until-caught-up driver: fetch (`schedule`/`fetcher`/`archive`) ->
+parse (`parse.parse_game`) -> replay (`replay.replay_game`) -> commit, one season at a time, never
+overwriting an already-committed `games/<season>/<game_id>.json` (write-once). Run it from the
+`pipeline/` directory:
+
+```bash
+python -m bc_pipeline.backfill                       # walk every configured season until caught up
+python -m bc_pipeline.backfill --limit 20             # cap total NEW fetches this run (bounded slice)
+python -m bc_pipeline.backfill --config my-config.json --repo-root ..
+```
+
+It stops immediately (exit 1) on a detected challenge/WAF trip after escalating backoff (60s, 10min,
+60min); a resumed run picks back up from the checkpoint plus whatever `games/**` files are already
+committed. See `bc_pipeline.backfill.BackfillResult`/`GameOutcome`/`SeasonSummary` for the exact
+per-game and per-season outcome shape this driver produces.
+
+### Completeness report (`bc_pipeline.completeness`)
+
+`bc_pipeline.completeness` turns one or more `BackfillResult`s into a single honest completeness
+report, written to `artifacts/latest/completeness.json` (mutable, regenerable — see the caller
+contract above; it carries a `meta.generated_at` timestamp). Run it from the `pipeline/` directory
+against one or more serialized backfill-result JSON files:
+
+```bash
+python -m bc_pipeline.completeness --input backfill_result.json --output ../artifacts/latest/completeness.json
+python -m bc_pipeline.completeness --input season2024.json season2025.json --threshold 0.03
+```
+
+**Report shape:**
+
+- `league.*` — league-wide totals across every season in the input: `games_discovered`,
+  `games_fetched`, `games_parsed`, `games_replayable`, `games_non_final`, `games_parse_failed`,
+  `games_skipped_already_committed`, and `unparsed_rate` (see definition below).
+- `by_season["<year>"]` — the same shape as `league`, scoped to one season.
+- `enumerated_failures` — one entry per game whose outcome is `parse_failed`, or whose outcome is
+  `parsed` with `replayable: false` — `{game_id, season, url, outcome, reason}`. Every such game is
+  listed here; none are ever dropped, truncated, or summarized away.
+- `non_final_games` — one entry per game that hit `NonFinalPageError` (`{game_id, season, url}`) —
+  an expected, non-alarming outcome, kept separate from `enumerated_failures`.
+- `threshold.value` / `threshold.exceeded` — the threshold this run was scored against, and whether
+  the league-wide `unparsed_rate` crossed it.
+
+**UNPARSED-rate definition.** A game counts against the rate if its outcome is `parse_failed`, OR
+its outcome is `parsed` but `replayable` is `false`. `non_final` games are excluded from the
+numerator (an unfinished game is an expected negative, not a parse failure) but still count in the
+denominator (`games_discovered`), since they were genuinely discovered and looked at this run.
+`skipped_already_committed` games are likewise excluded from the numerator (they succeeded in a
+previous run) but count in the denominator. Concretely:
+
+```
+unparsed_rate = (games_parse_failed + (games_parsed - games_replayable)) / games_discovered
+```
+
+**Threshold mechanism.** The CLI exits nonzero when the league-wide `unparsed_rate` exceeds
+`--threshold` (default **0.05**, i.e. 5%). This default is a **provisional placeholder** — the full
+multi-season backfill corpus this report is meant to score does not exist yet at the time this gate
+was built. The intended mechanism, once real data exists, is: take the observed league-wide
+`unparsed_rate` across the actual backfill slice and add a fixed safety margin (e.g. +2 percentage
+points), rather than a hand-picked constant. `--threshold` lets a real run supply that
+evidence-grounded value without any code change. 0.05 was chosen deliberately generous (not tight)
+so a provisional value does not spuriously fail an otherwise-healthy early run.

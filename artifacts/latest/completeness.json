@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "generated_at": "2026-07-12T13:55:28Z"
+  },
+  "league": {
+    "games_discovered": 7,
+    "games_fetched": 5,
+    "games_parsed": 5,
+    "games_replayable": 4,
+    "games_non_final": 1,
+    "games_parse_failed": 1,
+    "games_skipped_already_committed": 1,
+    "unparsed_rate": 0.2857142857142857
+  },
+  "by_season": {
+    "2024": {
+      "games_discovered": 3,
+      "games_fetched": 2,
+      "games_parsed": 2,
+      "games_replayable": 1,
+      "games_non_final": 1,
+      "games_parse_failed": 1,
+      "games_skipped_already_committed": 0,
+      "unparsed_rate": 0.6666666666666666
+    },
+    "2025": {
+      "games_discovered": 4,
+      "games_fetched": 3,
+      "games_parsed": 3,
+      "games_replayable": 3,
+      "games_non_final": 0,
+      "games_parse_failed": 0,
+      "games_skipped_already_committed": 1,
+      "unparsed_rate": 0.0
+    }
+  },
+  "enumerated_failures": [
+    {
+      "game_id": "h3",
+      "season": 2024,
+      "url": "https://example.com/2024/boxscores/h3.xml",
+      "outcome": "parse_failed",
+      "reason": "no archived_path found in checkpoint for this url"
+    }
+  ],
+  "non_final_games": [
+    {
+      "game_id": "h2",
+      "season": 2024,
+      "url": "https://example.com/2024/boxscores/h2.xml"
+    }
+  ],
+  "threshold": {
+    "value": 0.05,
+    "exceeded": true
+  }
+}
