@@ -1,0 +1,30 @@
+{
+  "description": "REAL (not synthetic) exercise of the fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md). One of the 5 DH-pitching-substitution lines from the live sample game_20260709_h94w — genuinely unparsed[] under schema 1.0.0 (substitution.slot required 1-9; a DH pitching change has no batting-order slot) — was promoted after the additive-MINOR schema evolution to 1.1.0 (substitution.slot made nullable; see docs/design/DECISION.md section 7). This captures the promoted line's actual parse output; test_promoted_dh_pitching_sub.py re-derives it from the live sample so this fixture stays golden, not hand-copied.",
+  "formerly_unparsed_under": "schema 1.0.0",
+  "promoted_under": "schema 1.1.0 (additive MINOR: $defs.substitution.slot -> [\"integer\",\"null\"], null = pitcher not in the batting order)",
+  "source": "tests/samples/boxscore_20260709_final.html (inning 7 top), the real live sample",
+  "raw_line": "Ryan Faulks to p for Garrett VanDeventer.",
+  "grammar_clausegroup": {
+    "module": "bc_pipeline.grammar",
+    "kind": "substitution",
+    "player_in": "Ryan Faulks",
+    "player_out": "Garrett VanDeventer"
+  },
+  "promoted_substitution_event": {
+    "seq": 95,
+    "inning": 7,
+    "half": "top",
+    "kind": "substitution",
+    "batting_team": "syn:team:away",
+    "fielding_team": "maotayco79j2g2lx",
+    "narrative": "Ryan Faulks to p for Garrett VanDeventer.",
+    "scoring_play": false,
+    "substitution": {
+      "slot": null,
+      "player_out": "4bs3tvwryvtzrvpa",
+      "player_in": "urxa9mmchubhb8h6",
+      "kind": "pitching",
+      "after_event_seq": 94
+    }
+  }
+}
