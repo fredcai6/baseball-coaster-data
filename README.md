@@ -100,6 +100,12 @@ against the committed golden — read-only by default; pass `--write` to accept 
 delta and regenerate the golden. Regeneration is always gated by this visible delta,
 never a silent overwrite.
 
+**Test fixtures.** `tests/samples/` holds the curated, archived boxscore pages the
+zero-fetch tests run against; it is the sole sanctioned location for committed HTML (a
+narrow `!tests/samples/*.html` exception to the blanket `*.html` ignore). The
+no-raw-HTML caller-contract clause is intent-scoped to the scraped corpus — curated
+test fixtures are exempt.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
