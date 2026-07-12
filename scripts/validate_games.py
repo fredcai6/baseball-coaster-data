@@ -31,11 +31,24 @@ FIXTURES_DIR = REPO_ROOT / "tests" / "fixtures"
 
 
 def _discover_targets() -> list[Path]:
-    """Every *.json under games/** and tests/fixtures/**, sorted, deduped."""
+    """Every *.json under games/** and tests/fixtures/**, sorted, deduped.
+
+    Full-game validation applies to: every file under games/**, files sitting
+    DIRECTLY in tests/fixtures/ (real-game fixtures), and everything under
+    tests/fixtures/golden/ (full parse outputs). Any OTHER fixture
+    subdirectory (synthetic_bad_sequences/, synthetic_taxonomy_tail/,
+    promoted/, ...) holds deliberately partial unit-test material that the
+    pytest suite exercises directly — those are not full game files and are
+    skipped here.
+    """
     targets: set[Path] = set()
-    for base in (GAMES_DIR, FIXTURES_DIR):
-        if base.is_dir():
-            targets.update(base.rglob("*.json"))
+    if GAMES_DIR.is_dir():
+        targets.update(GAMES_DIR.rglob("*.json"))
+    if FIXTURES_DIR.is_dir():
+        for p in FIXTURES_DIR.rglob("*.json"):
+            rel_parts = p.relative_to(FIXTURES_DIR).parts
+            if len(rel_parts) == 1 or rel_parts[0] == "golden":
+                targets.add(p)
     return sorted(targets)
 
 
