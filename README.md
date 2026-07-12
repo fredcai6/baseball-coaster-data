@@ -55,6 +55,51 @@ version) and `_derived` is a regenerable cache — neither is part of the game's
 the rule the write-once / re-parse discipline is checked against, and it also appears in the
 schema's root `$comment`.
 
+## Parsing & replay
+
+The pipeline turns a raw StatCrew boxscore page into a schema-valid `final` game file
+in three independently-testable stages, plus a machine-checkable summary of any run:
+
+1. **Parse** (`bc_pipeline.parse.parse_game(html, source_url=..., fetched_at=...)`) reads
+   the page's structural DOM and its own closed play-by-play grammar, and folds every
+   PBP line forward into the schema's `events[]` spine. Every line becomes an event OR a
+   verbatim `unparsed[]` entry — never dropped, never guessed. Parsing is
+   **zero-fetch**: it never makes a network call; it only reads the HTML string handed
+   to it (fetching that HTML is a separate, earlier gate's job).
+2. **Replay** (`bc_pipeline.replay.replay_game(game, html)`) is an INDEPENDENT check —
+   it re-derives the linescore/box oracle from the same raw HTML with its own,
+   unshared table-reading code, folds the parser's asserted runner primitives forward
+   into the `_derived` base-out cache, and runs five checks (linescore, outs-per-half,
+   LOB, PA counts, illegal transitions). A failed check flags the game
+   (`meta.parse.replayable = False` + a warning); it never silently passes and never
+   raises past the caller.
+3. **Reparse-summary** (`bc_pipeline.reparse_summary`) turns one parse+replay run into a
+   small, stable, JSON-serializable summary (`summarize`: replay pass/fail, unparsed
+   rate, event-type counts) and the delta between two runs (`diff`: zero on two
+   identical runs, and isolated to exactly what changed otherwise). This is what gates
+   golden-fixture regeneration — see below.
+
+**Determinism.** Two game files describe the same game iff they are deep-equal after
+removing the root `meta` key and every `_derived` block (`bc_pipeline.serialize.
+semantic_equal`/`canonical_dumps` — see "Semantic equality" above). A re-parse of
+byte-identical HTML by the same parser version always produces the same
+`idempotency_key` (`source sha256 + parser version`).
+
+**`unparsed[]`.** A line the current grammar/schema cannot honestly represent is never
+fabricated or dropped — it is preserved verbatim in `unparsed[]` with its location and
+the reason it missed. `tests/fixtures/PROMOTION_PROTOCOL.md` documents how an
+`unparsed[]` line, once its grammar rule lands, is promoted into a golden or synthetic
+unit fixture (exercised once, end to end, in
+`tests/fixtures/synthetic_taxonomy_tail/`).
+
+**Golden fixtures.** `tests/fixtures/golden/` holds the full parse+replay output of the
+live sample game, with volatile `meta` timestamps normalized so the fixture never
+depends on wall-clock time. `PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -m
+bc_pipeline.reparse_summary` re-parses the sample and prints the reparse-summary delta
+against the committed golden — read-only by default; pass `--write` to accept that
+delta and regenerate the golden. Regeneration is always gated by this visible delta,
+never a silent overwrite.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
