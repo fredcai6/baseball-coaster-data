@@ -189,6 +189,43 @@ def _split_chain(chain: str) -> List[str]:
     return [tok for tok in chain.split(" to ") if tok]
 
 
+# A closed alternation of the modifier tokens a hit-type hit_run_batted_ball
+# verb (single/double/triple/home_run) can carry, in StatCrew's own
+# comma-separated tail -- "RBI, N RBI, bunt, SAC, ground-rule, unearned" per
+# the real corpus (issue #31 g2). Order matters: "\d+ RBI" must be tried
+# before the bare "RBI" alternative so a token like "2 RBI" isn't split into
+# an unmatched "2" plus a bare "RBI". NEVER a `.*` catch-all -- an unlisted
+# token (e.g. the batter's own trailing self-advance clause, "advanced to
+# second on an error by X") deliberately does NOT match here, so a line
+# carrying one stays a clean GrammarMiss rather than silently discarding
+# structured movement data into a junk modifier string.
+_HIT_MOD_TOKEN = r"\d+ RBI|RBI|bunt|SAC|ground-rule|unearned"
+_HIT_MOD_TAIL = rf"(?P<mods>(?:, (?:{_HIT_MOD_TOKEN}))*)"
+
+
+def _expand_rbi_modifiers(tokens: List[str]) -> List[str]:
+    """A "N RBI" (N >= 2) token keeps its own literal text (fidelity: the
+    count is real information) but ALSO gets a bare "RBI" element appended
+    right after it, so the pre-existing `"RBI" in modifiers` exact-match
+    check (parse.py's per-run rbi-flag assembly, and the identical `"SAC" in
+    modifiers` pattern in replay.py's check_pa_counts) keeps matching
+    regardless of N -- that boolean check is the code's own existing
+    convention for modifier membership, and it is exact-match, not
+    substring, so "2 RBI" alone would silently break it. A bare "RBI" token
+    is left untouched (no duplication).
+    """
+    out: List[str] = []
+    for tok in tokens:
+        out.append(tok)
+        if re.fullmatch(r"\d+ RBI", tok):
+            out.append("RBI")
+    return out
+
+
+def _hit_modifiers_from_tail(tail: Optional[str]) -> List[str]:
+    return _expand_rbi_modifiers(_modifiers_from_tail(tail or ""))
+
+
 # ---------------------------------------------------------------------------
 # PRIMARY_RULES -- ordered (regex, outcome_type, extractor) rows.
 # Each regex is matched (fullmatch) against the primary clause text with its
@@ -206,6 +243,11 @@ def _x_sacrifice(m: re.Match):
 
 def _x_grounded_into_double_play(m: re.Match):
     return (m.group("name"), _split_chain(m.group("chain")), None, [])
+
+
+def _x_into_double_play(m: re.Match):
+    mods = ["unassisted"] if m.group("unassisted") else []
+    return (m.group("name"), _split_chain(m.group("chain")), None, mods)
 
 
 def _x_groundout_chain(m: re.Match):
@@ -238,6 +280,11 @@ def _x_popout(m: re.Match):
     return (m.group("name"), [m.group("f")], None, [])
 
 
+def _x_popout_out_to(m: re.Match):
+    mods = [m.group("mod")] if m.group("mod") else []
+    return (m.group("name"), [m.group("f")], None, mods)
+
+
 def _x_fielders_choice(m: re.Match):
     return (m.group("name"), [], None, _modifiers_from_tail(m.group("tail")))
 
@@ -256,28 +303,31 @@ def _x_single(m: re.Match):
         loc = f"{m.group('side')} side"
     else:
         loc = None
-    mods = [m.group("mod")] if m.group("mod") else []
+    mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
 
 def _x_double(m: re.Match):
     loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
-    mods = [m.group("mod")] if m.group("mod") else []
+    mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
 
 def _x_triple(m: re.Match):
-    mods = [m.group("mod")] if m.group("mod") else []
-    return (m.group("name"), [], m.group("loc"), mods)
+    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    mods = _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), [], loc, mods)
 
 
 def _x_home_run(m: re.Match):
-    mods = [m.group("mod")] if m.group("mod") else []
-    return (m.group("name"), [], m.group("loc"), mods)
+    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    mods = _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), [], loc, mods)
 
 
 def _x_walk(m: re.Match):
-    return (m.group("name"), [], None, [])
+    mods = [m.group("mod")] if m.group("mod") else []
+    return (m.group("name"), [], None, mods)
 
 
 def _x_intentional_walk(m: re.Match):
@@ -307,12 +357,57 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_sacrifice,
     ),
     (
+        # Bare "NAME out at first CHAIN" (the batter grounds into a force
+        # play and is thrown out at first, no sacrifice comma) -- ordered
+        # right AFTER the ", SAC" row above so that row still wins when
+        # present. The negative lookaheads guard against two UNRELATED
+        # compound narrative shapes found in the real corpus that also
+        # contain the literal " out at first " substring later in the same
+        # clause -- "NAME struck out swinging, out at first C to 1B"
+        # (dropped-third-strike thrown out) and "NAME picked off, out at
+        # first C to 1B" (pickoff throw) -- neither is one of this gate's 10
+        # target shapes; without the guard, `.+?`'s non-greedy name group
+        # would swallow "NAME struck out swinging," whole as if it were a
+        # player name, misfiling a strikeout as a groundout.
+        re.compile(
+            r"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
+            r"(?P<name>.+?) out at first "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)$"
+        ),
+        "groundout",
+        _x_groundout_chain,
+    ),
+    (
         re.compile(
             r"^(?P<name>.+?) grounded into double play "
             r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)+)$"
         ),
         "grounded_into_double_play",
         _x_grounded_into_double_play,
+    ),
+    (
+        # "flied/lined into double play <chain>" map to the EXISTING
+        # flyout/lineout types -- never a new flied_into_double_play /
+        # lined_into_double_play type. Unlike "grounded into double play"
+        # (always a multi-hop chain in the sample), the real corpus shows
+        # this verb pair with a bare single fielder, a multi-hop chain, OR a
+        # single fielder + " unassisted" -- so the chain quantifier is `*`
+        # (zero or more additional hops) with a separate optional
+        # " unassisted" suffix, rather than requiring `+`.
+        re.compile(
+            r"^(?P<name>.+?) flied into double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
+        ),
+        "flyout",
+        _x_into_double_play,
+    ),
+    (
+        re.compile(
+            r"^(?P<name>.+?) lined into double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
+        ),
+        "lineout",
+        _x_into_double_play,
     ),
     (
         re.compile(
@@ -343,13 +438,26 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_popout,
     ),
     (
+        re.compile(
+            r"^(?P<name>.+?) popped out to (?P<f>[a-z0-9]+)(?:, (?P<mod>bunt))?$"
+        ),
+        "popout",
+        _x_popout_out_to,
+    ),
+    (
         re.compile(r"^(?P<name>.+?) reached on a fielder's choice(?P<tail>.*)$"),
         "fielders_choice",
         _x_fielders_choice,
     ),
     (
+        # "an error" (bare) / "a fielding error" / "a throwing error", with
+        # "first" itself optional (the "reached on a fielding error by X"
+        # no-first wording, if it occurs) -- wording alternation only; the
+        # tail-capture behavior (unrestricted, feeding `_modifiers_from_tail`
+        # exactly as before) is UNCHANGED from the pre-existing row.
         re.compile(
-            r"^(?P<name>.+?) reached first on an error by "
+            r"^(?P<name>.+?) reached (?:first )?on "
+            r"(?:an error|a fielding error|a throwing error) by "
             r"(?P<f>[a-z0-9]+)(?P<tail>.*)$"
         ),
         "reached_on_error",
@@ -361,29 +469,31 @@ PRIMARY_RULES: List[PrimaryRule] = [
             r" to (?P<loc>[a-z][a-z ]*?)"
             r"|(?P<middle> up the middle)"
             r"| through the (?P<side>left|right) side"
-            r")?(?:, (?P<mod>RBI))?$"
+            rf")?{_HIT_MOD_TAIL}$"
         ),
         "single",
         _x_single,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) doubled (?:to (?P<loc>[a-z][a-z ]*?)"
-            r"|down (?P<loc2>[a-z][a-z ]*?))(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) doubled(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "double",
         _x_double,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) tripled to (?P<loc>[a-z][a-z ]*?)(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) tripled(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "triple",
         _x_triple,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) homered to (?P<loc>[a-z][a-z ]*?)(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) homered(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "home_run",
         _x_home_run,
@@ -393,7 +503,11 @@ PRIMARY_RULES: List[PrimaryRule] = [
         "intentional_walk",
         _x_intentional_walk,
     ),
-    (re.compile(r"^(?P<name>.+?) walked$"), "walk", _x_walk),
+    (
+        re.compile(r"^(?P<name>.+?) walked(?:, (?P<mod>RBI))?$"),
+        "walk",
+        _x_walk,
+    ),
     (
         re.compile(r"^(?P<name>.+?) hit by pitch(?:, (?P<mod>RBI))?$"),
         "hit_by_pitch",

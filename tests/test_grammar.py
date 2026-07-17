@@ -604,6 +604,408 @@ def test_grammar_miss_preserves_verbatim_raw_with_embedded_whitespace():
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Family 5 (issue #31, g2) -- bare long hits (no location), a generic
+# closed-alternation multi-modifier tail (RBI / N RBI / bunt / SAC /
+# ground-rule / unearned) on single/double/triple/home_run, and "down the
+# X line" location wording extended to triple/home_run (double already had
+# it) -- all confirmed against real corpus unparsed[] entries.
+# ---------------------------------------------------------------------------
+
+
+def test_bare_doubled_no_location():
+    # verbatim games/2026 unparsed[] entry: "A. Fogel doubled."
+    result = parse_clause_group("A. Fogel doubled.")
+    p = result.primary
+    assert p.outcome_type == "double"
+    assert p.location is None
+    assert p.modifiers == []
+
+
+def test_bare_tripled_no_location():
+    result = parse_clause_group("C. Thompson tripled")
+    p = result.primary
+    assert p.outcome_type == "triple"
+    assert p.location is None
+
+
+def test_bare_homered_no_location():
+    result = parse_clause_group("C. Thompson homered")
+    p = result.primary
+    assert p.outcome_type == "home_run"
+    assert p.location is None
+
+
+def test_home_run_with_location_and_multi_rbi():
+    # verbatim games/2025 unparsed[] entry: "M. Moralez homered to left
+    # field, 2 RBI". N-RBI carries the literal "2 RBI" token for fidelity
+    # PLUS a bare "RBI" element so the existing `"RBI" in modifiers` check
+    # in parse.py keeps matching regardless of N.
+    result = parse_clause_group("M. Moralez homered to left field, 2 RBI")
+    p = result.primary
+    assert p.outcome_type == "home_run"
+    assert p.location == "left field"
+    assert "RBI" in p.modifiers
+    assert "2 RBI" in p.modifiers
+
+
+def test_home_run_bare_multi_rbi_no_location():
+    # verbatim games/2025 unparsed[] entry: "J. Jablonski homered, 2 RBI".
+    result = parse_clause_group("J. Jablonski homered, 2 RBI")
+    p = result.primary
+    assert p.outcome_type == "home_run"
+    assert p.location is None
+    assert "RBI" in p.modifiers
+    assert "2 RBI" in p.modifiers
+
+
+def test_home_run_four_rbi_grand_slam():
+    # verbatim games/2025 unparsed[] entry: "... homered to catcher, 4 RBI".
+    result = parse_clause_group("Z. Player homered to catcher, 4 RBI")
+    p = result.primary
+    assert p.outcome_type == "home_run"
+    assert "RBI" in p.modifiers
+    assert "4 RBI" in p.modifiers
+
+
+def test_single_multi_rbi_with_location():
+    # verbatim games/2025 unparsed[] entry: "K. Willman singled, 2 RBI" /
+    # "E. McCabe singled up the middle, 2 RBI" / "J. Day singled to left
+    # field, 2 RBI".
+    bare = parse_clause_group("K. Willman singled, 2 RBI")
+    assert bare.primary.outcome_type == "single"
+    assert "RBI" in bare.primary.modifiers and "2 RBI" in bare.primary.modifiers
+
+    middle = parse_clause_group("E. McCabe singled up the middle, 2 RBI")
+    assert middle.primary.location == "up the middle"
+    assert "RBI" in middle.primary.modifiers
+
+    loc = parse_clause_group("J. Day singled to left field, 2 RBI")
+    assert loc.primary.location == "left field"
+    assert "RBI" in loc.primary.modifiers and "2 RBI" in loc.primary.modifiers
+
+
+def test_walked_rbi_still_not_confused_with_hit_modifier_tail():
+    # A walk's modifier tail is intentionally NOT the generic hit alternation
+    # (a walk can never carry SAC/bunt/ground-rule) -- covered separately in
+    # Family 6 below; this test only guards single's own tail doesn't regress.
+    result = parse_clause_group("K. Dugan singled through the left side, RBI.")
+    assert "RBI" in result.primary.modifiers
+
+
+def test_singled_bunt_modifier():
+    # verbatim games corpus: "B. Skinner singled, bunt."
+    result = parse_clause_group("B. Skinner singled, bunt.")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.modifiers == ["bunt"]
+
+
+def test_singled_location_bunt_and_rbi_combined():
+    # verbatim games corpus: "... singled to first base, bunt, RBI".
+    result = parse_clause_group("N. Player singled to first base, bunt, RBI")
+    p = result.primary
+    assert p.outcome_type == "single"
+    assert p.location == "first base"
+    assert p.modifiers == ["bunt", "RBI"]
+
+
+def test_doubled_ground_rule_modifier():
+    # verbatim games corpus: "... doubled down the lf line, ground-rule".
+    result = parse_clause_group("N. Player doubled down the lf line, ground-rule")
+    p = result.primary
+    assert p.outcome_type == "double"
+    assert p.location == "the lf line"
+    assert "ground-rule" in p.modifiers
+
+
+def test_doubled_ground_rule_then_multi_rbi():
+    # verbatim games corpus: "... doubled down the rf line, ground-rule, 2
+    # RBI" -- modifier ORDER as narrated (ground-rule before RBI) preserved.
+    result = parse_clause_group(
+        "N. Player doubled down the rf line, ground-rule, 2 RBI"
+    )
+    p = result.primary
+    assert p.modifiers == ["ground-rule", "2 RBI", "RBI"]
+
+
+def test_tripled_down_the_line_location():
+    # verbatim games corpus: "... tripled down the lf line, RBI" -- triple
+    # previously only accepted "to LOC", never "down the X line".
+    result = parse_clause_group("N. Player tripled down the lf line, RBI")
+    p = result.primary
+    assert p.outcome_type == "triple"
+    assert p.location == "the lf line"
+    assert "RBI" in p.modifiers
+
+
+def test_home_run_down_the_line_location():
+    # verbatim games corpus: "... homered down the lf line, 3 RBI".
+    result = parse_clause_group("N. Player homered down the lf line, 3 RBI")
+    p = result.primary
+    assert p.outcome_type == "home_run"
+    assert p.location == "the lf line"
+    assert "3 RBI" in p.modifiers
+
+
+def test_home_run_unearned_then_rbi_order_variant():
+    # verbatim games corpus shows BOTH orderings in the wild: "unearned, 3
+    # RBI" and "3 RBI, unearned" -- the closed alternation must accept both.
+    a = parse_clause_group("N. Player homered to left field, unearned, 3 RBI")
+    assert a.primary.modifiers == ["unearned", "3 RBI", "RBI"]
+    b = parse_clause_group("N. Player homered to center field, 3 RBI, unearned")
+    assert b.primary.modifiers == ["3 RBI", "RBI", "unearned"]
+
+
+# ---------------------------------------------------------------------------
+# Family 6 (issue #31, g2) -- walked, RBI (bare walk stays untouched) and a
+# NEW "popped out to <pos>" row (ADDED alongside the existing "popped up to"
+# row, never merged into it) -- confirmed against real corpus unparsed[]
+# entries.
+# ---------------------------------------------------------------------------
+
+
+def test_walked_rbi():
+    # verbatim games corpus: "C. Brady walked, RBI; E. Diaz advanced to
+    # second; G. Kueber advanced to third; K. Santiago scored."
+    result = parse_clause_group(
+        "C. Brady walked, RBI; E. Diaz advanced to second; "
+        "G. Kueber advanced to third; K. Santiago scored."
+    )
+    p = result.primary
+    assert p.outcome_type == "walk"
+    assert p.modifiers == ["RBI"]
+    assert len(result.runners) == 3
+
+
+def test_walked_rbi_with_count_tail():
+    # verbatim games corpus: "Darryl Jackson walked, RBI (3-2 BBBFFB)".
+    result = parse_clause_group("Darryl Jackson walked, RBI (3-2 BBBFFB)")
+    p = result.primary
+    assert p.outcome_type == "walk"
+    assert p.modifiers == ["RBI"]
+    assert p.count.balls == 3 and p.count.strikes == 2
+
+
+def test_bare_walk_still_no_modifiers():
+    # Regression: the pre-existing bare-walk shape must stay unaffected by
+    # the broadened row.
+    result = parse_clause_group("Cooper Vest walked (3-2 BBBKKFB).")
+    p = result.primary
+    assert p.outcome_type == "walk"
+    assert p.modifiers == []
+
+
+def test_popped_out_to():
+    # verbatim games corpus: "L. Barns popped out to 1b."
+    result = parse_clause_group("L. Barns popped out to 1b.")
+    p = result.primary
+    assert p.outcome_type == "popout"
+    assert p.fielders == ["1b"]
+    assert p.modifiers == []
+
+
+def test_popped_out_to_bunt():
+    # verbatim games corpus: "C. Villafuer popped out to c, bunt."
+    result = parse_clause_group("C. Villafuer popped out to c, bunt.")
+    p = result.primary
+    assert p.outcome_type == "popout"
+    assert p.fielders == ["c"]
+    assert p.modifiers == ["bunt"]
+
+
+def test_popped_up_to_row_still_unaffected():
+    # Regression: the pre-existing "popped up to" row/wording must stay
+    # exactly as it was -- the new row is an ADDITION, not a merge.
+    result = parse_clause_group("Jordan Donahue popped up to 2b (0-1 F).")
+    assert result.primary.outcome_type == "popout"
+    assert result.primary.modifiers == []
+
+
+# ---------------------------------------------------------------------------
+# Family 7 (issue #31, g2) -- bare "NAME out at first CHAIN" (batter thrown
+# out, no sacrifice comma) -> groundout, and the "reached first on a
+# fielding/throwing error by X" wording variants of the existing
+# reached_on_error row.
+# ---------------------------------------------------------------------------
+
+
+def test_bare_out_at_first_chain():
+    # verbatim games/2025 unparsed[] entry: "A. Fernandez out at first 1b to
+    # ss; H. Hall advanced to second on a fielder's choice; J. Lynch
+    # advanced to third." -- the "on a fielder's choice" runner clause is a
+    # separate, unrelated gap (out of scope here), so exercise the primary
+    # alone via a line whose runner clauses are already-supported shapes.
+    result = parse_clause_group(
+        "J. Kalafut out at first 1b to p; T. Darden advanced to second; "
+        "N. Marcello advanced to third."
+    )
+    assert isinstance(result, ClauseGroup)
+    p = result.primary
+    assert p.outcome_type == "groundout"
+    assert p.fielders == ["1b", "p"]
+    assert len(result.runners) == 2
+
+
+def test_out_at_first_sac_row_still_wins_when_sac_present():
+    # Regression: the existing "out at first CHAIN, SAC" sacrifice row must
+    # still win -- the new bare row must never shadow it.
+    line = (
+        "Cam Yuran out at first p to 2b, SAC (0-0); "
+        "Josh Lopez advanced to second; Jackson Mayo advanced to third."
+    )
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "sacrifice"
+    assert "SAC" in p.modifiers
+
+
+def test_out_at_first_does_not_swallow_struck_out_compound():
+    # verbatim games corpus: "K. Jimenez struck out swinging, out at first c
+    # to 1b." -- a DIFFERENT (dropped-third-strike) narrative shape, not one
+    # of this gate's 10 target families and out of scope for this gate. The
+    # new bare row's negative lookahead must NOT match this by treating
+    # "K. Jimenez struck out swinging," as if it were a player name (which
+    # would misfile it as a groundout plate_appearance) -- it must stay
+    # exactly the SAME pre-existing (unrelated, out-of-scope) shape the
+    # RUNNER_RULES "out at base" fallback already produced before this
+    # gate's change: a runner_event, never a plate_appearance/groundout.
+    result = parse_clause_group("K. Jimenez struck out swinging, out at first c to 1b.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "runner_event"
+    assert result.primary is None
+
+
+def test_out_at_first_does_not_swallow_picked_off_compound():
+    # verbatim games corpus: "D. Covino picked off, out at first p to 1b to
+    # ss." -- also out of scope; same non-hijack guarantee as above.
+    result = parse_clause_group("D. Covino picked off, out at first p to 1b to ss.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "runner_event"
+    assert result.primary is None
+
+
+def test_reached_first_on_a_fielding_error():
+    # verbatim games corpus: "T. Lomack reached first on a fielding error by
+    # 2b; B. Evans advanced to second; L. Fennelly advanced to third."
+    result = parse_clause_group(
+        "T. Lomack reached first on a fielding error by 2b; "
+        "B. Evans advanced to second; L. Fennelly advanced to third."
+    )
+    p = result.primary
+    assert p.outcome_type == "reached_on_error"
+    assert p.fielders == ["2b"]
+    assert "error" in p.modifiers
+    assert len(result.runners) == 2
+
+
+def test_reached_first_on_a_throwing_error():
+    # verbatim games corpus: "A. Fernandez reached first on a throwing error
+    # by ss."
+    result = parse_clause_group("A. Fernandez reached first on a throwing error by ss.")
+    p = result.primary
+    assert p.outcome_type == "reached_on_error"
+    assert p.fielders == ["ss"]
+    assert "error" in p.modifiers
+
+
+def test_reached_first_on_a_fielding_error_rbi_tail():
+    # verbatim games corpus: "R. Major reached first on a fielding error by
+    # 2b, RBI; ..." -- the pre-existing wildcard tail-capture behavior is
+    # UNCHANGED, only the error-phrase wording is broadened.
+    result = parse_clause_group(
+        "R. Major reached first on a fielding error by 2b, RBI; "
+        "R. Gonzalez advanced to second."
+    )
+    p = result.primary
+    assert p.outcome_type == "reached_on_error"
+    assert "error" in p.modifiers
+    assert "RBI" in p.modifiers
+
+
+def test_reached_first_on_an_error_wording_still_works():
+    # Regression: the pre-existing "an error" (no fielding/throwing) wording
+    # must stay unaffected by the broadened alternation.
+    line = (
+        "Emilio Corona reached first on an error by 3b (3-2 BFKBB); "
+        "Cuba Bess advanced to third."
+    )
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "reached_on_error"
+    assert p.fielders == ["3b"]
+
+
+# ---------------------------------------------------------------------------
+# Family 8 (issue #31, g2) -- "flied/lined into double play <chain>" ->
+# EXISTING flyout/lineout types (never a new flied_into_double_play /
+# lined_into_double_play type). Chain covers a multi-hop fielding chain, a
+# single bare fielder, and a single fielder + "unassisted" -- all seen in
+# the real corpus.
+# ---------------------------------------------------------------------------
+
+
+def test_flied_into_double_play_multi_hop_chain():
+    # verbatim games corpus: "J. Lynch flied into double play ss to c;
+    # X. Washingto advanced to second on the throw; M. Backstrom out on the
+    # play." -- the trailing runner clause exercises the pre-existing
+    # RUNNER_RULES "out on the play" row (not re-implemented here).
+    result = parse_clause_group(
+        "J. Lynch flied into double play ss to c; "
+        "M. Backstrom out on the play."
+    )
+    p = result.primary
+    assert p.outcome_type == "flyout"
+    assert p.fielders == ["ss", "c"]
+    assert p.modifiers == []
+    assert result.runners[0].cause == "putout"
+    assert result.runners[0].out is True
+
+
+def test_flied_into_double_play_single_bare_fielder():
+    # verbatim games corpus: "... flied into double play lf; ..."
+    result = parse_clause_group("N. Player flied into double play lf.")
+    p = result.primary
+    assert p.outcome_type == "flyout"
+    assert p.fielders == ["lf"]
+
+
+def test_lined_into_double_play_multi_hop_chain():
+    # verbatim games corpus: "M. Yonamine lined into double play 2b to ss;
+    # D. Poteet out on the play."
+    result = parse_clause_group(
+        "M. Yonamine lined into double play 2b to ss; D. Poteet out on the play."
+    )
+    p = result.primary
+    assert p.outcome_type == "lineout"
+    assert p.fielders == ["2b", "ss"]
+
+
+def test_lined_into_double_play_unassisted():
+    # verbatim games corpus: "P. Howard lined into double play ss
+    # unassisted; R. Gill out on the play."
+    result = parse_clause_group(
+        "P. Howard lined into double play ss unassisted; R. Gill out on the play."
+    )
+    p = result.primary
+    assert p.outcome_type == "lineout"
+    assert p.fielders == ["ss"]
+    assert p.modifiers == ["unassisted"]
+
+
+def test_grounded_into_double_play_row_still_unaffected():
+    # Regression: the pre-existing "grounded into double play" row/type must
+    # stay exactly as before -- this gate never touches it.
+    line = (
+        "Christian Castaneda grounded into double play p to 2b to 1b (0-0); "
+        "Kyle Carlson out on the play; Josh Phillips advanced to third."
+    )
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "grounded_into_double_play"
+    assert p.fielders == ["p", "2b", "1b"]
+
+
 def test_real_sample_zero_grammar_miss():
     cells = _all_sample_cells()
     assert len(cells) == 122
