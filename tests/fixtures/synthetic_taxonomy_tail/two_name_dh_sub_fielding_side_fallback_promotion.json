@@ -1,0 +1,53 @@
+{
+  "description": "SYNTHETIC. Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for the g3 REWORK (commander-31's parse.py-assembly design call): the try-both-sides substitution side-resolution fallback in parse.py's substitution assembly branch. NOT a whole fake game and NOT a games/** entry.",
+  "taxonomy_tail_shape": "substitution with kind='offensive' resolved against the FIELDING side via the fallback (the kind-implied PRIMARY side, batting, does not resolve at all) -- proves the fallback works end-to-end, not just that grammar.py emits kind='offensive' correctly. Companion to tests/fixtures/synthetic_taxonomy_tail/two_name_dh_sub_promotion.json, which demonstrates the batting-side (convention-holds) case.",
+  "live_corpus_provenance": "verbatim real line from games/2024/20240613_516b.json unparsed[] (pre-rework): 'J. McLaughli to dh for A. Sczepkows.' (half='bottom', inning=9). Cross-checked against that game's own players/box data: both 'JD McLaughlin' and 'Ajay Sczepkowski' are on the AWAY roster (team_id z7y9gph0l9ltq3lq, 'Glacier Range Riders'); half='bottom' means the HOME team bats, so the kind-implied batting-side lookup fails and the fielding-side (away) fallback is required. This is one of the 22 of 47 real 'to dh for' corpus lines the original g3-implementer-result.md reported as failing safely to unparsed[] before this rework; it now resolves correctly.",
+  "step_a_pre_rework_behavior": {
+    "note": "Pre-rework, parse.py's substitution branch resolved ONLY against the kind-implied primary side (offensive -> batting_side). Since neither 'McLaughlin' nor 'Sczepkowski' exists on the batting (home) roster, resolution failed and the line landed in unparsed[] with reason \"substitution names did not resolve uniquely on the home side: out='A. Sczepkows' in='J. McLaughli'\" -- honest, never a wrong guess, but incomplete coverage.",
+    "raw": "J. McLaughli to dh for A. Sczepkows."
+  },
+  "step_b_rework_now_in_assembly": {
+    "module": "bc_pipeline.parse",
+    "function": "build_events",
+    "mechanism": "The substitution branch now resolves BOTH the kind-implied primary side and the other (fallback) side, and accepts whichever ONE fully resolves both names uniquely. Here the batting (primary) side fails entirely and the fielding (fallback) side fully resolves -> accepted. `substitution.kind` stays 'offensive' (grammar-layer, position semantics) even though resolution landed on the fielding side (assembly-layer, roster membership) -- the two are deliberately decoupled per commander-31's rework authorization."
+  },
+  "step_c_and_d_promoted_fixture": {
+    "synthetic_input": {
+      "player_table": "two synthetic away players (syn:away:1 'J. McLaughli', syn:away:2 'A. Sczepkows', both dh/cf-eligible) + one synthetic home pitcher (syn:home:1 'Home Pitcher'); half='bottom' so home bats (kind-implied primary side) and away fields (fallback side, where both DH-sub names actually live). See PROMOTION_PROTOCOL.md for the exact identity.PlayerTable construction.",
+      "pbp_line": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 0,
+        "text": "J. McLaughli to dh for A. Sczepkows.",
+        "is_strong": false
+      }
+    },
+    "build_events_output": {
+      "events": [
+        {
+          "seq": 0,
+          "inning": 9,
+          "half": "bottom",
+          "kind": "substitution",
+          "batting_team": "syn:team:home",
+          "fielding_team": "syn:team:away",
+          "narrative": "J. McLaughli to dh for A. Sczepkows.",
+          "scoring_play": false,
+          "substitution": {
+            "slot": 2,
+            "player_out": "syn:away:2",
+            "player_in": "syn:away:1",
+            "kind": "offensive",
+            "after_event_seq": 0
+          }
+        }
+      ],
+      "unparsed": []
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"from bc_pipeline import identity, parse as parse_mod; away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'syn:away:1': identity.PlayerEntry(player_id='syn:away:1', name='J. McLaughli', last_name='McLaughlin', team_id='syn:team:away', positions=['dh','cf']), 'syn:away:2': identity.PlayerEntry(player_id='syn:away:2', name='A. Sczepkows', last_name='Sczepkowski', team_id='syn:team:away', positions=['dh','cf'])}); home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'syn:home:1': identity.PlayerEntry(player_id='syn:home:1', name='Home Pitcher', last_name='Pitcher', team_id='syn:team:home', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=9, half='bottom', line_index=0, text='J. McLaughli to dh for A. Sczepkows.', is_strong=False); print(parse_mod.build_events([line], player_table))\""
+  },
+  "sibling_cases_covered_by_the_same_rework_not_separately_promoted_here": {
+    "cross_side_ambiguity_stays_unparsed": "a roster where BOTH sides fully resolve (e.g. the same surname pair exists on both teams) must stay unparsed -- never guess. See tests/test_parse.py test_e2e_dh_sub_ambiguous_on_both_sides_stays_unparsed_never_guesses.",
+    "convention_holds_batting_side_unaffected": "the original convention-holds case (both names on the kind-implied primary/batting side) is unaffected by the fallback -- see tests/test_parse.py test_e2e_two_name_dh_sub_issue_32_resolves_batting_side_when_convention_holds and tests/fixtures/synthetic_taxonomy_tail/two_name_dh_sub_promotion.json."
+  }
+}

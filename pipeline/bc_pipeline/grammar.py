@@ -87,14 +87,14 @@ class Substitution:
     player_out: Optional[str]
     # One of the schema's closed `substitution.kind` enum values
     # ("offensive", "defensive", "pitching") -- which side/role the
-    # substitution applies to. g5 (parse.py) currently resolves every
-    # substitution's names against the FIELDING side and hardcodes
-    # `kind: "pitching"` on the emitted event (its only STANDALONE_RULES row
-    # used to be the "<in> to p for <out>" pitching-change shape, so that was
-    # always correct); wiring g5 to read this field instead, and to resolve
-    # an "offensive" substitution's names against the BATTING side, is a
-    # separate gate's job (identity/name-resolution call sites), not this
-    # module's -- this field only carries the honest answer forward.
+    # substitution applies to. Every STANDALONE_RULES builder assigns this
+    # from the matched shape: a pitcher-position two-name/bare sub is
+    # "pitching", a dh-slot two-name/bare sub is "offensive" (the DH is a
+    # batting-lineup slot, not a fielding position), a pinch-hit/pinch-run is
+    # "offensive", and a bare or two-name move to any other fielding position
+    # is "defensive". g5 (parse.py) reads this field to resolve the
+    # substitution's names against the correct side (offensive -> batting,
+    # else -> fielding) -- see parse.py's substitution-assembly branch.
     kind: str
 
 
@@ -788,24 +788,48 @@ RUNNER_RULES: List[RunnerRule] = [
 
 # ---------------------------------------------------------------------------
 # STANDALONE_RULES -- whole-line shapes that are neither a PA nor a bare
-# sequence of runner-movement clauses: an inning-recap line, a pitching
-# substitution line ("<in> to p for <out>."), and a pinch-run substitution
-# line ("<in> pinch ran for <out>."). (Whole-line runner-movement-only shapes
-# -- "X stole second.", "X Failed pickoff attempt.", "X advanced to Y on a
-# wild pitch." and multi-clause variants thereof -- fall out of the SAME
-# RUNNER_RULES table via the no-count-tail fallback path below; they need no
-# separate regex here.)
+# sequence of runner-movement clauses: an inning-recap line, a two-name
+# position-move substitution line ("<in> to <pos> for <out>." -- <pos> is any
+# fielding position token, including "dh"), a pinch-run substitution line
+# ("<in> pinch ran for <out>."), a pinch-hit substitution line ("<in> pinch
+# hit for <out>."), and a bare (no outgoing player named) position-move line
+# ("<name> to <pos>."). (Whole-line runner-movement-only shapes -- "X stole
+# second.", "X Failed pickoff attempt.", "X advanced to Y on a wild pitch."
+# and multi-clause variants thereof -- fall out of the SAME RUNNER_RULES
+# table via the no-count-tail fallback path below; they need no separate
+# regex here.)
 #
-# The bare "<name> to dh." DH-slot-entry shape (no outgoing player named in
-# the text at all) is now covered below: schema 1.2.0 made
-# `$defs.substitution.player_out` nullable (issue #30, g2b), so this line can
-# honestly be encoded as a real substitution event with player_out=None
-# instead of an `unparsed[]` residue. The "<in> to dh for <out>." variant
-# (both names present) DOES fit this table's shape but was not requested by
-# this gate's authorized scope, so it remains intentionally unimplemented --
-# `_DH_SLOT_BARE_RE` requires the line end right after "dh" (only an optional
-# trailing period), so it does NOT match the two-name "... to dh for ..."
-# shape; that shape still falls through to a GrammarMiss unchanged.
+# kind assignment (schema's closed `substitution.kind` enum -- see
+# `Substitution.kind`'s docstring): the matched <pos> token decides it.
+# "p" -> "pitching" (the mound), "dh" -> "offensive" (the DH is a
+# batting-lineup slot, not a fielding position -- issue #30's convention),
+# every other fielding position -> "defensive". Pinch-run/pinch-hit are
+# always "offensive" (they name a batting-order substitution outright, no
+# position token to branch on).
+#
+# The bare "<name> to dh." DH-slot-entry shape (no outgoing player named at
+# all) predates this gate (schema 1.2.0, issue #30 g2b, `player_out`
+# nullable). `_POSITION_MOVE_BARE_RE` below covers the SAME bare shape for
+# every OTHER fielding position (never "dh" -- that is `_DH_SLOT_BARE_RE`'s
+# job, and this row is ordered after it so "to dh" keeps its existing
+# offensive handling) -- kind="defensive" flat, not branched by position,
+# because a bare move never names an outgoing player to disambiguate a true
+# pitching change from a defensive repositioning, and (per parse.py's
+# substitution assembly) "defensive" and "pitching" both resolve against the
+# same fielding side, so the flat label loses no assembly correctness.
+#
+# GUARD: `_POSITION_MOVE_BARE_RE`'s captured name group is a Title-Case NAME
+# TOKEN pattern, not a bare ".+?" -- a naive ".+? to <pos>\.?$" catastrophically
+# false-matches TWO real narrative shapes that end in the exact same "to
+# <pos>." tail a genuine bare substitution does: (1) multi-clause
+# runner-event lines ending in a fielding ASSIST-CHAIN notation, e.g. "...;
+# B. Burckel out at home 3b to c." (the trailing "3b to c" is a throw chain,
+# not a substitution -- 54 real corpus lines), and (2) single-clause
+# plate-appearance narrative text that itself ends "... to <pos>.", e.g.
+# "T. Specht flied out to cf.", "L. Barns popped out to 1b.", and the
+# "out at first"-guarded compounds ("K. Jimenez struck out swinging, out at
+# first c to 1b."). See the detailed comment on `_NAME_TOKEN`/
+# `_POSITION_MOVE_BARE_RE` below for the guard that eliminates both classes.
 # ---------------------------------------------------------------------------
 
 StandaloneBuilder = Callable[[re.Match, Optional[int]], ClauseGroup]
@@ -815,9 +839,50 @@ _INNING_SUMMARY_RE = re.compile(
     r"^Inning Summary:\s*(?P<r>\d+)\s*Runs\s*,\s*(?P<h>\d+)\s*Hits\s*,\s*"
     r"(?P<e>\d+)\s*Errors\s*,\s*(?P<lob>\d+)\s*LOB\s*$"
 )
-_SUBSTITUTION_RE = re.compile(r"^(?P<in>.+?) to p for (?P<out>.+?)\.?$")
+# Fielding position tokens as they appear in StatCrew narrative text (never
+# "dh" here -- dh is handled separately below, both as a two-name kind=
+# offensive branch on `_SUBSTITUTION_RE` and as its own bare
+# `_DH_SLOT_BARE_RE` row).
+_FIELD_POS_TOKENS = r"1b|2b|3b|ss|lf|cf|rf|c|p"
+_SUBSTITUTION_RE = re.compile(
+    rf"^(?P<in>.+?) to (?P<pos>{_FIELD_POS_TOKENS}|dh) for (?P<out>.+?)\.?$"
+)
 _PINCH_RUN_RE = re.compile(r"^(?P<in>.+?) pinch ran for (?P<out>.+?)\.?$")
+_PINCH_HIT_RE = re.compile(r"^(?P<in>.+?) pinch hit for (?P<out>.+?)\.?$")
 _DH_SLOT_BARE_RE = re.compile(r"^(?P<in>.+?) to dh\.?$")
+# `_POSITION_MOVE_BARE_RE`'s name group is a NAME TOKEN pattern, not a bare
+# ".+?" -- unlike every other STANDALONE_RULES row, this one's trailing
+# shape ("to <pos>.") COLLIDES with real plate-appearance narrative text:
+# "T. Specht flied out to cf.", "L. Barns popped out to 1b.", and the
+# "out at first"-guarded compounds ("K. Jimenez struck out swinging, out at
+# first c to 1b.") all end in the exact same "to <pos>." tail a genuine bare
+# substitution does. A plain "no semicolon" guard (which is enough for the
+# OTHER false-positive class -- multi-clause fielding-assist chains, see the
+# module note above) does NOT catch these: they are single-clause narrative
+# text, comma-joined, with no semicolon at all. The only reliable
+# discriminator is that a real player-name token is Title Case throughout
+# (StatCrew's own convention -- "F. Last", "First Last", plus the observed
+# real-corpus edge cases "Last, Jr", "First (Nickname) Last", curly-quote
+# apostrophes) while every PA/runner verb phrase is lowercase prose. Each
+# whitespace-separated word in the name must therefore start with an
+# uppercase letter or "(" -- this single rule independently eliminates BOTH
+# false-positive classes (verified against the full corpus: 0 of the known
+# false positives match, all 1221 legitimate real bare-move lines still do,
+# including the 11 edge-case names above that a naive [A-Z][\w'-]* char
+# class would have wrongly dropped).
+_NAME_TOKEN = r"[A-Z(][A-Za-z0-9.'’(),-]*"
+_POSITION_MOVE_BARE_RE = re.compile(
+    rf"^(?P<name>{_NAME_TOKEN}(?:\s+{_NAME_TOKEN})*) to (?P<pos>{_FIELD_POS_TOKENS})\.?$"
+)
+
+
+def _substitution_kind_for_pos(pos: str) -> str:
+    """p -> pitching, dh -> offensive (batting-lineup slot), else defensive."""
+    if pos == "p":
+        return "pitching"
+    if pos == "dh":
+        return "offensive"
+    return "defensive"
 
 
 def _build_inning_summary(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
@@ -837,13 +902,25 @@ def _build_substitution(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
     return ClauseGroup(
         kind="substitution",
         substitution=Substitution(
-            player_in=m.group("in"), player_out=m.group("out"), kind="pitching"
+            player_in=m.group("in"),
+            player_out=m.group("out"),
+            kind=_substitution_kind_for_pos(m.group("pos")),
         ),
         trailing_outs=trailing_outs,
     )
 
 
 def _build_pinch_run(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("in"), player_out=m.group("out"), kind="offensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
+def _build_pinch_hit(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
     return ClauseGroup(
         kind="substitution",
         substitution=Substitution(
@@ -868,11 +945,28 @@ def _build_dh_slot_bare(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
     )
 
 
+def _build_position_move_bare(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    # Bare defensive-position-move: the line names only the player taking the
+    # field at the new position, never an outgoing player -- same
+    # never-guess convention as the bare DH-slot row. kind is flat
+    # "defensive" (see the module-level note above this table for why it is
+    # not branched by position here).
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("name"), player_out=None, kind="defensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
 STANDALONE_RULES: List[StandaloneRule] = [
     (_INNING_SUMMARY_RE, None, _build_inning_summary),
     (_SUBSTITUTION_RE, None, _build_substitution),
     (_PINCH_RUN_RE, None, _build_pinch_run),
+    (_PINCH_HIT_RE, None, _build_pinch_hit),
     (_DH_SLOT_BARE_RE, None, _build_dh_slot_bare),
+    (_POSITION_MOVE_BARE_RE, None, _build_position_move_bare),
 ]
 
 

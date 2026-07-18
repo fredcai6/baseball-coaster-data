@@ -498,13 +498,146 @@ def test_dh_slot_bare_shape_parses_to_a_substitution_with_player_out_none():
     assert result.substitution.kind == "offensive"
 
 
-def test_dh_slot_two_name_form_still_a_grammar_miss():
-    # Regression: "<in> to dh for <out>." (both players named) is NOT
-    # requested by this gate's authorized scope and remains unimplemented --
-    # the new bare-DH regex must not accidentally swallow this shape.
-    # verbatim games/2024/20240524_91ql.json unparsed[] entry.
+# ---------------------------------------------------------------------------
+# Family 9 (issue #31, g3) -- substitution/position-move grammar: the
+# two-name "<in> to <pos> for <out>." shape generalized to any fielding
+# position (including #32's "to dh for"), a standalone pinch-hit row, and a
+# guarded bare "<name> to <pos>." position-move row. `kind` is asserted for
+# every shape -- the prior hardcoded kind="pitching" would ship silently
+# wrong for anything but a pitching change, and nothing else catches that.
+# ---------------------------------------------------------------------------
+
+
+def test_two_name_position_sub_defensive_kind():
+    # verbatim games/**/*.json unparsed[] entry shape: 'B. Lada to ss for
+    # B. Marine.' -- a non-p/non-dh fielding position -> kind="defensive".
+    result = parse_clause_group("B. Lada to ss for B. Marine.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "B. Lada"
+    assert result.substitution.player_out == "B. Marine"
+    assert result.substitution.kind == "defensive"
+
+
+def test_two_name_position_sub_second_base_defensive_kind():
+    # Second real-corpus position, to guard against an off-by-one in the
+    # position alternation (only testing "ss" would not catch a regex that
+    # accidentally only covers one token).
+    result = parse_clause_group("J. Leslie to 2b for B. Lada.")
+    assert result.substitution.kind == "defensive"
+
+
+def test_two_name_position_sub_pitching_kind_unchanged():
+    # Regression: the original p-only shape must still emit kind="pitching"
+    # after the regex is generalized to accept other positions.
+    result = parse_clause_group("Isaiah Williams to p for Chase Martinez.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.kind == "pitching"
+
+
+def test_two_name_dh_sub_is_issue_32_offensive_kind():
+    # Issue #32: the two-name DH sub ('<in> to dh for <out>.') was previously
+    # an intentional GrammarMiss (see the pre-fix regression test this one
+    # replaces). It is now covered by the same generalized _SUBSTITUTION_RE
+    # as every other position, with kind="offensive" (the DH is a
+    # batting-lineup slot, not a fielding position -- the #30 bare "to dh"
+    # convention). verbatim games/2024/20240524_91ql.json unparsed[] entry.
     result = parse_clause_group("P. DePasqual to dh for J. Impedugli.")
-    assert isinstance(result, GrammarMiss)
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "P. DePasqual"
+    assert result.substitution.player_out == "J. Impedugli"
+    assert result.substitution.kind == "offensive"
+
+
+def test_standalone_pinch_hit_substitution():
+    # verbatim games/**/*.json unparsed[] entry shape: 'S. Wilmer pinch hit
+    # for B. Hancock.'
+    result = parse_clause_group("S. Wilmer pinch hit for B. Hancock.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "S. Wilmer"
+    assert result.substitution.player_out == "B. Hancock"
+    assert result.substitution.kind == "offensive"
+
+
+def test_bare_position_move_is_defensive_kind_player_out_none():
+    # verbatim games/**/*.json unparsed[] entry shape: 'D. Sackett to 3b.'
+    result = parse_clause_group("D. Sackett to 3b.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "substitution"
+    assert result.substitution.player_in == "D. Sackett"
+    assert result.substitution.player_out is None
+    assert result.substitution.kind == "defensive"
+
+
+def test_bare_position_move_second_position():
+    # verbatim games/**/*.json unparsed[] entry shape: 'B. Trammell to lf.'
+    result = parse_clause_group("B. Trammell to lf.")
+    assert result.substitution.player_in == "B. Trammell"
+    assert result.substitution.kind == "defensive"
+
+
+def test_bare_position_move_ordered_after_dh_slot_bare():
+    # "to dh." must still route through _DH_SLOT_BARE_RE (kind="offensive"),
+    # never the new bare-position-move row (which excludes "dh" from its own
+    # position alternation, but this also proves ordering never matters --
+    # the two rows are already mutually exclusive by token set).
+    result = parse_clause_group("Cole Robinson to dh.")
+    assert result.substitution.kind == "offensive"
+
+
+def test_bare_position_move_does_not_swallow_a_fielding_assist_chain():
+    # CRITICAL false-positive guard (class 1): a naive ".+? to <pos>\.?$"
+    # bare-move regex would catastrophically misparse a real multi-clause
+    # runner-event line whose trailing clause is a fielding ASSIST CHAIN
+    # ("3b to c" means a throw from third base to the catcher, not a
+    # substitution). This exact line is verbatim real-corpus shape
+    # (games/**/*.json unparsed[]): semicolon-joined clauses ending "... out
+    # at home 3b to c." Still a GrammarMiss (this shape family is not part
+    # of this gate's scope) -- the point of this test is that it must NEVER
+    # become a false substitution.
+    line = (
+        "A. Davis reached on a fielder's choice; P. Harden advanced to "
+        "second; M. Jefferson advanced to third; B. Burckel out at home "
+        "3b to c."
+    )
+    result = parse_clause_group(line)
+    assert not (isinstance(result, ClauseGroup) and result.kind == "substitution")
+
+
+def test_bare_position_move_does_not_swallow_a_flyout_to_position():
+    # CRITICAL false-positive guard (class 2, found while implementing this
+    # gate -- the semicolon guard above does NOT catch this class): a
+    # single-clause plate-appearance line ending "... to <pos>." is
+    # structurally identical to a genuine bare position-move's tail. Without
+    # the Title-Case name-token guard, "T. Specht flied out to cf." would be
+    # misparsed as a substitution (name="T. Specht flied out", pos="cf"),
+    # silently stealing this line from PRIMARY_RULES' pre-existing flyout
+    # row. Regression-guards test_count_tail_optional_flied_out_to_cf and
+    # test_popped_out_to (both pre-existing, Family/1 tests) against this
+    # exact collision.
+    result = parse_clause_group("T. Specht flied out to cf.")
+    assert result.kind == "plate_appearance"
+    assert result.primary.outcome_type == "flyout"
+
+
+def test_bare_position_move_handles_real_corpus_name_edge_cases():
+    # Real corpus names include a comma+suffix ("Last, Jr"), a parenthetical
+    # nickname, and a curly-quote apostrophe -- none of which a naive
+    # [A-Z][\w'-]* per-token char class would accept. Confirms the
+    # broadened _NAME_TOKEN character class recovers all of them.
+    for line, expected_name in [
+        ("Allen, Jr to c.", "Allen, Jr"),
+        ("Charles (CJ) Dean to 1b.", "Charles (CJ) Dean"),
+        ("Michael O’Hara to cf.", "Michael O’Hara"),
+    ]:
+        result = parse_clause_group(line)
+        assert isinstance(result, ClauseGroup), line
+        assert result.kind == "substitution"
+        assert result.substitution.player_in == expected_name
+        assert result.substitution.kind == "defensive"
 
 
 # ---------------------------------------------------------------------------

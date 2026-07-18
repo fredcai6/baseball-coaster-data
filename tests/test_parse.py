@@ -368,6 +368,238 @@ def test_dh_slot_bare_event_is_schema_valid():
     validate_game(game)
 
 
+# ---------------------------------------------------------------------------
+# Family (issue #31, g3) -- substitution/position-move grammar generalized:
+# kind branched by matched position (p -> pitching, dh -> offensive, every
+# other fielding position -> defensive) on the two-name "<in> to <pos> for
+# <out>." row, a new standalone pinch-hit row, and a new guarded bare
+# "<name> to <pos>." row. Every shape's kind->side resolution is checked
+# against a synthetic roster shaped to match a REAL corpus example of that
+# exact shape -- see each test's docstring for the grounding evidence.
+# ---------------------------------------------------------------------------
+
+
+def _entry2(pid, name, last, team_id, positions):
+    return identity.PlayerEntry(
+        player_id=pid, name=name, last_name=last, team_id=team_id, positions=list(positions)
+    )
+
+
+def _two_team_table(away_players, home_players):
+    away = identity.TeamIdentity(team_id="syn:team:away", name="Synthetic Away", players=away_players)
+    home = identity.TeamIdentity(team_id="syn:team:home", name="Synthetic Home", players=home_players)
+    return identity.PlayerTable(home=home, away=away)
+
+
+def test_e2e_pitching_sub_resolves_fielding_side():
+    # half="top" -> away bats, HOME fields. A pitching change is made by the
+    # FIELDING team (kind="pitching" -> parse.py's fielding_side branch,
+    # unchanged by this gate). Verified against 21 of 40 sampled real
+    # "to p for" corpus lines resolving cleanly under this convention (the
+    # remainder are a PRE-EXISTING, unrelated data quirk -- see this gate's
+    # IMPLEMENTER_RESULT -- where a trailing substitution announcement is
+    # logged at a half boundary describing the NEXT half's roster; those
+    # lines were already honest unparsed[] residues before this gate and
+    # remain so, never silently mis-resolved).
+    table = _two_team_table(
+        away_players={"a1": _entry2("a1", "Away Batter", "Batter", "syn:team:away", ["cf"])},
+        home_players={
+            "h1": _entry2("h1", "Isaiah Williams", "Williams", "syn:team:home", ["p"]),
+            "h2": _entry2("h2", "Chase Martinez", "Martinez", "syn:team:home", ["p"]),
+        },
+    )
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0,
+        text="Isaiah Williams to p for Chase Martinez.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "pitching"
+    assert sub["player_in"] == "h1"
+    assert sub["player_out"] == "h2"
+
+
+def test_e2e_two_name_defensive_position_sub_resolves_fielding_side():
+    # half="top" -> away bats, HOME fields. A defensive position change is
+    # made by the FIELDING team (kind="defensive" -> fielding_side, the same
+    # dispatch branch pitching already used). verbatim shape 'B. Lada to ss
+    # for B. Marine.' (games/**/*.json unparsed[] entry).
+    table = _two_team_table(
+        away_players={"a1": _entry2("a1", "Away Batter", "Batter", "syn:team:away", ["cf"])},
+        home_players={
+            "h1": _entry2("h1", "B. Lada", "Lada", "syn:team:home", ["ss"]),
+            "h2": _entry2("h2", "B. Marine", "Marine", "syn:team:home", ["ss"]),
+        },
+    )
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0, text="B. Lada to ss for B. Marine.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "defensive"
+    assert sub["player_in"] == "h1"
+    assert sub["player_out"] == "h2"
+
+
+def test_e2e_bare_position_move_resolves_fielding_side_player_out_none():
+    # half="top" -> away bats, HOME fields. A bare position move (no
+    # outgoing player named) resolves against the FIELDING side, kind flat
+    # "defensive". This shape was the CLEANEST in real-corpus verification:
+    # 0 of 40 sampled real 'to <pos>.' lines mismatched this convention.
+    # verbatim shape 'D. Sackett to 3b.' (games/**/*.json unparsed[] entry).
+    table = _two_team_table(
+        away_players={"a1": _entry2("a1", "Away Batter", "Batter", "syn:team:away", ["cf"])},
+        home_players={"h1": _entry2("h1", "D. Sackett", "Sackett", "syn:team:home", ["3b"])},
+    )
+    line = parse.PbpLine(inning=1, half="top", line_index=0, text="D. Sackett to 3b.", is_strong=False)
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "defensive"
+    assert sub["player_in"] == "h1"
+    assert sub["player_out"] is None
+
+
+def test_e2e_pinch_hit_resolves_batting_side():
+    # half="top" -> AWAY bats. A pinch-hitter enters exactly at their own
+    # team's turn to bat (kind="offensive" -> batting_side). This shape was
+    # also the cleanest in real-corpus verification: 0 of 40 sampled real
+    # 'pinch hit for' lines mismatched this convention. verbatim shape
+    # 'S. Wilmer pinch hit for B. Hancock.' (games/**/*.json unparsed[]).
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "S. Wilmer", "Wilmer", "syn:team:away", ["ph"]),
+            "a2": _entry2("a2", "B. Hancock", "Hancock", "syn:team:away", ["cf"]),
+        },
+        home_players={"h1": _entry2("h1", "Home Pitcher", "Pitcher", "syn:team:home", ["p"])},
+    )
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0, text="S. Wilmer pinch hit for B. Hancock.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "offensive"
+    assert sub["player_in"] == "a1"
+    assert sub["player_out"] == "a2"
+
+
+def test_e2e_two_name_dh_sub_issue_32_resolves_batting_side_when_convention_holds():
+    # Issue #32. half="top" -> AWAY bats. kind="offensive" (grammar layer,
+    # p->pitching/dh->offensive/else->defensive, unambiguous and NOT
+    # affected by the finding below) resolves against batting_side, same
+    # convention as pinch-run/pinch-hit/bare-DH-entry. This test proves the
+    # convention DOES work end-to-end when it holds -- verbatim shape
+    # 'P. DePasqual to dh for J. Impedugli.', confirmed against real game
+    # games/2024/20240524_91ql.json where both named players are on the
+    # batting team's roster for that half.
+    #
+    # STOP CONDITION / real-data finding (see this gate's IMPLEMENTER_RESULT
+    # for full detail): sampling all 47 real 'to dh for' corpus lines against
+    # their actual per-game rosters, only 24/47 (51%) match this
+    # batting_side convention: the remaining 22/47 (47%) are a same-team
+    # roster reshuffle logged as a trailing announcement at a half boundary
+    # (immediately following a defensive substitution for the SAME
+    # FIELDING team, moving a player from a fielding position into the DH
+    # slot) -- the DH sub genuinely belongs to the FIELDING side in those
+    # cases, not the batting side. This is NOT a simple "always resolve
+    # fielding instead" fix either (24/47 need batting, 22/47 need
+    # fielding) -- resolving it correctly requires a genuine assembly design
+    # decision (e.g. try-both-sides-accept-if-unique-on-exactly-one), which
+    # is out of this gate's authorized scope per the handoff's explicit stop
+    # condition. parse.py is left UNCHANGED; the ~47% of real DH-sub lines
+    # that need the fielding side will safely land in unparsed[] (never
+    # silently mis-resolved -- see the next test) until Commander/Admiral
+    # rules on the design call.
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "P. DePasqual", "DePasqual", "syn:team:away", ["dh"]),
+            "a2": _entry2("a2", "J. Impedugli", "Impedugli", "syn:team:away", ["dh"]),
+        },
+        home_players={"h1": _entry2("h1", "Home Pitcher", "Pitcher", "syn:team:home", ["p"])},
+    )
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0, text="P. DePasqual to dh for J. Impedugli.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "offensive"
+    assert sub["player_in"] == "a1"
+    assert sub["player_out"] == "a2"
+
+
+def test_e2e_two_name_dh_sub_resolves_via_fielding_side_fallback():
+    # REWORK (commander-31, parse.py-assembly design call, responding to the
+    # stop condition originally reported here): a real corpus shape where the
+    # DH sub genuinely belongs to the FIELDING side (verbatim 'J. McLaughli
+    # to dh for A. Sczepkows.', games/2024/20240613_516b.json -- both players
+    # confirmed on that game's AWAY/fielding roster during the "bottom" half
+    # this line was logged in). Under the OLD batting_side-only convention,
+    # this line could not resolve at all (neither name exists on the assumed
+    # batting side) and landed in unparsed[]. The try-both-sides fallback
+    # (parse.py's substitution branch) now tries the fielding side when the
+    # kind-implied primary (batting, since kind="offensive") fails, and
+    # accepts it because BOTH names resolve uniquely there. `kind` stays
+    # "offensive" regardless of which side it resolved on -- kind is
+    # position semantics (grammar layer), side is roster membership
+    # (assembly layer); the two are deliberately decoupled.
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "J. McLaughli", "McLaughlin", "syn:team:away", ["dh", "cf"]),
+            "a2": _entry2("a2", "A. Sczepkows", "Sczepkowski", "syn:team:away", ["dh", "cf"]),
+        },
+        home_players={"h1": _entry2("h1", "Home Pitcher", "Pitcher", "syn:team:home", ["p"])},
+    )
+    # half="bottom" -> batting_side="home" (primary, fails), fielding_side
+    # ="away" (fallback, both names resolve uniquely there -> accepted).
+    line = parse.PbpLine(
+        inning=9, half="bottom", line_index=0, text="J. McLaughli to dh for A. Sczepkows.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert unparsed == []
+    assert len(events) == 1
+    sub = events[0]["substitution"]
+    assert sub["kind"] == "offensive"
+    assert sub["player_in"] == "a1"
+    assert sub["player_out"] == "a2"
+
+
+def test_e2e_dh_sub_ambiguous_on_both_sides_stays_unparsed_never_guesses():
+    # REWORK companion (b): the try-both-sides fallback must NEVER create a
+    # wrong resolution. Construct a roster where BOTH the batting side (the
+    # kind-implied primary) AND the fielding side (the fallback) each have a
+    # UNIQUE, FULL match for the two DH-sub names -- a plausible real-world
+    # scenario (a common surname pair existing on both rosters). Since both
+    # sides fully resolve, this is a genuine cross-side ambiguity: the
+    # fallback logic checks BOTH sides (never short-circuits on a primary
+    # success) specifically so it can detect this and refuse to guess, same
+    # as the pre-rework "never guess" doctrine.
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "J. Smith", "Smith", "syn:team:away", ["dh"]),
+            "a2": _entry2("a2", "T. Jones", "Jones", "syn:team:away", ["dh"]),
+        },
+        home_players={
+            "h1": _entry2("h1", "J. Smith", "Smith", "syn:team:home", ["dh"]),
+            "h2": _entry2("h2", "T. Jones", "Jones", "syn:team:home", ["dh"]),
+        },
+    )
+    # half="top" -> batting_side="away" (primary, fully resolves: both Smith
+    # and Jones are on the away roster) AND fielding_side="home" (fallback,
+    # ALSO fully resolves: both Smith and Jones are on the home roster too)
+    # -- ambiguous across both sides.
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0, text="J. Smith to dh for T. Jones.", is_strong=False,
+    )
+    events, unparsed, _subs = parse.build_events([line], table)
+    assert events == []
+    assert len(unparsed) == 1
+    assert "cross-side ambiguity" in unparsed[0]["reason"]
+
+
 def test_count_tail_optional_event_is_schema_valid():
     # Embed the count-less event into the frozen hand fixture (which supplies
     # every other required top-level field) and validate the whole file.

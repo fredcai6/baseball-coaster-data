@@ -1,0 +1,58 @@
+{
+  "description": "SYNTHETIC. Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for issue #31 gate g3's substitution/position-move grammar generalization -- specifically issue #32, the two-name DH substitution shape '<in> to dh for <out>.'. NOT a whole fake game and NOT a games/** entry.",
+  "taxonomy_tail_shape": "substitution with kind='offensive' resolved against the BATTING side (same closed substitution.kind enum value as the pre-existing pinch-run/bare-DH-entry shapes) -- chosen for this fixture because the live sample game (game_20260709_h94w, 0 unparsed) has no 'to dh for' line (its 5 substitution events are all pitching changes), so reparse_summary against the live sample shows a zero delta and this is a genuine 'shape not in the sample' per PROMOTION_PROTOCOL.md step 4's second bullet.",
+  "live_corpus_provenance": "verbatim real line from games/2024/20240524_91ql.json unparsed[] (pre-fix): 'P. DePasqual to dh for J. Impedugli.' (half='bottom', inning=8). Cross-checked against that game's own players/box data: both 'Parker DePasquale' and 'Joseph Impeduglia' are on the HOME roster (team_id 56cu2zsze70qcfrx), and half='bottom' means the HOME team bats -- so this specific real occurrence matches the batting_side convention this fixture encodes. 47 real corpus occurrences of this shape total exist (see this gate's IMPLEMENTER_RESULT for the full before/after coverage measurement).",
+  "real_data_stop_condition_note": "IMPORTANT, see IMPLEMENTER_RESULT for full detail: sampling all 47 real 'to dh for' lines against their actual per-game rosters, only 24/47 (51%) match the batting_side convention this fixture demonstrates -- the remaining 22/47 (47%) are a same-team roster reshuffle logged as a trailing announcement at a half boundary where the DH sub genuinely belongs to the FIELDING side instead. This is a reported, unresolved assembly-design stop condition (parse.py is left unchanged) -- NOT something this fixture claims to resolve. tests/test_parse.py::test_e2e_two_name_dh_sub_on_the_fielding_side_fails_safely_not_wrongly is the companion regression proving the fielding-side case still fails SAFELY (routes to unparsed[], never a wrong-side guess) rather than silently mis-resolving.",
+  "step_a_hypothetical_pre_rule_unparsed": {
+    "note": "Pre-fix, this line matched no STANDALONE_RULES row (the only two-name substitution row, `_SUBSTITUTION_RE`, required the literal ' to p for ' -- pitching changes only) and had no count-tail, so it fell through to the RUNNER_RULES-only path, which also does not match a substitution-shaped string -- build_events() routed it to unparsed[] with reason \"no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'P. DePasqual to dh for J. Impedugli'\" (this is the ACTUAL reason string recorded in the committed games/2024/20240524_91ql.json unparsed[] entry).",
+    "raw": "P. DePasqual to dh for J. Impedugli."
+  },
+  "step_b_rule_now_in_closed_taxonomy": {
+    "module": "bc_pipeline.grammar",
+    "table": "STANDALONE_RULES",
+    "row": "_SUBSTITUTION_RE",
+    "regex": "^(?P<in>.+?) to (?P<pos>1b|2b|3b|ss|lf|cf|rf|c|p|dh) for (?P<out>.+?)\\.?$",
+    "builder": "_build_substitution -- kind assigned by `_substitution_kind_for_pos(m.group('pos'))`: p -> 'pitching', dh -> 'offensive' (this fixture's case), every other fielding position -> 'defensive'. `substitution.kind` is the schema's pre-existing closed enum (schemas/game.schema.json $defs.substitution.kind); no schema change."
+  },
+  "step_c_and_d_promoted_fixture": {
+    "synthetic_input": {
+      "player_table": "two synthetic away batters (syn:away:1 'P. DePasqual', syn:away:2 'J. Impedugli', both dh-eligible) + one synthetic home pitcher (syn:home:1 'Jordan Lee'); half='top' so the away side is batting, matching the offensive/batting_side convention this fixture demonstrates. See PROMOTION_PROTOCOL.md for the exact identity.PlayerTable construction.",
+      "pbp_line": {
+        "inning": 1,
+        "half": "top",
+        "line_index": 0,
+        "text": "P. DePasqual to dh for J. Impedugli.",
+        "is_strong": false
+      }
+    },
+    "build_events_output": {
+      "events": [
+        {
+          "seq": 0,
+          "inning": 1,
+          "half": "top",
+          "kind": "substitution",
+          "batting_team": "syn:team:away",
+          "fielding_team": "syn:team:home",
+          "narrative": "P. DePasqual to dh for J. Impedugli.",
+          "scoring_play": false,
+          "substitution": {
+            "slot": 2,
+            "player_out": "syn:away:2",
+            "player_in": "syn:away:1",
+            "kind": "offensive",
+            "after_event_seq": 0
+          }
+        }
+      ],
+      "unparsed": []
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"from bc_pipeline import identity, parse as parse_mod; away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'syn:away:1': identity.PlayerEntry(player_id='syn:away:1', name='P. DePasqual', last_name='DePasqual', team_id='syn:team:away', positions=['dh']), 'syn:away:2': identity.PlayerEntry(player_id='syn:away:2', name='J. Impedugli', last_name='Impedugli', team_id='syn:team:away', positions=['dh'])}); home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'syn:home:1': identity.PlayerEntry(player_id='syn:home:1', name='Jordan Lee', last_name='Lee', team_id='syn:team:home', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=1, half='top', line_index=0, text='P. DePasqual to dh for J. Impedugli.', is_strong=False); print(parse_mod.build_events([line], player_table))\""
+  },
+  "sibling_shapes_covered_by_the_same_gate_not_separately_promoted_here": {
+    "two_name_pitching_sub_generalized": "'Isaiah Williams to p for Chase Martinez.' -- kind stays 'pitching' (regression, unchanged behavior); see tests/test_grammar.py test_two_name_position_sub_pitching_kind_unchanged and tests/test_parse.py test_e2e_pitching_sub_resolves_fielding_side.",
+    "two_name_defensive_position_sub": "'B. Lada to ss for B. Marine.' -> kind='defensive'; see tests/test_grammar.py test_two_name_position_sub_defensive_kind and tests/test_parse.py test_e2e_two_name_defensive_position_sub_resolves_fielding_side.",
+    "standalone_pinch_hit": "'S. Wilmer pinch hit for B. Hancock.' -> kind='offensive'; see tests/test_grammar.py test_standalone_pinch_hit_substitution and tests/test_parse.py test_e2e_pinch_hit_resolves_batting_side.",
+    "bare_position_move": "'D. Sackett to 3b.' -> kind='defensive', player_out=null; see tests/test_grammar.py test_bare_position_move_is_defensive_kind_player_out_none and tests/test_parse.py test_e2e_bare_position_move_resolves_fielding_side_player_out_none."
+  }
+}
