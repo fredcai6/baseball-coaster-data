@@ -99,3 +99,16 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   1.2.0; only new parses may emit `null` for either field. The two-name `"<in> to dh for <out>."`
   variant remains intentionally unimplemented (out of this gate's authorized scope) and still falls
   to `unparsed[]` unchanged.
+- **2026-07-17 — `schema_version` 1.2.0 → 1.3.0 (additive MINOR).** `$defs.outcome.properties.type.enum`
+  gains `"foul_out"` and `"strikeout"` (closed taxonomy 17 → 19). `foul_out` (`"<name> fouled out to
+  <pos>."`) is a foul fly ball caught for an out, `outs_recorded=1`, `fielders=["<pos>"]` populated
+  exactly like `flyout`/`popout` (a human hard requirement: no defensive-info loss — the position
+  chain is preserved for offense/defense analysis, verified infield AND outfield). `strikeout` is a
+  bare `"<name> struck out."` carrying no swinging/looking qualifier, `fielders=[]`. **Why:** both were
+  high-frequency `unparsed[]` residues under 1.2.0 (`foul_out` alone: 881 lines / 531 games / 42% of
+  the corpus) that mapped to no existing outcome type and could not be shoehorned into `popout`/`flyout`
+  without a position-based judgment the source never states. Ratified by the human via the Admiral
+  (issue #31 float). Additive-only: every existing 1.2.0 file still validates under 1.3.0. Landed in the
+  issue #31 labeled re-parse (`reparse(v0.3.0)`), which also implemented the two-name
+  `"<in> to dh for <out>."` DH-sub variant noted above as unimplemented (issue #32, now covered:
+  47/47 grammar-parse, 44/47 resolve end-to-end via a try-both-sides identity resolution).
