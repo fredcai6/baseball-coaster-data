@@ -17,7 +17,9 @@ from pathlib import Path
 
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "game.schema.json"
 
-# Appendix A — the frozen outcome `type` taxonomy (B §6.4), EXACT.
+# Appendix A — the outcome `type` taxonomy (B §6.4), EXACT. Extended by the
+# human-ratified additive MINOR 1.3.0 (foul_out, strikeout); extension of this
+# closed set requires this deliberate paired edit alongside the schema enum.
 FROZEN_OUTCOME_TYPES = {
     "single",
     "double",
@@ -28,10 +30,12 @@ FROZEN_OUTCOME_TYPES = {
     "hit_by_pitch",
     "strikeout_swinging",
     "strikeout_looking",
+    "strikeout",
     "groundout",
     "flyout",
     "lineout",
     "popout",
+    "foul_out",
     "fielders_choice",
     "reached_on_error",
     "grounded_into_double_play",
@@ -93,7 +97,7 @@ def inv2_closed_outcome_taxonomy(schema: dict) -> str:
         )
     if len(enum) != len(FROZEN_OUTCOME_TYPES):
         _fail(f"invariant 2 FAILED: outcome.type enum has duplicates ({len(enum)} members)")
-    return "2. closed 6.4 outcome taxonomy (17 members, exact)"
+    return "2. closed 6.4 outcome taxonomy (19 members, exact)"
 
 
 def inv3_no_open_asserted_objects(schema: dict) -> str:
