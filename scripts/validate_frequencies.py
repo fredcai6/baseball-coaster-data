@@ -12,9 +12,9 @@ non-zero with a LOUD message (the jsonschema error) on any violation, or
 when the target artifact does not exist yet (nothing to validate is a
 reportable condition, not a silent pass).
 
-NOT wired into `.github/workflows/validate.yml` (fenced for issue #21) --
-this script exists standalone, to be run manually or wired in by a later
-change.
+Wired into `.github/workflows/validate.yml` as a CI step (Admiral fix-now at
+the issue-#21 merge, discharging the paired-guard lesson: a new validation
+script must run in CI, not just locally). Also runnable manually.
 
 Run:  py scripts/validate_frequencies.py [--target PATH]
 """
