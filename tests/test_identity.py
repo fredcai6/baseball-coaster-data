@@ -303,3 +303,118 @@ def test_resolve_empty_string_never_vacuously_matches():
     table = _one_side_table(players)
     pid, resolved = table.resolve("", "away")
     assert (pid, resolved) == (None, False)
+
+
+# --- resolve() first-initial/first-name tie-breaker (issue #31 g4) ---------
+#
+# identity.PlayerTable.resolve(last_name, side) was SURNAME-ONLY: "M.
+# Jackson", "Marquis Jackson", "Manny Jackson" all collapse to the bare
+# surname "Jackson" and fail as ambiguous whenever >=2 players share a
+# surname on a side -- the single largest replay blocker (~1,949 unparsed
+# lines across ~815 games, real corpus survey). These tests add a new
+# optional `full_name` argument (the FULL pbp name token) that narrows a
+# surname collision by first-initial/first-name -- ONLY as a tie-breaker on
+# the already-ambiguous (>=2 candidate) branch; a currently-correct unique
+# resolution is untouched, and a collision where the narrowing ITSELF stays
+# ambiguous (same initial + same surname) must still return (None, False).
+# Never guess.
+
+
+def _jackson_table() -> "identity.PlayerTable":
+    # Real corpus roster shape (games/2025/20250524_9pwo.json, team
+    # ftxbf1wj156q30wd): "Marquis Jackson" (2b) and "Manny Jackson" (dh) --
+    # SAME first initial "M", so PBP "M. Jackson" is genuinely ambiguous even
+    # after first-initial narrowing.
+    away_players = {
+        "05eihvbf9wvx0ikn": identity.PlayerEntry(
+            player_id="05eihvbf9wvx0ikn",
+            name="Marquis Jackson",
+            last_name="Jackson",
+            team_id="ftxbf1wj156q30wd",
+            positions=["2b"],
+        ),
+        "twqnymp68ltasrbv": identity.PlayerEntry(
+            player_id="twqnymp68ltasrbv",
+            name="Manny Jackson",
+            last_name="Jackson",
+            team_id="ftxbf1wj156q30wd",
+            positions=["dh"],
+        ),
+    }
+    return _one_side_table(away_players)
+
+
+def test_resolve_unique_surname_unaffected_by_full_name_argument():
+    # Regression: passing full_name must never change a currently-correct
+    # UNIQUE surname resolution (len(exact) == 1 never reaches the tie-break
+    # helper at all).
+    table = _final_table()
+    pid, resolved = table.resolve("VanDeventer", "home", "T. VanDeventer")
+    assert resolved is True
+    assert pid == "4bs3tvwryvtzrvpa"
+
+
+def test_resolve_surname_collision_narrowed_by_first_initial():
+    # Real corpus shape (games/2024/20240522_s5ki.json, same team): "Austin
+    # Davis" (rf) + "Tyler Davis" (p) -- different initials, so PBP "A.
+    # Davis" now narrows uniquely to Austin Davis.
+    players = {
+        "hrvm30esk9hi64t6": identity.PlayerEntry(
+            player_id="hrvm30esk9hi64t6",
+            name="Austin Davis",
+            last_name="Davis",
+            team_id="3ward2o2o9m0w2dj",
+            positions=["rf"],
+        ),
+        "mrj63gyklqqmbnl9": identity.PlayerEntry(
+            player_id="mrj63gyklqqmbnl9",
+            name="Tyler Davis",
+            last_name="Davis",
+            team_id="3ward2o2o9m0w2dj",
+            positions=["p"],
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("Davis", "away", "A. Davis")
+    assert resolved is True
+    assert pid == "hrvm30esk9hi64t6"
+
+
+def test_resolve_surname_collision_same_initial_stays_unresolved():
+    # The inviolable rule: when the first-initial is ALSO ambiguous (two
+    # "M. Jackson"-shaped players), never guess -- stays honestly
+    # unresolved, exactly like the pre-existing bare-surname-collision case.
+    table = _jackson_table()
+    pid, resolved = table.resolve("Jackson", "away", "M. Jackson")
+    assert resolved is False
+    assert pid is None
+
+
+def test_resolve_surname_collision_narrowed_by_full_first_name():
+    # A full (non-abbreviated) first-name token also disambiguates uniquely,
+    # even with the other same-surname/same-initial player present.
+    table = _jackson_table()
+    pid, resolved = table.resolve("Jackson", "away", "Marquis Jackson")
+    assert resolved is True
+    assert pid == "05eihvbf9wvx0ikn"
+
+
+def test_resolve_surname_collision_no_full_name_still_unresolved():
+    # Backward compatibility: omitting full_name entirely (the 2-arg call
+    # every pre-existing caller/test uses) preserves the pre-change ambiguous
+    # -> (None, False) behavior -- the tie-breaker never fires without a pbp
+    # token to narrow with.
+    table = _jackson_table()
+    pid, resolved = table.resolve("Jackson", "away")
+    assert resolved is False
+    assert pid is None
+
+
+def test_resolve_surname_collision_empty_full_name_never_vacuously_narrows():
+    # An empty full_name token must not vacuously "narrow" via a trivial
+    # startswith("") match -- same guard discipline as the empty last_name
+    # case above.
+    table = _jackson_table()
+    pid, resolved = table.resolve("Jackson", "away", "")
+    assert resolved is False
+    assert pid is None

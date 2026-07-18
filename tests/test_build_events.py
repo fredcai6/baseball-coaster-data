@@ -531,19 +531,25 @@ def test_e2e_lined_into_double_play():
 
 
 def test_ambiguous_batter_name_routes_to_unparsed_never_guessed():
-    # Two "One"-surnamed players on the away side -> resolve() returns
-    # unresolved -- never a guess.
+    # Two "One"-surnamed players on the away side, SAME first initial "A" --
+    # resolve() returns unresolved -- never a guess. (issue #31 g4: a bare
+    # full-first-name pbp token like "Alpha One" would now legitimately
+    # disambiguate a surname collision -- see
+    # test_family2_name_resolution.py's first-initial section -- so this
+    # regression test uses an ABBREVIATED "A. One" token whose initial is
+    # ALSO ambiguous between "Alpha" and "Amy", to keep exercising the
+    # genuine-collision-stays-unparsed path this test protects.)
     home = identity.TeamIdentity(team_id=HOME_ID, name="Home", players={})
     away = identity.TeamIdentity(
         team_id=AWAY_ID,
         name="Away",
         players={
             "a1": _entry("a1", "Alpha One", AWAY_ID),
-            "a2": _entry("a2", "Zeta One", AWAY_ID),
+            "a2": _entry("a2", "Amy One", AWAY_ID),
         },
     )
     table = identity.PlayerTable(home=home, away=away)
-    lines = [_line(1, "top", 0, "Alpha One singled to left field (1-0 B).")]
+    lines = [_line(1, "top", 0, "A. One singled to left field (1-0 B).")]
     events, unparsed, _subs = build_events(lines, table)
     assert events == []
     assert len(unparsed) == 1

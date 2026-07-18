@@ -168,9 +168,19 @@ def _last_name_token(full_name: str) -> str:
 
 
 def _resolve_substitution_pair(
-    player_table: identity.PlayerTable, in_last: str, out_last: Optional[str], side: str
+    player_table: identity.PlayerTable,
+    in_last: str,
+    in_full: str,
+    out_last: Optional[str],
+    out_full: Optional[str],
+    side: str,
 ) -> Tuple[Optional[str], bool, Optional[str], bool]:
     """Resolve a substitution's (in, out) last names against ONE side.
+
+    ``in_full``/``out_full`` are the FULL pbp name tokens (issue #31 g4) --
+    threaded into ``resolve()`` as its ``full_name`` tie-breaker so a
+    same-surname collision on this side can still be disambiguated by
+    first-initial/first-name; never guesses.
 
     ``out_last`` is ``None`` for a bare move (no outgoing player named) --
     the out half of the pair is trivially "resolved" (``None``, ``True``),
@@ -179,10 +189,10 @@ def _resolve_substitution_pair(
     ``(in_pid, in_ok, out_pid, out_ok)``; a caller checks both ``*_ok``
     flags to decide whether THIS side is a clean match.
     """
-    in_pid, in_ok = player_table.resolve(in_last, side)
+    in_pid, in_ok = player_table.resolve(in_last, side, in_full)
     if out_last is None:
         return in_pid, in_ok, None, True
-    out_pid, out_ok = player_table.resolve(out_last, side)
+    out_pid, out_ok = player_table.resolve(out_last, side, out_full)
     return in_pid, in_ok, out_pid, out_ok
 
 
@@ -255,7 +265,7 @@ def build_events(
         modifiers: Optional[List[str]],
     ) -> Optional[dict]:
         last = _last_name_token(rm.name_token)
-        pid, ok = player_table.resolve(last, batting_side)
+        pid, ok = player_table.resolve(last, batting_side, rm.name_token)
         if not ok:
             return None
         # `from` chains WITHIN an event: if this runner already moved earlier
@@ -412,18 +422,16 @@ def build_events(
             else:
                 primary_side, primary_team = fielding_side, fielding_team_id
                 fallback_side, fallback_team = batting_side, batting_team_id
-            in_last = _last_name_token(cg.substitution.player_in)
+            in_full = cg.substitution.player_in
+            in_last = _last_name_token(in_full)
             # Bare DH-slot-entry / bare position move (schema 1.2.0, issue
             # #30 g2b / issue #31 g3): the line names only the incoming
             # player. Never guess an outgoing player from a line that does
             # not name one -- `out_last=None` short-circuits both the
             # primary and fallback resolution to (None, True) directly,
             # instead of calling resolve() on a value that was never there.
-            out_last = (
-                None
-                if cg.substitution.player_out is None
-                else _last_name_token(cg.substitution.player_out)
-            )
+            out_full = cg.substitution.player_out
+            out_last = None if out_full is None else _last_name_token(out_full)
             # REWORK (commander-31, parse.py-assembly design call, responding
             # to the stop condition originally reported here): a real-corpus
             # data quirk (a substitution announcement sometimes logged as a
@@ -441,10 +449,10 @@ def build_events(
             # ambiguous-on-both-sides case is caught rather than silently
             # accepting a coincidentally-matching primary.
             p_in_pid, p_in_ok, p_out_pid, p_out_ok = _resolve_substitution_pair(
-                player_table, in_last, out_last, primary_side
+                player_table, in_last, in_full, out_last, out_full, primary_side
             )
             f_in_pid, f_in_ok, f_out_pid, f_out_ok = _resolve_substitution_pair(
-                player_table, in_last, out_last, fallback_side
+                player_table, in_last, in_full, out_last, out_full, fallback_side
             )
             primary_full = p_in_ok and p_out_ok
             fallback_full = f_in_ok and f_out_ok
@@ -558,7 +566,7 @@ def build_events(
         # plate_appearance
         p = cg.primary
         batter_last = _last_name_token(p.name_token)
-        batter_pid, batter_ok = player_table.resolve(batter_last, batting_side)
+        batter_pid, batter_ok = player_table.resolve(batter_last, batting_side, p.name_token)
         if not batter_ok:
             _unparsed(line, f"batter name did not resolve uniquely: {p.name_token!r}")
             continue

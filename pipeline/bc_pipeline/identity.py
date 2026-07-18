@@ -64,6 +64,58 @@ def _derive_last_name(display_name: str) -> str:
     return tokens[-1] if tokens else display_name
 
 
+def _first_token(name: str) -> str:
+    """Return ``name``'s leading whitespace-separated token, trailing '.'
+    stripped (e.g. ``"M."`` -> ``"M"``, ``"Marquis"`` -> ``"Marquis"``).
+
+    Shared by both sides of the first-initial tie-breaker: the pbp full name
+    token (``"M. Jackson"``) and a roster ``PlayerEntry.name`` display name
+    (``"Marquis Jackson"``) are tokenized the same way so an initial and a
+    full first name compare on equal footing.
+    """
+    tokens = name.split()
+    return tokens[0].rstrip(".") if tokens else ""
+
+
+def _narrow_by_first_token(
+    team: "TeamIdentity", candidate_ids: List[str], full_name: Optional[str]
+) -> Optional[str]:
+    """Tie-break a surname collision (``candidate_ids``, already >= 2) using
+    the PBP first-initial/first-name token on ``full_name``.
+
+    Matches case-insensitively via ``startswith`` in EITHER direction
+    between the pbp first token and each candidate's display-name first
+    token -- symmetric with ``resolve()``'s own surname prefix fallback, and
+    handles all three real shapes uniformly: a bare initial (``"M."`` ->
+    ``"m"``, matches any candidate first name starting with "m"), a
+    truncated first name (``"Man."`` -> ``"man"``, matches "Manny"), and a
+    full first name (``"Marquis"``, matches "Marquis" exactly).
+
+    Returns the single remaining player_id, or ``None`` when ``full_name``
+    is absent/empty, or the narrowing itself is still ambiguous (>= 2
+    candidates share the matching first token, e.g. two "M. Jackson"-shaped
+    players) -- never guesses.
+    """
+    if not full_name:
+        return None
+    pbp_first = _first_token(full_name).lower()
+    if not pbp_first:
+        # A blank pbp first token would make `startswith("")` trivially True
+        # for every candidate -- vacuous, not a narrowing. Never guess (same
+        # discipline as resolve()'s own empty-last_name guard).
+        return None
+    matches = []
+    for pid in candidate_ids:
+        cand_first = _first_token(team.players[pid].name).lower()
+        if cand_first and (
+            cand_first.startswith(pbp_first) or pbp_first.startswith(cand_first)
+        ):
+            matches.append(pid)
+    if len(matches) == 1:
+        return matches[0]
+    return None
+
+
 @dataclass
 class PlayerEntry:
     """One player_entry (schema shape): identity home for a single player."""
@@ -92,7 +144,9 @@ class PlayerTable:
     home: TeamIdentity
     away: TeamIdentity
 
-    def resolve(self, last_name: str, side: str) -> Tuple[Optional[str], bool]:
+    def resolve(
+        self, last_name: str, side: str, full_name: Optional[str] = None
+    ) -> Tuple[Optional[str], bool]:
         """Resolve a bare PBP last name to a player_id on the given side.
 
         Returns ``(player_id, True)`` on a unique match, else ``(None,
@@ -114,6 +168,20 @@ class PlayerTable:
         ``anything.startswith("")``) is trivially True, so without this
         explicit guard the prefix fallback would vacuously "resolve" an empty
         token to any lone player on the side. Added in 1.2.0/g2b hardening.
+
+        ``full_name`` (issue #31 g4) is the OPTIONAL full PBP name token
+        (e.g. ``"M. Jackson"``, ``"Marquis Jackson"``) -- when a surname
+        match (exact OR prefix) yields >= 2 candidates, a same-surname
+        collision that would otherwise be an honest ``(None, False)``, this
+        is used as a TIE-BREAKER: ``_narrow_by_first_token`` narrows the
+        candidate set by the pbp token's first-initial/first-name against
+        each candidate's display-name first token, and the narrowed result
+        is used ONLY if it yields exactly ONE remaining candidate. A
+        currently-correct UNIQUE surname resolution (exact match of 1) is
+        never touched by this parameter -- the tie-breaker fires only on the
+        already-ambiguous (>=2) branch. When the initial is ALSO ambiguous
+        (e.g. two "M. Jackson"-shaped players), or ``full_name`` is absent/
+        empty, this still returns ``(None, False)``. Never guesses.
         """
         if not last_name:
             # An empty token would make the prefix fallback's
@@ -124,6 +192,11 @@ class PlayerTable:
         exact = [pid for pid, p in team.players.items() if p.last_name == last_name]
         if len(exact) == 1:
             return exact[0], True
+        if len(exact) >= 2:
+            narrowed = _narrow_by_first_token(team, exact, full_name)
+            if narrowed is not None:
+                return narrowed, True
+            return None, False
         prefix = [
             pid
             for pid, p in team.players.items()
@@ -131,6 +204,10 @@ class PlayerTable:
         ]
         if len(prefix) == 1:
             return prefix[0], True
+        if len(prefix) >= 2:
+            narrowed = _narrow_by_first_token(team, prefix, full_name)
+            if narrowed is not None:
+                return narrowed, True
         return None, False
 
 
