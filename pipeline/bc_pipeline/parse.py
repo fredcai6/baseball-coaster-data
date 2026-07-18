@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.2.0"
-SCHEMA_VERSION = "1.2.0"
+SCHEMA_VERSION = "1.3.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 

@@ -530,6 +530,63 @@ def test_e2e_lined_into_double_play():
     assert runners["a2"]["cause"] == "putout"
 
 
+# --- issue #31 gate g2b: foul_out + strikeout (fielders preservation) ------
+
+
+def test_e2e_foul_out_infield():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One fouled out to 1b.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "foul_out"
+    assert ev["outcome"]["fielders"] == ["1b"]
+    assert ev["outcome"]["outs_recorded"] == 1
+    assert ev["outcome"]["location"] is None
+    r = ev["runners"][0]
+    assert r["from"] == 0
+    assert r["to"] == -1
+    assert r["out"] is True
+    assert r["scored"] is False
+
+
+def test_e2e_foul_out_outfield():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One fouled out to rf.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "foul_out"
+    assert ev["outcome"]["fielders"] == ["rf"]
+    assert ev["outcome"]["outs_recorded"] == 1
+    assert ev["outcome"]["location"] is None
+    r = ev["runners"][0]
+    assert r["from"] == 0
+    assert r["to"] == -1
+    assert r["out"] is True
+    assert r["scored"] is False
+
+
+def test_e2e_strikeout_bare():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One struck out.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "strikeout"
+    assert ev["outcome"]["fielders"] == []
+    assert ev["outcome"]["outs_recorded"] == 1
+    r = ev["runners"][0]
+    assert r == {
+        "player_id": "a1",
+        "from": 0,
+        "to": -1,
+        "cause": "putout",
+        "out": True,
+        "scored": False,
+    }
+
+
 def test_ambiguous_batter_name_routes_to_unparsed_never_guessed():
     # Two "One"-surnamed players on the away side, SAME first initial "A" --
     # resolve() returns unresolved -- never a guess. (issue #31 g4: a bare

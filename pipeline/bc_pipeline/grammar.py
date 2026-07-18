@@ -14,7 +14,7 @@ mega-regex, never recursive descent. Each table row is
 regex fullmatches wins. Coverage grows by ADDING rows, never by loosening an
 existing one into a catch-all.
 
-CLOSED TAXONOMY (schema-frozen, never extended here): 17 outcome types
+CLOSED TAXONOMY (schema-frozen, never extended here): 19 outcome types
 (``$defs.outcome.properties.type.enum``), 12 runner causes
 (``$defs.runner.properties.cause.enum``). A clause the tables cannot match
 returns a ``GrammarMiss`` carrying the reason and the verbatim source line,
@@ -272,6 +272,15 @@ def _x_flyout(m: re.Match):
     )
 
 
+def _x_foul_out(m: re.Match):
+    return (
+        m.group("name"),
+        [m.group("f")],
+        None,
+        _modifiers_from_tail(m.group("tail")),
+    )
+
+
 def _x_lineout(m: re.Match):
     return (m.group("name"), [m.group("f")], None, [])
 
@@ -344,6 +353,10 @@ def _x_strikeout_swinging(m: re.Match):
 
 
 def _x_strikeout_looking(m: re.Match):
+    return (m.group("name"), [], None, [])
+
+
+def _x_strikeout(m: re.Match):
     return (m.group("name"), [], None, [])
 
 
@@ -426,6 +439,18 @@ PRIMARY_RULES: List[PrimaryRule] = [
         re.compile(r"^(?P<name>.+?) flied out to (?P<f>[a-z0-9]+)(?P<tail>.*)$"),
         "flyout",
         _x_flyout,
+    ),
+    (
+        # A foul fly ball caught for an out -- distinct verb token
+        # ("fouled") from "flied"/"lined"/"grounded"/"popped", so no
+        # collision risk with any other row. Mirrors _x_flyout's tail
+        # handling exactly: a "sacrifice fly, RBI" tail carries its
+        # modifiers under the SAME outcome_type "foul_out" (never a
+        # separate "sacrifice" type), matching the existing flyout
+        # convention (test_flyout_sac_rbi_modifiers).
+        re.compile(r"^(?P<name>.+?) fouled out to (?P<f>[a-z0-9]+)(?P<tail>.*)$"),
+        "foul_out",
+        _x_foul_out,
     ),
     (
         re.compile(r"^(?P<name>.+?) lined out to (?P<f>[a-z0-9]+)$"),
@@ -522,6 +547,16 @@ PRIMARY_RULES: List[PrimaryRule] = [
         re.compile(r"^(?P<name>.+?) struck out looking$"),
         "strikeout_looking",
         _x_strikeout_looking,
+    ),
+    (
+        # Bare "NAME struck out" (no swinging/looking qualifier) --
+        # ordered AFTER the swinging/looking rows above (the trailing $
+        # anchor already prevents a collision with either, since both
+        # carry extra trailing text after "out", but the explicit
+        # ordering keeps the intent visible).
+        re.compile(r"^(?P<name>.+?) struck out$"),
+        "strikeout",
+        _x_strikeout,
     ),
 ]
 
@@ -995,6 +1030,8 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
     "popout": ("putout", None, True, False),
     "grounded_into_double_play": ("putout", None, True, False),
     "sacrifice": ("putout", None, True, False),
+    "foul_out": ("putout", None, True, False),
+    "strikeout": ("putout", None, True, False),
 }
 
 

@@ -1,0 +1,135 @@
+{
+  "description": "SYNTHETIC. Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for issue #31 gate g2b's `foul_out` PRIMARY_RULES row. NOT a whole fake game and NOT a games/** entry. Demonstrates the human's HARD requirement -- a foul_out MUST populate outcome.fielders exactly like flyout/popout, never a positionless bucket -- with BOTH an INFIELD and an OUTFIELD example.",
+  "taxonomy_tail_shape": "foul_out (new outcome_type in schema 1.3.0, additive MINOR, human-ratified issue #31) -- chosen because it does not appear anywhere in the live sample game_20260709_h94w (0 unparsed), so this is a genuine 'shape not in the sample' per PROMOTION_PROTOCOL.md step 4's second bullet.",
+  "live_corpus_provenance": "verbatim real games/** lines (881 total 'fouled out to <pos>' occurrences / 531 games, 42% of corpus, per the g2b handoff): games/2024/20240521_7sf7.json 'A. Fritz fouled out to 1b.' (INFIELD) and 'A. Adams fouled out to rf.' (OUTFIELD). By fielder across the corpus: 1b 301, 3b 218, c 131, rf 87, lf 72, 2b 37, ss 26, p 9.",
+  "step_a_hypothetical_pre_rule_unparsed": {
+    "note": "HYPOTHETICAL. Before this gate, 'fouled out to <pos>' matched no PRIMARY_RULES row, so build_events() routed every such line to unparsed[] with reason \"primary verb not recognized: 'NAME fouled out to POS'\" (reproduced by temporarily reverting the PRIMARY_RULES row edit) -- shown here for illustration only; the rule now exists (step b).",
+    "raw": "A. Fritz fouled out to 1b."
+  },
+  "step_b_rule_now_in_closed_taxonomy": {
+    "module": "bc_pipeline.grammar",
+    "table": "PRIMARY_RULES",
+    "outcome_type": "foul_out",
+    "regex": "^(?P<name>.+?) fouled out to (?P<f>[a-z0-9]+)(?P<tail>.*)$",
+    "extractor": "_x_foul_out -- mirrors _x_flyout exactly: fielders=[f], location=None, modifiers from the tail (so a 'sacrifice fly, RBI' tail carries its modifiers under the SAME outcome_type foul_out, matching the existing flyout convention -- test_flyout_sac_rbi_modifiers / test_foul_out_sac_rbi_modifiers)."
+  },
+  "step_c_and_d_promoted_fixture": {
+    "infield": {
+      "synthetic_input": {
+        "player_table": "one synthetic away batter (syn:away:1, last_name Smith) + one synthetic home player (syn:home:1, last_name Lee); see PROMOTION_PROTOCOL.md for the exact identity.PlayerTable construction",
+        "pbp_line": {
+          "inning": 1,
+          "half": "top",
+          "line_index": 0,
+          "text": "Smith fouled out to 1b (1-2 BFK).",
+          "is_strong": false
+        }
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Smith fouled out to 1b (1-2 BFK).",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": null,
+              "name_raw": null,
+              "resolved": false
+            },
+            "outcome": {
+              "type": "foul_out",
+              "modifiers": [],
+              "fielders": ["1b"],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": {"balls": 1, "strikes": 2},
+            "pitches": "BFK",
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": []
+      }
+    },
+    "outfield": {
+      "synthetic_input": {
+        "player_table": "same synthetic player_table as the infield case",
+        "pbp_line": {
+          "inning": 1,
+          "half": "top",
+          "line_index": 0,
+          "text": "Smith fouled out to rf (0-0).",
+          "is_strong": false
+        }
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Smith fouled out to rf (0-0).",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": null,
+              "name_raw": null,
+              "resolved": false
+            },
+            "outcome": {
+              "type": "foul_out",
+              "modifiers": [],
+              "fielders": ["rf"],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": {"balls": 0, "strikes": 0},
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": []
+      }
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"from bc_pipeline import identity, parse as parse_mod; away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'syn:away:1': identity.PlayerEntry(player_id='syn:away:1', name='Pat Smith', last_name='Smith', team_id='syn:team:away', positions=['cf'])}); home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'syn:home:1': identity.PlayerEntry(player_id='syn:home:1', name='Jordan Lee', last_name='Lee', team_id='syn:team:home', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=1, half='top', line_index=0, text='Smith fouled out to 1b (1-2 BFK).', is_strong=False); print(parse_mod.build_events([line], player_table))\""
+  },
+  "sibling_shapes_covered_by_the_same_gate_not_separately_promoted_here": {
+    "foul_out_sac_fly_tail": "'A. Fritz fouled out to rf, sacrifice fly, RBI; A. Swenda scored, unearned.' -- the PRIMARY clause now matches (type foul_out, modifiers ['sacrifice fly','RBI'], fielders ['rf']) via the same tail-capturing group as flyout; see tests/test_grammar.py test_foul_out_sac_rbi_modifiers. Some of the 17 corpus lines with this tail still land in unparsed[] for an UNRELATED, pre-existing reason (the following RUNNER clause shape, e.g. 'advanced to second on a throwing error by X', is not yet covered by RUNNER_RULES) -- see the g2b IMPLEMENTER_RESULT coverage-measurement section.",
+    "strikeout_bare": "'T. Rogers struck out.' -> outcome_type 'strikeout', fielders []; see tests/test_grammar.py test_strikeout_bare and tests/test_build_events.py test_e2e_strikeout_bare (no separate promoted fixture -- the handoff only required a fixture/test for strikeout, satisfied by the e2e test)."
+  }
+}

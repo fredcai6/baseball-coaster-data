@@ -4,7 +4,7 @@ Protected intent: grammar.py is PURE text -> structured clause data. No HTML,
 no player ids, no base-out state. An unrecognized clause returns a
 ``GrammarMiss`` -- never a guess, never an exception. These tests cover the
 5 resistant shapes named in the handoff verbatim, a taxonomy-coverage check
-(rule-table outcome/cause sets == the frozen schema's 17/12 enums), a
+(rule-table outcome/cause sets == the frozen schema's 19/12 enums), a
 GrammarMiss smoke test, and a full real-sample sweep (every ``<td
 class="text">`` cell of the archived final boxscore) asserting 0
 GrammarMiss -- the x2 spike proved 100% coverage is achievable on this game.
@@ -149,10 +149,10 @@ def test_grammar_miss_on_unrecognized_runner_clause():
 # ---------------------------------------------------------------------------
 
 
-def test_primary_rules_cover_all_17_outcomes():
+def test_primary_rules_cover_all_19_outcomes():
     schema = load_schema()
     enum = set(schema["$defs"]["outcome"]["properties"]["type"]["enum"])
-    assert len(enum) == 17
+    assert len(enum) == 19
     covered = {outcome_type for _regex, outcome_type, _extractor in PRIMARY_RULES}
     assert covered == enum
 
@@ -366,6 +366,25 @@ def test_strikeout_looking():
     assert result.primary.outcome_type == "strikeout_looking"
 
 
+def test_strikeout_bare():
+    # verbatim shape from games/2024/*.json unparsed[] entries, e.g.
+    # "T. Rogers struck out." -- no swinging/looking qualifier.
+    line = "T. Rogers struck out."
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "strikeout"
+    assert p.fielders == []
+
+
+def test_strikeout_bare_does_not_swallow_swinging_or_looking():
+    # Regression: the new bare "struck out$" row must NOT collide with the
+    # existing swinging/looking rows (both have trailing text after "out").
+    swinging = parse_clause_group("Beta Two struck out swinging.")
+    assert swinging.primary.outcome_type == "strikeout_swinging"
+    looking = parse_clause_group("Beta Two struck out looking.")
+    assert looking.primary.outcome_type == "strikeout_looking"
+
+
 def test_flyout_sac_rbi_modifiers():
     line = "Cooper Vest flied out to cf, SAC, RBI (2-2 FSBB); Anthony Mata scored."
     result = parse_clause_group(line)
@@ -373,6 +392,42 @@ def test_flyout_sac_rbi_modifiers():
     assert p.outcome_type == "flyout"
     assert p.fielders == ["cf"]
     assert "SAC" in p.modifiers and "RBI" in p.modifiers
+
+
+def test_foul_out_infield():
+    # verbatim shape from games/2024/20240521_7sf7.json ("A. Fritz fouled
+    # out to 1b."). HARD requirement: fielders populated, never a
+    # positionless bucket.
+    line = "A. Fritz fouled out to 1b."
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "foul_out"
+    assert p.fielders == ["1b"]
+
+
+def test_foul_out_outfield():
+    # verbatim shape from games/2024/20240521_7sf7.json ("A. Adams fouled
+    # out to rf."). HARD requirement: fielders populated, never a
+    # positionless bucket.
+    line = "A. Adams fouled out to rf."
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "foul_out"
+    assert p.fielders == ["rf"]
+
+
+def test_foul_out_sac_rbi_modifiers():
+    # verbatim-shaped: "A. Fritz fouled out to rf, sacrifice fly, RBI;
+    # A. Swenda scored, unearned." (games/2024/20240521_7sf7.json) -- the
+    # tail carries modifiers exactly like the flyout row's tail
+    # (test_flyout_sac_rbi_modifiers), staying type "foul_out" (never a
+    # separate "sacrifice" type).
+    line = "A. Fritz fouled out to lf, sacrifice fly, RBI (2-2 FSBB); Anthony Mata scored."
+    result = parse_clause_group(line)
+    p = result.primary
+    assert p.outcome_type == "foul_out"
+    assert p.fielders == ["lf"]
+    assert "sacrifice fly" in p.modifiers and "RBI" in p.modifiers
 
 
 def test_lineout_and_popout():
