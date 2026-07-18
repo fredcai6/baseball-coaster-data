@@ -14,7 +14,7 @@ mega-regex, never recursive descent. Each table row is
 regex fullmatches wins. Coverage grows by ADDING rows, never by loosening an
 existing one into a catch-all.
 
-CLOSED TAXONOMY (schema-frozen, never extended here): 17 outcome types
+CLOSED TAXONOMY (schema-frozen, never extended here): 19 outcome types
 (``$defs.outcome.properties.type.enum``), 12 runner causes
 (``$defs.runner.properties.cause.enum``). A clause the tables cannot match
 returns a ``GrammarMiss`` carrying the reason and the verbatim source line,
@@ -87,14 +87,14 @@ class Substitution:
     player_out: Optional[str]
     # One of the schema's closed `substitution.kind` enum values
     # ("offensive", "defensive", "pitching") -- which side/role the
-    # substitution applies to. g5 (parse.py) currently resolves every
-    # substitution's names against the FIELDING side and hardcodes
-    # `kind: "pitching"` on the emitted event (its only STANDALONE_RULES row
-    # used to be the "<in> to p for <out>" pitching-change shape, so that was
-    # always correct); wiring g5 to read this field instead, and to resolve
-    # an "offensive" substitution's names against the BATTING side, is a
-    # separate gate's job (identity/name-resolution call sites), not this
-    # module's -- this field only carries the honest answer forward.
+    # substitution applies to. Every STANDALONE_RULES builder assigns this
+    # from the matched shape: a pitcher-position two-name/bare sub is
+    # "pitching", a dh-slot two-name/bare sub is "offensive" (the DH is a
+    # batting-lineup slot, not a fielding position), a pinch-hit/pinch-run is
+    # "offensive", and a bare or two-name move to any other fielding position
+    # is "defensive". g5 (parse.py) reads this field to resolve the
+    # substitution's names against the correct side (offensive -> batting,
+    # else -> fielding) -- see parse.py's substitution-assembly branch.
     kind: str
 
 
@@ -189,6 +189,43 @@ def _split_chain(chain: str) -> List[str]:
     return [tok for tok in chain.split(" to ") if tok]
 
 
+# A closed alternation of the modifier tokens a hit-type hit_run_batted_ball
+# verb (single/double/triple/home_run) can carry, in StatCrew's own
+# comma-separated tail -- "RBI, N RBI, bunt, SAC, ground-rule, unearned" per
+# the real corpus (issue #31 g2). Order matters: "\d+ RBI" must be tried
+# before the bare "RBI" alternative so a token like "2 RBI" isn't split into
+# an unmatched "2" plus a bare "RBI". NEVER a `.*` catch-all -- an unlisted
+# token (e.g. the batter's own trailing self-advance clause, "advanced to
+# second on an error by X") deliberately does NOT match here, so a line
+# carrying one stays a clean GrammarMiss rather than silently discarding
+# structured movement data into a junk modifier string.
+_HIT_MOD_TOKEN = r"\d+ RBI|RBI|bunt|SAC|ground-rule|unearned"
+_HIT_MOD_TAIL = rf"(?P<mods>(?:, (?:{_HIT_MOD_TOKEN}))*)"
+
+
+def _expand_rbi_modifiers(tokens: List[str]) -> List[str]:
+    """A "N RBI" (N >= 2) token keeps its own literal text (fidelity: the
+    count is real information) but ALSO gets a bare "RBI" element appended
+    right after it, so the pre-existing `"RBI" in modifiers` exact-match
+    check (parse.py's per-run rbi-flag assembly, and the identical `"SAC" in
+    modifiers` pattern in replay.py's check_pa_counts) keeps matching
+    regardless of N -- that boolean check is the code's own existing
+    convention for modifier membership, and it is exact-match, not
+    substring, so "2 RBI" alone would silently break it. A bare "RBI" token
+    is left untouched (no duplication).
+    """
+    out: List[str] = []
+    for tok in tokens:
+        out.append(tok)
+        if re.fullmatch(r"\d+ RBI", tok):
+            out.append("RBI")
+    return out
+
+
+def _hit_modifiers_from_tail(tail: Optional[str]) -> List[str]:
+    return _expand_rbi_modifiers(_modifiers_from_tail(tail or ""))
+
+
 # ---------------------------------------------------------------------------
 # PRIMARY_RULES -- ordered (regex, outcome_type, extractor) rows.
 # Each regex is matched (fullmatch) against the primary clause text with its
@@ -206,6 +243,11 @@ def _x_sacrifice(m: re.Match):
 
 def _x_grounded_into_double_play(m: re.Match):
     return (m.group("name"), _split_chain(m.group("chain")), None, [])
+
+
+def _x_into_double_play(m: re.Match):
+    mods = ["unassisted"] if m.group("unassisted") else []
+    return (m.group("name"), _split_chain(m.group("chain")), None, mods)
 
 
 def _x_groundout_chain(m: re.Match):
@@ -230,12 +272,26 @@ def _x_flyout(m: re.Match):
     )
 
 
+def _x_foul_out(m: re.Match):
+    return (
+        m.group("name"),
+        [m.group("f")],
+        None,
+        _modifiers_from_tail(m.group("tail")),
+    )
+
+
 def _x_lineout(m: re.Match):
     return (m.group("name"), [m.group("f")], None, [])
 
 
 def _x_popout(m: re.Match):
     return (m.group("name"), [m.group("f")], None, [])
+
+
+def _x_popout_out_to(m: re.Match):
+    mods = [m.group("mod")] if m.group("mod") else []
+    return (m.group("name"), [m.group("f")], None, mods)
 
 
 def _x_fielders_choice(m: re.Match):
@@ -256,28 +312,31 @@ def _x_single(m: re.Match):
         loc = f"{m.group('side')} side"
     else:
         loc = None
-    mods = [m.group("mod")] if m.group("mod") else []
+    mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
 
 def _x_double(m: re.Match):
     loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
-    mods = [m.group("mod")] if m.group("mod") else []
+    mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
 
 def _x_triple(m: re.Match):
-    mods = [m.group("mod")] if m.group("mod") else []
-    return (m.group("name"), [], m.group("loc"), mods)
+    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    mods = _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), [], loc, mods)
 
 
 def _x_home_run(m: re.Match):
-    mods = [m.group("mod")] if m.group("mod") else []
-    return (m.group("name"), [], m.group("loc"), mods)
+    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    mods = _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), [], loc, mods)
 
 
 def _x_walk(m: re.Match):
-    return (m.group("name"), [], None, [])
+    mods = [m.group("mod")] if m.group("mod") else []
+    return (m.group("name"), [], None, mods)
 
 
 def _x_intentional_walk(m: re.Match):
@@ -297,6 +356,10 @@ def _x_strikeout_looking(m: re.Match):
     return (m.group("name"), [], None, [])
 
 
+def _x_strikeout(m: re.Match):
+    return (m.group("name"), [], None, [])
+
+
 PRIMARY_RULES: List[PrimaryRule] = [
     (
         re.compile(
@@ -307,12 +370,57 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_sacrifice,
     ),
     (
+        # Bare "NAME out at first CHAIN" (the batter grounds into a force
+        # play and is thrown out at first, no sacrifice comma) -- ordered
+        # right AFTER the ", SAC" row above so that row still wins when
+        # present. The negative lookaheads guard against two UNRELATED
+        # compound narrative shapes found in the real corpus that also
+        # contain the literal " out at first " substring later in the same
+        # clause -- "NAME struck out swinging, out at first C to 1B"
+        # (dropped-third-strike thrown out) and "NAME picked off, out at
+        # first C to 1B" (pickoff throw) -- neither is one of this gate's 10
+        # target shapes; without the guard, `.+?`'s non-greedy name group
+        # would swallow "NAME struck out swinging," whole as if it were a
+        # player name, misfiling a strikeout as a groundout.
+        re.compile(
+            r"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
+            r"(?P<name>.+?) out at first "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)$"
+        ),
+        "groundout",
+        _x_groundout_chain,
+    ),
+    (
         re.compile(
             r"^(?P<name>.+?) grounded into double play "
             r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)+)$"
         ),
         "grounded_into_double_play",
         _x_grounded_into_double_play,
+    ),
+    (
+        # "flied/lined into double play <chain>" map to the EXISTING
+        # flyout/lineout types -- never a new flied_into_double_play /
+        # lined_into_double_play type. Unlike "grounded into double play"
+        # (always a multi-hop chain in the sample), the real corpus shows
+        # this verb pair with a bare single fielder, a multi-hop chain, OR a
+        # single fielder + " unassisted" -- so the chain quantifier is `*`
+        # (zero or more additional hops) with a separate optional
+        # " unassisted" suffix, rather than requiring `+`.
+        re.compile(
+            r"^(?P<name>.+?) flied into double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
+        ),
+        "flyout",
+        _x_into_double_play,
+    ),
+    (
+        re.compile(
+            r"^(?P<name>.+?) lined into double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
+        ),
+        "lineout",
+        _x_into_double_play,
     ),
     (
         re.compile(
@@ -333,6 +441,18 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_flyout,
     ),
     (
+        # A foul fly ball caught for an out -- distinct verb token
+        # ("fouled") from "flied"/"lined"/"grounded"/"popped", so no
+        # collision risk with any other row. Mirrors _x_flyout's tail
+        # handling exactly: a "sacrifice fly, RBI" tail carries its
+        # modifiers under the SAME outcome_type "foul_out" (never a
+        # separate "sacrifice" type), matching the existing flyout
+        # convention (test_flyout_sac_rbi_modifiers).
+        re.compile(r"^(?P<name>.+?) fouled out to (?P<f>[a-z0-9]+)(?P<tail>.*)$"),
+        "foul_out",
+        _x_foul_out,
+    ),
+    (
         re.compile(r"^(?P<name>.+?) lined out to (?P<f>[a-z0-9]+)$"),
         "lineout",
         _x_lineout,
@@ -343,13 +463,26 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_popout,
     ),
     (
+        re.compile(
+            r"^(?P<name>.+?) popped out to (?P<f>[a-z0-9]+)(?:, (?P<mod>bunt))?$"
+        ),
+        "popout",
+        _x_popout_out_to,
+    ),
+    (
         re.compile(r"^(?P<name>.+?) reached on a fielder's choice(?P<tail>.*)$"),
         "fielders_choice",
         _x_fielders_choice,
     ),
     (
+        # "an error" (bare) / "a fielding error" / "a throwing error", with
+        # "first" itself optional (the "reached on a fielding error by X"
+        # no-first wording, if it occurs) -- wording alternation only; the
+        # tail-capture behavior (unrestricted, feeding `_modifiers_from_tail`
+        # exactly as before) is UNCHANGED from the pre-existing row.
         re.compile(
-            r"^(?P<name>.+?) reached first on an error by "
+            r"^(?P<name>.+?) reached (?:first )?on "
+            r"(?:an error|a fielding error|a throwing error) by "
             r"(?P<f>[a-z0-9]+)(?P<tail>.*)$"
         ),
         "reached_on_error",
@@ -361,29 +494,31 @@ PRIMARY_RULES: List[PrimaryRule] = [
             r" to (?P<loc>[a-z][a-z ]*?)"
             r"|(?P<middle> up the middle)"
             r"| through the (?P<side>left|right) side"
-            r")?(?:, (?P<mod>RBI))?$"
+            rf")?{_HIT_MOD_TAIL}$"
         ),
         "single",
         _x_single,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) doubled (?:to (?P<loc>[a-z][a-z ]*?)"
-            r"|down (?P<loc2>[a-z][a-z ]*?))(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) doubled(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "double",
         _x_double,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) tripled to (?P<loc>[a-z][a-z ]*?)(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) tripled(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "triple",
         _x_triple,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) homered to (?P<loc>[a-z][a-z ]*?)(?:, (?P<mod>RBI))?$"
+            r"^(?P<name>.+?) homered(?: to (?P<loc>[a-z][a-z ]*?)"
+            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "home_run",
         _x_home_run,
@@ -393,7 +528,11 @@ PRIMARY_RULES: List[PrimaryRule] = [
         "intentional_walk",
         _x_intentional_walk,
     ),
-    (re.compile(r"^(?P<name>.+?) walked$"), "walk", _x_walk),
+    (
+        re.compile(r"^(?P<name>.+?) walked(?:, (?P<mod>RBI))?$"),
+        "walk",
+        _x_walk,
+    ),
     (
         re.compile(r"^(?P<name>.+?) hit by pitch(?:, (?P<mod>RBI))?$"),
         "hit_by_pitch",
@@ -408,6 +547,16 @@ PRIMARY_RULES: List[PrimaryRule] = [
         re.compile(r"^(?P<name>.+?) struck out looking$"),
         "strikeout_looking",
         _x_strikeout_looking,
+    ),
+    (
+        # Bare "NAME struck out" (no swinging/looking qualifier) --
+        # ordered AFTER the swinging/looking rows above (the trailing $
+        # anchor already prevents a collision with either, since both
+        # carry extra trailing text after "out", but the explicit
+        # ordering keeps the intent visible).
+        re.compile(r"^(?P<name>.+?) struck out$"),
+        "strikeout",
+        _x_strikeout,
     ),
 ]
 
@@ -674,24 +823,48 @@ RUNNER_RULES: List[RunnerRule] = [
 
 # ---------------------------------------------------------------------------
 # STANDALONE_RULES -- whole-line shapes that are neither a PA nor a bare
-# sequence of runner-movement clauses: an inning-recap line, a pitching
-# substitution line ("<in> to p for <out>."), and a pinch-run substitution
-# line ("<in> pinch ran for <out>."). (Whole-line runner-movement-only shapes
-# -- "X stole second.", "X Failed pickoff attempt.", "X advanced to Y on a
-# wild pitch." and multi-clause variants thereof -- fall out of the SAME
-# RUNNER_RULES table via the no-count-tail fallback path below; they need no
-# separate regex here.)
+# sequence of runner-movement clauses: an inning-recap line, a two-name
+# position-move substitution line ("<in> to <pos> for <out>." -- <pos> is any
+# fielding position token, including "dh"), a pinch-run substitution line
+# ("<in> pinch ran for <out>."), a pinch-hit substitution line ("<in> pinch
+# hit for <out>."), and a bare (no outgoing player named) position-move line
+# ("<name> to <pos>."). (Whole-line runner-movement-only shapes -- "X stole
+# second.", "X Failed pickoff attempt.", "X advanced to Y on a wild pitch."
+# and multi-clause variants thereof -- fall out of the SAME RUNNER_RULES
+# table via the no-count-tail fallback path below; they need no separate
+# regex here.)
 #
-# The bare "<name> to dh." DH-slot-entry shape (no outgoing player named in
-# the text at all) is now covered below: schema 1.2.0 made
-# `$defs.substitution.player_out` nullable (issue #30, g2b), so this line can
-# honestly be encoded as a real substitution event with player_out=None
-# instead of an `unparsed[]` residue. The "<in> to dh for <out>." variant
-# (both names present) DOES fit this table's shape but was not requested by
-# this gate's authorized scope, so it remains intentionally unimplemented --
-# `_DH_SLOT_BARE_RE` requires the line end right after "dh" (only an optional
-# trailing period), so it does NOT match the two-name "... to dh for ..."
-# shape; that shape still falls through to a GrammarMiss unchanged.
+# kind assignment (schema's closed `substitution.kind` enum -- see
+# `Substitution.kind`'s docstring): the matched <pos> token decides it.
+# "p" -> "pitching" (the mound), "dh" -> "offensive" (the DH is a
+# batting-lineup slot, not a fielding position -- issue #30's convention),
+# every other fielding position -> "defensive". Pinch-run/pinch-hit are
+# always "offensive" (they name a batting-order substitution outright, no
+# position token to branch on).
+#
+# The bare "<name> to dh." DH-slot-entry shape (no outgoing player named at
+# all) predates this gate (schema 1.2.0, issue #30 g2b, `player_out`
+# nullable). `_POSITION_MOVE_BARE_RE` below covers the SAME bare shape for
+# every OTHER fielding position (never "dh" -- that is `_DH_SLOT_BARE_RE`'s
+# job, and this row is ordered after it so "to dh" keeps its existing
+# offensive handling) -- kind="defensive" flat, not branched by position,
+# because a bare move never names an outgoing player to disambiguate a true
+# pitching change from a defensive repositioning, and (per parse.py's
+# substitution assembly) "defensive" and "pitching" both resolve against the
+# same fielding side, so the flat label loses no assembly correctness.
+#
+# GUARD: `_POSITION_MOVE_BARE_RE`'s captured name group is a Title-Case NAME
+# TOKEN pattern, not a bare ".+?" -- a naive ".+? to <pos>\.?$" catastrophically
+# false-matches TWO real narrative shapes that end in the exact same "to
+# <pos>." tail a genuine bare substitution does: (1) multi-clause
+# runner-event lines ending in a fielding ASSIST-CHAIN notation, e.g. "...;
+# B. Burckel out at home 3b to c." (the trailing "3b to c" is a throw chain,
+# not a substitution -- 54 real corpus lines), and (2) single-clause
+# plate-appearance narrative text that itself ends "... to <pos>.", e.g.
+# "T. Specht flied out to cf.", "L. Barns popped out to 1b.", and the
+# "out at first"-guarded compounds ("K. Jimenez struck out swinging, out at
+# first c to 1b."). See the detailed comment on `_NAME_TOKEN`/
+# `_POSITION_MOVE_BARE_RE` below for the guard that eliminates both classes.
 # ---------------------------------------------------------------------------
 
 StandaloneBuilder = Callable[[re.Match, Optional[int]], ClauseGroup]
@@ -701,9 +874,50 @@ _INNING_SUMMARY_RE = re.compile(
     r"^Inning Summary:\s*(?P<r>\d+)\s*Runs\s*,\s*(?P<h>\d+)\s*Hits\s*,\s*"
     r"(?P<e>\d+)\s*Errors\s*,\s*(?P<lob>\d+)\s*LOB\s*$"
 )
-_SUBSTITUTION_RE = re.compile(r"^(?P<in>.+?) to p for (?P<out>.+?)\.?$")
+# Fielding position tokens as they appear in StatCrew narrative text (never
+# "dh" here -- dh is handled separately below, both as a two-name kind=
+# offensive branch on `_SUBSTITUTION_RE` and as its own bare
+# `_DH_SLOT_BARE_RE` row).
+_FIELD_POS_TOKENS = r"1b|2b|3b|ss|lf|cf|rf|c|p"
+_SUBSTITUTION_RE = re.compile(
+    rf"^(?P<in>.+?) to (?P<pos>{_FIELD_POS_TOKENS}|dh) for (?P<out>.+?)\.?$"
+)
 _PINCH_RUN_RE = re.compile(r"^(?P<in>.+?) pinch ran for (?P<out>.+?)\.?$")
+_PINCH_HIT_RE = re.compile(r"^(?P<in>.+?) pinch hit for (?P<out>.+?)\.?$")
 _DH_SLOT_BARE_RE = re.compile(r"^(?P<in>.+?) to dh\.?$")
+# `_POSITION_MOVE_BARE_RE`'s name group is a NAME TOKEN pattern, not a bare
+# ".+?" -- unlike every other STANDALONE_RULES row, this one's trailing
+# shape ("to <pos>.") COLLIDES with real plate-appearance narrative text:
+# "T. Specht flied out to cf.", "L. Barns popped out to 1b.", and the
+# "out at first"-guarded compounds ("K. Jimenez struck out swinging, out at
+# first c to 1b.") all end in the exact same "to <pos>." tail a genuine bare
+# substitution does. A plain "no semicolon" guard (which is enough for the
+# OTHER false-positive class -- multi-clause fielding-assist chains, see the
+# module note above) does NOT catch these: they are single-clause narrative
+# text, comma-joined, with no semicolon at all. The only reliable
+# discriminator is that a real player-name token is Title Case throughout
+# (StatCrew's own convention -- "F. Last", "First Last", plus the observed
+# real-corpus edge cases "Last, Jr", "First (Nickname) Last", curly-quote
+# apostrophes) while every PA/runner verb phrase is lowercase prose. Each
+# whitespace-separated word in the name must therefore start with an
+# uppercase letter or "(" -- this single rule independently eliminates BOTH
+# false-positive classes (verified against the full corpus: 0 of the known
+# false positives match, all 1221 legitimate real bare-move lines still do,
+# including the 11 edge-case names above that a naive [A-Z][\w'-]* char
+# class would have wrongly dropped).
+_NAME_TOKEN = r"[A-Z(][A-Za-z0-9.'’(),-]*"
+_POSITION_MOVE_BARE_RE = re.compile(
+    rf"^(?P<name>{_NAME_TOKEN}(?:\s+{_NAME_TOKEN})*) to (?P<pos>{_FIELD_POS_TOKENS})\.?$"
+)
+
+
+def _substitution_kind_for_pos(pos: str) -> str:
+    """p -> pitching, dh -> offensive (batting-lineup slot), else defensive."""
+    if pos == "p":
+        return "pitching"
+    if pos == "dh":
+        return "offensive"
+    return "defensive"
 
 
 def _build_inning_summary(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
@@ -723,13 +937,25 @@ def _build_substitution(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
     return ClauseGroup(
         kind="substitution",
         substitution=Substitution(
-            player_in=m.group("in"), player_out=m.group("out"), kind="pitching"
+            player_in=m.group("in"),
+            player_out=m.group("out"),
+            kind=_substitution_kind_for_pos(m.group("pos")),
         ),
         trailing_outs=trailing_outs,
     )
 
 
 def _build_pinch_run(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("in"), player_out=m.group("out"), kind="offensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
+def _build_pinch_hit(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
     return ClauseGroup(
         kind="substitution",
         substitution=Substitution(
@@ -754,11 +980,28 @@ def _build_dh_slot_bare(m: re.Match, trailing_outs: Optional[int]) -> ClauseGrou
     )
 
 
+def _build_position_move_bare(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    # Bare defensive-position-move: the line names only the player taking the
+    # field at the new position, never an outgoing player -- same
+    # never-guess convention as the bare DH-slot row. kind is flat
+    # "defensive" (see the module-level note above this table for why it is
+    # not branched by position here).
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("name"), player_out=None, kind="defensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
 STANDALONE_RULES: List[StandaloneRule] = [
     (_INNING_SUMMARY_RE, None, _build_inning_summary),
     (_SUBSTITUTION_RE, None, _build_substitution),
     (_PINCH_RUN_RE, None, _build_pinch_run),
+    (_PINCH_HIT_RE, None, _build_pinch_hit),
     (_DH_SLOT_BARE_RE, None, _build_dh_slot_bare),
+    (_POSITION_MOVE_BARE_RE, None, _build_position_move_bare),
 ]
 
 
@@ -787,6 +1030,8 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
     "popout": ("putout", None, True, False),
     "grounded_into_double_play": ("putout", None, True, False),
     "sacrifice": ("putout", None, True, False),
+    "foul_out": ("putout", None, True, False),
+    "strikeout": ("putout", None, True, False),
 }
 
 

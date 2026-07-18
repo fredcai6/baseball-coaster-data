@@ -1,0 +1,77 @@
+{
+  "description": "SYNTHETIC (roster subset re-created with identity.PlayerEntry, matching the real corpus roster's ids/names/last_names verbatim). Fixture-promotion protocol (see tests/fixtures/PROMOTION_PROTOCOL.md) for issue #31 gate g4's identity/parse fix: PlayerTable.resolve() was SURNAME-ONLY -- it discarded the pbp first-initial, so a shared-surname collision (e.g. two 'Davis' players on one side) always fell back to (None, False) even when the pbp line's first-initial ('A.' vs 'T.') uniquely disambiguates. NOT a whole fake game and NOT a games/** entry.",
+  "family": "first-initial/first-name disambiguation (issue #31 g4)",
+  "taxonomy_tail_shape": "plate_appearance whose batter is named by the abbreviated 'Initial. Surname' pbp shape ('A. Davis walked.') on a side with a genuine shared-surname collision -- chosen (over a runner_event or substitution shape) because it is the SIMPLEST, most common real-corpus shape this fix resolves (605+ 'batter name did not resolve uniquely' unparsed lines survey-wide), and has no count-tail dependency (grammar already parses 'X walked.' cleanly with no PrimaryClause.count=None crash).",
+  "live_corpus_provenance": "verbatim real line from games/2024/20240522_s5ki.json unparsed[] (pre-fix): 'A. Davis walked.' (inning 6, top) -- that game's committed players{} table has real player_id 'hrvm30esk9hi64t6', name 'Austin Davis', last_name 'Davis', team_id '3ward2o2o9m0w2dj' (away, Oakland Ballers, position rf) AND a second same-surname player on the SAME team, player_id 'mrj63gyklqqmbnl9', name 'Tyler Davis', last_name 'Davis', position p -- the genuine shared-surname collision this fix disambiguates by first-initial ('A' matches only 'Austin', not 'Tyler').",
+  "sibling_shapes_covered_by_the_same_gate_not_separately_promoted_here": {
+    "same_initial_stays_unresolved": "'M. Jackson flied out to lf.' (games/2025/20250524_9pwo.json unparsed[], both pre- AND post-fix; real roster away side team_id 'ftxbf1wj156q30wd' has BOTH 'Marquis Jackson' (2b, player_id '05eihvbf9wvx0ikn') and 'Manny Jackson' (dh, player_id 'twqnymp68ltasrbv'), same initial 'M' -- the inviolable never-guess rule: the initial narrowing itself stays ambiguous, so the line correctly stays unparsed[]. See tests/test_family2_name_resolution.py test_same_initial_surname_collision_stays_honestly_unresolved.",
+    "full_first_name_disambiguates": "same Marquis/Manny Jackson roster, a synthetic 'Marquis Jackson walked.' line resolves uniquely to Marquis even with Manny also present (full first-name token, not just an initial). See tests/test_family2_name_resolution.py test_full_first_name_disambiguates_even_with_collision_present.",
+    "unit_level_resolve_coverage": "tests/test_identity.py's first-initial/first-name tie-breaker section covers the resolve() surface directly: unique-surname resolution unaffected by the new full_name argument, the initial narrowing itself, the same-initial-stays-unresolved case, the full-first-name case, the no-full_name-argument backward-compatibility case, and the empty-full_name vacuous-match guard."
+  },
+  "step_a_hypothetical_pre_rule_unparsed": {
+    "note": "Pre-fix, 'PlayerTable.resolve(\"Davis\", \"away\")' found 2 exact-surname candidates ('Austin Davis', 'Tyler Davis') and returned (None, False) unconditionally -- there was no way to use the pbp token's leading 'A.' initial to narrow the candidate set at all. build_events() routed the line to unparsed[] with reason \"batter name did not resolve uniquely: 'A. Davis'\" (reproduced by temporarily reverting the parse.py/identity.py fix).",
+    "raw": "A. Davis walked."
+  },
+  "step_b_rule_already_in_closed_taxonomy": {
+    "module": "bc_pipeline.grammar",
+    "table": "PRIMARY_RULES",
+    "note": "The bare 'X walked.' plate-appearance shape (outcome.type 'walk') already existed in the closed taxonomy before this gate; this gate's fix is entirely in the identity/parse name-JOIN layer (identity.PlayerTable.resolve's new first-initial/first-name tie-breaker + parse.py threading the full pbp name token to all 3 resolve() call sites), not a new grammar row."
+  },
+  "step_c_and_d_promoted_fixture": {
+    "synthetic_input": {
+      "player_table": "two same-surname players matching the real corpus roster entries verbatim (away player_id 'hrvm30esk9hi64t6', name 'Austin Davis', last_name 'Davis', position rf; away player_id 'mrj63gyklqqmbnl9', name 'Tyler Davis', last_name 'Davis', position p) + one synthetic home player so both sides of PlayerTable are populated; see reproduce_with below for the exact identity.PlayerTable construction",
+      "pbp_line": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 0,
+        "text": "A. Davis walked.",
+        "is_strong": false
+      }
+    },
+    "build_events_output": {
+      "events": [
+        {
+          "seq": 0,
+          "inning": 6,
+          "half": "top",
+          "kind": "plate_appearance",
+          "batting_team": "syn:team:away",
+          "fielding_team": "syn:team:home",
+          "narrative": "A. Davis walked.",
+          "scoring_play": false,
+          "batter": {
+            "player_id": "hrvm30esk9hi64t6",
+            "name_raw": "A. Davis",
+            "resolved": true
+          },
+          "pitcher": {
+            "player_id": null,
+            "name_raw": null,
+            "resolved": false
+          },
+          "outcome": {
+            "type": "walk",
+            "modifiers": [],
+            "fielders": [],
+            "outs_recorded": 0,
+            "location": null
+          },
+          "count": null,
+          "pitches": null,
+          "runners": [
+            {
+              "player_id": "hrvm30esk9hi64t6",
+              "from": 0,
+              "to": 1,
+              "cause": "advance",
+              "out": false,
+              "scored": false
+            }
+          ]
+        }
+      ],
+      "unparsed": []
+    },
+    "reproduce_with": "PYTHONIOENCODING=utf-8 PYTHONPATH=pipeline py -c \"import json; from bc_pipeline import identity, parse as parse_mod; away = identity.TeamIdentity(team_id='syn:team:away', name='Synthetic Away', players={'hrvm30esk9hi64t6': identity.PlayerEntry(player_id='hrvm30esk9hi64t6', name='Austin Davis', last_name='Davis', team_id='syn:team:away', positions=['rf']), 'mrj63gyklqqmbnl9': identity.PlayerEntry(player_id='mrj63gyklqqmbnl9', name='Tyler Davis', last_name='Davis', team_id='syn:team:away', positions=['p'])}); home = identity.TeamIdentity(team_id='syn:team:home', name='Synthetic Home', players={'syn:home:1': identity.PlayerEntry(player_id='syn:home:1', name='Alex Preece', last_name='Preece', team_id='syn:team:home', positions=['p'])}); player_table = identity.PlayerTable(home=home, away=away); line = parse_mod.PbpLine(inning=6, half='top', line_index=0, text='A. Davis walked.', is_strong=False); print(json.dumps(parse_mod.build_events([line], player_table)))\""
+  }
+}

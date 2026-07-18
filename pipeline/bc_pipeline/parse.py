@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.2.0"
-SCHEMA_VERSION = "1.2.0"
+PARSER_VERSION = "0.3.0"
+SCHEMA_VERSION = "1.3.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -167,6 +167,35 @@ def _last_name_token(full_name: str) -> str:
     return tokens[-1] if tokens else full_name
 
 
+def _resolve_substitution_pair(
+    player_table: identity.PlayerTable,
+    in_last: str,
+    in_full: str,
+    out_last: Optional[str],
+    out_full: Optional[str],
+    side: str,
+) -> Tuple[Optional[str], bool, Optional[str], bool]:
+    """Resolve a substitution's (in, out) last names against ONE side.
+
+    ``in_full``/``out_full`` are the FULL pbp name tokens (issue #31 g4) --
+    threaded into ``resolve()`` as its ``full_name`` tie-breaker so a
+    same-surname collision on this side can still be disambiguated by
+    first-initial/first-name; never guesses.
+
+    ``out_last`` is ``None`` for a bare move (no outgoing player named) --
+    the out half of the pair is trivially "resolved" (``None``, ``True``),
+    mirroring the pre-existing bare-DH-entry convention (never call
+    ``resolve()`` on a value that was never there). Returns
+    ``(in_pid, in_ok, out_pid, out_ok)``; a caller checks both ``*_ok``
+    flags to decide whether THIS side is a clean match.
+    """
+    in_pid, in_ok = player_table.resolve(in_last, side, in_full)
+    if out_last is None:
+        return in_pid, in_ok, None, True
+    out_pid, out_ok = player_table.resolve(out_last, side, out_full)
+    return in_pid, in_ok, out_pid, out_ok
+
+
 def build_events(
     lines: List[PbpLine], player_table: identity.PlayerTable
 ) -> Tuple[List[dict], List[dict], Dict[str, List[dict]]]:
@@ -236,7 +265,7 @@ def build_events(
         modifiers: Optional[List[str]],
     ) -> Optional[dict]:
         last = _last_name_token(rm.name_token)
-        pid, ok = player_table.resolve(last, batting_side)
+        pid, ok = player_table.resolve(last, batting_side, rm.name_token)
         if not ok:
             return None
         # `from` chains WITHIN an event: if this runner already moved earlier
@@ -388,31 +417,73 @@ def build_events(
             # worse, a false match against an unrelated same-surname player
             # on the wrong team).
             if cg.substitution.kind == "offensive":
-                side = batting_side
-                team_id = batting_team_id
+                primary_side, primary_team = batting_side, batting_team_id
+                fallback_side, fallback_team = fielding_side, fielding_team_id
             else:
-                side = fielding_side
-                team_id = fielding_team_id
-            in_last = _last_name_token(cg.substitution.player_in)
-            in_pid, in_ok = player_table.resolve(in_last, side)
-            if cg.substitution.player_out is None:
-                # Bare DH-slot-entry (schema 1.2.0, issue #30 g2b): the line
-                # names only the incoming player. Never guess an outgoing
-                # player from a line that does not name one -- emit
-                # player_out: None directly, mirroring the p.count is None
-                # guard above, instead of calling _last_name_token/resolve()
-                # on a value that was never there.
-                out_pid, out_ok = None, True
+                primary_side, primary_team = fielding_side, fielding_team_id
+                fallback_side, fallback_team = batting_side, batting_team_id
+            in_full = cg.substitution.player_in
+            in_last = _last_name_token(in_full)
+            # Bare DH-slot-entry / bare position move (schema 1.2.0, issue
+            # #30 g2b / issue #31 g3): the line names only the incoming
+            # player. Never guess an outgoing player from a line that does
+            # not name one -- `out_last=None` short-circuits both the
+            # primary and fallback resolution to (None, True) directly,
+            # instead of calling resolve() on a value that was never there.
+            out_full = cg.substitution.player_out
+            out_last = None if out_full is None else _last_name_token(out_full)
+            # REWORK (commander-31, parse.py-assembly design call, responding
+            # to the stop condition originally reported here): a real-corpus
+            # data quirk (a substitution announcement sometimes logged as a
+            # trailing roster-shuffle at a half boundary) means the
+            # kind-implied PRIMARY side is sometimes wrong for ANY
+            # substitution kind -- see this gate's IMPLEMENTER_RESULT for the
+            # full real-data measurement (issue #31/#32, 22 of 47 real
+            # "to dh for" lines). Resolve BOTH sides and accept whichever ONE
+            # fully resolves both names uniquely. If BOTH sides fully
+            # resolve -- a genuine cross-side ambiguity, e.g. a common
+            # surname pair that happens to exist on both rosters -- or if
+            # NEITHER does, keep the existing honest unparsed[] behavior.
+            # Never guesses. Both sides are always checked (not
+            # short-circuited on a primary success) specifically so this
+            # ambiguous-on-both-sides case is caught rather than silently
+            # accepting a coincidentally-matching primary.
+            p_in_pid, p_in_ok, p_out_pid, p_out_ok = _resolve_substitution_pair(
+                player_table, in_last, in_full, out_last, out_full, primary_side
+            )
+            f_in_pid, f_in_ok, f_out_pid, f_out_ok = _resolve_substitution_pair(
+                player_table, in_last, in_full, out_last, out_full, fallback_side
+            )
+            primary_full = p_in_ok and p_out_ok
+            fallback_full = f_in_ok and f_out_ok
+            if primary_full and not fallback_full:
+                side, team_id = primary_side, primary_team
+                in_pid, in_ok, out_pid, out_ok = p_in_pid, p_in_ok, p_out_pid, p_out_ok
+            elif fallback_full and not primary_full:
+                side, team_id = fallback_side, fallback_team
+                in_pid, in_ok, out_pid, out_ok = f_in_pid, f_in_ok, f_out_pid, f_out_ok
             else:
-                out_last = _last_name_token(cg.substitution.player_out)
-                out_pid, out_ok = player_table.resolve(out_last, side)
+                # Neither side fully resolves, OR both do (genuine
+                # cross-side ambiguity) -- either way, never guess.
+                side, team_id = primary_side, primary_team
+                in_pid, in_ok, out_pid, out_ok = None, False, None, False
             if not out_ok or not in_ok:
-                _unparsed(
-                    line,
-                    f"substitution names did not resolve uniquely on the "
-                    f"{side} side: out={cg.substitution.player_out!r} "
-                    f"in={cg.substitution.player_in!r}",
-                )
+                if primary_full and fallback_full:
+                    reason = (
+                        f"substitution names resolved uniquely on BOTH the "
+                        f"{primary_side} and {fallback_side} side (genuine "
+                        f"cross-side ambiguity): "
+                        f"out={cg.substitution.player_out!r} "
+                        f"in={cg.substitution.player_in!r}"
+                    )
+                else:
+                    reason = (
+                        f"substitution names did not resolve uniquely on "
+                        f"either the {primary_side} or {fallback_side} "
+                        f"side: out={cg.substitution.player_out!r} "
+                        f"in={cg.substitution.player_in!r}"
+                    )
+                _unparsed(line, reason)
                 continue
             slot = None
             if out_pid is not None:
@@ -495,7 +566,7 @@ def build_events(
         # plate_appearance
         p = cg.primary
         batter_last = _last_name_token(p.name_token)
-        batter_pid, batter_ok = player_table.resolve(batter_last, batting_side)
+        batter_pid, batter_ok = player_table.resolve(batter_last, batting_side, p.name_token)
         if not batter_ok:
             _unparsed(line, f"batter name did not resolve uniquely: {p.name_token!r}")
             continue

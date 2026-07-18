@@ -365,20 +365,248 @@ def test_grammar_miss_routes_to_unparsed_with_location():
     assert unparsed[0]["reason"]
 
 
+# ---------------------------------------------------------------------------
+# Issue #31 g2 -- END-TO-END build_events assertions for the newly-added
+# PRIMARY_RULES shapes (not just parse_clause_group). A grammar-layer-only
+# test has historically hidden assembly bugs (issue #30), so each of these
+# exercises the FULL fold: outcome type/modifiers/fielders AND the asserted
+# runner from/to/rbi primitives.
+# ---------------------------------------------------------------------------
+
+
+def test_e2e_bare_double_no_location():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One doubled.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "double"
+    assert ev["outcome"]["location"] is None
+    assert ev["outcome"]["modifiers"] == []
+    assert ev["runners"][0] == {
+        "player_id": "a1",
+        "from": 0,
+        "to": 2,
+        "cause": "batted_ball",
+        "out": False,
+        "scored": False,
+    }
+
+
+def test_e2e_home_run_multi_rbi_tags_every_scoring_runner():
+    # verbatim-shape corpus line: a 2-run homer -- the batter AND the runner
+    # already on base both score, both get rbi=True from the SAME "RBI"
+    # (bare) element the N-RBI expansion adds alongside "2 RBI".
+    table = _make_table()
+    lines = [
+        _line(1, "top", 0, "Alpha One singled to left field (1-0 B)."),
+        _line(
+            1,
+            "top",
+            1,
+            "Beta Two homered to left field, 2 RBI; Alpha One scored.",
+        ),
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[1]
+    assert ev["outcome"]["type"] == "home_run"
+    assert ev["outcome"]["modifiers"] == ["2 RBI", "RBI"]
+    runners = {r["player_id"]: r for r in ev["runners"]}
+    batter = runners["a2"]
+    assert batter["scored"] is True
+    assert batter["rbi"] is True
+    other = runners["a1"]
+    assert other["scored"] is True
+    assert other["rbi"] is True
+
+
+def test_e2e_walked_rbi_tags_the_forced_in_runner_not_the_walker():
+    table = _make_table()
+    lines = [
+        _line(1, "top", 0, "Alpha One singled to left field (1-0 B)."),
+        _line(
+            1,
+            "top",
+            1,
+            "Beta Two singled to right field (1-0 B); Alpha One advanced to third.",
+        ),
+        _line(1, "top", 2, "Gamma Three walked, RBI; Alpha One scored."),
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[2]
+    assert ev["outcome"]["type"] == "walk"
+    assert ev["outcome"]["modifiers"] == ["RBI"]
+    runners = {r["player_id"]: r for r in ev["runners"]}
+    walker = runners["a3"]
+    assert walker["to"] == 1
+    assert walker["scored"] is False
+    assert "rbi" not in walker
+    scorer = runners["a1"]
+    assert scorer["from"] == 3
+    assert scorer["scored"] is True
+    assert scorer["rbi"] is True
+
+
+def test_e2e_popped_out_to_bunt():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One popped out to c, bunt.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "popout"
+    assert ev["outcome"]["fielders"] == ["c"]
+    assert ev["outcome"]["modifiers"] == ["bunt"]
+    assert ev["outcome"]["outs_recorded"] == 1
+    assert ev["runners"][0]["to"] == -1
+    assert ev["runners"][0]["out"] is True
+
+
+def test_e2e_bare_out_at_first_chain():
+    table = _make_table()
+    lines = [
+        _line(
+            1,
+            "top",
+            0,
+            "Alpha One out at first 1b to p; Beta Two advanced to second.",
+        )
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "groundout"
+    assert ev["outcome"]["fielders"] == ["1b", "p"]
+    runners = {r["player_id"]: r for r in ev["runners"]}
+    assert runners["a1"]["to"] == -1
+    assert runners["a1"]["out"] is True
+    assert runners["a2"]["to"] == 2
+
+
+def test_e2e_reached_first_on_a_fielding_error():
+    table = _make_table()
+    lines = [
+        _line(
+            1,
+            "top",
+            0,
+            "Alpha One reached first on a fielding error by 2b; "
+            "Beta Two advanced to second.",
+        )
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "reached_on_error"
+    assert ev["outcome"]["fielders"] == ["2b"]
+    assert "error" in ev["outcome"]["modifiers"]
+    batter = ev["runners"][0]
+    assert batter["player_id"] == "a1"
+    assert batter["from"] == 0
+    assert batter["to"] == 1
+    assert batter["out"] is False
+
+
+def test_e2e_lined_into_double_play():
+    table = _make_table()
+    lines = [
+        _line(
+            1,
+            "top",
+            0,
+            "Alpha One lined into double play ss to c; Beta Two out on the play.",
+        )
+    ]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "lineout"
+    assert ev["outcome"]["fielders"] == ["ss", "c"]
+    assert ev["outcome"]["outs_recorded"] == 2
+    runners = {r["player_id"]: r for r in ev["runners"]}
+    assert runners["a1"]["to"] == -1 and runners["a1"]["out"] is True
+    assert runners["a2"]["out"] is True
+    assert runners["a2"]["cause"] == "putout"
+
+
+# --- issue #31 gate g2b: foul_out + strikeout (fielders preservation) ------
+
+
+def test_e2e_foul_out_infield():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One fouled out to 1b.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "foul_out"
+    assert ev["outcome"]["fielders"] == ["1b"]
+    assert ev["outcome"]["outs_recorded"] == 1
+    assert ev["outcome"]["location"] is None
+    r = ev["runners"][0]
+    assert r["from"] == 0
+    assert r["to"] == -1
+    assert r["out"] is True
+    assert r["scored"] is False
+
+
+def test_e2e_foul_out_outfield():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One fouled out to rf.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "foul_out"
+    assert ev["outcome"]["fielders"] == ["rf"]
+    assert ev["outcome"]["outs_recorded"] == 1
+    assert ev["outcome"]["location"] is None
+    r = ev["runners"][0]
+    assert r["from"] == 0
+    assert r["to"] == -1
+    assert r["out"] is True
+    assert r["scored"] is False
+
+
+def test_e2e_strikeout_bare():
+    table = _make_table()
+    lines = [_line(1, "top", 0, "Alpha One struck out.")]
+    events, unparsed, _subs = build_events(lines, table)
+    assert unparsed == []
+    ev = events[0]
+    assert ev["outcome"]["type"] == "strikeout"
+    assert ev["outcome"]["fielders"] == []
+    assert ev["outcome"]["outs_recorded"] == 1
+    r = ev["runners"][0]
+    assert r == {
+        "player_id": "a1",
+        "from": 0,
+        "to": -1,
+        "cause": "putout",
+        "out": True,
+        "scored": False,
+    }
+
+
 def test_ambiguous_batter_name_routes_to_unparsed_never_guessed():
-    # Two "One"-surnamed players on the away side -> resolve() returns
-    # unresolved -- never a guess.
+    # Two "One"-surnamed players on the away side, SAME first initial "A" --
+    # resolve() returns unresolved -- never a guess. (issue #31 g4: a bare
+    # full-first-name pbp token like "Alpha One" would now legitimately
+    # disambiguate a surname collision -- see
+    # test_family2_name_resolution.py's first-initial section -- so this
+    # regression test uses an ABBREVIATED "A. One" token whose initial is
+    # ALSO ambiguous between "Alpha" and "Amy", to keep exercising the
+    # genuine-collision-stays-unparsed path this test protects.)
     home = identity.TeamIdentity(team_id=HOME_ID, name="Home", players={})
     away = identity.TeamIdentity(
         team_id=AWAY_ID,
         name="Away",
         players={
             "a1": _entry("a1", "Alpha One", AWAY_ID),
-            "a2": _entry("a2", "Zeta One", AWAY_ID),
+            "a2": _entry("a2", "Amy One", AWAY_ID),
         },
     )
     table = identity.PlayerTable(home=home, away=away)
-    lines = [_line(1, "top", 0, "Alpha One singled to left field (1-0 B).")]
+    lines = [_line(1, "top", 0, "A. One singled to left field (1-0 B).")]
     events, unparsed, _subs = build_events(lines, table)
     assert events == []
     assert len(unparsed) == 1
