@@ -281,3 +281,90 @@ add a fixed safety margin (e.g. +1 percentage point), rather than a hand-picked 
 `--threshold` lets a real run supply that evidence-grounded value without any code change. 0.02 was
 chosen deliberately generous (not tight) so a provisional value does not spuriously fail an
 otherwise-healthy early run, while still meaning something at line granularity.
+
+## Refresh
+
+`bc_pipeline.refresh` is the ONE command that keeps this repo current: it runs the backfill driver
+(above) to pick up every newly-FINAL game, then regenerates the frequency artifact (below) only if
+that regeneration actually changed something. It is a thin orchestration layer — it calls
+`bc_pipeline.backfill.run_backfill_with_escalation` and `bc_pipeline.frequencies`'s public functions
+unchanged; it adds no pick-up/idempotency/batching logic and no aggregation logic of its own. Run it
+from the `pipeline/` directory:
+
+```bash
+python -m bc_pipeline.refresh                       # backfill + regenerate frequencies if changed
+python -m bc_pipeline.refresh --limit 20             # cap total NEW fetches this run (bounded slice)
+python -m bc_pipeline.refresh --config my-config.json --repo-root ..
+```
+
+Its CLI flags mirror `bc_pipeline.backfill`'s own (`--config`, `--limit`, `--repo-root`, `--push`) —
+the two commands are siblings.
+
+**Sequencing:**
+
+1. Run the backfill escalation loop (fetch -> parse -> replay -> commit every discoverable newly-FINAL
+   game, one season at a time — see "Backfill" above).
+2. If that stopped on a detected challenge/WAF trip, **skip frequency regeneration entirely** and
+   exit 1 — `games/**` reflects only a partial refresh at that point, and regenerating the frequency
+   artifact over incomplete state would silently mask the stop. A resumed run picks back up exactly
+   where the backfill half left off.
+3. Otherwise, regenerate the frequency artifact in memory and compare it (with `meta.generated_at`
+   normalized on both sides) against whatever is currently committed at
+   `artifacts/latest/frequencies.json`. If they compare equal (or nothing is committed yet and there
+   is genuinely nothing to aggregate), this is a **NO-OP** — nothing is written, nothing is
+   committed. If they differ, the fresh artifact is written and committed with the SAME commit
+   mechanism used for game-file commits, under its own distinct commit message
+   (`"refresh: regenerate frequency artifacts"`), separate from any game-file batch commit.
+4. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
+   NO-OP-or-CHANGED) and exit 0 (or 1 if step 2 fired).
+
+### Artifacts: frequencies (`bc_pipeline.frequencies`)
+
+`bc_pipeline.frequencies` aggregates every `games/**` file's `events[].outcome.type` — the closed
+19-type outcome taxonomy at `schemas/game.schema.json`'s `$defs.outcome.properties.type.enum` — into
+a season+league **team** and **player** event-frequency artifact, written to
+`artifacts/latest/frequencies.json` (mutable, regenerable — see the caller contract above; it carries
+a `meta.generated_at` timestamp). It reads `games/**` only and never re-parses, re-derives, or
+fabricates an outcome.
+
+**Shape:** top-level `meta` (`generated_at`, `parser_versions`, `games_included.{total,by_season}`,
+`coverage`), `league.{batting,pitching}.{teams,players}` (totals across every aggregated game), and
+`by_season.<season>.{batting,pitching}.{teams,players}` (per-season breakdown) — the same
+`league`/`by_season` nesting `bc_pipeline.completeness`'s own report uses. `batting` is keyed by
+`batting_team`/`batter.player_id` (what a team/player did AT THE PLATE); `pitching` is keyed by
+`fielding_team`/`pitcher.player_id` (what a team/player ALLOWED). Every count/rate table always
+carries all 19 taxonomy keys, even when a type never occurred for that key (0, never sparse, never
+silently omitted), with keys emitted alphabetically for determinism.
+
+**Rate definition:**
+
+```
+rate = outcome_type_count / total_plate_appearances_for_that_key
+```
+
+For a `batting` entry the denominator is the total plate appearances that team/player BATTED in
+(this season, or league-wide for the `league` bucket); for a `pitching` entry it is the total plate
+appearances that team/player FACED. Both are counted by construction (every `plate_appearance` event
+increments exactly one outcome-type count and the same key's `total_plate_appearances`), so
+`sum(counts.values()) == total_plate_appearances` always holds.
+
+**Honest-Null coverage:** `meta.coverage` reports the LINE-level unparsed rate across the aggregated
+corpus (from each game's `meta.parse.events_count`/`unparsed_count`, stamped by `parse.py` — never
+recomputed here), plus an explicit note that outcome-type counts are drawn only from `events[]`: a
+source line the parser could not classify (landing in `unparsed[]`) is not represented in any count
+here, and may under-count rare event types. Never imputed, never fabricated.
+
+**CLI and the no-commit guard:**
+
+```bash
+python -m bc_pipeline.frequencies --input games/ --output artifacts/latest/frequencies.json
+python -m bc_pipeline.frequencies --check-no-commit
+```
+
+`--check-no-commit` regenerates the artifact in memory and compares it (with `generated_at`
+normalized on both sides) against the currently-committed `--output` file **without writing**: exit 0
++ a "NO-OP" message when nothing but the timestamp would change, exit 2 + a "CHANGED" message
+otherwise. This CLI flag only reports the comparison — it never decides whether to `git commit`; that
+decision (and the actual write) is `bc_pipeline.refresh`'s job (see "Refresh" above), which uses the
+same public functions (`load_games`, `build_frequencies`, `normalize_generated_at`) directly rather
+than shelling out to this CLI.

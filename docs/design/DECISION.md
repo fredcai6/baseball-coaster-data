@@ -112,3 +112,32 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   issue #31 labeled re-parse (`reparse(v0.3.0)`), which also implemented the two-name
   `"<in> to dh for <out>."` DH-sub variant noted above as unimplemented (issue #32, now covered:
   47/47 grammar-parse, 44/47 resolve end-to-end via a try-both-sides identity resolution).
+
+## 8. Sibling artifact — frequency schema (issue #21, epic #15)
+
+`game.schema.json` stayed **frozen at 1.3.0** for issue #21 (per the launch order's pre-ruling) — the
+season team/player event-frequency artifact got its OWN new schema (`schemas/frequencies.schema.json`,
+Draft 2020-12), not a graft onto the game schema. Two design decisions this run made under its own
+"design latitude" grant (File Ownership: "your design"), recorded here as the durable design record since
+no Cartographer architecture map exists for this repo:
+
+- **Batting + pitching split, both team and player level.** `frequencies.py` aggregates
+  `events[].outcome.type` (the same closed 19-type taxonomy as `game.schema.json`) into TWO sub-tables per
+  key — `batting` (keyed by `batting_team`/`batter.player_id`, offense) and `pitching` (keyed by
+  `fielding_team`/`pitcher.player_id`, what that team/player faced) — at both the team level and the
+  player level. Chosen over a batting-only design because it costs nothing extra (same single pass over
+  `events[]`, just two keyings) and matches how a real box-score/stat page presents both sides. Stays
+  strictly CONTEXT-FREE (still a direct `outcome.type` count, just keyed two ways) — no base-state/
+  run-expectancy/LOB/win-probability derivation, which remains out of scope (roadmap #26).
+- **One combined artifact file.** `artifacts/latest/frequencies.json` — a single file with `league`/
+  `by_season` nesting mirroring `completeness.json`'s existing shape — rather than per-season files.
+  Keeps the derived tier's whole v1 surface at two sibling top-level files (`completeness.json`,
+  `frequencies.json`), consistent and easy for issue #22's site read path to consume.
+- **Rate definition**: `rate = outcome_type_count / total_plate_appearances_for_that_key` (batting: PAs
+  that team/player batted in; pitching: PAs that team/player faced) — documented in `frequencies.py`'s own
+  module docstring, the artifact's authoritative source.
+
+Both decisions were cold-critic-reviewed at plan time (`.agent-work/epic-15/commander-21/
+PLAN_RIGOR_RECORD.md`) and independently re-verified by a reviewer against a hand-count on a real game file
+different from the implementer's own (`.agent-work/epic-15/commander-21/crew-handoffs/
+g1-review-result.md`) before being adopted.

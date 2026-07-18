@@ -24,3 +24,6 @@ jobs:
 
       - name: Check frozen schema invariants
         run: python scripts/check_schema_invariants.py
+
+      - name: Validate frequency artifact against its schema
+        run: python scripts/validate_frequencies.py
