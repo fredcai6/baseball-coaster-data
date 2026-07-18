@@ -1951,22 +1951,45 @@
         "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "D. Matthews",
+        "player_id": "kyzpt79w9n9nxo36",
+        "resolved": true
+      },
       "batting_team": "wfkag0okico94mfx",
+      "count": null,
       "fielding_team": "3ward2o2o9m0w2dj",
       "half": "top",
       "inning": 4,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "D. Matthews out at first 1b to p.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "ekd60jlitlarlwep",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "kyzpt79w9n9nxo36",
           "scored": false,
-          "to": 1
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -3390,7 +3413,7 @@
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4397,7 +4420,7 @@
         "home_score_before": 4,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -5231,14 +5254,12 @@
         "[outs_per_half] outs_per_half: inning 3 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 3 bottom folded LOB 2 != inning_summary LOB 1",
         "[pa_counts] pa_counts: player 10fcz4tbqx3hij8l events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player kyzpt79w9n9nxo36 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
         "[pa_counts] pa_counts: player 0cd7pfsbqrrvnpoj events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player hrwkxfkqmzd1k074 events PA 3 != box-implied PA 4 (AB=2 BB=2 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 32 runner kyzpt79w9n9nxo36 advances from base 1 which was not occupied at event start"
+        "[pa_counts] pa_counts: player hrwkxfkqmzd1k074 events PA 3 != box-implied PA 4 (AB=2 BB=2 HBP=0 SAC=0)"
       ]
     },
-    "parsed_at": "2026-07-12T22:08:52Z",
-    "parser_version": "0.2.0",
+    "parsed_at": "2026-07-18T02:14:48Z",
+    "parser_version": "0.3.0",
     "source_sha256": "f32a456153e6977f982f939599c46e6886b42a0676659e6e52f6c9498b317b44",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240627_e061.xml"
   },
@@ -5474,7 +5495,7 @@
       "team_id": "3ward2o2o9m0w2dj"
     }
   },
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

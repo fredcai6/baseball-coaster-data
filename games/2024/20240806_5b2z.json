@@ -1099,22 +1099,45 @@
         "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "D. Brutcher",
+        "player_id": "ef8s947884m7rozj",
+        "resolved": true
+      },
       "batting_team": "56cu2zsze70qcfrx",
+      "count": null,
       "fielding_team": "wq5td5flfeeumd82",
       "half": "top",
       "inning": 2,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "D. Brutcher out at first 1b to p.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "jwty0796sgwjyobt",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "ef8s947884m7rozj",
           "scored": false,
-          "to": 1
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -2355,22 +2378,45 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "A. Fernandez",
+        "player_id": "xnej7f2qlndsb0a9",
+        "resolved": true
+      },
       "batting_team": "wq5td5flfeeumd82",
+      "count": null,
       "fielding_team": "56cu2zsze70qcfrx",
       "half": "bottom",
       "inning": 4,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "A. Fernandez out at first 1b to p.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "8sokjze1lb7ovz7r",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "xnej7f2qlndsb0a9",
           "scored": false,
-          "to": 1
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -2585,7 +2631,7 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -3387,7 +3433,7 @@
         "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -3645,7 +3691,7 @@
         "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -3832,15 +3878,11 @@
       "warnings": [
         "[linescore] linescore: home inning 6 computed 0 != oracle 1",
         "[linescore] linescore: computed home final R 2 != oracle total 3",
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 0",
-        "[pa_counts] pa_counts: player ef8s947884m7rozj events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player xnej7f2qlndsb0a9 events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 15 runner ef8s947884m7rozj advances from base 1 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 40 runner xnej7f2qlndsb0a9 advances from base 1 which was not occupied at event start"
+        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 0"
       ]
     },
-    "parsed_at": "2026-07-12T22:09:18Z",
-    "parser_version": "0.2.0",
+    "parsed_at": "2026-07-18T02:15:24Z",
+    "parser_version": "0.3.0",
     "source_sha256": "12f588557cb796bfa5652dfdc127fd8d9b70e7fe711d5d212f1f4329c03dd732",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240806_5b2z.xml"
   },
@@ -4046,7 +4088,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
