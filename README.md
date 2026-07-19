@@ -22,12 +22,16 @@ New to baseball? A few terms this README uses, one line each:
 ```
 games/            canonical, write-once game files:  games/<season>/<game_id>.json
 artifacts/latest/ derived, mutable analysis outputs (regenerated from games/**)
-pipeline/         the Python package that fetches, parses, and replays games (bc_pipeline)
-schemas/          the JSON Schema every game file is validated against (added in a later gate)
+pipeline/         the Python package that fetches, parses, and replays games (bc_pipeline),
+                  including bc_pipeline.refresh (the backfill + frequencies orchestrator --
+                  see "Refresh" below) and bc_pipeline.frequencies (the season+league
+                  event-frequency aggregator -- see "Artifacts: frequencies" below)
+schemas/          the JSON Schemas game files and artifacts are validated against:
+                  game.schema.json (current: 1.3.0) and frequencies.schema.json
 docs/design/      the schema design record: the three candidates + the DECISION
-tests/fixtures/   golden fixtures for the parser/validator (added in a later gate)
-scripts/          CI + validation helper scripts (added in a later gate)
-.github/workflows/ continuous-integration workflows (added in a later gate)
+tests/fixtures/   golden fixtures for the parser/validator
+scripts/          CI + validation helper scripts
+.github/workflows/ continuous-integration workflows
 ```
 
 ## The caller contract
@@ -182,6 +186,19 @@ zero-fetch tests run against; it is the sole sanctioned location for committed H
 narrow `!tests/samples/*.html` exception to the blanket `*.html` ignore). The
 no-raw-HTML caller-contract clause is intent-scoped to the scraped corpus — curated
 test fixtures are exempt.
+
+**Running the tests.** The suite is split across two directories — repo-root `tests/`
+(parse/grammar/identity/replay/serialize) and `pipeline/tests/` (fetch/backfill/
+completeness/frequencies/refresh/config) — and both need `bc_pipeline` importable
+without an install. Run the whole thing from the repo root with `PYTHONPATH` pointed at
+`pipeline/`:
+
+```bash
+PYTHONPATH=pipeline python -m pytest tests pipeline/tests -q
+```
+
+CI (`.github/workflows/validate.yml`) runs this exact command on every push/PR, in
+addition to the schema-validation scripts below.
 
 ## License
 
