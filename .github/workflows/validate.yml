@@ -17,7 +17,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install jsonschema
+        run: pip install jsonschema requests pytest
+
+      - name: Run pytest suite (parser/grammar/identity/replay/frequencies/refresh/fetch/backfill)
+        # PYTHONPATH=pipeline is required so `import bc_pipeline` resolves without an
+        # install -- see pipeline/tests/conftest.py and the README's "Testing" note.
+        # Covers both suites: repo-root tests/ (parse/grammar/identity/replay/serialize)
+        # and pipeline/tests/ (fetch/backfill/completeness/frequencies/refresh/config).
+        run: PYTHONPATH=pipeline python -m pytest tests pipeline/tests -q
 
       - name: Validate game files against the schema
         run: python scripts/validate_games.py
