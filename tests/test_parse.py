@@ -835,3 +835,18 @@ def test_line_index_still_reflects_source_cell_position():
     src = inspect.getsource(parse)
     assert "for idx, td in enumerate(cells):" in src
     assert "line_index=idx," in src
+
+
+def test_scorer_correction_directive_is_not_a_narrative_line():
+    """"R. Preece Batter set to A. Albert." is a StatCrew scorer CORRECTION
+    -- the scorer fixing which batter the software thinks is up -- not a
+    description of anything that happened on the field. Same reasoning as an
+    empty cell: nothing to represent, nothing to preserve verbatim.
+    """
+    from bc_pipeline.parse import _SCORER_DIRECTIVE_RE
+
+    assert _SCORER_DIRECTIVE_RE.search("R. Preece Batter set to A. Albert.")
+    assert _SCORER_DIRECTIVE_RE.search("B. Rosengard Batter set to S. Rich.")
+    # Ordinary narrative must not be caught by it.
+    assert not _SCORER_DIRECTIVE_RE.search("Pat Smith walked.")
+    assert not _SCORER_DIRECTIVE_RE.search("Pat Smith set the tone.")

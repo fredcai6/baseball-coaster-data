@@ -99,6 +99,18 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   1.2.0; only new parses may emit `null` for either field. The two-name `"<in> to dh for <out>."`
   variant remains intentionally unimplemented (out of this gate's authorized scope) and still falls
   to `unparsed[]` unchanged.
+- **2026-08-27 — `schema_version` 1.5.0 → 1.6.0 (additive MINOR).** `$defs.outcome.properties.type.enum`
+  gains `infield_fly` (closed taxonomy 21 → 22). **Why:** under the infield fly rule, with runners on
+  and fewer than two out, the batter is declared out on a catchable infield pop-up **whether or not it
+  is caught**. Folding it into `popout` or `flyout` would assert the opposite — that the out depended
+  on the catch — which is exactly what those two types mean. 19 lines across 19 games, every one of
+  them the sole blocker on an otherwise clean-parse game. `fielders` carries the named position, the
+  same no-defensive-info-loss requirement that shaped `foul_out` at 1.3.0. Implied runner primitive is
+  `("putout", None, True, False)`, identical to the other batter-retired types, so `check_pa_counts`
+  needs no change: the batter is charged an at-bat and is already inside `box.AB`. Human-ratified
+  ("okay with schema update for infield fly", issue #40). Additive-only: every existing 1.5.0 file
+  still validates under 1.6.0. Lands in the next labeled re-parse.
+
 - **2026-08-27 — `schema_version` 1.4.0 → 1.5.0 (additive MINOR).** `$defs.outcome.properties.type.enum`
   gains `reached_on_interference` and `batter_interference` (closed taxonomy 19 → 21). **Why:** neither
   maps onto an existing type. *Catcher's interference* awards the batter first base with **no error

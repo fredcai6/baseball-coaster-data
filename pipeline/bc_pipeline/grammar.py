@@ -199,6 +199,12 @@ def _split_chain(chain: str) -> List[str]:
 # second on an error by X") deliberately does NOT match here, so a line
 # carrying one stays a clean GrammarMiss rather than silently discarding
 # structured movement data into a junk modifier string.
+#: StatCrew writes both "unearned" and "team unearned" -- the latter means
+#: the run is unearned for the TEAM though charged to the pitcher. Both are
+#: the same fact for this schema's boolean, so both are accepted.
+_UNEARNED_TAIL = r"(?:, (?P<unearned>(?:team )?unearned))?"
+
+
 _HIT_MOD_TOKEN = r"\d+ RBI|RBI|bunt|SAC|ground-rule|unearned"
 _HIT_MOD_TAIL = rf"(?P<mods>(?:, (?:{_HIT_MOD_TOKEN}))*)"
 
@@ -306,6 +312,18 @@ def _x_reached_on_interference(m: re.Match):
     is the responsible fielder, so `fielders` carries "c"."""
     mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), ["c"], None, mods)
+
+
+def _x_infield_fly(m: re.Match):
+    """"X infield fly to ss." -- the infield fly rule: with runners on and
+    fewer than two out, the batter is declared out on a catchable infield
+    pop-up whether or not it is caught.
+
+    Given its own type rather than folded into `popout`/`flyout` because the
+    out does NOT depend on the catch, which is exactly what those two types
+    assert. The fielder is preserved, same no-defensive-info-loss
+    requirement that shaped `foul_out` at 1.3.0 (issue #40)."""
+    return (m.group("name"), [m.group("f")], None, [])
 
 
 def _x_batter_interference(m: re.Match):
@@ -535,6 +553,11 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_batter_interference,
     ),
     (
+        re.compile(r"^(?P<name>.+?) infield fly to (?P<f>[a-z0-9]+)$"),
+        "infield_fly",
+        _x_infield_fly,
+    ),
+    (
         re.compile(r"^(?P<name>.+?) reached on a fielder's choice(?P<tail>.*)$"),
         "fielders_choice",
         _x_fielders_choice,
@@ -710,6 +733,27 @@ def _b_advance_on_error(m: re.Match):
     )
 
 
+def _b_advance_on_fielders_choice(m: re.Match):
+    return RunnerMovement(
+        name_token=m.group("name"),
+        cause="fielders_choice",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+    )
+
+
+def _b_scored_on_throw(m: re.Match):
+    return RunnerMovement(
+        name_token=m.group("name"),
+        cause="advance",
+        destination="home",
+        out=False,
+        scored=True,
+        unearned=bool(m.groupdict().get("unearned")),
+    )
+
+
 def _b_advance_plain(m: re.Match):
     return RunnerMovement(
         name_token=m.group("name"),
@@ -842,7 +886,7 @@ RUNNER_RULES: List[RunnerRule] = [
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest1>{_DEST_ALT}), "
             rf"scored on an error by (?P<f>[a-z0-9]+)"
-            rf"(?:, (?P<unearned>unearned))?$"
+            rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("advance", "error"),
         _b_compound_advance_scored_error,
@@ -866,9 +910,10 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on an? "
-            rf"(?:throwing |fielding )?error by "
-            rf"(?P<f>[a-z0-9]+)(?:, (?P<unearned>unearned))?$"
+            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on "
+            rf"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)"
+            rf"|the error)"
+            rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("error",),
         _b_advance_on_error,
@@ -881,6 +926,19 @@ RUNNER_RULES: List[RunnerRule] = [
         _b_advance_plain,
     ),
     (
+        re.compile(
+            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on a "
+            rf"fielder's choice$"
+        ),
+        ("fielders_choice",),
+        _b_advance_on_fielders_choice,
+    ),
+    (
+        re.compile(rf"^(?P<name>.+?) scored on the throw{_UNEARNED_TAIL}$"),
+        ("advance",),
+        _b_scored_on_throw,
+    ),
+    (
         re.compile(rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT})$"),
         ("advance",),
         _b_advance_plain,
@@ -889,28 +947,29 @@ RUNNER_RULES: List[RunnerRule] = [
         re.compile(
             r"^(?P<name>.+?) scored on a "
             r"(?P<causephrase>wild pitch|passed ball|balk)"
-            r"(?:, (?P<unearned>unearned))?$"
+            r"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_scored_on_causephrase,
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) scored on an error by "
-            r"(?P<f>[a-z0-9]+)(?:, (?P<unearned>unearned))?$"
+            r"^(?P<name>.+?) scored on "
+            r"(?:an error by (?P<f>[a-z0-9]+)|the error)"
+            r"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("error",),
         _b_scored_on_error,
     ),
     (
-        re.compile(r"^(?P<name>.+?) scored(?:, (?P<unearned>unearned))?$"),
+        re.compile(r"^(?P<name>.+?) scored(?:, (?P<unearned>(?:team )?unearned))?$"),
         ("advance",),
         _b_scored_plain,
     ),
     (
         re.compile(
             rf"^(?P<name>.+?) stole (?P<dest>{_DEST_ALT})"
-            rf"(?:, (?P<unearned>unearned))?$"
+            rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("stolen_base",),
         _b_stole,
@@ -1147,6 +1206,8 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
     "reached_on_interference": ("advance", "first", False, False),
     # Retired without a batted ball.
     "batter_interference": ("putout", None, True, False),
+    # Declared out under the infield fly rule; the catch is irrelevant.
+    "infield_fly": ("putout", None, True, False),
     "fielders_choice": ("fielders_choice", "first", False, False),
     "strikeout_swinging": ("putout", None, True, False),
     "strikeout_looking": ("putout", None, True, False),
@@ -1185,9 +1246,6 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
 # lead clause by `_match_clause_chain`.
 # ---------------------------------------------------------------------------
 
-_UNEARNED_TAIL = r"(?:, (?P<unearned>unearned))?"
-
-
 def _c_out_at(m: "re.Match", name_token: str) -> RunnerMovement:
     return RunnerMovement(
         name_token=name_token,
@@ -1216,6 +1274,27 @@ def _c_advance_on_causephrase(m: "re.Match", name_token: str) -> RunnerMovement:
         destination=m.group("dest"),
         out=False,
         scored=False,
+    )
+
+
+def _c_advance_on_fielders_choice(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="fielders_choice",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+    )
+
+
+def _c_scored_on_throw(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="advance",
+        destination="home",
+        out=False,
+        scored=True,
+        unearned=bool(m.groupdict().get("unearned")),
     )
 
 
@@ -1261,7 +1340,7 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     ),
     (
         re.compile(
-            rf"^scored on an error by (?P<f>[a-z0-9]+){_UNEARNED_TAIL}$"
+            rf"^scored on (?:an error by (?P<f>[a-z0-9]+)|the error){_UNEARNED_TAIL}$"
         ),
         _c_scored_on_error,
     ),
@@ -1271,8 +1350,9 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     ),
     (
         re.compile(
-            rf"^advanced to (?P<dest>{_DEST_ALT}) on an? "
-            rf"(?:throwing |fielding )?error by (?P<f>[a-z0-9]+){_UNEARNED_TAIL}$"
+            rf"^advanced to (?P<dest>{_DEST_ALT}) on "
+            rf"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)"
+            rf"|the error){_UNEARNED_TAIL}$"
         ),
         _c_advance_on_error,
     ),
@@ -1308,6 +1388,14 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         # in the closed taxonomy.
         re.compile(rf"^advanced to (?P<dest>{_DEST_ALT}) on the throw$"),
         _c_advance_plain,
+    ),
+    (
+        re.compile(rf"^advanced to (?P<dest>{_DEST_ALT}) on a fielder's choice$"),
+        _c_advance_on_fielders_choice,
+    ),
+    (
+        re.compile(rf"^scored on the throw{_UNEARNED_TAIL}$"),
+        _c_scored_on_throw,
     ),
     (
         re.compile(rf"^advanced to (?P<dest>{_DEST_ALT})$"),

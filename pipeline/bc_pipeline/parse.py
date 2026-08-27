@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.3.0"
-SCHEMA_VERSION = "1.5.0"
+SCHEMA_VERSION = "1.6.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -150,6 +150,10 @@ def _location_to_fielders(location: Optional[str]) -> List[str]:
         return [m.group(1)]
     return []
 
+
+#: StatCrew scorer-correction directives that describe bookkeeping rather
+#: than play. "Batter set to X" resets who the software believes is at bat.
+_SCORER_DIRECTIVE_RE = re.compile(r"\bBatter set to\b")
 
 _SUFFIX_TOKENS = {"jr", "sr", "ii", "iii", "iv", "v"}
 
@@ -802,6 +806,15 @@ def _iter_halves(root: Node) -> List[PbpLine]:
             ]
             for idx, td in enumerate(cells):
                 text = text_of(td)
+                if _SCORER_DIRECTIVE_RE.search(text):
+                    # "R. Preece Batter set to A. Albert." -- a StatCrew
+                    # scorer CORRECTION directive (the scorer fixing which
+                    # batter the software thinks is up), not a description of
+                    # anything that happened on the field. Same reasoning as
+                    # the empty cell below: nothing to represent as an event
+                    # and nothing to preserve verbatim, so it never becomes a
+                    # narrative line (issue #40, human-ratified).
+                    continue
                 if not text.strip():
                     # An EMPTY `td.text` cell is layout, not narrative. It
                     # carries nothing to represent as an event and nothing to

@@ -42,6 +42,7 @@ FROZEN_OUTCOME_TYPES = {
     "sacrifice",
     "reached_on_interference",
     "batter_interference",
+    "infield_fly",
 }
 
 SEMVER_PATTERN = r"^[0-9]+\.[0-9]+\.[0-9]+$"
