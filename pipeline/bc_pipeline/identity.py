@@ -78,17 +78,37 @@ def _first_token(name: str) -> str:
 
 
 def _interior_surname_tokens(full_name: str) -> List[str]:
-    """Every name token after the FIRST one, for a compound surname.
+    """Every surname part of a compound surname, space- OR hyphen-separated.
 
-    ``last_name`` is stored as the FINAL token only, so "Gary Lora Gonzalez"
-    is keyed on "Gonzalez" and a PBP narrative that says "G. Lora" -- the
-    common shorthand for a compound Hispanic surname -- can never match.
-    Returning {"Lora", "Gonzalez"} lets either part resolve.
+    ``last_name`` is stored as the final whitespace token only, so:
 
-    This is exact token matching, not fuzzy: no guessing is involved.
+      "Gary Lora Gonzalez" is keyed on "Gonzalez" -- a PBP "G. Lora" misses.
+      "Ren Abe-Arias"      is keyed on "Abe-Arias" -- a PBP "Ren Arias" misses.
+
+    Both are the ordinary shorthand a scorer types, and both were honest but
+    avoidable failures. Returning every part lets either resolve.
+
+    This is exact token matching, not fuzzy: no guessing is involved. The
+    first whitespace token is excluded because it is the GIVEN name -- we
+    must never resolve "Gary Gonzalez" off a PBP token of "Gary".
     """
     parts = (full_name or "").split()
-    return parts[1:] if len(parts) > 2 else []
+    if not parts:
+        return []
+    tokens: List[str] = []
+    for part in parts[1:]:
+        if "-" in part:
+            # The hyphenated form itself stays a candidate as well, so a PBP
+            # token that spells the whole thing still matches here.
+            tokens.append(part)
+            tokens.extend(piece for piece in part.split("-") if piece)
+        else:
+            tokens.append(part)
+    # A plain "First Last" contributes only its own surname, which exact
+    # matching already covers -- return nothing so behaviour is unchanged.
+    if len(tokens) == 1 and "-" not in parts[-1]:
+        return []
+    return tokens
 
 
 def _within_one_edit(a: str, b: str) -> bool:

@@ -510,3 +510,26 @@ def test_within_one_edit_covers_the_three_real_shapes_and_rejects_two():
     assert _within_one_edit("bagnieski", "bagnieksi")   # transposition
     assert not _within_one_edit("smith", "smithers")    # 3 edits
     assert not _within_one_edit("jackson", "johnson")   # 3 edits
+
+
+def test_hyphenated_compound_surname_resolves_on_either_part():
+    """"Ren Abe-Arias" is keyed on the whole hyphenated token, so a PBP
+    "Ren Arias" -- the ordinary shorthand -- missed entirely."""
+    team = _team(("p1", "Ren Abe-Arias"))
+    assert _resolve(team, "Ren Arias") == ("p1", True)
+    assert _resolve(team, "R. Abe") == ("p1", True)
+    assert _resolve(team, "R. Abe-Arias") == ("p1", True)
+
+
+def test_hyphenated_given_name_contributes_no_surname_token():
+    """A hyphen in the FIRST name must not manufacture surname candidates --
+    resolving "Jean" to "Jean-Luc Picard" would be a false match."""
+    from bc_pipeline.identity import _interior_surname_tokens
+    assert _interior_surname_tokens("Jean-Luc Picard") == []
+    team = _team(("p1", "Jean-Luc Picard"))
+    assert _resolve(team, "J. Jean") == (None, False)
+
+
+def test_plain_first_last_is_unchanged():
+    from bc_pipeline.identity import _interior_surname_tokens
+    assert _interior_surname_tokens("Gary Gonzalez") == []
