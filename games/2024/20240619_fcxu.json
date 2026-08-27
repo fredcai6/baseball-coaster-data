@@ -4775,14 +4775,52 @@
         "away_score_before": 1,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
+        "runs_on_play": 0
+      },
+      "batting_team": "z7y9gph0l9ltq3lq",
+      "fielding_team": "wq5td5flfeeumd82",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "A. Atwood advanced to second on an error by p, advanced to third.",
+      "runners": [
+        {
+          "cause": "error",
+          "from": 1,
+          "out": false,
+          "player_id": "7ta8lyaitqov5yq3",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 90
+    },
+    {
+      "_derived": {
+        "away_score_before": 1,
+        "base_out_state": "001|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 0,
         "outs_after": 2,
@@ -4826,21 +4864,21 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 91
     },
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|2",
+        "base_out_state": "001|2",
         "bases_after": [
           true,
           false,
-          false
+          true
         ],
         "bases_before": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "home_score_before": 0,
         "outs_after": 2,
@@ -4884,7 +4922,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 91
+      "seq": 92
     },
     {
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -4894,9 +4932,9 @@
       "kind": "substitution",
       "narrative": "G. Tonkel pinch ran for C. Castillo.",
       "scoring_play": false,
-      "seq": 92,
+      "seq": 93,
       "substitution": {
-        "after_event_seq": 91,
+        "after_event_seq": 92,
         "kind": "offensive",
         "player_in": "guq7bmgbmpuz42gx",
         "player_out": "xm5c6hanhwrxj016",
@@ -4906,16 +4944,16 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|2",
+        "base_out_state": "101|2",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
         "bases_before": [
           true,
           false,
-          false
+          true
         ],
         "home_score_before": 0,
         "outs_after": 2,
@@ -4931,7 +4969,7 @@
       "runners": [
         {
           "cause": "balk",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "guq7bmgbmpuz42gx",
           "scored": false,
@@ -4940,7 +4978,7 @@
         {
           "cause": "balk",
           "earned": true,
-          "from": 4,
+          "from": 3,
           "out": false,
           "player_id": "7ta8lyaitqov5yq3",
           "rbi": false,
@@ -4949,19 +4987,19 @@
         }
       ],
       "scoring_play": true,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "110|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
+          false,
           true,
           false
         ],
@@ -5021,7 +5059,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 94
+      "seq": 95
     },
     {
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -5031,7 +5069,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 1 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 95,
+      "seq": 96,
       "summary": {
         "E": 1,
         "H": 1,
@@ -5198,7 +5236,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 91,
+          "after_event_seq": 92,
           "kind": "offensive",
           "player_in": "guq7bmgbmpuz42gx",
           "player_out": "xm5c6hanhwrxj016",
@@ -5211,23 +5249,22 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:14:48Z",
     "parse": {
-      "events_count": 96,
+      "events_count": 97,
       "replayable": false,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 93 runner guq7bmgbmpuz42gx advances from base 2 which was not occupied at event start"
+        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-07-18T02:14:42Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "75535c12591a7de8aa93483dab7501c36124588da223cd56c12a599ea7b12104",
+    "parsed_at": "2026-08-27T21:11:10Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "1d38277db9e9a10b3378f8255c719aa64110bc76bde7f4b39afeb9558dc45213",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240619_fcxu.xml"
   },
   "players": {
     "2p7ntprl8kefvjh1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cooper",
       "name": "Luke Cooper",
       "player_id": "2p7ntprl8kefvjh1",
@@ -5238,6 +5275,7 @@
     },
     "3runegpqw6mig9eu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Block",
       "name": "Nick Block",
       "player_id": "3runegpqw6mig9eu",
@@ -5248,6 +5286,7 @@
     },
     "5yttq9y9fco5xnmr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kirtley",
       "name": "Christian Kirtley",
       "player_id": "5yttq9y9fco5xnmr",
@@ -5258,6 +5297,7 @@
     },
     "7ta8lyaitqov5yq3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Atwood",
       "name": "Andy Atwood",
       "player_id": "7ta8lyaitqov5yq3",
@@ -5268,6 +5308,7 @@
     },
     "8trfwljzh82q6tuy": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Backstrom",
       "name": "Mahki Backstrom",
       "player_id": "8trfwljzh82q6tuy",
@@ -5278,6 +5319,7 @@
     },
     "d8klvmlrumxlsg7s": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Schroedle",
       "name": "Kyle Schroedle",
       "player_id": "d8klvmlrumxlsg7s",
@@ -5288,6 +5330,7 @@
     },
     "ejjvip09zufm08ji": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rojas",
       "name": "Freddy Rojas Jr.",
       "player_id": "ejjvip09zufm08ji",
@@ -5298,6 +5341,7 @@
     },
     "guq7bmgbmpuz42gx": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tonkel",
       "name": "Gavin Tonkel",
       "player_id": "guq7bmgbmpuz42gx",
@@ -5308,6 +5352,7 @@
     },
     "hwskb8dtc3qd177z": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Putnam",
       "name": "Kody Putnam",
       "player_id": "hwskb8dtc3qd177z",
@@ -5318,6 +5363,7 @@
     },
     "iepo38tl6j9om1qw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Galvan",
       "name": "Danny Galvan",
       "player_id": "iepo38tl6j9om1qw",
@@ -5328,6 +5374,7 @@
     },
     "ihuo4nm2qe0ttx8f": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sczepkowski",
       "name": "Ajay Sczepkowski",
       "player_id": "ihuo4nm2qe0ttx8f",
@@ -5338,6 +5385,7 @@
     },
     "j6ahilapa5u4e3gv": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Quigley",
       "name": "Montana Quigley",
       "player_id": "j6ahilapa5u4e3gv",
@@ -5348,6 +5396,7 @@
     },
     "l9ccio6w9znwz750": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gore",
       "name": "Nick Gore",
       "player_id": "l9ccio6w9znwz750",
@@ -5358,6 +5407,7 @@
     },
     "mlgwg524sgj5ed9k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McLaughlin",
       "name": "JD McLaughlin",
       "player_id": "mlgwg524sgj5ed9k",
@@ -5368,6 +5418,7 @@
     },
     "o08pyccdbt11eqal": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dinesen",
       "name": "Mason Dinesen",
       "player_id": "o08pyccdbt11eqal",
@@ -5378,6 +5429,7 @@
     },
     "o80ebiiht8tlgxtg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Podkul",
       "name": "Frank Podkul",
       "player_id": "o80ebiiht8tlgxtg",
@@ -5388,6 +5440,7 @@
     },
     "of30cu7blhtqgcjj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Major",
       "name": "Ryan Major",
       "player_id": "of30cu7blhtqgcjj",
@@ -5398,6 +5451,7 @@
     },
     "pdzrh8j18y8ey7od": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yanez",
       "name": "Hernan Yanez",
       "player_id": "pdzrh8j18y8ey7od",
@@ -5408,6 +5462,7 @@
     },
     "pesp4dvx1ealaw3m": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Washington",
       "name": "Xane Washington",
       "player_id": "pesp4dvx1ealaw3m",
@@ -5418,6 +5473,7 @@
     },
     "pqj1tua56mz1jf4s": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lynch",
       "name": "Jack Lynch",
       "player_id": "pqj1tua56mz1jf4s",
@@ -5428,6 +5484,7 @@
     },
     "s26hdq45rubozfal": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Zegna",
       "name": "Nick Zegna",
       "player_id": "s26hdq45rubozfal",
@@ -5438,6 +5495,7 @@
     },
     "uovggtnkh4gyqp5c": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hall",
       "name": "Hylan Hall",
       "player_id": "uovggtnkh4gyqp5c",
@@ -5448,6 +5506,7 @@
     },
     "xm5c6hanhwrxj016": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Castillo",
       "name": "Chad Castillo",
       "player_id": "xm5c6hanhwrxj016",
@@ -5458,6 +5517,7 @@
     },
     "z9bdtpt5yzn6phlr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Fitzgerald",
       "name": "Ben Fitzgerald",
       "player_id": "z9bdtpt5yzn6phlr",
@@ -5468,6 +5528,7 @@
     },
     "zw6qly6xv4zlnkxp": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Reinoso",
       "name": "Dayan Reinoso",
       "player_id": "zw6qly6xv4zlnkxp",
@@ -5477,7 +5538,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -5495,15 +5556,5 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 3
-      },
-      "raw": "A. Atwood advanced to second on an error by p, advanced to third.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

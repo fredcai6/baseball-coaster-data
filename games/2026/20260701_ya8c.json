@@ -6313,14 +6313,62 @@
         "away_score_before": 6,
         "base_out_state": "101|2",
         "bases_after": [
-          true,
           false,
-          true
+          true,
+          false
         ],
         "bases_before": [
           true,
           false,
           true
+        ],
+        "home_score_before": 8,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 1
+      },
+      "batting_team": "gnd7gosh9l5fc5us",
+      "fielding_team": "maotayco79j2g2lx",
+      "half": "top",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "Jeter Ybarra advanced to second on a passed ball; Jaden Collura scored on a passed ball, unearned.",
+      "runners": [
+        {
+          "cause": "passed_ball",
+          "from": 1,
+          "out": false,
+          "player_id": "c5at8f2oieorql60",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "passed_ball",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "g3ot5lbmuf5s94ce",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 111
+    },
+    {
+      "_derived": {
+        "away_score_before": 7,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
         ],
         "home_score_before": 8,
         "outs_after": 3,
@@ -6367,7 +6415,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6377,7 +6425,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6578,24 +6626,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:36:41Z",
     "parse": {
-      "events_count": 113,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 1 != oracle 2",
-        "[linescore] linescore: computed away final R 6 != oracle total 7",
-        "[lob] lob: inning 3 top folded LOB 0 != inning_summary LOB 1",
-        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1"
-      ]
+      "events_count": 114,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:17:46Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "ad77d0c00f77758101a92ab9c1f07d642a819d648a0f49279edd5c2b9455bf25",
+    "parsed_at": "2026-08-27T21:11:54Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "c080bfbeb559ddbb5807b2e6cb891462fbecbd5d28d9333ed18ae0acc19ae1df",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260701_ya8c.xml"
   },
   "players": {
     "3865oyuz5l2pj51r": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pelc",
       "name": "Eddy Pelc",
       "player_id": "3865oyuz5l2pj51r",
@@ -6606,6 +6650,7 @@
     },
     "4wq5cjcl7qx8k41p": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Winland",
       "name": "Paul Winland",
       "player_id": "4wq5cjcl7qx8k41p",
@@ -6616,6 +6661,7 @@
     },
     "6tyejjh3pgva2r8z": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cobb",
       "name": "Tremayne Cobb",
       "player_id": "6tyejjh3pgva2r8z",
@@ -6626,6 +6672,7 @@
     },
     "c5at8f2oieorql60": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ybarra",
       "name": "Jeter Ybarra",
       "player_id": "c5at8f2oieorql60",
@@ -6636,6 +6683,7 @@
     },
     "g3ot5lbmuf5s94ce": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Collura",
       "name": "Jaden Collura",
       "player_id": "g3ot5lbmuf5s94ce",
@@ -6646,6 +6694,7 @@
     },
     "ix3pddvfovgfw5vm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "ix3pddvfovgfw5vm",
@@ -6656,6 +6705,7 @@
     },
     "jpn4iq0lgbqlbqcj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Percival",
       "name": "Cole Percival",
       "player_id": "jpn4iq0lgbqlbqcj",
@@ -6666,6 +6716,7 @@
     },
     "jszdhyzbmh0veqym": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bardowell",
       "name": "Matthew Bardowell",
       "player_id": "jszdhyzbmh0veqym",
@@ -6676,6 +6727,7 @@
     },
     "jx26vjvq2ewlnfnd": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hurley",
       "name": "Charlie Hurley",
       "player_id": "jx26vjvq2ewlnfnd",
@@ -6686,6 +6738,7 @@
     },
     "ljqveu56o3ed51gw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lina",
       "name": "Dylan Lina",
       "player_id": "ljqveu56o3ed51gw",
@@ -6696,6 +6749,7 @@
     },
     "ly42v4qy0of9uuxa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ly42v4qy0of9uuxa",
@@ -6704,6 +6758,7 @@
     },
     "lzjofqe1dtaczmw1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Petersheim",
       "name": "Jacob Petersheim",
       "player_id": "lzjofqe1dtaczmw1",
@@ -6714,6 +6769,7 @@
     },
     "mqdcsnthll43eapk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bufford",
       "name": "Cam Bufford",
       "player_id": "mqdcsnthll43eapk",
@@ -6724,6 +6780,7 @@
     },
     "pgzu59edzgcd9im3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rocha",
       "name": "Liam Rocha",
       "player_id": "pgzu59edzgcd9im3",
@@ -6732,6 +6789,7 @@
     },
     "pockxe9pfd6nua32": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "pockxe9pfd6nua32",
@@ -6742,6 +6800,7 @@
     },
     "quxk0ram2ev0tb3h": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Corona",
       "name": "Emilio Corona",
       "player_id": "quxk0ram2ev0tb3h",
@@ -6752,6 +6811,7 @@
     },
     "s35939a0kgbmsi1b": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McKenzie",
       "name": "T.J. McKenzie",
       "player_id": "s35939a0kgbmsi1b",
@@ -6762,6 +6822,7 @@
     },
     "t0wytyl3ylepo8qy": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mata",
       "name": "Anthony Mata",
       "player_id": "t0wytyl3ylepo8qy",
@@ -6772,6 +6833,7 @@
     },
     "u83q216ly8jgh7ob": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burkett",
       "name": "Langston Burkett",
       "player_id": "u83q216ly8jgh7ob",
@@ -6780,6 +6842,7 @@
     },
     "ul6mvinxyg0iv4yg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jablonski",
       "name": "Jacob Jablonski",
       "player_id": "ul6mvinxyg0iv4yg",
@@ -6790,6 +6853,7 @@
     },
     "urxa9mmchubhb8h6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Faulks",
       "name": "Ryan Faulks",
       "player_id": "urxa9mmchubhb8h6",
@@ -6798,6 +6862,7 @@
     },
     "vdyqeggqglqcijyh": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dixon",
       "name": "Jake Dixon",
       "player_id": "vdyqeggqglqcijyh",
@@ -6806,6 +6871,7 @@
     },
     "vqkuwm8ezcpz7g4u": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bess",
       "name": "Cuba Bess",
       "player_id": "vqkuwm8ezcpz7g4u",
@@ -6816,6 +6882,7 @@
     },
     "wcos7mqc7wolufgw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ordorica",
       "name": "Steven Ordorica",
       "player_id": "wcos7mqc7wolufgw",
@@ -6824,6 +6891,7 @@
     },
     "wv1ggzstcd9bwz5x": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bautista",
       "name": "Nick Bautista",
       "player_id": "wv1ggzstcd9bwz5x",
@@ -6834,6 +6902,7 @@
     },
     "x3z3msk7ac43ae5e": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vest",
       "name": "Cooper Vest",
       "player_id": "x3z3msk7ac43ae5e",
@@ -6844,6 +6913,7 @@
     },
     "xzjn8n013w5tftyv": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Sullivan",
       "name": "Brendan O'Sullivan",
       "player_id": "xzjn8n013w5tftyv",
@@ -6854,6 +6924,7 @@
     },
     "zzd0sa3w036lzj22": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Laferriere",
       "name": "Derek Laferriere",
       "player_id": "zzd0sa3w036lzj22",
@@ -6863,7 +6934,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6881,15 +6952,5 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 6
-      },
-      "raw": "Jeter Ybarra advanced to second on a passed ball; Jaden Collura scored on a passed ball, unearned.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Jaden Collura scored on a passed ball, unearned'"
-    }
-  ]
+  "unparsed": []
 }

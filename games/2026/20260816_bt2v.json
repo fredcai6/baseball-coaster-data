@@ -7107,6 +7107,79 @@
         "home_score_before": 7,
         "outs_after": 1,
         "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Eli Lopez",
+        "player_id": "syn:home:7",
+        "resolved": true
+      },
+      "batting_team": "toa4e66upwknb2r7",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "ndn2a2djbgbd0lh4",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Eli Lopez singled, advanced to second on an error by ss, RBI (1-1 FB); Devon Dixon scored, unearned.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:10",
+        "resolved": true
+      },
+      "pitches": "FB",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:home:7",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "syn:home:6",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 124
+    },
+    {
+      "_derived": {
+        "away_score_before": 12,
+        "base_out_state": "010|1",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 8,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 6,
         "runs_on_play": 1
       },
@@ -7154,7 +7227,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 4,
+          "from": 2,
           "out": false,
           "player_id": "syn:home:7",
           "rbi": true,
@@ -7163,7 +7236,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 124
+      "seq": 125
     },
     {
       "batting_team": "toa4e66upwknb2r7",
@@ -7173,9 +7246,9 @@
       "kind": "substitution",
       "narrative": "Bridger Holmes to p for Aaron Moreno.",
       "scoring_play": false,
-      "seq": 125,
+      "seq": 126,
       "substitution": {
-        "after_event_seq": 124,
+        "after_event_seq": 125,
         "kind": "pitching",
         "player_in": "syn:away:11",
         "player_out": "syn:away:10",
@@ -7196,7 +7269,7 @@
           true,
           false
         ],
-        "home_score_before": 8,
+        "home_score_before": 9,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -7258,7 +7331,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 126
+      "seq": 127
     },
     {
       "_derived": {
@@ -7274,7 +7347,7 @@
           false,
           false
         ],
-        "home_score_before": 10,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -7319,7 +7392,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7335,7 +7408,7 @@
           false,
           false
         ],
-        "home_score_before": 10,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7380,7 +7453,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7396,7 +7469,7 @@
           false,
           false
         ],
-        "home_score_before": 10,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 0
@@ -7418,7 +7491,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 129
+      "seq": 130
     },
     {
       "_derived": {
@@ -7434,7 +7507,7 @@
           true,
           false
         ],
-        "home_score_before": 10,
+        "home_score_before": 11,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7479,7 +7552,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 130
+      "seq": 131
     },
     {
       "batting_team": "toa4e66upwknb2r7",
@@ -7489,7 +7562,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 6 Runs, 6 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 131,
+      "seq": 132,
       "summary": {
         "E": 0,
         "H": 6,
@@ -7621,7 +7694,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 124,
+          "after_event_seq": 125,
           "kind": "pitching",
           "player_in": "syn:away:11",
           "player_out": "syn:away:10",
@@ -7697,27 +7770,25 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:13:02Z",
     "parse": {
-      "events_count": 132,
+      "events_count": 133,
       "replayable": false,
-      "unparsed_count": 2,
+      "unparsed_count": 1,
       "warnings": [
         "[linescore] linescore: away inning 7 computed 3 != oracle 4",
-        "[linescore] linescore: home inning 9 computed 5 != oracle 6",
         "[linescore] linescore: computed away final R 12 != oracle total 13",
-        "[linescore] linescore: computed home final R 10 != oracle total 11",
         "[outs_per_half] outs_per_half: inning 7 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 5 top folded LOB 0 != inning_summary LOB 1",
         "[lob] lob: inning 7 top folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T15:20:12Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:05Z",
+    "parser_version": "0.4.0",
     "source_sha256": "1d35921703b3eed06f62f963294207afbb64e734a701a598bf1db16f8767f527",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260816_bt2v.xml"
   },
   "players": {
     "2y16esu8w84t2090": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Handron",
       "name": "Max Handron",
       "player_id": "2y16esu8w84t2090",
@@ -7728,6 +7799,7 @@
     },
     "5m17u858pgtvklh8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Serrano",
       "name": "Omar Serrano",
       "player_id": "5m17u858pgtvklh8",
@@ -7738,6 +7810,7 @@
     },
     "c6cvjogr2py2p0p9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wiese",
       "name": "Sean Wiese",
       "player_id": "c6cvjogr2py2p0p9",
@@ -7746,6 +7819,7 @@
     },
     "cbuq7j2rxnjic6tp": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Chamizo",
       "name": "Zach Chamizo",
       "player_id": "cbuq7j2rxnjic6tp",
@@ -7756,6 +7830,7 @@
     },
     "dhom60hfa5q8nmnw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnson",
       "name": "Osiris Johnson",
       "player_id": "dhom60hfa5q8nmnw",
@@ -7766,6 +7841,7 @@
     },
     "gece0gqd5zskx8y6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Williams",
       "name": "Tyler Williams",
       "player_id": "gece0gqd5zskx8y6",
@@ -7776,6 +7852,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Terilli",
       "name": "Lucas Terilli",
       "player_id": "syn:away:1",
@@ -7786,6 +7863,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Moreno",
       "name": "Aaron Moreno",
       "player_id": "syn:away:10",
@@ -7794,6 +7872,7 @@
     },
     "syn:away:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Holmes",
       "name": "Bridger Holmes",
       "player_id": "syn:away:11",
@@ -7804,6 +7883,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lojewski",
       "name": "Jacob Lojewski",
       "player_id": "syn:away:2",
@@ -7814,6 +7894,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Figueroa",
       "name": "Leiker Figueroa",
       "player_id": "syn:away:3",
@@ -7824,6 +7905,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cannon",
       "name": "Bryce Cannon",
       "player_id": "syn:away:4",
@@ -7834,6 +7916,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Boyd",
       "name": "Justin Boyd",
       "player_id": "syn:away:5",
@@ -7844,6 +7927,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Fellows",
       "name": "Cole Fellows",
       "player_id": "syn:away:6",
@@ -7854,6 +7938,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sutter",
       "name": "Logan Sutter",
       "player_id": "syn:away:7",
@@ -7864,6 +7949,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dunhurst",
       "name": "Hayden Dunhurst",
       "player_id": "syn:away:8",
@@ -7874,6 +7960,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tremain",
       "name": "Cole Tremain",
       "player_id": "syn:away:9",
@@ -7882,6 +7969,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hext",
       "name": "Cooper Hext",
       "player_id": "syn:home:1",
@@ -7892,6 +7980,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bower",
       "name": "Daylan Bower",
       "player_id": "syn:home:10",
@@ -7902,6 +7991,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kirchner",
       "name": "Andrew Kirchner",
       "player_id": "syn:home:2",
@@ -7912,6 +8002,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Castaneda",
       "name": "Christian Castaneda",
       "player_id": "syn:home:3",
@@ -7922,6 +8013,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Duarte",
       "name": "Josh Duarte",
       "player_id": "syn:home:4",
@@ -7932,6 +8024,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Aragon",
       "name": "Diego Aragon",
       "player_id": "syn:home:5",
@@ -7942,6 +8035,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dixon",
       "name": "Devon Dixon",
       "player_id": "syn:home:6",
@@ -7952,6 +8046,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lopez",
       "name": "Eli Lopez",
       "player_id": "syn:home:7",
@@ -7962,6 +8057,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Silvas",
       "name": "Anthony Silvas",
       "player_id": "syn:home:8",
@@ -7972,6 +8068,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ravelo",
       "name": "Andrew Ravelo",
       "player_id": "syn:home:9",
@@ -7980,6 +8077,7 @@
     },
     "vless40gstttagnp": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Roos",
       "name": "Zeb Roos",
       "player_id": "vless40gstttagnp",
@@ -7989,7 +8087,7 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -8016,15 +8114,6 @@
       },
       "raw": "Max Handron lined out to lf, sacrifice fly, RBI (0-2 KK); Leiker Figueroa advanced to third; Hayden Dunhurst scored.",
       "reason": "primary verb not recognized: 'Max Handron lined out to lf, sacrifice fly, RBI'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 4
-      },
-      "raw": "Eli Lopez singled, advanced to second on an error by ss, RBI (1-1 FB); Devon Dixon scored, unearned.",
-      "reason": "primary verb not recognized: 'Eli Lopez singled, advanced to second on an error by ss, RBI'"
     }
   ]
 }

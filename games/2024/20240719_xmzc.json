@@ -3232,7 +3232,7 @@
         "fielders": [
           "lf"
         ],
-        "location": "the lf line",
+        "location": "down the lf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -6033,12 +6033,82 @@
         "bases_after": [
           true,
           false,
-          false
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 5,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "D. Rivera",
+        "player_id": "5m0frfj9dc7gzinv",
+        "resolved": true
+      },
+      "batting_team": "j2s5i8avme57snyy",
+      "count": null,
+      "fielding_team": "wfkag0okico94mfx",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "D. Rivera reached first on a throwing error by 3b; D. Henderson advanced to third on the error.",
+      "outcome": {
+        "fielders": [
+          "3b"
+        ],
+        "location": null,
+        "modifiers": [
+          "error"
+        ],
+        "outs_recorded": 0,
+        "type": "reached_on_error"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "vbh3nyxzr56grlis",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "error",
+          "from": 0,
+          "out": false,
+          "player_id": "5m0frfj9dc7gzinv",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "error",
+          "from": 1,
+          "out": false,
+          "player_id": "xe2dadix8ufcbksu",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 111
+    },
+    {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "101|0",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          false,
+          true
         ],
         "home_score_before": 5,
         "outs_after": 1,
@@ -6082,21 +6152,21 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "100|1",
+        "base_out_state": "101|1",
         "bases_after": [
+          false,
           true,
-          true,
-          false
+          true
         ],
         "bases_before": [
           true,
           false,
-          false
+          true
         ],
         "home_score_before": 5,
         "outs_after": 1,
@@ -6112,7 +6182,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "5m0frfj9dc7gzinv",
           "scored": false,
@@ -6120,21 +6190,21 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "110|1",
+        "base_out_state": "011|1",
         "bases_after": [
+          false,
           true,
-          true,
-          false
+          true
         ],
         "bases_before": [
+          false,
           true,
-          true,
-          false
+          true
         ],
         "home_score_before": 5,
         "outs_after": 2,
@@ -6178,21 +6248,21 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "110|2",
+        "base_out_state": "011|2",
         "bases_after": [
+          false,
           true,
-          true,
-          false
+          true
         ],
         "bases_before": [
+          false,
           true,
-          true,
-          false
+          true
         ],
         "home_score_before": 5,
         "outs_after": 3,
@@ -6236,7 +6306,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "j2s5i8avme57snyy",
@@ -6246,7 +6316,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "summary": {
         "E": 1,
         "H": 1,
@@ -6468,25 +6538,24 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:50:12Z",
     "parse": {
-      "events_count": 116,
+      "events_count": 117,
       "replayable": false,
-      "unparsed_count": 2,
+      "unparsed_count": 1,
       "warnings": [
         "[linescore] linescore: away inning 9 computed 2 != oracle 4",
         "[linescore] linescore: computed away final R 3 != oracle total 5",
-        "[pa_counts] pa_counts: player wuffp5k6iedl9yvi events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player 5m0frfj9dc7gzinv events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 112 runner 5m0frfj9dc7gzinv advances from base 2 which was not occupied at event start"
+        "[pa_counts] pa_counts: player wuffp5k6iedl9yvi events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-07-18T02:15:08Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "56a2cbfb28573ec50d867e8fa77ded7b43237e1663bebfa59a7ed19a2c6d9c4a",
+    "parsed_at": "2026-08-27T21:11:16Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "a6dee47802c07312f9cc7a99697e264f42572ce9cb3c29ec4cd10e143fa7441a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240719_xmzc.xml"
   },
   "players": {
     "0or6g0vtuqazzkp0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Villafuerte",
       "name": "Conrad Villafuerte",
       "player_id": "0or6g0vtuqazzkp0",
@@ -6497,6 +6566,7 @@
     },
     "10fcz4tbqx3hij8l": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gomez",
       "name": "Dario Gomez",
       "player_id": "10fcz4tbqx3hij8l",
@@ -6507,6 +6577,7 @@
     },
     "253oik0z5zwh3dfy": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Galvan",
       "name": "Rene Galvan",
       "player_id": "253oik0z5zwh3dfy",
@@ -6517,6 +6588,7 @@
     },
     "2odthldpoj3pg1gq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dugan",
       "name": "Kelly Dugan",
       "player_id": "2odthldpoj3pg1gq",
@@ -6527,6 +6599,7 @@
     },
     "2x2nz84vkfjzctz5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jimenez",
       "name": "Kevin Jimenez",
       "player_id": "2x2nz84vkfjzctz5",
@@ -6537,6 +6610,7 @@
     },
     "4p75zf2hynf21qgn": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Low",
       "name": "Sam Low",
       "player_id": "4p75zf2hynf21qgn",
@@ -6547,6 +6621,7 @@
     },
     "5m0frfj9dc7gzinv": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rivera",
       "name": "David Rivera",
       "player_id": "5m0frfj9dc7gzinv",
@@ -6557,6 +6632,7 @@
     },
     "5z6i7mxsboq24cmm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Coutts",
       "name": "Jackson Coutts",
       "player_id": "5z6i7mxsboq24cmm",
@@ -6567,6 +6643,7 @@
     },
     "6m1xtdhif0nm6ymh": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Buraconak",
       "name": "Will Buraconak",
       "player_id": "6m1xtdhif0nm6ymh",
@@ -6577,6 +6654,7 @@
     },
     "aag4p2jl83ftumua": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gustofson",
       "name": "Eric Gustofson",
       "player_id": "aag4p2jl83ftumua",
@@ -6587,6 +6665,7 @@
     },
     "aotgmzmyu0gax1yu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sackett",
       "name": "Druw Sackett",
       "player_id": "aotgmzmyu0gax1yu",
@@ -6597,6 +6676,7 @@
     },
     "audmewj3k14o39f3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Boyd",
       "name": "Julian Boyd",
       "player_id": "audmewj3k14o39f3",
@@ -6607,6 +6687,7 @@
     },
     "ep55xja4r6oyrso8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Ethan Smith",
       "player_id": "ep55xja4r6oyrso8",
@@ -6617,6 +6698,7 @@
     },
     "fa6zbuk5l4f68z7k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jordan",
       "name": "Diego Jordan",
       "player_id": "fa6zbuk5l4f68z7k",
@@ -6627,6 +6709,7 @@
     },
     "h4tmaxhcifcr04tj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "George",
       "name": "Henry George",
       "player_id": "h4tmaxhcifcr04tj",
@@ -6637,6 +6720,7 @@
     },
     "iqdo087snqkus8c0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yeargain",
       "name": "Reece Yeargain",
       "player_id": "iqdo087snqkus8c0",
@@ -6647,6 +6731,7 @@
     },
     "kp4qf4i7gq5p5536": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santiago",
       "name": "Kevin Santiago",
       "player_id": "kp4qf4i7gq5p5536",
@@ -6657,6 +6742,7 @@
     },
     "kyzpt79w9n9nxo36": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Matthews",
       "name": "Dave Matthews",
       "player_id": "kyzpt79w9n9nxo36",
@@ -6667,6 +6753,7 @@
     },
     "ldiy9pp3n3t3qm2i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Alger",
       "name": "Aydan Alger",
       "player_id": "ldiy9pp3n3t3qm2i",
@@ -6677,6 +6764,7 @@
     },
     "lmdqcass6pt006xa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Diaz",
       "name": "Euro Diaz",
       "player_id": "lmdqcass6pt006xa",
@@ -6687,6 +6775,7 @@
     },
     "pikfoumrfdsma17q": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rosengard",
       "name": "Benjamin Rosengard",
       "player_id": "pikfoumrfdsma17q",
@@ -6697,6 +6786,7 @@
     },
     "psqq8mta515lxqay": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rios",
       "name": "Andres Rios",
       "player_id": "psqq8mta515lxqay",
@@ -6707,6 +6797,7 @@
     },
     "rh9f2ek376lfc148": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Scavotto",
       "name": "Evan Scavotto",
       "player_id": "rh9f2ek376lfc148",
@@ -6717,6 +6808,7 @@
     },
     "t8mu8ambhqo05rkt": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tindall",
       "name": "Mark Tindall",
       "player_id": "t8mu8ambhqo05rkt",
@@ -6727,6 +6819,7 @@
     },
     "uz46r2ds4bvhi1eg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ross",
       "name": "Dalton Ross",
       "player_id": "uz46r2ds4bvhi1eg",
@@ -6737,6 +6830,7 @@
     },
     "vbh3nyxzr56grlis": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Linton",
       "name": "Carter Linton",
       "player_id": "vbh3nyxzr56grlis",
@@ -6747,6 +6841,7 @@
     },
     "wuffp5k6iedl9yvi": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kueber",
       "name": "Garrett Kueber",
       "player_id": "wuffp5k6iedl9yvi",
@@ -6757,6 +6852,7 @@
     },
     "xe2dadix8ufcbksu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Henderson",
       "name": "Damian Henderson",
       "player_id": "xe2dadix8ufcbksu",
@@ -6767,6 +6863,7 @@
     },
     "y46ubyxbspn907xq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kuchinski",
       "name": "Sam Kuchinski",
       "player_id": "y46ubyxbspn907xq",
@@ -6777,6 +6874,7 @@
     },
     "yo3dk9nib34liu51": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Halvorson",
       "name": "Calyn Halvorson",
       "player_id": "yo3dk9nib34liu51",
@@ -6786,7 +6884,7 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -6813,15 +6911,6 @@
       },
       "raw": "G. Kueber singled up the middle, 2 RBI; E. Diaz scored; H. George H. George.",
       "reason": "runner clause not recognized: 'H. George H. George'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 4
-      },
-      "raw": "D. Rivera reached first on a throwing error by 3b; D. Henderson advanced to third on the error.",
-      "reason": "runner clause not recognized: 'D. Henderson advanced to third on the error'"
     }
   ]
 }

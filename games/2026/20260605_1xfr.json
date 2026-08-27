@@ -4815,7 +4815,7 @@
         "away_score_before": 1,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -4838,7 +4838,7 @@
       "runners": [
         {
           "cause": "force_out",
-          "from": 2,
+          "from": 1,
           "out": true,
           "player_id": "a4x9809wbva3u0yi",
           "scored": false,
@@ -6830,13 +6830,74 @@
         "away_score_before": 9,
         "base_out_state": "000|2",
         "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "C. Garner",
+        "player_id": "1l4hph86mlaafm85",
+        "resolved": true
+      },
+      "batting_team": "na6t5g8htwf89dsc",
+      "count": {
+        "balls": 1,
+        "strikes": 2
+      },
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "C. Garner struck out swinging, reached first on a wild pitch, advanced to second (1-2 BKSS).",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "st9dm78s4lqttdke",
+        "resolved": true
+      },
+      "pitches": "BKSS",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": false,
+          "player_id": "1l4hph86mlaafm85",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 121
+    },
+    {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "010|2",
+        "bases_after": [
           true,
           false,
           true
         ],
         "bases_before": [
           false,
-          false,
+          true,
           false
         ],
         "home_score_before": 5,
@@ -6886,7 +6947,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "1l4hph86mlaafm85",
           "scored": false,
@@ -6894,7 +6955,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 121
+      "seq": 122
     },
     {
       "_derived": {
@@ -6955,7 +7016,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -6965,9 +7026,9 @@
       "kind": "substitution",
       "narrative": "X. Casserilla to 3b.",
       "scoring_play": false,
-      "seq": 123,
+      "seq": 124,
       "substitution": {
-        "after_event_seq": 122,
+        "after_event_seq": 123,
         "kind": "defensive",
         "player_in": "f75cvfkdrtbyc313",
         "player_out": null,
@@ -6982,9 +7043,9 @@
       "kind": "substitution",
       "narrative": "W. Bermudez to lf.",
       "scoring_play": false,
-      "seq": 124,
+      "seq": 125,
       "substitution": {
-        "after_event_seq": 123,
+        "after_event_seq": 124,
         "kind": "defensive",
         "player_in": "aiqzwlp2f5yyasgu",
         "player_out": null,
@@ -6999,9 +7060,9 @@
       "kind": "substitution",
       "narrative": "N. Klemp to dh.",
       "scoring_play": false,
-      "seq": 125,
+      "seq": 126,
       "substitution": {
-        "after_event_seq": 124,
+        "after_event_seq": 125,
         "kind": "offensive",
         "player_in": "1xorg2l0v9lraecu",
         "player_out": null,
@@ -7016,7 +7077,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 126,
+      "seq": 127,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7218,21 +7279,21 @@
           "slot": null
         },
         {
-          "after_event_seq": 122,
+          "after_event_seq": 123,
           "kind": "defensive",
           "player_in": "f75cvfkdrtbyc313",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 123,
+          "after_event_seq": 124,
           "kind": "defensive",
           "player_in": "aiqzwlp2f5yyasgu",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 124,
+          "after_event_seq": 125,
           "kind": "offensive",
           "player_in": "1xorg2l0v9lraecu",
           "player_out": null,
@@ -7245,24 +7306,22 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:06:09Z",
     "parse": {
-      "events_count": 127,
+      "events_count": 128,
       "replayable": false,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": [
-        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3",
-        "[pa_counts] pa_counts: player 1l4hph86mlaafm85 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 81 runner a4x9809wbva3u0yi advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 121 runner 1l4hph86mlaafm85 advances from base 3 which was not occupied at event start"
+        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-07-18T02:17:21Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "063e7b2c7e360d4c20a36c371fa84d4fff8fa260f5c878fdaa09e9d76b44f560",
+    "parsed_at": "2026-08-27T21:11:48Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "05cdfbca647e22be1c1f1f746b31a8e7e98ef6e54ad507bafa353a05bedd4ce7",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260605_1xfr.xml"
   },
   "players": {
     "0mdsxwdneapayxh2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Humphreys",
       "name": "Ryan Humphreys",
       "player_id": "0mdsxwdneapayxh2",
@@ -7271,6 +7330,7 @@
     },
     "1l4hph86mlaafm85": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Garner",
       "name": "Carson Garner",
       "player_id": "1l4hph86mlaafm85",
@@ -7281,6 +7341,7 @@
     },
     "1xorg2l0v9lraecu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Klemp",
       "name": "Nich Klemp",
       "player_id": "1xorg2l0v9lraecu",
@@ -7291,6 +7352,7 @@
     },
     "347td5ul6pm19016": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Stone",
       "name": "Tyler Stone",
       "player_id": "347td5ul6pm19016",
@@ -7301,6 +7363,7 @@
     },
     "5sm31oznfsp5yy51": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ashworth",
       "name": "Kyle Ashworth",
       "player_id": "5sm31oznfsp5yy51",
@@ -7311,6 +7374,7 @@
     },
     "8ask0s9solu5djkd": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rover",
       "name": "Tommy Rover",
       "player_id": "8ask0s9solu5djkd",
@@ -7321,6 +7385,7 @@
     },
     "8ex7ex8vlpqyo3fn": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barry",
       "name": "Leyton Barry",
       "player_id": "8ex7ex8vlpqyo3fn",
@@ -7331,6 +7396,7 @@
     },
     "9um1va7isuz7hfeu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Piatkiewicz",
       "name": "Jeremy Piatkiewicz",
       "player_id": "9um1va7isuz7hfeu",
@@ -7341,6 +7407,7 @@
     },
     "a4x9809wbva3u0yi": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Collins",
       "name": "Andrew Collins",
       "player_id": "a4x9809wbva3u0yi",
@@ -7351,6 +7418,7 @@
     },
     "aiqzwlp2f5yyasgu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bermudez",
       "name": "William Bermudez",
       "player_id": "aiqzwlp2f5yyasgu",
@@ -7361,6 +7429,7 @@
     },
     "bcnnkmg78l5te8wo": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McLaughlin",
       "name": "Joe McLaughlin",
       "player_id": "bcnnkmg78l5te8wo",
@@ -7371,6 +7440,7 @@
     },
     "cuz6vkinbjyn9krf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Maynard",
       "name": "Will Maynard",
       "player_id": "cuz6vkinbjyn9krf",
@@ -7379,6 +7449,7 @@
     },
     "dac4sfhr54b4mala": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Timmins",
       "name": "Mark Timmins",
       "player_id": "dac4sfhr54b4mala",
@@ -7387,6 +7458,7 @@
     },
     "eavl4eau19mx5nm4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Longshore",
       "name": "Zach Longshore",
       "player_id": "eavl4eau19mx5nm4",
@@ -7397,6 +7469,7 @@
     },
     "f75cvfkdrtbyc313": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Casserilla",
       "name": "Xavier Casserilla",
       "player_id": "f75cvfkdrtbyc313",
@@ -7407,6 +7480,7 @@
     },
     "g2gfwgjmgw0wumz0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Steele",
       "name": "Jacob Steele",
       "player_id": "g2gfwgjmgw0wumz0",
@@ -7417,6 +7491,7 @@
     },
     "iohaj5ddzeilt0kf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Maruskin",
       "name": "Jack Maruskin",
       "player_id": "iohaj5ddzeilt0kf",
@@ -7425,6 +7500,7 @@
     },
     "iru12spt2m5gmc5n": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Millan",
       "name": "Jake Millan",
       "player_id": "iru12spt2m5gmc5n",
@@ -7435,6 +7511,7 @@
     },
     "ix62wf3sseddnft8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Canada",
       "name": "Chris Canada",
       "player_id": "ix62wf3sseddnft8",
@@ -7445,6 +7522,7 @@
     },
     "mh9g30o5e2rhll4o": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Beard",
       "name": "Logan Beard",
       "player_id": "mh9g30o5e2rhll4o",
@@ -7455,6 +7533,7 @@
     },
     "p2w9sx75b8r25jmk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Koszewski",
       "name": "Michael Koszewski",
       "player_id": "p2w9sx75b8r25jmk",
@@ -7465,6 +7544,7 @@
     },
     "pb4j4o4tl4zsiriu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ratfield",
       "name": "Donovan Ratfield",
       "player_id": "pb4j4o4tl4zsiriu",
@@ -7475,6 +7555,7 @@
     },
     "rfb5k9ztocuuy6r7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Apodaca",
       "name": "Enzo Apodaca",
       "player_id": "rfb5k9ztocuuy6r7",
@@ -7485,6 +7566,7 @@
     },
     "st9dm78s4lqttdke": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Taubensee",
       "name": "Matthew Taubensee",
       "player_id": "st9dm78s4lqttdke",
@@ -7495,6 +7577,7 @@
     },
     "te21i4ec5vlt1xni": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Feliciano",
       "name": "Joskar Feliciano",
       "player_id": "te21i4ec5vlt1xni",
@@ -7505,6 +7588,7 @@
     },
     "vmg2p3yxrn2razhg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Beard",
       "name": "Brendan Beard",
       "player_id": "vmg2p3yxrn2razhg",
@@ -7515,6 +7599,7 @@
     },
     "widh2653g4rul3u2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yukumoto",
       "name": "Ty Yukumoto",
       "player_id": "widh2653g4rul3u2",
@@ -7525,6 +7610,7 @@
     },
     "xagqrwvpyqhr7ts3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hornung",
       "name": "Carson Hornung",
       "player_id": "xagqrwvpyqhr7ts3",
@@ -7534,7 +7620,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7552,15 +7638,5 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "C. Garner struck out swinging, reached first on a wild pitch, advanced to second (1-2 BKSS).",
-      "reason": "primary verb not recognized: 'C. Garner struck out swinging, reached first on a wild pitch, advanced to second'"
-    }
-  ]
+  "unparsed": []
 }

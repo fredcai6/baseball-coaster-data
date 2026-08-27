@@ -6220,14 +6220,52 @@
         "away_score_before": 6,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 0
+      },
+      "batting_team": "zgzmksngghvq54yy",
+      "fielding_team": "ybsjgrorwgm7zp91",
+      "half": "top",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "D. Buggs stole second, advanced to third on an error by c.",
+      "runners": [
+        {
+          "cause": "stolen_base",
+          "from": 1,
+          "out": false,
+          "player_id": "rqibaab795yyg29r",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 111
+    },
+    {
+      "_derived": {
+        "away_score_before": 6,
+        "base_out_state": "001|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 5,
         "outs_after": 2,
@@ -6276,7 +6314,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "rqibaab795yyg29r",
           "rbi": true,
@@ -6285,7 +6323,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
@@ -6351,7 +6389,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
@@ -6412,7 +6450,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -6422,7 +6460,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 114,
+      "seq": 115,
       "summary": {
         "E": 1,
         "H": 2,
@@ -6438,9 +6476,9 @@
       "kind": "substitution",
       "narrative": "C. Sullivan to p for C. Richardso.",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "substitution": {
-        "after_event_seq": 114,
+        "after_event_seq": 115,
         "kind": "pitching",
         "player_in": "am7czikji3iecp9k",
         "player_out": "a8k7z5bbeuii76ei",
@@ -6505,7 +6543,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "_derived": {
@@ -6573,7 +6611,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
@@ -6641,7 +6679,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6701,7 +6739,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
@@ -6761,7 +6799,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "ybsjgrorwgm7zp91",
@@ -6771,7 +6809,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6959,7 +6997,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 114,
+          "after_event_seq": 115,
           "kind": "pitching",
           "player_in": "am7czikji3iecp9k",
           "player_out": "a8k7z5bbeuii76ei",
@@ -6972,21 +7010,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T17:24:36Z",
     "parse": {
-      "events_count": 122,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[pa_counts] pa_counts: player rqibaab795yyg29r events PA 5 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)"
-      ]
+      "events_count": 123,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:16:53Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "9c4b4ffaae7d928af7496bbd540d85d9ade6e51681f978b6f04e58b353aeca88",
+    "parsed_at": "2026-08-27T21:11:42Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "11fc6349bd5d9206f79fce45095c8809ed19813388fca2384ad032ecd61250ab",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250812_1mth.xml"
   },
   "players": {
     "0bfeemnqzdz9of4k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "0bfeemnqzdz9of4k",
@@ -6997,6 +7034,7 @@
     },
     "0cuac12goo7m3qmw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tucker",
       "name": "Wyatt Tucker",
       "player_id": "0cuac12goo7m3qmw",
@@ -7007,6 +7045,7 @@
     },
     "2rlq2219lcuet2nz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Linscott",
       "name": "Sam Linscott",
       "player_id": "2rlq2219lcuet2nz",
@@ -7017,6 +7056,7 @@
     },
     "4orhvl3m18tpom6d": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gonzalez",
       "name": "Gary Lora Gonzalez",
       "player_id": "4orhvl3m18tpom6d",
@@ -7027,6 +7067,7 @@
     },
     "4woeenyn10mjj560": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "4woeenyn10mjj560",
@@ -7037,6 +7078,7 @@
     },
     "6adnrav00fetslox": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Feliciano",
       "name": "Joskar Feliciano",
       "player_id": "6adnrav00fetslox",
@@ -7047,6 +7089,7 @@
     },
     "a8k7z5bbeuii76ei": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Richardson",
       "name": "Conner Richardson",
       "player_id": "a8k7z5bbeuii76ei",
@@ -7057,6 +7100,7 @@
     },
     "am7czikji3iecp9k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sullivan",
       "name": "Connor Sullivan",
       "player_id": "am7czikji3iecp9k",
@@ -7067,6 +7111,7 @@
     },
     "cfetr828oix8pp6g": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cobb",
       "name": "Tremayne Cobb Jr.",
       "player_id": "cfetr828oix8pp6g",
@@ -7077,6 +7122,7 @@
     },
     "ctm99vma4pub5ygl": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ctm99vma4pub5ygl",
@@ -7087,6 +7133,7 @@
     },
     "edtt17c787jdojxm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Almanza",
       "name": "Christian Almanza",
       "player_id": "edtt17c787jdojxm",
@@ -7097,6 +7144,7 @@
     },
     "fzfduce250h6dagk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kueber",
       "name": "Garrett Kueber",
       "player_id": "fzfduce250h6dagk",
@@ -7107,6 +7155,7 @@
     },
     "hb4w8pl6p2jubt8w": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Drewek",
       "name": "Davis Drewek",
       "player_id": "hb4w8pl6p2jubt8w",
@@ -7117,6 +7166,7 @@
     },
     "in1bvij8kkwhrw8h": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Clark",
       "name": "Kellum Clark",
       "player_id": "in1bvij8kkwhrw8h",
@@ -7127,6 +7177,7 @@
     },
     "jkhyj03ouuq9t3je": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tofteland",
       "name": "Dane Tofteland",
       "player_id": "jkhyj03ouuq9t3je",
@@ -7137,6 +7188,7 @@
     },
     "kj52okpii7s3iadf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Booth",
       "name": "Carter Booth",
       "player_id": "kj52okpii7s3iadf",
@@ -7147,6 +7199,7 @@
     },
     "kvm0j4rqnk9wkje0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Walsh",
       "name": "John Walsh",
       "player_id": "kvm0j4rqnk9wkje0",
@@ -7157,6 +7210,7 @@
     },
     "ndqc0h3j170spypq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bufford",
       "name": "Cam Bufford",
       "player_id": "ndqc0h3j170spypq",
@@ -7167,6 +7221,7 @@
     },
     "npyuuhwuub8olldk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dooley",
       "name": "Ty Dooley",
       "player_id": "npyuuhwuub8olldk",
@@ -7177,6 +7232,7 @@
     },
     "o790upgfabmye2xm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pierre",
       "name": "Zach St. Pierre",
       "player_id": "o790upgfabmye2xm",
@@ -7187,6 +7243,7 @@
     },
     "q001ut2ui4rmms1q": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lozano",
       "name": "Tyler Lozano",
       "player_id": "q001ut2ui4rmms1q",
@@ -7197,6 +7254,7 @@
     },
     "rqibaab795yyg29r": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Buggs",
       "name": "Darryl Buggs",
       "player_id": "rqibaab795yyg29r",
@@ -7207,6 +7265,7 @@
     },
     "sg8rwt49y0pixaj9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kowalski",
       "name": "Evan Kowalski",
       "player_id": "sg8rwt49y0pixaj9",
@@ -7217,6 +7276,7 @@
     },
     "u5obcvsxszazzd7q": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bryan",
       "name": "Hunter Bryan",
       "player_id": "u5obcvsxszazzd7q",
@@ -7227,6 +7287,7 @@
     },
     "u92j3eijj0uy66k8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Waterhouse",
       "name": "Quinn Waterhouse",
       "player_id": "u92j3eijj0uy66k8",
@@ -7237,6 +7298,7 @@
     },
     "vkeltex4ceuf8kjs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harris",
       "name": "Daniel Harris IV",
       "player_id": "vkeltex4ceuf8kjs",
@@ -7247,6 +7309,7 @@
     },
     "x8r6n22qj9009w87": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Garcia",
       "name": "Tristin Garcia",
       "player_id": "x8r6n22qj9009w87",
@@ -7257,6 +7320,7 @@
     },
     "y93tig5ow0mslgob": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Short",
       "name": "Luke Short",
       "player_id": "y93tig5ow0mslgob",
@@ -7266,7 +7330,7 @@
       "team_id": "zgzmksngghvq54yy"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7284,15 +7348,5 @@
       "team_id": "ybsjgrorwgm7zp91"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 4
-      },
-      "raw": "D. Buggs stole second, advanced to third on an error by c.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

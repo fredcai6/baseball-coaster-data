@@ -5994,14 +5994,52 @@
         "away_score_before": 9,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 0
+      },
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "fielding_team": "gnd7gosh9l5fc5us",
+      "half": "top",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "Justin Boyd stole second, advanced to third on an error by c.",
+      "runners": [
+        {
+          "cause": "stolen_base",
+          "from": 1,
+          "out": false,
+          "player_id": "syn:away:4",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 103
+    },
+    {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "001|2",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 5,
         "outs_after": 3,
@@ -6050,7 +6088,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -6060,7 +6098,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 105,
       "summary": {
         "E": 1,
         "H": 0,
@@ -6076,9 +6114,9 @@
       "kind": "substitution",
       "narrative": "Dawson Goines to p for Blake Smith.",
       "scoring_play": false,
-      "seq": 105,
+      "seq": 106,
       "substitution": {
-        "after_event_seq": 104,
+        "after_event_seq": 105,
         "kind": "pitching",
         "player_in": "syn:away:10",
         "player_out": "syn:away:9",
@@ -6144,7 +6182,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "_derived": {
@@ -6205,7 +6243,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "_derived": {
@@ -6266,7 +6304,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
@@ -6329,7 +6367,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6339,7 +6377,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 110,
+      "seq": 111,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6527,7 +6565,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 104,
+          "after_event_seq": 105,
           "kind": "pitching",
           "player_in": "syn:away:10",
           "player_out": "syn:away:9",
@@ -6540,21 +6578,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:37:15Z",
     "parse": {
-      "events_count": 111,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[pa_counts] pa_counts: player syn:away:4 events PA 5 != box-implied PA 4 (AB=3 BB=0 HBP=1 SAC=0)"
-      ]
+      "events_count": 112,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:06Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:11:58Z",
+    "parser_version": "0.4.0",
     "source_sha256": "07c26d1014c89421037726a401936d27111496fe80a112c7ccaf48555f4610f2",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260717_qi4s.xml"
   },
   "players": {
     "2y16esu8w84t2090": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Handron",
       "name": "Max Handron",
       "player_id": "2y16esu8w84t2090",
@@ -6565,6 +6602,7 @@
     },
     "4wq5cjcl7qx8k41p": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Winland",
       "name": "Paul Winland",
       "player_id": "4wq5cjcl7qx8k41p",
@@ -6575,6 +6613,7 @@
     },
     "5w7du1822fw3aj3e": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Blythe",
       "name": "Noah Blythe",
       "player_id": "5w7du1822fw3aj3e",
@@ -6585,6 +6624,7 @@
     },
     "dhom60hfa5q8nmnw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnson",
       "name": "Osiris Johnson",
       "player_id": "dhom60hfa5q8nmnw",
@@ -6595,6 +6635,7 @@
     },
     "gece0gqd5zskx8y6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Williams",
       "name": "Tyler Williams",
       "player_id": "gece0gqd5zskx8y6",
@@ -6605,6 +6646,7 @@
     },
     "ly42v4qy0of9uuxa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ly42v4qy0of9uuxa",
@@ -6615,6 +6657,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Terilli",
       "name": "Lucas Terilli",
       "player_id": "syn:away:1",
@@ -6625,6 +6668,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Goines",
       "name": "Dawson Goines",
       "player_id": "syn:away:10",
@@ -6635,6 +6679,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lojewski",
       "name": "Jacob Lojewski",
       "player_id": "syn:away:2",
@@ -6645,6 +6690,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cannon",
       "name": "Bryce Cannon",
       "player_id": "syn:away:3",
@@ -6655,6 +6701,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Boyd",
       "name": "Justin Boyd",
       "player_id": "syn:away:4",
@@ -6665,6 +6712,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Reynolds",
       "name": "Kolton Reynolds",
       "player_id": "syn:away:5",
@@ -6675,6 +6723,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dunhurst",
       "name": "Hayden Dunhurst",
       "player_id": "syn:away:6",
@@ -6685,6 +6734,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Figueroa",
       "name": "Leiker Figueroa",
       "player_id": "syn:away:7",
@@ -6695,6 +6745,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hernandez",
       "name": "Devyn Hernandez",
       "player_id": "syn:away:8",
@@ -6705,6 +6756,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Blake Smith",
       "player_id": "syn:away:9",
@@ -6713,6 +6765,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "syn:home:1",
@@ -6723,6 +6776,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Chavez",
       "name": "Brady Chavez",
       "player_id": "syn:home:10",
@@ -6733,6 +6787,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "syn:home:2",
@@ -6743,6 +6798,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ybarra",
       "name": "Jeter Ybarra",
       "player_id": "syn:home:3",
@@ -6753,6 +6809,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Collura",
       "name": "Jaden Collura",
       "player_id": "syn:home:4",
@@ -6763,6 +6820,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Conner Smith",
       "player_id": "syn:home:5",
@@ -6773,6 +6831,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Sullivan",
       "name": "Brendan O'Sullivan",
       "player_id": "syn:home:6",
@@ -6783,6 +6842,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Risse",
       "name": "Aidan Risse",
       "player_id": "syn:home:7",
@@ -6793,6 +6853,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harajli",
       "name": "Ahmad Harajli",
       "player_id": "syn:home:8",
@@ -6801,6 +6862,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mayer",
       "name": "Brock Mayer",
       "player_id": "syn:home:9",
@@ -6808,7 +6870,7 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6826,15 +6888,5 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 4
-      },
-      "raw": "Justin Boyd stole second, advanced to third on an error by c.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

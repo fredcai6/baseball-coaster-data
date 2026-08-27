@@ -1887,7 +1887,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -5321,7 +5321,7 @@
         "base_out_state": "110|1",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -5385,7 +5385,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 4,
+          "from": 2,
           "out": false,
           "player_id": "9jvhhfltpd5oqobw",
           "rbi": true,
@@ -5399,7 +5399,7 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "111|1",
+        "base_out_state": "101|1",
         "bases_after": [
           true,
           true,
@@ -5407,7 +5407,7 @@
         ],
         "bases_before": [
           true,
-          true,
+          false,
           true
         ],
         "home_score_before": 4,
@@ -5840,13 +5840,82 @@
         "base_out_state": "010|2",
         "bases_after": [
           true,
-          true,
-          false
+          false,
+          true
         ],
         "bases_before": [
           false,
           true,
           false
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "William Ponce",
+        "player_id": "x64xa5bvo5ns9w0d",
+        "resolved": true
+      },
+      "batting_team": "yaop56c5591myre0",
+      "count": {
+        "balls": 2,
+        "strikes": 2
+      },
+      "fielding_team": "tlqlpupbujjreauc",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "William Ponce struck out swinging, reached first on a wild pitch (2-2 BKSFBS); Vincent Temesvary advanced to third.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:10",
+        "resolved": true
+      },
+      "pitches": "BKSFBS",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": false,
+          "player_id": "x64xa5bvo5ns9w0d",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "iqp0ir45t895u9t0",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 102
+    },
+    {
+      "_derived": {
+        "away_score_before": 6,
+        "base_out_state": "101|2",
+        "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          false,
+          true
         ],
         "home_score_before": 4,
         "outs_after": 2,
@@ -5893,7 +5962,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "x64xa5bvo5ns9w0d",
           "scored": false,
@@ -5901,7 +5970,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -5911,14 +5980,103 @@
       "kind": "substitution",
       "narrative": "Blake Wilhoite pinch hit for Michael Dorcean.",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "substitution": {
-        "after_event_seq": 102,
+        "after_event_seq": 103,
         "kind": "offensive",
         "player_in": "syn:home:4",
         "player_out": "6pjlkckyce1z6u8k",
         "slot": 9
       }
+    },
+    {
+      "_derived": {
+        "away_score_before": 6,
+        "base_out_state": "111|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 4,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Blake Wilhoite",
+        "player_id": "syn:home:4",
+        "resolved": true
+      },
+      "batting_team": "yaop56c5591myre0",
+      "count": {
+        "balls": 1,
+        "strikes": 0
+      },
+      "fielding_team": "tlqlpupbujjreauc",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Blake Wilhoite singled through the right side, RBI (1-0 B); Zack Blaszak advanced to second; William Ponce advanced to third, out at home rf to c; Vincent Temesvary scored.",
+      "outcome": {
+        "fielders": [],
+        "location": "right side",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:10",
+        "resolved": true
+      },
+      "pitches": "B",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:home:4",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "eiwm9iuy8cd81n3u",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": true,
+          "player_id": "x64xa5bvo5ns9w0d",
+          "scored": false,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "iqp0ir45t895u9t0",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 105
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -5928,7 +6086,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 106,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6088,7 +6246,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 102,
+          "after_event_seq": 103,
           "kind": "offensive",
           "player_in": "syn:home:4",
           "player_out": "6pjlkckyce1z6u8k",
@@ -6101,24 +6259,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:17:27Z",
     "parse": {
-      "events_count": 105,
-      "replayable": false,
-      "unparsed_count": 2,
-      "warnings": [
-        "[linescore] linescore: home inning 9 computed 0 != oracle 1",
-        "[linescore] linescore: computed home final R 4 != oracle total 5",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player x64xa5bvo5ns9w0d events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)"
-      ]
+      "events_count": 107,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:13Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:06Z",
+    "parser_version": "0.4.0",
     "source_sha256": "0ed56ddda9a316cd2b1f8f117f10858fbedac522d5d770465f3f574d5518d1ee",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260821_psgb.xml"
   },
   "players": {
     "5oy4xxnl5a1fu82h": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cardinal",
       "name": "Nik Cardinal",
       "player_id": "5oy4xxnl5a1fu82h",
@@ -6129,6 +6283,7 @@
     },
     "6pjlkckyce1z6u8k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dorcean",
       "name": "Michael Dorcean",
       "player_id": "6pjlkckyce1z6u8k",
@@ -6139,6 +6294,7 @@
     },
     "9jvhhfltpd5oqobw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burns",
       "name": "Nin Burns II",
       "player_id": "9jvhhfltpd5oqobw",
@@ -6149,6 +6305,7 @@
     },
     "9m5vcqzdjnreg23z": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cruz",
       "name": "Trey Cruz",
       "player_id": "9m5vcqzdjnreg23z",
@@ -6159,6 +6316,7 @@
     },
     "cekepr0nr9v4p6cu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Specht",
       "name": "Tommy Specht",
       "player_id": "cekepr0nr9v4p6cu",
@@ -6169,6 +6327,7 @@
     },
     "eiwm9iuy8cd81n3u": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Blaszak",
       "name": "Zack Blaszak",
       "player_id": "eiwm9iuy8cd81n3u",
@@ -6179,6 +6338,7 @@
     },
     "iqp0ir45t895u9t0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Temesvary",
       "name": "Vincent Temesvary",
       "player_id": "iqp0ir45t895u9t0",
@@ -6189,6 +6349,7 @@
     },
     "rvkbb2vboby1l0t3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lavin",
       "name": "Sam Lavin",
       "player_id": "rvkbb2vboby1l0t3",
@@ -6199,6 +6360,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bowen",
       "name": "Cameron Bowen",
       "player_id": "syn:away:1",
@@ -6209,6 +6371,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hartman",
       "name": "Lucas Hartman",
       "player_id": "syn:away:10",
@@ -6219,6 +6382,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Shaver",
       "name": "A.J. Shaver",
       "player_id": "syn:away:2",
@@ -6229,6 +6393,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Muniz",
       "name": "Charlie Muniz",
       "player_id": "syn:away:3",
@@ -6239,6 +6404,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnson",
       "name": "Justin Johnson Jr.",
       "player_id": "syn:away:4",
@@ -6249,6 +6415,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cootway",
       "name": "Adam Cootway",
       "player_id": "syn:away:5",
@@ -6259,6 +6426,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Jacob Gutierrez",
       "player_id": "syn:away:6",
@@ -6269,6 +6437,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McHenry",
       "name": "John McHenry",
       "player_id": "syn:away:7",
@@ -6279,6 +6448,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wright",
       "name": "Bodee Wright",
       "player_id": "syn:away:8",
@@ -6289,6 +6459,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Calnon",
       "name": "Cole Calnon",
       "player_id": "syn:away:9",
@@ -6299,6 +6470,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Manisero",
       "name": "Anthony Manisero",
       "player_id": "syn:home:1",
@@ -6309,6 +6481,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ott",
       "name": "Ethan Ott",
       "player_id": "syn:home:2",
@@ -6319,6 +6492,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Swenda",
       "name": "Anthony Swenda",
       "player_id": "syn:home:3",
@@ -6329,6 +6503,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wilhoite",
       "name": "Blake Wilhoite",
       "player_id": "syn:home:4",
@@ -6339,6 +6514,7 @@
     },
     "uja1ybrurx0phpya": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lynch",
       "name": "Sean Lynch",
       "player_id": "uja1ybrurx0phpya",
@@ -6349,6 +6525,7 @@
     },
     "x64xa5bvo5ns9w0d": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ponce",
       "name": "William Ponce",
       "player_id": "x64xa5bvo5ns9w0d",
@@ -6358,7 +6535,7 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6376,24 +6553,5 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 5
-      },
-      "raw": "William Ponce struck out swinging, reached first on a wild pitch (2-2 BKSFBS); Vincent Temesvary advanced to third.",
-      "reason": "primary verb not recognized: 'William Ponce struck out swinging, reached first on a wild pitch'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 8
-      },
-      "raw": "Blake Wilhoite singled through the right side, RBI (1-0 B); Zack Blaszak advanced to second; William Ponce advanced to third, out at home rf to c; Vincent Temesvary scored.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

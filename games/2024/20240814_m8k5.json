@@ -4923,14 +4923,52 @@
         "away_score_before": 4,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 4,
+        "outs_after": 0,
+        "outs_before": 0,
+        "runs_on_play": 0
+      },
+      "batting_team": "zws0fa37bt7u3101",
+      "fielding_team": "3ward2o2o9m0w2dj",
+      "half": "top",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "N. Marcelo stole second, advanced to third on an error by c.",
+      "runners": [
+        {
+          "cause": "stolen_base",
+          "from": 1,
+          "out": false,
+          "player_id": "w5vvrf58x6s94e3k",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 91
+    },
+    {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "001|0",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 4,
         "outs_after": 0,
@@ -4979,7 +5017,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "w5vvrf58x6s94e3k",
           "rbi": true,
@@ -4988,7 +5026,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 91
+      "seq": 92
     },
     {
       "_derived": {
@@ -5056,7 +5094,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 92
+      "seq": 93
     },
     {
       "_derived": {
@@ -5128,7 +5166,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
@@ -5166,7 +5204,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 94
+      "seq": 95
     },
     {
       "_derived": {
@@ -5224,7 +5262,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "_derived": {
@@ -5282,7 +5320,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "batting_team": "zws0fa37bt7u3101",
@@ -5292,7 +5330,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 2 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 97,
+      "seq": 98,
       "summary": {
         "E": 2,
         "H": 2,
@@ -5308,9 +5346,9 @@
       "kind": "substitution",
       "narrative": "C. Dykstra to p for A. Edwards.",
       "scoring_play": false,
-      "seq": 98,
+      "seq": 99,
       "substitution": {
-        "after_event_seq": 97,
+        "after_event_seq": 98,
         "kind": "pitching",
         "player_in": "n7v2a7pu5etspmod",
         "player_out": "rld44x3g02k7c8km",
@@ -5375,7 +5413,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
@@ -5433,7 +5471,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "_derived": {
@@ -5493,7 +5531,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "batting_team": "3ward2o2o9m0w2dj",
@@ -5503,9 +5541,9 @@
       "kind": "substitution",
       "narrative": "J. Smith pinch hit for J. Leslie.",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "substitution": {
-        "after_event_seq": 101,
+        "after_event_seq": 102,
         "kind": "offensive",
         "player_in": "35dyp57wosq2r51n",
         "player_out": "8xhazkb5zc41bz6c",
@@ -5570,7 +5608,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "batting_team": "3ward2o2o9m0w2dj",
@@ -5580,7 +5618,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 105,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5712,7 +5750,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 101,
+          "after_event_seq": 102,
           "kind": "offensive",
           "player_in": "35dyp57wosq2r51n",
           "player_out": "8xhazkb5zc41bz6c",
@@ -5775,7 +5813,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 97,
+          "after_event_seq": 98,
           "kind": "pitching",
           "player_in": "n7v2a7pu5etspmod",
           "player_out": "rld44x3g02k7c8km",
@@ -5788,21 +5826,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:20:02Z",
     "parse": {
-      "events_count": 105,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[pa_counts] pa_counts: player w5vvrf58x6s94e3k events PA 4 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0)"
-      ]
+      "events_count": 106,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:15:31Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "ee435dce9ef1a2e00d3d93dea7a1cd75a7ff65e1ba511cf058f88a5fa6942a1e",
+    "parsed_at": "2026-08-27T21:11:21Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "15e352c77ab5e6e603eb6e3facbc8bd93393e6e328407bdc62bf249254f52a6d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240814_m8k5.xml"
   },
   "players": {
     "0cd7pfsbqrrvnpoj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hubbard",
       "name": "Dondrei Hubbard",
       "player_id": "0cd7pfsbqrrvnpoj",
@@ -5813,6 +5850,7 @@
     },
     "0jh2rymugzy1o7vw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Minder",
       "name": "Trevor Minder",
       "player_id": "0jh2rymugzy1o7vw",
@@ -5823,6 +5861,7 @@
     },
     "2txeba3l9o0tzy8o": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Czyz",
       "name": "TJ Czyz",
       "player_id": "2txeba3l9o0tzy8o",
@@ -5833,6 +5872,7 @@
     },
     "35dyp57wosq2r51n": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Jaylen Smith",
       "player_id": "35dyp57wosq2r51n",
@@ -5843,6 +5883,7 @@
     },
     "3fdb3arivk8fbbbl": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jorgensen",
       "name": "Tyler Jorgensen",
       "player_id": "3fdb3arivk8fbbbl",
@@ -5853,6 +5894,7 @@
     },
     "6o95zsogcrrn1mp5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Martinez",
       "name": "Noah Martinez",
       "player_id": "6o95zsogcrrn1mp5",
@@ -5863,6 +5905,7 @@
     },
     "8a9cq4etob4zfehd": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Clark",
       "name": "Tripp Clark",
       "player_id": "8a9cq4etob4zfehd",
@@ -5873,6 +5916,7 @@
     },
     "8xhazkb5zc41bz6c": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leslie",
       "name": "Josh Leslie",
       "player_id": "8xhazkb5zc41bz6c",
@@ -5883,6 +5927,7 @@
     },
     "ak1ol9xk8uqfh9p7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Viola",
       "name": "Troy Viola",
       "player_id": "ak1ol9xk8uqfh9p7",
@@ -5893,6 +5938,7 @@
     },
     "az4ih8utwyknljrz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harden",
       "name": "Payton Harden",
       "player_id": "az4ih8utwyknljrz",
@@ -5903,6 +5949,7 @@
     },
     "bq9fshzdhl2trdcr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yonamine",
       "name": "Micah Yonamine",
       "player_id": "bq9fshzdhl2trdcr",
@@ -5913,6 +5960,7 @@
     },
     "bs3tai4sg07adq95": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Carson",
       "name": "Brett Carson",
       "player_id": "bs3tai4sg07adq95",
@@ -5923,6 +5971,7 @@
     },
     "dp723km1thlio6tb": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burckel",
       "name": "Brad Burckel",
       "player_id": "dp723km1thlio6tb",
@@ -5933,6 +5982,7 @@
     },
     "efpsj6cbf4pzjrrj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Esposito",
       "name": "Michael Esposito",
       "player_id": "efpsj6cbf4pzjrrj",
@@ -5943,6 +5993,7 @@
     },
     "f6uflrqs9y93cykb": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Malone",
       "name": "Luke Malone",
       "player_id": "f6uflrqs9y93cykb",
@@ -5953,6 +6004,7 @@
     },
     "gc6kgog5ptdxjw03": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Klemp",
       "name": "Nicholas Klemp",
       "player_id": "gc6kgog5ptdxjw03",
@@ -5963,6 +6015,7 @@
     },
     "gjq34ef6wze0r6ua": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Hara",
       "name": "Michael O'Hara",
       "player_id": "gjq34ef6wze0r6ua",
@@ -5973,6 +6026,7 @@
     },
     "k0roujhrfwn1yhzs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Eglite",
       "name": "Brody Eglite",
       "player_id": "k0roujhrfwn1yhzs",
@@ -5983,6 +6037,7 @@
     },
     "kugpp6i7m004w7ps": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sullivan",
       "name": "Connor Sullivan",
       "player_id": "kugpp6i7m004w7ps",
@@ -5993,6 +6048,7 @@
     },
     "m0obhuxtbln6cb96": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wilmer",
       "name": "Stephen Wilmer",
       "player_id": "m0obhuxtbln6cb96",
@@ -6003,6 +6059,7 @@
     },
     "n7v2a7pu5etspmod": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dykstra",
       "name": "Casey Dykstra",
       "player_id": "n7v2a7pu5etspmod",
@@ -6013,6 +6070,7 @@
     },
     "nrqyofournpgojpn": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Stuart",
       "name": "Daunte Stuart",
       "player_id": "nrqyofournpgojpn",
@@ -6023,6 +6081,7 @@
     },
     "p76s5jwx9y0uprxq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hughes",
       "name": "Tyner Hughes",
       "player_id": "p76s5jwx9y0uprxq",
@@ -6033,6 +6092,7 @@
     },
     "rld44x3g02k7c8km": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Edwards",
       "name": "Andrew Edwards",
       "player_id": "rld44x3g02k7c8km",
@@ -6043,6 +6103,7 @@
     },
     "spkrmn1lntn5rifc": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Woodcox",
       "name": "Drew Woodcox",
       "player_id": "spkrmn1lntn5rifc",
@@ -6053,6 +6114,7 @@
     },
     "w5vvrf58x6s94e3k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Marcelo",
       "name": "Noah Marcelo",
       "player_id": "w5vvrf58x6s94e3k",
@@ -6063,6 +6125,7 @@
     },
     "yfto6vkm3p1z1k76": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Whitmore",
       "name": "Kelsie Whitmore",
       "player_id": "yfto6vkm3p1z1k76",
@@ -6073,6 +6136,7 @@
     },
     "yjjf51rghusw1u21": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Nelson",
       "name": "Braydon Nelson",
       "player_id": "yjjf51rghusw1u21",
@@ -6083,6 +6147,7 @@
     },
     "zaqz87tamnugyloe": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jung-Goldberg",
       "name": "Max Jung-Goldberg",
       "player_id": "zaqz87tamnugyloe",
@@ -6092,7 +6157,7 @@
       "team_id": "zws0fa37bt7u3101"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -6110,15 +6175,5 @@
       "team_id": "3ward2o2o9m0w2dj"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "N. Marcelo stole second, advanced to third on an error by c.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

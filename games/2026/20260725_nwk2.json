@@ -6771,6 +6771,67 @@
         "runs_on_play": 0
       },
       "batter": {
+        "name_raw": "Michael Soper",
+        "player_id": "0y61reek2k11wgjw",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 2,
+        "strikes": 2
+      },
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Michael Soper struck out swinging, out at first c to 1b (2-2 KFBFBS).",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:home:5",
+        "resolved": true
+      },
+      "pitches": "KFBFBS",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "0y61reek2k11wgjw",
+          "scored": false,
+          "to": 1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 116
+    },
+    {
+      "_derived": {
+        "away_score_before": 11,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 10,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
         "name_raw": "A.J. Shaver",
         "player_id": "syn:away:6",
         "resolved": true
@@ -6811,7 +6872,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6821,7 +6882,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6890,7 +6951,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6961,7 +7022,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
@@ -6999,7 +7060,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "_derived": {
@@ -7084,7 +7145,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 121
+      "seq": 122
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -7094,7 +7155,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "summary": {
         "E": 0,
         "H": 3,
@@ -7323,25 +7384,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:46:38Z",
     "parse": {
-      "events_count": 123,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player syn:away:1 events PA 5 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player 0y61reek2k11wgjw events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player syn:away:6 events PA 5 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)"
-      ]
+      "events_count": 124,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:07Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:00Z",
+    "parser_version": "0.4.0",
     "source_sha256": "613eaa65352936538ea2f8359b21be9e9319b22fbd2bfb62e860fc38f76ddd0e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260725_nwk2.xml"
   },
   "players": {
     "0y61reek2k11wgjw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Soper",
       "name": "Michael Soper",
       "player_id": "0y61reek2k11wgjw",
@@ -7352,6 +7408,7 @@
     },
     "1xorg2l0v9lraecu": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Klemp",
       "name": "Nich Klemp",
       "player_id": "1xorg2l0v9lraecu",
@@ -7362,6 +7419,7 @@
     },
     "3o1d4ejqjxj9802j": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mills",
       "name": "Pat Mills",
       "player_id": "3o1d4ejqjxj9802j",
@@ -7372,6 +7430,7 @@
     },
     "4ge6oa4jcwdh2da1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vargas",
       "name": "Nate Vargas",
       "player_id": "4ge6oa4jcwdh2da1",
@@ -7382,6 +7441,7 @@
     },
     "9jvhhfltpd5oqobw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burns",
       "name": "Nin Burns II",
       "player_id": "9jvhhfltpd5oqobw",
@@ -7392,6 +7452,7 @@
     },
     "aj0u2wqt1z6um095": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Stewart",
       "name": "Zack Stewart",
       "player_id": "aj0u2wqt1z6um095",
@@ -7402,6 +7463,7 @@
     },
     "f75cvfkdrtbyc313": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Casserilla",
       "name": "Xavier Casserilla",
       "player_id": "f75cvfkdrtbyc313",
@@ -7412,6 +7474,7 @@
     },
     "j36cazia9qut6ruz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McEvoy",
       "name": "True McEvoy",
       "player_id": "j36cazia9qut6ruz",
@@ -7422,6 +7485,7 @@
     },
     "p2w9sx75b8r25jmk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Koszewski",
       "name": "Michael Koszewski",
       "player_id": "p2w9sx75b8r25jmk",
@@ -7432,6 +7496,7 @@
     },
     "q6z9m8o366x502gy": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Sergio Gutierrez",
       "player_id": "q6z9m8o366x502gy",
@@ -7442,6 +7507,7 @@
     },
     "st9dm78s4lqttdke": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Taubensee",
       "name": "Matthew Taubensee",
       "player_id": "st9dm78s4lqttdke",
@@ -7452,6 +7518,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bowen",
       "name": "Cameron Bowen",
       "player_id": "syn:away:1",
@@ -7462,6 +7529,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hartman",
       "name": "Lucas Hartman",
       "player_id": "syn:away:10",
@@ -7472,6 +7540,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Jacob Gutierrez",
       "player_id": "syn:away:2",
@@ -7482,6 +7551,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Muniz",
       "name": "Charlie Muniz",
       "player_id": "syn:away:3",
@@ -7492,6 +7562,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cootway",
       "name": "Adam Cootway",
       "player_id": "syn:away:4",
@@ -7502,6 +7573,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McHenry",
       "name": "John McHenry",
       "player_id": "syn:away:5",
@@ -7512,6 +7584,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Shaver",
       "name": "A.J. Shaver",
       "player_id": "syn:away:6",
@@ -7522,6 +7595,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Calhoun",
       "name": "Aaron Calhoun",
       "player_id": "syn:away:7",
@@ -7530,6 +7604,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Anziani",
       "name": "Carlos Anziani",
       "player_id": "syn:away:8",
@@ -7538,6 +7613,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Almeda",
       "name": "J.J. Almeda",
       "player_id": "syn:away:9",
@@ -7546,6 +7622,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Apodaca",
       "name": "Enzo Apodaca",
       "player_id": "syn:home:1",
@@ -7556,6 +7633,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Piatkiewicz",
       "name": "Jeremy Piatkiewicz",
       "player_id": "syn:home:2",
@@ -7566,6 +7644,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cermenelli",
       "name": "Bryce Cermenelli",
       "player_id": "syn:home:3",
@@ -7574,6 +7653,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tauken",
       "name": "Daniel Tauken",
       "player_id": "syn:home:4",
@@ -7584,6 +7664,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Andiarena",
       "name": "Derick Andiarena",
       "player_id": "syn:home:5",
@@ -7594,6 +7675,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jackson",
       "name": "Jaren Jackson",
       "player_id": "syn:home:6",
@@ -7604,6 +7686,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lambert",
       "name": "Brock Lambert",
       "player_id": "syn:home:7",
@@ -7612,6 +7695,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnson",
       "name": "Josh Johnson",
       "player_id": "syn:home:8",
@@ -7620,6 +7704,7 @@
     },
     "widh2653g4rul3u2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yukumoto",
       "name": "Ty Yukumoto",
       "player_id": "widh2653g4rul3u2",
@@ -7630,6 +7715,7 @@
     },
     "xy6u5oj9pdzi64sg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Steinman",
       "name": "Ritter Steinman",
       "player_id": "xy6u5oj9pdzi64sg",
@@ -7637,7 +7723,7 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7655,15 +7741,5 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 3
-      },
-      "raw": "Michael Soper struck out swinging, out at first c to 1b (2-2 KFBFBS).\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "primary verb not recognized: 'Michael Soper struck out swinging, out at first c to 1b'"
-    }
-  ]
+  "unparsed": []
 }

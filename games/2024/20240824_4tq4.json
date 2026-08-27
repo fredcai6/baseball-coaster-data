@@ -5120,7 +5120,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 1,
           "out": false,
           "player_id": "ksk97h8qcj0sgd49",
           "scored": false,
@@ -5656,6 +5656,94 @@
       "seq": 103
     },
     {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "111|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 8,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "D. Gomez",
+        "player_id": "10fcz4tbqx3hij8l",
+        "resolved": true
+      },
+      "batting_team": "wfkag0okico94mfx",
+      "count": null,
+      "fielding_team": "3ward2o2o9m0w2dj",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "D. Gomez singled to third base, RBI; D. Maynard advanced to second; J. Colombo advanced to third, out at home 3b to c; E. Diaz scored.",
+      "outcome": {
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "yjjf51rghusw1u21",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "10fcz4tbqx3hij8l",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "18xjass4s3okcxu5",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": true,
+          "player_id": "ygz2nhvazzlvmg89",
+          "scored": false,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "lmdqcass6pt006xa",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 104
+    },
+    {
       "batting_team": "wfkag0okico94mfx",
       "fielding_team": "3ward2o2o9m0w2dj",
       "half": "bottom",
@@ -5663,7 +5751,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 105,
       "summary": {
         "E": 0,
         "H": 3,
@@ -5679,9 +5767,9 @@
       "kind": "substitution",
       "narrative": "J. McCaskey to 3b for J. Colombo.",
       "scoring_play": false,
-      "seq": 105,
+      "seq": 106,
       "substitution": {
-        "after_event_seq": 104,
+        "after_event_seq": 105,
         "kind": "defensive",
         "player_in": "9dyy2wtipddph35a",
         "player_out": "ygz2nhvazzlvmg89",
@@ -5696,7 +5784,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5910,7 +5998,7 @@
           "slot": 9
         },
         {
-          "after_event_seq": 104,
+          "after_event_seq": 105,
           "kind": "defensive",
           "player_in": "9dyy2wtipddph35a",
           "player_out": "ygz2nhvazzlvmg89",
@@ -5923,28 +6011,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:31:48Z",
     "parse": {
-      "events_count": 107,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 8 has no folded events but oracle expects 0",
-        "[linescore] linescore: home inning 7 computed 0 != oracle 1",
-        "[linescore] linescore: home inning 8 has no folded events but oracle expects 0",
-        "[linescore] linescore: computed home final R 8 != oracle total 9",
-        "[outs_per_half] outs_per_half: inning 7 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 7 bottom folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player 10fcz4tbqx3hij8l events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 92 runner ksk97h8qcj0sgd49 advances from base 3 which was not occupied at event start"
-      ]
+      "events_count": 108,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:15:40Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "a7d21bac71115e318822d5c9fc388421de12613d1ba7966607e622071af58a6b",
+    "parsed_at": "2026-08-27T21:11:24Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "234e40c7b1fef0983d619d67e6ceac55a4f186d02d3c6bae5e5019351734ac46",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240824_4tq4.xml"
   },
   "players": {
     "0cd7pfsbqrrvnpoj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hubbard",
       "name": "Dondrei Hubbard",
       "player_id": "0cd7pfsbqrrvnpoj",
@@ -5955,6 +6035,7 @@
     },
     "10fcz4tbqx3hij8l": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gomez",
       "name": "Dario Gomez",
       "player_id": "10fcz4tbqx3hij8l",
@@ -5965,6 +6046,7 @@
     },
     "18xjass4s3okcxu5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Maynard",
       "name": "Damon Maynard",
       "player_id": "18xjass4s3okcxu5",
@@ -5975,6 +6057,7 @@
     },
     "2x2nz84vkfjzctz5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jimenez",
       "name": "Kevin Jimenez",
       "player_id": "2x2nz84vkfjzctz5",
@@ -5985,6 +6068,7 @@
     },
     "59sd4opre7ey9ce0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barrera",
       "name": "Brett Barrera",
       "player_id": "59sd4opre7ey9ce0",
@@ -5995,6 +6079,7 @@
     },
     "5fqljf4w5b6yz32d": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Perez",
       "name": "Danny Perez",
       "player_id": "5fqljf4w5b6yz32d",
@@ -6005,6 +6090,7 @@
     },
     "5z6i7mxsboq24cmm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Coutts",
       "name": "Jackson Coutts",
       "player_id": "5z6i7mxsboq24cmm",
@@ -6015,6 +6101,7 @@
     },
     "6o95zsogcrrn1mp5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Martinez",
       "name": "Noah Martinez",
       "player_id": "6o95zsogcrrn1mp5",
@@ -6025,6 +6112,7 @@
     },
     "8a9cq4etob4zfehd": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Clark",
       "name": "Tripp Clark",
       "player_id": "8a9cq4etob4zfehd",
@@ -6035,6 +6123,7 @@
     },
     "9dyy2wtipddph35a": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McCaskey",
       "name": "Jacob McCaskey",
       "player_id": "9dyy2wtipddph35a",
@@ -6045,6 +6134,7 @@
     },
     "9vzf38gopjiiut3y": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Short",
       "name": "Luke Short",
       "player_id": "9vzf38gopjiiut3y",
@@ -6055,6 +6145,7 @@
     },
     "az4ih8utwyknljrz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harden",
       "name": "Payton Harden",
       "player_id": "az4ih8utwyknljrz",
@@ -6065,6 +6156,7 @@
     },
     "bs3tai4sg07adq95": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Carson",
       "name": "Brett Carson",
       "player_id": "bs3tai4sg07adq95",
@@ -6075,6 +6167,7 @@
     },
     "dp723km1thlio6tb": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burckel",
       "name": "Brad Burckel",
       "player_id": "dp723km1thlio6tb",
@@ -6085,6 +6178,7 @@
     },
     "h4tmaxhcifcr04tj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "George",
       "name": "Henry George",
       "player_id": "h4tmaxhcifcr04tj",
@@ -6095,6 +6189,7 @@
     },
     "k0roujhrfwn1yhzs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Eglite",
       "name": "Brody Eglite",
       "player_id": "k0roujhrfwn1yhzs",
@@ -6105,6 +6200,7 @@
     },
     "kp4qf4i7gq5p5536": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santiago",
       "name": "Kevin Santiago",
       "player_id": "kp4qf4i7gq5p5536",
@@ -6115,6 +6211,7 @@
     },
     "ksk97h8qcj0sgd49": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pierre",
       "name": "Zach St. Pierre",
       "player_id": "ksk97h8qcj0sgd49",
@@ -6125,6 +6222,7 @@
     },
     "kyzpt79w9n9nxo36": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Matthews",
       "name": "Dave Matthews",
       "player_id": "kyzpt79w9n9nxo36",
@@ -6135,6 +6233,7 @@
     },
     "lmdqcass6pt006xa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Diaz",
       "name": "Euro Diaz",
       "player_id": "lmdqcass6pt006xa",
@@ -6145,6 +6244,7 @@
     },
     "m0obhuxtbln6cb96": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wilmer",
       "name": "Stephen Wilmer",
       "player_id": "m0obhuxtbln6cb96",
@@ -6155,6 +6255,7 @@
     },
     "mpbr6yirdxhj36zi": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Guadalupe",
       "name": "Abdel Guadalupe",
       "player_id": "mpbr6yirdxhj36zi",
@@ -6165,6 +6266,7 @@
     },
     "nrqyofournpgojpn": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Stuart",
       "name": "Daunte Stuart",
       "player_id": "nrqyofournpgojpn",
@@ -6175,6 +6277,7 @@
     },
     "oiuugksp6v2ftkdz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Draves",
       "name": "Nathan Draves",
       "player_id": "oiuugksp6v2ftkdz",
@@ -6185,6 +6288,7 @@
     },
     "r3gkyn2wdqpqlafa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cosby",
       "name": "Christian Cosby",
       "player_id": "r3gkyn2wdqpqlafa",
@@ -6195,6 +6299,7 @@
     },
     "rh9f2ek376lfc148": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Scavotto",
       "name": "Evan Scavotto",
       "player_id": "rh9f2ek376lfc148",
@@ -6205,6 +6310,7 @@
     },
     "uz46r2ds4bvhi1eg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ross",
       "name": "Dalton Ross",
       "player_id": "uz46r2ds4bvhi1eg",
@@ -6215,6 +6321,7 @@
     },
     "ygz2nhvazzlvmg89": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Colombo",
       "name": "Johnny Colombo",
       "player_id": "ygz2nhvazzlvmg89",
@@ -6225,6 +6332,7 @@
     },
     "yjjf51rghusw1u21": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Nelson",
       "name": "Braydon Nelson",
       "player_id": "yjjf51rghusw1u21",
@@ -6235,6 +6343,7 @@
     },
     "z4pola979v5tt8la": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Landis",
       "name": "Dutch Landis",
       "player_id": "z4pola979v5tt8la",
@@ -6244,7 +6353,7 @@
       "team_id": "wfkag0okico94mfx"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -6262,15 +6371,5 @@
       "team_id": "wfkag0okico94mfx"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 8
-      },
-      "raw": "D. Gomez singled to third base, RBI; D. Maynard advanced to second; J. Colombo advanced to third, out at home 3b to c; E. Diaz scored.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }
