@@ -321,7 +321,15 @@ def _x_single(m: re.Match):
 
 
 def _x_double(m: re.Match):
-    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    loc = m.group("loc")
+    if loc is None and m.group("loc2") is not None:
+        # The double rule captures "down <X>" WITHOUT the preposition, while
+        # the single rule captures "down the <X> line" WITH it -- two
+        # different strings for the same physical location, which a consumer
+        # joining on location would trip over. Normalized here onto the
+        # single rule's form, which is also parallel to "up the middle"
+        # (the other location that keeps its preposition). Issue #40.
+        loc = _normalize_down_location(m.group("loc2"))
     if loc is None and m.groupdict().get("middle2") is not None:
         loc = "up the middle"
     elif loc is None and m.groupdict().get("side2") is not None:
@@ -330,14 +338,33 @@ def _x_double(m: re.Match):
     return (m.group("name"), [], loc, mods)
 
 
+def _normalize_down_location(loc: Optional[str]) -> Optional[str]:
+    """Give every hit type ONE spelling of a down-the-line location.
+
+    The `down (?P<loc2>...)` capture drops the preposition ("the lf line")
+    while the single rule's own row keeps it ("down the lf line") -- two
+    strings for the same physical location, which a consumer joining on
+    location would trip over. Normalized onto the form that keeps it,
+    parallel to "up the middle", the other location carrying a preposition.
+    Issue #40.
+    """
+    if loc is None or loc.startswith("down "):
+        return loc
+    return f"down {loc}"
+
+
 def _x_triple(m: re.Match):
-    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    loc = m.group("loc")
+    if loc is None:
+        loc = _normalize_down_location(m.group("loc2"))
     mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
 
 def _x_home_run(m: re.Match):
-    loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    loc = m.group("loc")
+    if loc is None:
+        loc = _normalize_down_location(m.group("loc2"))
     mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 

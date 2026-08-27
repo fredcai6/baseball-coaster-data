@@ -903,7 +903,7 @@ def test_doubled_ground_rule_modifier():
     result = parse_clause_group("N. Player doubled down the lf line, ground-rule")
     p = result.primary
     assert p.outcome_type == "double"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "ground-rule" in p.modifiers
 
 
@@ -923,7 +923,7 @@ def test_tripled_down_the_line_location():
     result = parse_clause_group("N. Player tripled down the lf line, RBI")
     p = result.primary
     assert p.outcome_type == "triple"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "RBI" in p.modifiers
 
 
@@ -932,7 +932,7 @@ def test_home_run_down_the_line_location():
     result = parse_clause_group("N. Player homered down the lf line, 3 RBI")
     p = result.primary
     assert p.outcome_type == "home_run"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "3 RBI" in p.modifiers
 
 
@@ -1521,16 +1521,20 @@ def test_hit_location_accepts_a_position_token_with_a_digit():
     """"down the 1b line" / "down the 3b line" -- the position token is not
     two letters, which the first pass assumed."""
     assert _pa("Ty Yukumoto singled down the 1b line (0-0).").primary.location == "down the 1b line"
-    assert _pa("N. Player doubled down the 3b line (0-0).").primary.location == "the 3b line"
+    assert _pa("N. Player doubled down the 3b line (0-0).").primary.location == "down the 3b line"
 
 
-def test_existing_double_location_format_is_unchanged():
-    """The double rule has always yielded "the lf line" (no leading "down");
-    widening its character class must not change that."""
-    assert (
-        parse_clause_group("N. Player doubled down the lf line, ground-rule").primary.location
-        == "the lf line"
-    )
+def test_hit_location_format_is_consistent_across_hit_types():
+    """The double rule used to yield "the lf line" while the single rule
+    yielded "down the lf line" -- two strings for the same physical location,
+    which a consumer joining on location would trip over. Normalized onto the
+    form that keeps its preposition, parallel to "up the middle"."""
+    single = parse_clause_group("Ty Yukumoto singled down the lf line (0-0)").primary.location
+    double = parse_clause_group("N. Player doubled down the lf line, ground-rule").primary.location
+    assert single == double == "down the lf line"
+    # Locations that never carried a preposition are untouched.
+    assert parse_clause_group("N. Player doubled to left field (0-0)").primary.location == "left field"
+    assert parse_clause_group("N. Player doubled up the middle (0-0)").primary.location == "up the middle"
 
 
 def test_stole_base_accepts_an_unearned_tail():

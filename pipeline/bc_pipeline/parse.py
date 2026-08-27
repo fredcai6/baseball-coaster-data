@@ -130,7 +130,13 @@ _LOCATION_FIELDERS: Dict[str, Tuple[str, ...]] = {
     "first base": ("1b",),
     "shortstop": ("ss",),
 }
-_LINE_LOCATION_RE = re.compile(r"^the (lf|rf) line$")
+#: A down-the-line hit location names the position it went past, so the
+#: fielder falls out of the location itself. Matches the ONE normalized
+#: spelling grammar now emits for every hit type ("down the <pos> line" --
+#: issue #40); the old pattern was `^the (lf|rf) line$`, which matched only
+#: the double rule's spelling and only outfield corners, so a single down
+#: the line never got a fielder and "down the 1b line" never matched at all.
+_LINE_LOCATION_RE = re.compile(r"^down the (lf|rf|cf|1b|2b|3b|ss) line$")
 
 
 def _location_to_fielders(location: Optional[str]) -> List[str]:
