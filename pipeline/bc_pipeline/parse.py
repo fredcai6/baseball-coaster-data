@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
-from . import identity
+from . import identity, team_map
 from .grammar import (
     BATTER_OUTCOME_CAUSE,
     GrammarMiss,
@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.5.0"
-SCHEMA_VERSION = "1.7.0"
+PARSER_VERSION = "0.6.0"
+SCHEMA_VERSION = "1.8.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1150,8 +1150,16 @@ def parse_game(
             "site": urlparse(source_url).netloc,
         },
         "teams": {
-            "home": {"team_id": player_table.home.team_id, "name": player_table.home.name},
-            "away": {"team_id": player_table.away.team_id, "name": player_table.away.name},
+            side: {
+                "team_id": team.team_id,
+                "name": team.name,
+                # schema 1.8.0. Unlike person_id, this needs no corpus-level
+                # evidence: franchise_id is a pure function of the team name,
+                # which is right here in the file. So it is always populated
+                # and can never drift out of sync with the registry.
+                "franchise_id": team_map.mint_franchise_id(team.name),
+            }
+            for side, team in (("home", player_table.home), ("away", player_table.away))
         },
         "players": players,
         "linescore": linescore,

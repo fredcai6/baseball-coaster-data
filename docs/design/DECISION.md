@@ -281,3 +281,75 @@ Both are emitted in `meta.not_attempted` so a consumer reads a number rather tha
 `game.schema.json`'s `$comment` VERSION HISTORY runs 1.0.0 → 1.3.0 and then jumps to this entry:
 **1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without a history
 entry.** Recorded here rather than reconstructed, since the reconstruction would not be evidence.
+
+## 10. `franchise_id` — cross-season team identity (issue #41 team half, epic #15)
+
+Schema **1.8.0** (additive MINOR): `$defs.team` gains optional, nullable `franchise_id`.
+
+### The problem
+
+`team_id` is SEASON-LOCAL. PrestoSports reissues it every year, and the corpus proves it
+exhaustively: of the **12** teams appearing in more than one season, **zero** keep their `team_id`,
+and **no `team_id` is ever reused**. Any multi-season question about a club — park factors, a
+franchise's run environment, three-year trends — silently breaks when joined on `team_id`.
+
+This was also the blocker #41 named for the *player* half: "team continuity is unusable as a linking
+signal until team identity is solved." It is now solved, which unblocks Gap 1.
+
+### The key: exact team name
+
+Two preconditions, both checked on every build rather than assumed, and both currently clean:
+
+- Within a season, name ↔ `team_id` is **1:1** — no name held by two ids, no id carrying two names.
+- **No team in this corpus has ever renamed.** Every name appearing in consecutive seasons keeps its
+  exact spelling.
+
+A violation of either raises `AmbiguousTeamIdentity` and fails the build. The whole key rests on that
+invariant, so a violation is the signal to redesign the key, not to degrade past it.
+
+`franchise_id` is minted as `franchise:<16 hex>` from `sha256(name)`. Minted rather than anchored on
+a real id because — unlike a player's Presto id, which is at least stable *within* a season — no team
+id survives a season boundary at all. There is nothing to anchor to.
+
+### Roster continuity was tested as a second signal, and rejected
+
+A relocated club keeps some of its players, so roster overlap is the obvious corroborating signal. It
+was measured against the cases where the answer is already known — a team present in both seasons
+under one name — and it **fails**:
+
+- Same-name overlap runs only **15–37%**. Minor-league rosters turn over that hard.
+- On **3 of 21** checkable season-pairs the top roster match is the **wrong team**. 2025's
+  `Colorado Springs Sky Sox` best-matches `Grand Junction Jackalopes` at 11.6% *even though the Sky
+  Sox exist that season under their own name*. In 2025→2026, both `Idaho Falls Chukars` and
+  `Yuba-Sutter Freebirds` best-match `Long Beach Coast`.
+
+A signal that misidentifies cases we can check is not trusted on cases we cannot.
+`build_team_map` recomputes this discriminating-power number every run and reports it in
+`meta.not_attempted.roster_signal`, so the refusal stays evidence-backed rather than becoming
+folklore — and so it will visibly change if the corpus ever makes the signal good.
+
+### What that means for the 2026 turnover
+
+2025 lost `Colorado Springs Sky Sox`, `Grand Junction Jackalopes` and `Rocky Mountain Vibes`; 2026
+gained `Modesto Roadsters`, `RedPocket Mobiles` and `Long Beach Coast`. Whether any arrival is a
+relocation of a departure **is not determinable from this corpus**, and the one available
+corroborating signal has just been shown unreliable. They are left as separate franchises and
+enumerated in `continuity` so the question stays visible rather than silently answered either way.
+15 franchises over 36 season-team records; 12 span more than one season.
+
+### Two deliberate differences from `person_id`
+
+1. **No artifact dependency, and no drift.** `franchise_id` is a pure function of the team name,
+   which is present in every file — so `parse` computes it directly and it can never fall out of sync
+   with the registry. `person_id` needs corpus-level grouping, so it is materialized at re-parse time
+   and `refresh` reports its drift. `team_map.json` is a registry and an evidence record, not an
+   input.
+2. **A synthetic `syn:team:<side>` id is exempt from the invariants and never becomes a join key.** A
+   team-site boxscore links only the host's caption, so the opponent gets a file-local id that
+   denotes a different club in every file. The corpus currently has none (it is fetched from league
+   pages, which link both), but the fetch path produces them and the golden fixture is one. The
+   franchise still resolves, because the key is the name — which a team-site page renders correctly.
+
+The records are keyed on the `(season, team_id, name)` **triple**, not on `(season, team_id)`.
+Keying by id would let two clubs sharing `syn:team:away` in one season overwrite each other and
+silently drop a franchise — caught by test, not by inspection.

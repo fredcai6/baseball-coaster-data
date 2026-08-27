@@ -19,6 +19,11 @@ its own:
 * :func:`bc_pipeline.person_map.build_person_map` -- rebuilds the
   within-season ``person_id`` map (issue #41). Same treatment: public
   functions only, no linking logic duplicated here.
+* :func:`bc_pipeline.team_map.build_team_map` -- rebuilds the cross-season
+  ``franchise_id`` registry (issue #41, team half). Note this one carries no
+  drift counterpart: ``franchise_id`` is a pure function of the team name in
+  each file, so ``parse`` populates it directly and it cannot fall out of
+  sync the way ``person_id`` can.
 
 **Sequencing** (:func:`run_refresh`, this module's only new logic):
 
@@ -75,7 +80,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 
-from bc_pipeline import backfill, frequencies, person_map
+from bc_pipeline import backfill, frequencies, person_map, team_map
 from bc_pipeline.backfill import BackfillResult
 from bc_pipeline.config import PipelineConfig, load_config
 from bc_pipeline.fetcher import Transport
@@ -84,6 +89,7 @@ __all__ = [
     "RefreshResult",
     "FREQUENCY_COMMIT_MESSAGE",
     "PERSON_MAP_COMMIT_MESSAGE",
+    "TEAM_MAP_COMMIT_MESSAGE",
     "run_refresh",
     "build_arg_parser",
     "main",
@@ -98,6 +104,9 @@ FREQUENCY_COMMIT_MESSAGE: str = "refresh: regenerate frequency artifacts"
 #: derived surface moved.
 PERSON_MAP_COMMIT_MESSAGE: str = "refresh: regenerate person map"
 
+#: Commit message for the franchise-map artifact.
+TEAM_MAP_COMMIT_MESSAGE: str = "refresh: regenerate team map"
+
 #: Path (relative to repo_root) the frequency artifact is read from/written
 #: to -- mirrors bc_pipeline.frequencies's own CLI default.
 _FREQUENCIES_RELATIVE_PATH = Path("artifacts") / "latest" / "frequencies.json"
@@ -105,6 +114,9 @@ _FREQUENCIES_RELATIVE_PATH = Path("artifacts") / "latest" / "frequencies.json"
 #: Where the person-map artifact is written -- mirrors bc_pipeline.person_map's
 #: own CLI default.
 _PERSON_MAP_RELATIVE_PATH = Path("artifacts") / "latest" / "person_map.json"
+
+#: Where the franchise-map artifact is written.
+_TEAM_MAP_RELATIVE_PATH = Path("artifacts") / "latest" / "team_map.json"
 
 
 def _regenerate_artifact(
@@ -230,6 +242,8 @@ class RefreshResult:
     person_map_status: str = "skipped-challenge"
     person_map_commit_message: str | None = None
     person_id_drift: int | None = None
+    team_map_status: str = "skipped-challenge"
+    team_map_commit_message: str | None = None
 
     @property
     def stopped_by_challenge(self) -> bool:
@@ -243,6 +257,8 @@ class RefreshResult:
             "person_map_status": self.person_map_status,
             "person_map_commit_message": self.person_map_commit_message,
             "person_id_drift": self.person_id_drift,
+            "team_map_status": self.team_map_status,
+            "team_map_commit_message": self.team_map_commit_message,
         }
 
 
@@ -335,6 +351,18 @@ def run_refresh(
             "resync it -- run `python -m bc_pipeline.reparse --version X.Y.Z --write`."
         )
 
+    fresh_team_map = team_map.build_team_map(games)
+    team_map_status = _regenerate_artifact(
+        fresh=fresh_team_map,
+        output_path=repo_root / _TEAM_MAP_RELATIVE_PATH,
+        normalize=team_map.normalize_generated_at,
+        worth_writing_when_absent=fresh_team_map["meta"]["games"] > 0,
+        commit_fn=commit_fn,
+        commit_message=TEAM_MAP_COMMIT_MESSAGE,
+        label="team map",
+        print_fn=print_fn,
+    )
+
     fresh = frequencies.build_frequencies(games, generated_at=frequency_generated_at)
     frequency_status = _regenerate_artifact(
         fresh=fresh,
@@ -362,6 +390,10 @@ def run_refresh(
             PERSON_MAP_COMMIT_MESSAGE if person_map_status == "changed" else None
         ),
         person_id_drift=drift,
+        team_map_status=team_map_status,
+        team_map_commit_message=(
+            TEAM_MAP_COMMIT_MESSAGE if team_map_status == "changed" else None
+        ),
     )
 
 

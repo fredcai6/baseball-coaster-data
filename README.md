@@ -26,10 +26,11 @@ pipeline/         the Python package that fetches, parses, and replays games (bc
                   including bc_pipeline.refresh (the backfill + frequencies orchestrator --
                   see "Refresh" below) and bc_pipeline.frequencies (the season+league
                   event-frequency aggregator -- see "Artifacts: frequencies" below)
-                  and bc_pipeline.person_map (the within-season person_id builder --
-                  see "Artifacts: person_map" below)
+                  bc_pipeline.person_map (the within-season person_id builder) and
+                  bc_pipeline.team_map (the cross-season franchise_id registry) --
+                  see "Artifacts: person_map" / "Artifacts: team_map" below
 schemas/          the JSON Schemas game files and artifacts are validated against:
-                  game.schema.json (current: 1.7.0) and frequencies.schema.json
+                  game.schema.json (current: 1.8.0) and frequencies.schema.json
 docs/design/      the schema design record: the three candidates + the DECISION
 tests/fixtures/   golden fixtures for the parser/validator
 scripts/          CI + validation helper scripts
@@ -435,8 +436,8 @@ message.
    written and committed with the SAME commit mechanism used for game-file commits, under its own
    distinct commit message, separate from any game-file batch commit. The **person map** goes first
    (`"refresh: regenerate person map"`) because it is the identity layer every other reading of the
-   corpus sits on; the **frequency artifact** follows
-   (`"refresh: regenerate frequency artifacts"`).
+   corpus sits on; then the **team map** (`"refresh: regenerate team map"`); then the **frequency
+   artifact** (`"refresh: regenerate frequency artifacts"`).
 4. Report **`person_id` drift**. `person_id` lives in two places: the person-map artifact, which is
    authoritative and was just regenerated, and a materialized copy on every `players[].person_id`,
    which only a labeled `reparse(vX.Y.Z)` commit can refresh because `games/**` is write-once. A
@@ -446,6 +447,45 @@ message.
    anything else is the signal that a re-parse is due, and names the command.
 5. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
    NO-OP-or-CHANGED) and exit 0 (or 1 if step 2 fired).
+
+### Artifacts: team_map (`bc_pipeline.team_map`)
+
+**`team_id` cannot be joined on across seasons.** PrestoSports reissues it every year, and the corpus
+proves it exhaustively: of the 12 teams appearing in more than one season, **zero** keep their
+`team_id`, and no `team_id` is ever reused.
+
+```
+Yuba-Sutter Freebirds   2024 yypnc9frxm...   2025 0f7i5wcuhu...   2026 toa4e66upw...
+Idaho Falls Chukars     2024 4hgc4se23g...   2025 ik8nryg1d3...   2026 gwwjqo5s6n...
+```
+
+`bc_pipeline.team_map` builds the key that survives: **`franchise_id`**, written to
+`artifacts/latest/team_map.json` and populated on `teams.{home,away}.franchise_id` (schema 1.8.0).
+
+**The key is the exact team NAME**, with two preconditions checked on every build (not assumed):
+within a season name ↔ `team_id` is 1:1, and no team in this corpus has ever renamed. A violation
+raises `AmbiguousTeamIdentity` and fails the build rather than degrading quietly.
+
+**Roster continuity is not used, because it was measured and it does not work.** It is the obvious
+second signal, so it was scored against the cases where the answer is known (a team in both seasons
+under one name): same-name overlap runs only 15–37%, and on **3 of 21** checkable pairs the top
+roster match is the *wrong* team — 2025's Colorado Springs Sky Sox best-matches Grand Junction
+Jackalopes even though the Sky Sox exist that season under their own name. A signal that
+misidentifies cases we can check is not trusted on cases we cannot. That number is recomputed every
+run into `meta.not_attempted.roster_signal`, so the refusal stays evidence-backed.
+
+Consequently the 2026 turnover — out: Colorado Springs Sky Sox, Grand Junction Jackalopes, Rocky
+Mountain Vibes; in: Modesto Roadsters, RedPocket Mobiles, Long Beach Coast — is **not** resolved into
+relocations. Those clubs stay separate franchises and the question stays visible in `continuity`.
+
+Unlike `person_id`, `franchise_id` has **no artifact dependency and no drift**: it is a pure function
+of the team name in each file, so `parse` computes it directly. `team_map.json` is a registry and an
+evidence record, not an input to parsing.
+
+```bash
+python -m bc_pipeline.team_map --input games/ --output artifacts/latest/team_map.json
+python -m bc_pipeline.team_map --check-no-commit
+```
 
 ### Artifacts: person_map (`bc_pipeline.person_map`)
 

@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from bc_pipeline import frequencies, person_map, refresh, schedule
+from bc_pipeline import frequencies, person_map, refresh, schedule, team_map
 from bc_pipeline.config import PipelineConfig
 from bc_pipeline.fetcher import FetchResponse
 
@@ -362,3 +362,69 @@ def test_person_id_drift_is_zero_on_the_real_corpus() -> None:
     games = frequencies.load_games(repo_root / "games")
     fresh = person_map.build_person_map(games)
     assert refresh._person_id_drift(games, fresh) == 0
+
+
+def test_refresh_regenerates_the_team_map_in_its_own_commit(tmp_path: Path) -> None:
+    """The franchise registry is a third derived artifact on the same footing,
+    with its own commit so `git log` names the surface that moved."""
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+    commits: list = []
+    result = run_refresh_against(config, response_map, [], commits, tmp_path, limit=None)
+
+    map_path = tmp_path / "artifacts" / "latest" / "team_map.json"
+    assert map_path.exists()
+    assert result.team_map_status == "changed"
+    assert result.team_map_commit_message == refresh.TEAM_MAP_COMMIT_MESSAGE
+
+    map_commits = [
+        (paths, msg) for paths, msg in commits if msg == refresh.TEAM_MAP_COMMIT_MESSAGE
+    ]
+    assert len(map_commits) == 1
+    assert map_commits[0][0] == (str(map_path),)
+    # Three distinct artifact commit messages, none folded into another.
+    assert len({
+        refresh.TEAM_MAP_COMMIT_MESSAGE,
+        refresh.PERSON_MAP_COMMIT_MESSAGE,
+        refresh.FREQUENCY_COMMIT_MESSAGE,
+    }) == 3
+
+
+def test_refresh_challenge_stop_skips_the_team_map_too(tmp_path: Path) -> None:
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=202, body="please wait"),
+    }
+    commits: list = []
+    result = run_refresh_against(
+        config, response_map, [], commits, tmp_path, limit=None,
+        escalation_sleep_fn=[].append,
+    )
+    assert result.stopped_by_challenge
+    assert result.team_map_status == "skipped-challenge"
+    assert result.team_map_commit_message is None
+    assert not (tmp_path / "artifacts" / "latest" / "team_map.json").exists()
+    assert all(msg != refresh.TEAM_MAP_COMMIT_MESSAGE for _paths, msg in commits)
+
+
+def test_corpus_franchise_id_needs_no_drift_counterpart() -> None:
+    """franchise_id is a pure function of the team name in each file, so
+    parse populates it directly and it cannot fall out of sync with the
+    registry the way person_id can. Assert that on the real corpus."""
+    repo_root = Path(__file__).resolve().parents[2]
+    games = frequencies.load_games(repo_root / "games")
+    art = team_map.build_team_map(games)
+    for game in games:
+        for side in ("home", "away"):
+            team = game["teams"][side]
+            expected = team_map.mint_franchise_id(team["name"])
+            assert team.get("franchise_id") == expected, (game["game_id"], side)
+            assert expected in art["franchises"]
