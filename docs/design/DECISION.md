@@ -99,6 +99,24 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   1.2.0; only new parses may emit `null` for either field. The two-name `"<in> to dh for <out>."`
   variant remains intentionally unimplemented (out of this gate's authorized scope) and still falls
   to `unparsed[]` unchanged.
+- **2026-08-27 — `schema_version` 1.3.0 → 1.4.0 (additive MINOR).** `$defs.player_entry.properties`
+  gains `box_listed` (boolean, not required). **False** marks a player who appears ONLY in the PBP
+  narrative and has no row in the boxscore's Batters/Pitchers tables. **Why:** StatCrew omits an
+  all-zero box row for a player who entered and then never batted or reached — 91% of this
+  population, measured over 633 games — and rarely omits one who DID record a plate appearance
+  (e.g. `J. Kennedy grounded out to p.` with `Kennedy` nowhere in the box). Previously such a
+  substitution line failed name resolution and landed in `unparsed[]`, losing the whole
+  substitution EVENT and not merely a stat line. The PBP is authority that the player was in the
+  game, so they are now admitted to `players` with a synthetic pid, anchored by the other name in
+  the same substitution resolving cleanly on exactly one side (never guessed — without that anchor
+  the line still fails loud). `box_listed=False` is what keeps this honest: a consumer can never
+  mistake "no box row" for "zero stats", and the replay oracle's box-derived checks can see which
+  players they have no row to reconcile against. Absent means True, so every pre-1.4.0 file is
+  boxscore-derived by definition. Human-ratified: "im okay with our derived box being better than
+  the real one … maybe we want to have an 'invisible' bit to make it clear when we're on this
+  corner case" (issue #40). Additive-only: every existing 1.3.0 file still validates under 1.4.0.
+  Lands in the next labeled re-parse.
+
 - **2026-07-17 — `schema_version` 1.2.0 → 1.3.0 (additive MINOR).** `$defs.outcome.properties.type.enum`
   gains `"foul_out"` and `"strikeout"` (closed taxonomy 17 → 19). `foul_out` (`"<name> fouled out to
   <pos>."`) is a foul fly ball caught for an out, `outs_recorded=1`, `fielders=["<pos>"]` populated

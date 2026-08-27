@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.3.0"
-SCHEMA_VERSION = "1.3.0"
+SCHEMA_VERSION = "1.4.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -259,6 +259,51 @@ def build_events(
             }
         )
 
+    _pbp_declared_ids: Dict[Tuple[str, str], str] = {}
+
+    def _declare_from_pbp(name_token: str, side: str) -> Optional[str]:
+        """Admit a player the PBP names but the boxscore never lists.
+
+        StatCrew omits an all-zero box row for a player who entered and then
+        never batted or reached -- 91% of this population -- and rarely omits
+        one who DID record a plate appearance. Either way the narrative is
+        authority that the player was in the game, so refusing to admit them
+        loses the substitution event itself, not just a stat line.
+
+        The entry is flagged ``box_listed=False`` (schema 1.4.0) so a
+        consumer can never mistake "no box row" for "zero stats", and so the
+        replay oracle's box-derived checks can see which players it has no
+        row to reconcile against.
+
+        Returns the new player_id, or None when the token is unusable.
+        """
+        display = " ".join((name_token or "").split()).strip().rstrip(".")
+        if not display or not _last_name_token(display):
+            return None
+        team = player_table.home if side == "home" else player_table.away
+        existing = _pbp_declared_ids.get((side, display))
+        if existing is not None:
+            return existing
+        n = 1 + max(
+            [
+                int(pid.rsplit(":", 1)[1])
+                for pid in team.players
+                if pid.startswith(f"syn:{side}:") and pid.rsplit(":", 1)[1].isdigit()
+            ]
+            or [0]
+        )
+        pid = f"syn:{side}:{n}"
+        team.players[pid] = identity.PlayerEntry(
+            player_id=pid,
+            name=display,
+            last_name=_last_name_token(display),
+            team_id=team.team_id,
+            positions=[],
+            box_listed=False,
+        )
+        _pbp_declared_ids[(side, display)] = pid
+        return pid
+
     def _resolve_runner(
         rm: RunnerMovement,
         batting_side: str,
@@ -467,6 +512,41 @@ def build_events(
                 # cross-side ambiguity) -- either way, never guess.
                 side, team_id = primary_side, primary_team
                 in_pid, in_ok, out_pid, out_ok = None, False, None, False
+            # issue #40: admit a PBP-named player the boxscore never lists,
+            # rather than losing the whole substitution.
+            #
+            # StatCrew omits an all-zero box row for a player who entered and
+            # then never batted or reached (91% of this population), and
+            # rarely omits one who DID record a plate appearance. Either way
+            # the narrative is authority that they played.
+            #
+            # This reads the PER-SIDE partial results, not in_ok/out_ok --
+            # the branch above deliberately zeroes those whenever neither
+            # side resolves BOTH names, which is exactly the case here. The
+            # resolved name is the anchor for which team this is; that anchor
+            # must be unambiguous, so we require the other side to have
+            # matched NEITHER name. Without an anchor we still refuse.
+            if not in_ok and not out_ok:
+                primary_half = p_in_ok != p_out_ok
+                fallback_half = f_in_ok != f_out_ok
+                anchor = None
+                if primary_half and not (f_in_ok or f_out_ok):
+                    anchor = (primary_side, primary_team, p_in_pid, p_in_ok, p_out_pid, p_out_ok)
+                elif fallback_half and not (p_in_ok or p_out_ok):
+                    anchor = (fallback_side, fallback_team, f_in_pid, f_in_ok, f_out_pid, f_out_ok)
+                if anchor is not None:
+                    a_side, a_team, a_in_pid, a_in_ok, a_out_pid, a_out_ok = anchor
+                    missing = cg.substitution.player_out if a_in_ok else cg.substitution.player_in
+                    declared = _declare_from_pbp(missing, a_side) if missing else None
+                    if declared is not None:
+                        side, team_id = a_side, a_team
+                        if a_in_ok:
+                            in_pid, in_ok = a_in_pid, True
+                            out_pid, out_ok = declared, True
+                        else:
+                            out_pid, out_ok = a_out_pid, True
+                            in_pid, in_ok = declared, True
+
             if not out_ok or not in_ok:
                 if primary_full and fallback_full:
                     reason = (
@@ -942,6 +1022,7 @@ def _players_table(player_table: identity.PlayerTable) -> Dict[str, dict]:
                 "team_id": entry.team_id,
                 "bats_side": entry.bats_side,
                 "positions": list(entry.positions),
+                "box_listed": entry.box_listed,
             }
     return players
 

@@ -181,6 +181,9 @@ class PlayerEntry:
     team_id: str
     positions: List[str] = field(default_factory=list)
     bats_side: Optional[str] = None
+    #: False when this entry was declared by the PBP narrative rather than
+    #: read from a boxscore table -- see the schema's `box_listed`.
+    box_listed: bool = True
 
 
 @dataclass

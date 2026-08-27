@@ -726,3 +726,71 @@ def test_replaced_runner_no_longer_occupies_the_base():
         if r["player_id"] == "syn:away:1" and ev.get("kind") == "runner_event"
     ]
     assert later == [], f"replaced runner should not move again, got {later!r}"
+
+
+# --- issue #40: PBP-declared players (schema 1.4.0 `box_listed`) ----------
+#
+# StatCrew omits an all-zero box row for a player who entered and then never
+# batted or reached, and rarely omits one who DID record a plate appearance.
+# Such a substitution line used to fail name resolution and land in
+# unparsed[], losing the substitution EVENT rather than just a stat line.
+
+
+def _sub_table():
+    away = identity.TeamIdentity(
+        team_id="syn:team:away", name="Synthetic Away",
+        players={
+            "syn:away:1": identity.PlayerEntry(
+                player_id="syn:away:1", name="Pat Smith", last_name="Smith",
+                team_id="syn:team:away", positions=["1b"],
+            ),
+        },
+    )
+    home = identity.TeamIdentity(
+        team_id="syn:team:home", name="Synthetic Home",
+        players={
+            "syn:home:1": identity.PlayerEntry(
+                player_id="syn:home:1", name="Jordan Lee", last_name="Lee",
+                team_id="syn:team:home", positions=["p"],
+            ),
+        },
+    )
+    return identity.PlayerTable(home=home, away=away)
+
+
+def _sub_events(text):
+    line = parse.PbpLine(inning=1, half="top", line_index=0, text=text, is_strong=False)
+    return parse.build_events([line], _sub_table())
+
+
+def test_absent_outgoing_player_is_declared_from_the_pbp():
+    """"Pat Smith pinch hit for E. Kowalski." -- Kowalski is on no box row,
+    but the narrative is authority that he was in the game."""
+    result = _sub_events("Pat Smith pinch hit for E. Kowalski.")
+    events = result[0] if isinstance(result, tuple) else result
+    subs = [e for e in events if e["kind"] == "substitution"]
+    assert subs, "the substitution must survive rather than land in unparsed[]"
+    assert subs[0]["substitution"]["player_in"] == "syn:away:1"
+    assert subs[0]["substitution"]["player_out"].startswith("syn:away:")
+
+
+def test_declared_player_is_flagged_not_box_listed():
+    result = _sub_events("Pat Smith pinch hit for E. Kowalski.")
+    unparsed = result[1] if isinstance(result, tuple) and len(result) > 1 else []
+    assert not [u for u in unparsed if "Kowalski" in (u.get("raw") or "")]
+
+
+def test_box_listed_defaults_true_for_boxscore_players():
+    entry = identity.PlayerEntry(
+        player_id="syn:away:1", name="Pat Smith", last_name="Smith",
+        team_id="syn:team:away", positions=[],
+    )
+    assert entry.box_listed is True
+
+
+def test_declaration_refuses_without_an_unambiguous_anchor():
+    """If NEITHER name resolves there is no anchor for which team this is,
+    and guessing the side is exactly what this codebase refuses to do."""
+    result = _sub_events("A. Nobody pinch hit for B. Alsonobody.")
+    events = result[0] if isinstance(result, tuple) else result
+    assert [e for e in events if e["kind"] == "substitution"] == []
