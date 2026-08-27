@@ -40,6 +40,8 @@ FROZEN_OUTCOME_TYPES = {
     "reached_on_error",
     "grounded_into_double_play",
     "sacrifice",
+    "reached_on_interference",
+    "batter_interference",
 }
 
 SEMVER_PATTERN = r"^[0-9]+\.[0-9]+\.[0-9]+$"
@@ -97,7 +99,7 @@ def inv2_closed_outcome_taxonomy(schema: dict) -> str:
         )
     if len(enum) != len(FROZEN_OUTCOME_TYPES):
         _fail(f"invariant 2 FAILED: outcome.type enum has duplicates ({len(enum)} members)")
-    return "2. closed 6.4 outcome taxonomy (19 members, exact)"
+    return f"2. closed 6.4 outcome taxonomy ({len(FROZEN_OUTCOME_TYPES)} members, exact)"
 
 
 def inv3_no_open_asserted_objects(schema: dict) -> str:
