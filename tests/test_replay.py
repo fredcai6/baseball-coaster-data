@@ -328,3 +328,78 @@ def test_sac_modifier_set_covers_both_spellings():
 
     assert "SAC" in _SAC_MODIFIERS
     assert "sacrifice fly" in _SAC_MODIFIERS
+
+
+# --- issue #40: LOB is measured at plate-appearance boundaries -------------
+#
+# check_lob REFOLDS from runners[] and never trusts an input _derived, so
+# these fixtures carry real runner primitives rather than hand-written state.
+
+
+def _runner(pid, frm, to, out=False, scored=False, cause="batted_ball"):
+    return {"player_id": pid, "from": frm, "to": to, "out": out,
+            "scored": scored, "cause": cause}
+
+
+def _lob_game(events, box_lob):
+    return {"events": events + [
+        {"kind": "inning_summary", "seq": 99, "inning": 1, "half": "bottom",
+         "summary": {"R": 0, "H": 0, "E": 0, "LOB": box_lob}}
+    ]}
+
+
+def _lob_warnings(events, box_lob):
+    return replay.check_lob(_lob_game(events, box_lob), {}).warnings
+
+
+def _pa_ev(seq, runners):
+    return {"kind": "plate_appearance", "seq": seq, "inning": 1, "half": "bottom",
+            "batter": {"player_id": "b", "name_raw": "B", "resolved": True},
+            "outcome": {"type": "single", "modifiers": [], "fielders": [],
+                        "location": None, "outs_recorded": 0},
+            "runners": runners}
+
+
+def _runner_ev(seq, runners):
+    return {"kind": "runner_event", "seq": seq, "inning": 1, "half": "bottom",
+            "runners": runners}
+
+
+def test_runner_retired_between_plate_appearances_is_still_left_on_base():
+    """A batter singles with two out, then is picked off for the third. The
+    box counts him; the old rule (occupancy after the last EVENT) did not.
+    This was the entire -1 cohort: 222 half-innings."""
+    events = [
+        _pa_ev(1, [_runner("r1", 0, 1)]),
+        _runner_ev(2, [_runner("r1", 1, -1, out=True, cause="pickoff")]),
+    ]
+    assert _lob_warnings(events, box_lob=1) == []
+    # And the old reading would have said 0.
+    assert _lob_warnings(events, box_lob=0) != []
+
+
+def test_batter_making_the_third_out_is_not_left_on_base():
+    """Guard the other direction: when the final PA is itself the out,
+    occupancy after it is what counts."""
+    events = [_pa_ev(1, [_runner("b", 0, -1, out=True, cause="putout")])]
+    assert _lob_warnings(events, box_lob=0) == []
+    assert _lob_warnings(events, box_lob=1) != []
+
+
+def test_runners_still_on_base_after_the_final_plate_appearance_count():
+    events = [
+        _pa_ev(1, [_runner("r1", 0, 1)]),
+        _pa_ev(2, [_runner("r2", 0, 1), _runner("r1", 1, 2)]),
+    ]
+    assert _lob_warnings(events, box_lob=2) == []
+
+
+def test_reached_and_did_not_score_is_NOT_the_rule():
+    """The rejected alternative. A runner who reached, advanced and was then
+    retired between PAs counts once -- not once per base he touched."""
+    events = [
+        _pa_ev(1, [_runner("r1", 0, 1)]),
+        _runner_ev(2, [_runner("r1", 1, 2, cause="stolen_base")]),
+        _runner_ev(3, [_runner("r1", 2, -1, out=True, cause="pickoff")]),
+    ]
+    assert _lob_warnings(events, box_lob=1) == []
