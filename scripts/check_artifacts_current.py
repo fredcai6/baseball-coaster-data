@@ -40,7 +40,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "pipeline"))
 
-from bc_pipeline import frequencies, person_map, team_map  # noqa: E402
+from bc_pipeline import career_map, frequencies, person_map, team_map  # noqa: E402
 
 #: (module, artifact filename, builder). Each module supplies its own
 #: `build_*`/`normalize_generated_at`/`load_games`, so the freshness rule lives
@@ -48,6 +48,7 @@ from bc_pipeline import frequencies, person_map, team_map  # noqa: E402
 _ARTIFACTS = (
     ("person_map", "person_map.json", person_map, person_map.build_person_map),
     ("team_map", "team_map.json", team_map, team_map.build_team_map),
+    ("career_map", "career_map.json", career_map, career_map.build_career_map),
     ("frequencies", "frequencies.json", frequencies, frequencies.build_frequencies),
 )
 

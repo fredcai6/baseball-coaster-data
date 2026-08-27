@@ -45,7 +45,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Sequence, Set, Tuple
 
-from bc_pipeline import archive, parse, person_map, replay, serialize
+from bc_pipeline import archive, career_map, parse, person_map, replay, serialize
 from bc_pipeline.backfill import RepoRootError, resolve_repo_root
 from bc_pipeline.config import PipelineConfig, load_config
 
@@ -77,6 +77,7 @@ class ReparseResult:
     commit_subject: Optional[str] = None
     allowed_partial: bool = False
     person_map_loaded: bool = False
+    career_map_loaded: bool = False
 
     def summary(self) -> dict:
         """A stable, serializable corpus-level delta."""
@@ -110,6 +111,7 @@ class ReparseResult:
             # Reported so a run with no person-map is never mistaken for a
             # run where nothing linked (schema 1.7.0 person_id, issue #41).
             "person_map_loaded": self.person_map_loaded,
+            "career_map_loaded": self.career_map_loaded,
             # A game that stops replaying is the one thing a re-parse must
             # never do quietly, so it is surfaced at the top level.
             "regressions": [
@@ -189,6 +191,9 @@ def _committed_games(repo_root: Path) -> List[Path]:
 #: Default location of the person-map artifact, relative to the repo root.
 PERSON_MAP_PATH = "artifacts/latest/person_map.json"
 
+#: Default location of the career-map artifact, relative to the repo root.
+CAREER_MAP_PATH = "artifacts/latest/career_map.json"
+
 
 def _load_person_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
     """Load the person-map artifact, or None when it is not present.
@@ -212,6 +217,21 @@ def _load_person_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
     return json.loads(artifact_path.read_text(encoding="utf-8"))
 
 
+def _load_career_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
+    """Load the career-map artifact, or None when it is not present.
+
+    Optional on the same terms as the person map (see ``_load_person_map``):
+    a missing map leaves every ``career_id`` null -- an honest unknown --
+    rather than failing a whole re-parse, and the summary reports which
+    happened. A career map without a person map is useless, since careers
+    are keyed by person id, so the summary reports both flags separately.
+    """
+    artifact_path = Path(path) if path else repo_root / CAREER_MAP_PATH
+    if not artifact_path.is_file():
+        return None
+    return json.loads(artifact_path.read_text(encoding="utf-8"))
+
+
 def run_reparse(
     *,
     repo_root: Path,
@@ -220,6 +240,7 @@ def run_reparse(
     allow_partial: bool = False,
     limit: Optional[int] = None,
     person_map_path: Optional[str] = None,
+    career_map_path: Optional[str] = None,
     print_fn: Callable[[str], None] = print,
 ) -> ReparseResult:
     result = ReparseResult(allowed_partial=allow_partial)
@@ -232,6 +253,19 @@ def run_reparse(
             "[REPARSE] no person_map artifact found -- every synthetic player's "
             "person_id will be null. Run `python -m bc_pipeline.person_map` first "
             "to populate schema 1.7.0's cross-game join key."
+        )
+    career_artifact = _load_career_map(repo_root, career_map_path)
+    result.career_map_loaded = career_artifact is not None
+    career_ids = (
+        career_map.career_ids_for_persons(career_artifact)
+        if career_artifact is not None
+        else None
+    )
+    if career_artifact is None:
+        print_fn(
+            "[REPARSE] no career_map artifact found -- every career_id will be null. "
+            "Run `python -m bc_pipeline.career_map` first to populate schema 1.9.0's "
+            "cross-season join key."
         )
 
     missing = [p.stem for p in paths if p.stem not in html_by_id]
@@ -264,6 +298,7 @@ def run_reparse(
                         if person_artifact is not None
                         else None
                     ),
+                    career_ids=career_ids,
                 ),
                 html,
             )
@@ -317,6 +352,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
                    help=("person_map artifact to populate schema 1.7.0 person_id "
                          f"(default: <repo-root>/{PERSON_MAP_PATH}). Missing is "
                          "allowed and reported; synthetic person_id stays null."))
+    p.add_argument("--career-map", default=None, metavar="PATH",
+                   help=("career_map artifact to populate schema 1.9.0 career_id "
+                         f"(default: <repo-root>/{CAREER_MAP_PATH}). Missing is "
+                         "allowed and reported; career_id stays null."))
     p.add_argument("--config", default=None)
     p.add_argument("--repo-root", default=None)
     return p
@@ -341,6 +380,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         allow_partial=args.allow_partial,
         limit=args.limit,
         person_map_path=args.person_map,
+        career_map_path=args.career_map,
     )
     if result.missing_archive and not args.allow_partial:
         return 1
@@ -375,6 +415,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "../artifacts/latest/person_map.json\n"
             "    python -m bc_pipeline.team_map    --input ../games --output "
             "../artifacts/latest/team_map.json\n"
+            "    python -m bc_pipeline.career_map  --input ../games --output "
+            "../artifacts/latest/career_map.json\n"
             "    python -m bc_pipeline.frequencies --input ../games --output "
             "../artifacts/latest/frequencies.json\n"
             "  then verify with: python scripts/check_artifacts_current.py"

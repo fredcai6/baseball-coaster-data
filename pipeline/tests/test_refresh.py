@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from bc_pipeline import frequencies, person_map, refresh, schedule, team_map
+from bc_pipeline import career_map, frequencies, person_map, refresh, schedule, team_map
 from bc_pipeline.config import PipelineConfig
 from bc_pipeline.fetcher import FetchResponse
 
@@ -428,3 +428,59 @@ def test_corpus_franchise_id_needs_no_drift_counterpart() -> None:
             expected = team_map.mint_franchise_id(team["name"])
             assert team.get("franchise_id") == expected, (game["game_id"], side)
             assert expected in art["franchises"]
+
+
+def test_refresh_regenerates_the_career_map_in_its_own_commit(tmp_path: Path) -> None:
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+    commits: list = []
+    result = run_refresh_against(config, response_map, [], commits, tmp_path, limit=None)
+
+    map_path = tmp_path / "artifacts" / "latest" / "career_map.json"
+    assert map_path.exists()
+    assert result.career_map_status == "changed"
+    assert result.career_map_commit_message == refresh.CAREER_MAP_COMMIT_MESSAGE
+    career_commits = [
+        (paths, msg) for paths, msg in commits if msg == refresh.CAREER_MAP_COMMIT_MESSAGE
+    ]
+    assert len(career_commits) == 1
+    # Four artifact commit messages, all distinct.
+    assert len({
+        refresh.CAREER_MAP_COMMIT_MESSAGE, refresh.TEAM_MAP_COMMIT_MESSAGE,
+        refresh.PERSON_MAP_COMMIT_MESSAGE, refresh.FREQUENCY_COMMIT_MESSAGE,
+    }) == 4
+
+
+def test_career_id_drift_counts_records_a_reparse_would_fix() -> None:
+    """career_id drifts independently of person_id: adding a season can link
+    new careers without changing a single person_id."""
+    games = [{
+        "game_id": "g1", "season": 2026, "date": "2026-05-01",
+        "teams": {
+            "home": {"team_id": "t1", "name": "H", "franchise_id": "franchise:aaaaaaaaaaaaaaaa"},
+            "away": {"team_id": "t2", "name": "A", "franchise_id": "franchise:bbbbbbbbbbbbbbbb"},
+        },
+        "players": {
+            "realaaaaaaaaaaa1": {
+                "name": "Ann Real", "team_id": "t1", "positions": ["ss"],
+                "person_id": "realaaaaaaaaaaa1", "career_id": None,
+            },
+        },
+    }]
+    fresh = career_map.build_career_map(games)
+    assert refresh._career_id_drift(games, fresh) == 1
+    games[0]["players"]["realaaaaaaaaaaa1"]["career_id"] = fresh["assignments"][
+        "realaaaaaaaaaaa1"
+    ]
+    assert refresh._career_id_drift(games, fresh) == 0
+
+
+def test_career_id_drift_is_zero_on_the_real_corpus() -> None:
+    repo_root = Path(__file__).resolve().parents[2]
+    games = frequencies.load_games(repo_root / "games")
+    assert refresh._career_id_drift(games, career_map.build_career_map(games)) == 0

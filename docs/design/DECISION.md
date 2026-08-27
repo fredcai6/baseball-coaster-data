@@ -353,3 +353,77 @@ enumerated in `continuity` so the question stays visible rather than silently an
 The records are keyed on the `(season, team_id, name)` **triple**, not on `(season, team_id)`.
 Keying by id would let two clubs sharing `syn:team:away` in one season overwrite each other and
 silently drop a franchise — caught by test, not by inspection.
+
+## 11. `career_id` — cross-season player identity (issue #41 Gap 1, epic #15)
+
+Schema **1.9.0** (additive MINOR): `$defs.player_entry` gains optional, nullable `career_id`.
+
+`person_id` (§9) is stable across every *game* of a season and deliberately no further. This is the
+layer above it. #41 named the blocker — *"team continuity is unusable as a linking signal until team
+identity is solved"* — and §10 solved it, so franchise continuity is now available.
+
+### Exact display name is necessary but NOT sufficient — proven, not assumed
+
+The corpus contains people who share a full display name and are provably different: **two
+`Jack Lynch`es both played in 2024** (30 games and 81 games), appearing on the **same date** for
+**different franchises**. One person cannot do that. Three such pairs are proven this way, and
+`build_career_map` recomputes them every run into `meta.evidence`. A rule linking on name alone would
+merge strangers.
+
+### Signal selection, measured against an exact null
+
+For each candidate signal: how often it fires on same-name consecutive-season pairs, versus on the
+**null** — every consecutive-season person pair with a *different* name, who are definitively not the
+same person. Computed exactly over all 839,861 such pairs, never sampled, so the artifact stays
+deterministic.
+
+| signal | fires on same-name | fires on null | likelihood ratio | used |
+|---|---|---|---|---|
+| franchise continuity | 51.7% | 7.1% | **7.33** | yes |
+| position overlap | 96.1% | 44.7% | 2.15 | **no** |
+
+Position overlap *feels* like evidence and is nearly a rubber stamp: it fires on almost half of people
+who are definitely not each other. It is kept in the artifact as a measured negative so the choice
+stays visible and will change if the data ever does. Franchise continuity genuinely separates the
+cases — and independently, none of the three proven-different pairs shares a franchise, so requiring
+it would have refused all three.
+
+### The rule
+
+Two persons in consecutive seasons link iff (1) they share a display-name spelling, (2) that name
+resolves to exactly one person in **each** season, and (3) they share a franchise. Careers are the
+connected components. Result: **173 links, 1,782 careers from 1,955 persons, 160 spanning more than
+one season** (147 two-season, 13 three-season).
+
+Two invariants are asserted on every build, never assumed: no career holds two persons from one
+season, and every member shares a spelling with the rest.
+
+### Refusals
+
+- `franchise_changed` (98 pairs) — the honest cost. A player who changed clubs between seasons stays
+  unlinked. It is exactly the shape of every proven-different pair, and nothing else in the data
+  separates the two cases.
+- `ambiguous_within_season` (55 pairs) — the name resolves to more than one person in one season.
+  `person_map` deliberately does not merge across teams within a season, so that ambiguity is
+  inherited rather than papered over.
+
+Every person still gets a `career_id`, including an unlinked one: a **singleton career is a complete
+answer, not a missing value**.
+
+### Display names are aliases, not a key
+
+A person can carry more than one spelling — the corpus has real Presto ids rendered both `J. Smith`
+and `Jonathan Smith`. Storing one name per person (last-wins) would silently pick a spelling and drop
+the other from name-based grouping. That is the same hazard as `reparse._committed_id_overrides`
+(§9), and it was found the same way: by an invariant check on the rebuilt corpus, not by inspection.
+Names are therefore kept as a set per person; a career records every `alias` and picks its label
+deterministically (longest, then alphabetical). Two persons need not carry identical name sets — only
+a shared spelling.
+
+### Anchoring
+
+`career_id` is `career:<16 hex>` from `sha256(earliest season + earliest person_id)`. Anchored on the
+earliest member so extending the corpus **forward** — adding a season, extending a career by a year —
+does not re-key it and invalidate stored references. The tradeoff, stated rather than hidden:
+back-filling an *earlier* season would re-key any career it extends backwards. The corpus grows
+forward.

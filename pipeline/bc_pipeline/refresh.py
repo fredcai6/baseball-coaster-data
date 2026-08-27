@@ -80,7 +80,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 
-from bc_pipeline import backfill, frequencies, person_map, team_map
+from bc_pipeline import backfill, career_map, frequencies, person_map, team_map
 from bc_pipeline.backfill import BackfillResult
 from bc_pipeline.config import PipelineConfig, load_config
 from bc_pipeline.fetcher import Transport
@@ -90,6 +90,7 @@ __all__ = [
     "FREQUENCY_COMMIT_MESSAGE",
     "PERSON_MAP_COMMIT_MESSAGE",
     "TEAM_MAP_COMMIT_MESSAGE",
+    "CAREER_MAP_COMMIT_MESSAGE",
     "run_refresh",
     "build_arg_parser",
     "main",
@@ -107,6 +108,9 @@ PERSON_MAP_COMMIT_MESSAGE: str = "refresh: regenerate person map"
 #: Commit message for the franchise-map artifact.
 TEAM_MAP_COMMIT_MESSAGE: str = "refresh: regenerate team map"
 
+#: Commit message for the cross-season career-map artifact.
+CAREER_MAP_COMMIT_MESSAGE: str = "refresh: regenerate career map"
+
 #: Path (relative to repo_root) the frequency artifact is read from/written
 #: to -- mirrors bc_pipeline.frequencies's own CLI default.
 _FREQUENCIES_RELATIVE_PATH = Path("artifacts") / "latest" / "frequencies.json"
@@ -117,6 +121,9 @@ _PERSON_MAP_RELATIVE_PATH = Path("artifacts") / "latest" / "person_map.json"
 
 #: Where the franchise-map artifact is written.
 _TEAM_MAP_RELATIVE_PATH = Path("artifacts") / "latest" / "team_map.json"
+
+#: Where the career-map artifact is written.
+_CAREER_MAP_RELATIVE_PATH = Path("artifacts") / "latest" / "career_map.json"
 
 
 def _regenerate_artifact(
@@ -188,6 +195,27 @@ def _person_id_drift(games: Sequence[dict], fresh_map: dict) -> int:
     return drift
 
 
+def _career_id_drift(games: Sequence[dict], fresh_map: dict) -> int:
+    """Committed player records whose stored ``career_id`` disagrees with the
+    freshly built career map.
+
+    Same contract as ``_person_id_drift``: the artifact is authoritative and
+    the field on ``players[]`` is a materialized copy only a labeled re-parse
+    can refresh. Counted separately from person drift because the two can
+    move independently -- adding a season links new careers without changing
+    a single person_id.
+    """
+    assignments = career_map.career_ids_for_persons(fresh_map)
+    drift = 0
+    for game in games:
+        for entry in (game.get("players") or {}).values():
+            person_id = entry.get("person_id")
+            expected = assignments.get(person_id) if person_id else None
+            if entry.get("career_id", "\x00missing") != expected:
+                drift += 1
+    return drift
+
+
 def _git_commit_fn(paths: Sequence[Path], message: str, *, repo_root: Path) -> None:
     """Real ``git add`` + ``git commit`` -- never called by any unit test
     (tests always inject a fake ``commit_fn``).
@@ -242,8 +270,11 @@ class RefreshResult:
     person_map_status: str = "skipped-challenge"
     person_map_commit_message: str | None = None
     person_id_drift: int | None = None
+    career_id_drift: int | None = None
     team_map_status: str = "skipped-challenge"
     team_map_commit_message: str | None = None
+    career_map_status: str = "skipped-challenge"
+    career_map_commit_message: str | None = None
 
     @property
     def stopped_by_challenge(self) -> bool:
@@ -257,8 +288,11 @@ class RefreshResult:
             "person_map_status": self.person_map_status,
             "person_map_commit_message": self.person_map_commit_message,
             "person_id_drift": self.person_id_drift,
+            "career_id_drift": self.career_id_drift,
             "team_map_status": self.team_map_status,
             "team_map_commit_message": self.team_map_commit_message,
+            "career_map_status": self.career_map_status,
+            "career_map_commit_message": self.career_map_commit_message,
         }
 
 
@@ -363,6 +397,29 @@ def run_refresh(
         print_fn=print_fn,
     )
 
+    # Careers sit ON TOP of both maps above -- they are keyed by person_id and
+    # linked on franchise_id -- so they are rebuilt after both, from the same
+    # in-memory `games`.
+    fresh_career_map = career_map.build_career_map(games)
+    career_map_status = _regenerate_artifact(
+        fresh=fresh_career_map,
+        output_path=repo_root / _CAREER_MAP_RELATIVE_PATH,
+        normalize=career_map.normalize_generated_at,
+        worth_writing_when_absent=fresh_career_map["meta"]["games"] > 0,
+        commit_fn=commit_fn,
+        commit_message=CAREER_MAP_COMMIT_MESSAGE,
+        label="career map",
+        print_fn=print_fn,
+    )
+
+    career_drift = _career_id_drift(games, fresh_career_map)
+    if career_drift:
+        print_fn(
+            f"[REFRESH] career_id DRIFT: {career_drift} committed player record(s) "
+            "carry a career_id that disagrees with the regenerated map -- same fix, "
+            "a labeled re-parse."
+        )
+
     fresh = frequencies.build_frequencies(games, generated_at=frequency_generated_at)
     frequency_status = _regenerate_artifact(
         fresh=fresh,
@@ -390,9 +447,14 @@ def run_refresh(
             PERSON_MAP_COMMIT_MESSAGE if person_map_status == "changed" else None
         ),
         person_id_drift=drift,
+        career_id_drift=career_drift,
         team_map_status=team_map_status,
         team_map_commit_message=(
             TEAM_MAP_COMMIT_MESSAGE if team_map_status == "changed" else None
+        ),
+        career_map_status=career_map_status,
+        career_map_commit_message=(
+            CAREER_MAP_COMMIT_MESSAGE if career_map_status == "changed" else None
         ),
     )
 

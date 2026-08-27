@@ -64,9 +64,19 @@ def test_minting_is_a_pure_function_of_the_name():
 
 def test_parse_needs_no_artifact_to_populate_franchise_id():
     """Unlike person_id, franchise_id is a pure function of the name in the
-    file -- so there is no artifact dependency and no drift to measure."""
-    assert team_map.mint_franchise_id("Boise Hawks").startswith("franchise:")
-    assert parse.SCHEMA_VERSION == "1.8.0"
+    file -- so there is no artifact dependency and no drift to measure.
+
+    Deliberately does NOT pin parse.SCHEMA_VERSION: this test is about the
+    artifact-independence of franchise_id, and coupling it to the schema
+    version made an unrelated additive bump fail here.
+    """
+    minted = team_map.mint_franchise_id("Boise Hawks")
+    assert minted.startswith("franchise:")
+    # A game dict carrying only the name is enough to resolve the franchise.
+    art = team_map.build_team_map([
+        _game("g1", 2026, ("id2026aaaaaaaaaa", "Boise Hawks"), ("id2026bbbbbbbbbb", "Ogden Raptors")),
+    ])
+    assert minted in art["franchises"]
 
 
 # --- the refusals -----------------------------------------------------------

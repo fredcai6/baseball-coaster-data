@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
-from . import identity, team_map
+from . import career_map, identity, team_map
 from .grammar import (
     BATTER_OUTCOME_CAUSE,
     GrammarMiss,
@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.6.0"
-SCHEMA_VERSION = "1.8.0"
+PARSER_VERSION = "0.7.0"
+SCHEMA_VERSION = "1.9.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1073,10 +1073,12 @@ def _person_id_for(
 def _players_table(
     player_table: identity.PlayerTable,
     person_ids: Optional[Dict[str, Optional[str]]] = None,
+    career_ids: Optional[Dict[str, Optional[str]]] = None,
 ) -> Dict[str, dict]:
     players: Dict[str, dict] = {}
     for team in (player_table.home, player_table.away):
         for pid, entry in team.players.items():
+            person_id = _person_id_for(pid, person_ids)
             players[pid] = {
                 "player_id": entry.player_id,
                 "name": entry.name,
@@ -1085,7 +1087,15 @@ def _players_table(
                 "bats_side": entry.bats_side,
                 "positions": list(entry.positions),
                 "box_listed": entry.box_listed,
-                "person_id": _person_id_for(pid, person_ids),
+                "person_id": person_id,
+                # schema 1.9.0. Composed here rather than in either map module
+                # because this is the one place a player is already resolved to
+                # a person: career_map is keyed by person_id, person_map by
+                # player_id, and neither needs to know about the other. A person
+                # we could not identify has no career either -- never a guess.
+                "career_id": (
+                    (career_ids or {}).get(person_id) if person_id else None
+                ),
             }
     return players
 
@@ -1100,6 +1110,7 @@ def parse_game(
     provider: str = "prestosports",
     id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
     person_ids: Optional[Dict[str, Optional[str]]] = None,
+    career_ids: Optional[Dict[str, Optional[str]]] = None,
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
@@ -1111,6 +1122,11 @@ def parse_game(
     ``bc_pipeline.person_map`` and passed in by the re-parse driver. Real ids
     resolve to themselves without it (see ``_person_id_for``); omitting it
     leaves every synthetic player's ``person_id`` null rather than guessing.
+
+    ``career_ids`` (schema 1.9.0) maps a PERSON id to its cross-season
+    ``career_id``, as built by ``bc_pipeline.career_map``. Keyed by person
+    rather than player because that is the layer above; a player with no
+    resolvable ``person_id`` gets no career either.
     """
     root = parse_html(html)
     if not has_pbp_panes(root):
@@ -1132,7 +1148,7 @@ def parse_game(
         "pitching": _parse_box_pitching(root, player_table),
     }
     lineups = _build_lineups(player_table, subs_by_team)
-    players = _players_table(player_table, person_ids)
+    players = _players_table(player_table, person_ids, career_ids)
 
     parsed_at_iso = parsed_at or datetime.now(timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ"

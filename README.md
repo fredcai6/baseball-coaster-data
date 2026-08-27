@@ -27,10 +27,11 @@ pipeline/         the Python package that fetches, parses, and replays games (bc
                   see "Refresh" below) and bc_pipeline.frequencies (the season+league
                   event-frequency aggregator -- see "Artifacts: frequencies" below)
                   bc_pipeline.person_map (the within-season person_id builder) and
-                  bc_pipeline.team_map (the cross-season franchise_id registry) --
-                  see "Artifacts: person_map" / "Artifacts: team_map" below
+                  bc_pipeline.team_map (cross-season franchise_id) and
+                  bc_pipeline.career_map (cross-season career_id) -- see the
+                  "Artifacts: ..." sections below
 schemas/          the JSON Schemas game files and artifacts are validated against:
-                  game.schema.json (current: 1.8.0) and frequencies.schema.json
+                  game.schema.json (current: 1.9.0) and frequencies.schema.json
 docs/design/      the schema design record: the three candidates + the DECISION
 tests/fixtures/   golden fixtures for the parser/validator
 scripts/          CI + validation helper scripts (including check_artifacts_current.py,
@@ -450,17 +451,59 @@ message.
    written and committed with the SAME commit mechanism used for game-file commits, under its own
    distinct commit message, separate from any game-file batch commit. The **person map** goes first
    (`"refresh: regenerate person map"`) because it is the identity layer every other reading of the
-   corpus sits on; then the **team map** (`"refresh: regenerate team map"`); then the **frequency
-   artifact** (`"refresh: regenerate frequency artifacts"`).
+   corpus sits on; then the **team map** (`"refresh: regenerate team map"`); then the **career map**
+   (`"refresh: regenerate career map"`, which sits on top of both); then the **frequency artifact**
+   (`"refresh: regenerate frequency artifacts"`).
 4. Report **`person_id` drift**. `person_id` lives in two places: the person-map artifact, which is
    authoritative and was just regenerated, and a materialized copy on every `players[].person_id`,
    which only a labeled `reparse(vX.Y.Z)` commit can refresh because `games/**` is write-once. A
    refresh that picked up new games leaves the two diverged. `run_refresh` does not resolve that (it
    has no license to rewrite game files) — it counts the committed player records whose stored
    `person_id` disagrees with the fresh map and prints the number. `0` means the corpus is in sync;
-   anything else is the signal that a re-parse is due, and names the command.
+   anything else is the signal that a re-parse is due, and names the command. `career_id` drift is
+   counted and reported separately, because the two move independently — adding a season links new
+   careers without changing a single `person_id`.
 5. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
    NO-OP-or-CHANGED) and exit 0 (or 1 if step 2 fired).
+
+### Artifacts: career_map (`bc_pipeline.career_map`)
+
+`person_id` is stable across every *game* of a season and deliberately no further — Presto reissues
+every player id each year. `bc_pipeline.career_map` builds the layer above it: **`career_id`**, one
+key per person across seasons, written to `artifacts/latest/career_map.json` and populated on
+`players[].career_id` (schema 1.9.0).
+
+**Exact display name is necessary but NOT sufficient, and the corpus proves it.** Two different
+`Jack Lynch`es both played in 2024 — on the **same date**, for **different franchises**. One person
+cannot do that. Three such pairs are proven, recomputed into `meta.evidence` on every build.
+
+**Signals are chosen by measurement, against an exact null** (every consecutive-season person pair
+with a *different* name — definitively not the same person):
+
+| signal | fires on same-name pairs | fires on the null | likelihood ratio | used |
+|---|---|---|---|---|
+| franchise continuity | 51.7% | 7.1% | **7.33** | yes |
+| position overlap | 96.1% | 44.7% | 2.15 | no |
+
+Position overlap fires on nearly half of unrelated people, so it is close to a rubber stamp and is
+not used — kept in the artifact as a measured negative. Franchise continuity separates the cases, and
+independently refuses all three proven-different pairs.
+
+**The rule:** two persons in consecutive seasons link iff they share a display-name spelling, that
+name resolves to exactly one person in *each* season, and they share a franchise. Careers are the
+connected components. On the current corpus: **173 links, 1,782 careers from 1,955 persons, 160
+spanning more than one season.**
+
+**Refused, and enumerated in `unlinked[]`:** `franchise_changed` (98 pairs — a player who changed
+clubs stays unlinked; that is exactly the shape of every proven-different pair) and
+`ambiguous_within_season` (55 pairs — inherited from `person_map` not merging across teams within a
+season). Every person still gets a `career_id`; a singleton career is a complete answer, not a
+missing value.
+
+```bash
+python -m bc_pipeline.career_map --input games/ --output artifacts/latest/career_map.json
+python -m bc_pipeline.career_map --check-no-commit
+```
 
 ### Artifacts: team_map (`bc_pipeline.team_map`)
 
