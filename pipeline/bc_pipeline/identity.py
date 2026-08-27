@@ -77,6 +77,61 @@ def _first_token(name: str) -> str:
     return tokens[0].rstrip(".") if tokens else ""
 
 
+def _interior_surname_tokens(full_name: str) -> List[str]:
+    """Every name token after the FIRST one, for a compound surname.
+
+    ``last_name`` is stored as the FINAL token only, so "Gary Lora Gonzalez"
+    is keyed on "Gonzalez" and a PBP narrative that says "G. Lora" -- the
+    common shorthand for a compound Hispanic surname -- can never match.
+    Returning {"Lora", "Gonzalez"} lets either part resolve.
+
+    This is exact token matching, not fuzzy: no guessing is involved.
+    """
+    parts = (full_name or "").split()
+    return parts[1:] if len(parts) > 2 else []
+
+
+def _within_one_edit(a: str, b: str) -> bool:
+    """True when ``a`` and ``b`` differ by at most one Damerau-Levenshtein
+    edit -- one insertion, deletion, substitution, or adjacent transposition.
+
+    The PBP narrative and the boxscore are keyed separately by the scorer, so
+    a surname can be misspelled in one and not the other. Every real instance
+    in the corpus is a single edit:
+
+        Terilli   -> Terillli    (insertion)
+        Marcelo   -> Marcello    (insertion)
+        Bagnieski -> Bagnieksi   (transposition)
+
+    Callers must additionally require a UNIQUE candidate and first-initial
+    agreement before trusting this -- see ``resolve``.
+    """
+    if a == b:
+        return True
+    la, lb = len(a), len(b)
+    if abs(la - lb) > 1:
+        return False
+    if la == lb:
+        diffs = [i for i in range(la) if a[i] != b[i]]
+        if len(diffs) == 1:
+            return True
+        if len(diffs) == 2 and diffs[1] == diffs[0] + 1:
+            i = diffs[0]
+            return a[i] == b[i + 1] and a[i + 1] == b[i]
+        return False
+    # One is exactly one character longer: check it is a pure insertion.
+    longer, shorter = (a, b) if la > lb else (b, a)
+    i = 0
+    while i < len(shorter) and longer[i] == shorter[i]:
+        i += 1
+    return longer[i + 1:] == shorter[i:]
+
+
+#: Below this length a one-edit window is too wide to be evidence -- "Cruz"
+#: and "Ruiz" are two edits apart, but "Ott"/"OtT"-scale names collide fast.
+_MIN_FUZZY_SURNAME_LEN = 5
+
+
 def _narrow_by_first_token(
     team: "TeamIdentity", candidate_ids: List[str], full_name: Optional[str]
 ) -> Optional[str]:
@@ -208,6 +263,39 @@ class PlayerTable:
             narrowed = _narrow_by_first_token(team, prefix, full_name)
             if narrowed is not None:
                 return narrowed, True
+
+        # Compound surname: the PBP may name any token of a multi-part
+        # surname ("G. Lora" for "Gary Lora Gonzalez"). Exact token match.
+        compound = [
+            pid
+            for pid, pl in team.players.items()
+            if last_name in _interior_surname_tokens(pl.name)
+        ]
+        if len(compound) == 1:
+            return compound[0], True
+        if len(compound) >= 2:
+            narrowed = _narrow_by_first_token(team, compound, full_name)
+            if narrowed is not None:
+                return narrowed, True
+
+        # Scorer typo: the PBP narrative and the boxscore are keyed
+        # separately, so a surname can be misspelled in exactly one of them.
+        # Accepted ONLY under three simultaneous constraints -- a single
+        # one-edit candidate on this side, AND independent first-initial
+        # agreement, AND a surname long enough for one edit to be evidence.
+        # Anything less stays an honest (None, False).
+        if len(last_name) >= _MIN_FUZZY_SURNAME_LEN:
+            lowered = last_name.lower()
+            near = [
+                pid
+                for pid, pl in team.players.items()
+                if pl.last_name
+                and len(pl.last_name) >= _MIN_FUZZY_SURNAME_LEN
+                and _within_one_edit(pl.last_name.lower(), lowered)
+            ]
+            if len(near) == 1 and _narrow_by_first_token(team, near, full_name):
+                return near[0], True
+
         return None, False
 
 
