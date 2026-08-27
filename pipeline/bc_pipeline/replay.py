@@ -466,11 +466,32 @@ def check_outs_per_half(game: dict, oracle: dict) -> CheckResult:
 
 
 def check_lob(game: dict, oracle: dict) -> CheckResult:
-    """Runners left on base, folded from the last play of each half, must
-    reconcile with that half's own ``inning_summary`` LOB (the oracle
-    already agrees the linescore/box are consistent with these totals;
-    this check is purely about the fold agreeing with the box's own
-    narrative-embedded summary line for that half)."""
+    """Runners left on base must reconcile with that half's own
+    ``inning_summary`` LOB.
+
+    LOB is measured at the end of the half's final PLATE APPEARANCE, not its
+    final event. LOB is a per-batter statistic -- it sits on the batting line
+    -- so it is counted at plate-appearance boundaries, and a runner retired
+    BETWEEN plate appearances (picked off, caught stealing) was still on base
+    when the last one ended. StatCrew scores it that way.
+
+    Measured over 10,999 half-innings in clean-parse games:
+
+        occupancy after the last EVENT (the old rule)   97.81%
+        occupancy after the last PLATE APPEARANCE       99.55%
+
+    The residual -1 cohort under the old rule was 222 half-innings, and every
+    traced instance was the same shape: a batter reached, then was retired on
+    the bases for the third out, and the box still counted him.
+
+    Rejected alternative, re-measured rather than inherited: "runners who
+    reached and did not score" scores only 73.51%, with a +1 tail of 2,538
+    half-innings -- the box does NOT generally count a runner retired on the
+    bases. Issue #33 rejected this same variant on the pre-fix corpus; the
+    conclusion survives on the current one.
+
+    This is an oracle-DEFINITION change, kept deliberate and separately
+    tested per #33's standing instruction (issue #40)."""
     warnings: List[str] = []
     pairs = _foldable_with_derived(game)
     groups = _group_by_half(pairs)
@@ -482,7 +503,8 @@ def check_lob(game: dict, oracle: dict) -> CheckResult:
         evd = groups.get(key)
         if not evd:
             continue  # no folded plays this half (shouldn't happen with a summary)
-        _, last_d = evd[-1]
+        pa_only = [(e, d) for e, d in evd if e.get("kind") == "plate_appearance"]
+        _, last_d = (pa_only or evd)[-1]
         folded_lob = sum(1 for b in last_d["bases_after"] if b)
         summary_lob = ev["summary"]["LOB"]
         if folded_lob != summary_lob:
