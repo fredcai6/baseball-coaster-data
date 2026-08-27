@@ -25,7 +25,7 @@
     "schema_version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.5.0."
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.6.0."
     },
     "game_id": {
       "type": "string",
@@ -540,7 +540,8 @@
             "foul_out",
             "strikeout",
             "reached_on_interference",
-            "batter_interference"
+            "batter_interference",
+            "infield_fly"
           ]
         },
         "modifiers": {

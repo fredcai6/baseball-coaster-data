@@ -1596,3 +1596,66 @@ def test_runner_out_on_the_play_interference_needs_no_new_cause():
     assert isinstance(result, ClauseGroup)
     assert result.kind == "runner_event"
     assert [(r.cause, r.out) for r in result.runners] == [("putout", True)]
+
+
+# --- issue #40: wording variants of already-handled facts ------------------
+#
+# The remaining tail looked like unique phrasing (311 distinct shapes, 59%
+# occurring once) but that was names and bases varying. At the level of the
+# FRAGMENT that actually failed it collapsed into a handful of wording
+# variants of things already handled.
+
+
+def test_advanced_on_the_error_without_a_named_fielder():
+    """"on an error by <f>" was handled; "on the error" was not."""
+    result = parse_clause_group("K. Liniak advanced to second on the error.")
+    assert isinstance(result, ClauseGroup)
+    assert [(r.destination, r.cause) for r in result.runners] == [("second", "error")]
+
+
+def test_scored_on_the_error_with_unearned():
+    result = parse_clause_group("N. Marcello scored on the error, unearned.")
+    (r,) = result.runners
+    assert (r.cause, r.scored, r.unearned) == ("error", True, True)
+
+
+def test_team_unearned_is_the_same_fact_as_unearned():
+    """StatCrew writes both; "team unearned" means unearned for the TEAM
+    though charged to the pitcher. One boolean covers both."""
+    result = parse_clause_group("T. Darden scored, team unearned.")
+    (r,) = result.runners
+    assert (r.scored, r.unearned) == (True, True)
+
+
+def test_runner_advance_on_a_fielders_choice():
+    """`fielders_choice` existed as a BATTER outcome but not as a runner
+    advance cause."""
+    result = parse_clause_group("Z. Roos advanced to second on a fielder's choice.")
+    assert [(r.destination, r.cause) for r in result.runners] == [
+        ("second", "fielders_choice")
+    ]
+
+
+def test_scored_on_the_throw_lead_and_continuation():
+    lead = parse_clause_group("L. Barry scored on the throw.")
+    assert [(r.destination, r.scored) for r in lead.runners] == [("home", True)]
+    chained = parse_clause_group("A. Juran advanced to third, scored on the throw.")
+    assert [(r.destination, r.scored) for r in chained.runners] == [
+        ("third", False),
+        ("home", True),
+    ]
+
+
+# --- issue #40 / schema 1.6.0: infield fly --------------------------------
+
+
+def test_infield_fly_is_its_own_outcome_type():
+    """The batter is out whether or not the ball is caught, which is exactly
+    what popout/flyout would wrongly assert."""
+    cg = _pa("C. Bowen infield fly to ss.")
+    assert cg.primary.outcome_type == "infield_fly"
+    assert cg.primary.fielders == ["ss"]
+
+
+def test_infield_fly_preserves_an_infield_position():
+    assert _pa("A. Shaver infield fly to 1b.").primary.fielders == ["1b"]
