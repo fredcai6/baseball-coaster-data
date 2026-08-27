@@ -226,6 +226,39 @@ PYTHONPATH=pipeline python -m pytest tests pipeline/tests -q
 CI (`.github/workflows/validate.yml`) runs this exact command on every push/PR, in
 addition to the schema-validation scripts below.
 
+### Corpus re-parse (`bc_pipeline.reparse`)
+
+`games/**` is write-once, so a committed game file changes only in an explicitly labeled
+`reparse(vX.Y.Z): ...` commit. `bc_pipeline.reparse` is how that commit gets made. Run it
+from the `pipeline/` directory:
+
+```bash
+python -m bc_pipeline.reparse --version 0.4.0                  # dry run, prints the delta
+python -m bc_pipeline.reparse --version 0.4.0 --write          # apply
+python -m bc_pipeline.reparse --version 0.4.0 --write --commit \
+    --message "grammar + identity + schema (issue #40)"        # apply and label
+```
+
+It never fetches — it reads archived raw HTML that `bc_pipeline.fetch` or
+`bc_pipeline.backfill` already put on disk, located via the checkpoint.
+
+**Coverage gate.** Every committed game must have archived raw HTML. A *partial* re-parse is
+refused by default, because it would leave the corpus straddling two parser versions with no
+marker saying which file is which. `--allow-partial` opts out deliberately and is reported in
+the summary.
+
+**Semantic comparison.** A game counts as changed only if it differs under
+`serialize.semantic_equal` (meta and every `_derived` block stripped), so a run that changes
+nothing but provenance does not churn the corpus.
+
+**What it prints** is a stable, serializable corpus delta — unparsed lines, clean-parse games,
+replayable games, per season and overall — plus, at the top level, any game that stopped
+replaying. That last one is the thing a re-parse must never do quietly.
+
+The commit subject it builds is the same shape `scripts/check_write_once.py` recognizes; a test
+asserts that cross-module contract directly, so the two cannot drift into a re-parse commit that
+its own CI rejects.
+
 ### Write-once guard (`scripts/check_write_once.py`)
 
 Caller-contract clause 1 says `games/**` is write-once — a final game file changes only
