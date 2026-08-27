@@ -26,8 +26,10 @@ pipeline/         the Python package that fetches, parses, and replays games (bc
                   including bc_pipeline.refresh (the backfill + frequencies orchestrator --
                   see "Refresh" below) and bc_pipeline.frequencies (the season+league
                   event-frequency aggregator -- see "Artifacts: frequencies" below)
+                  and bc_pipeline.person_map (the within-season person_id builder --
+                  see "Artifacts: person_map" below)
 schemas/          the JSON Schemas game files and artifacts are validated against:
-                  game.schema.json (current: 1.3.0) and frequencies.schema.json
+                  game.schema.json (current: 1.7.0) and frequencies.schema.json
 docs/design/      the schema design record: the three candidates + the DECISION
 tests/fixtures/   golden fixtures for the parser/validator
 scripts/          CI + validation helper scripts
@@ -433,6 +435,64 @@ message.
    (`"refresh: regenerate frequency artifacts"`), separate from any game-file batch commit.
 4. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
    NO-OP-or-CHANGED) and exit 0 (or 1 if step 2 fired).
+
+### Artifacts: person_map (`bc_pipeline.person_map`)
+
+**`player_id` cannot be joined on across games.** It is file-local: a real 16-char Presto id is
+stable for a season, but a synthetic `syn:<side>:<n>` is assigned by boxscore ROW ORDER, so the same
+value denotes a different person in every file — `syn:away:8` is bound to 99 distinct display names
+in 2026 alone. 10.0% of player records carry a synthetic id (29.5% of the 2026 season), so a naive
+cross-game join silently mixes people together.
+
+`bc_pipeline.person_map` builds the layer that fixes it: **`person_id`**, stable across every game of
+a season, written to `artifacts/latest/person_map.json` (mutable, regenerable) and materialized onto
+each `players[].person_id` (schema 1.7.0) at re-parse time. It reads `games/**` only.
+
+**The key is `(season, team_id, name)`.** `team_id` is always a real Presto id, never synthetic, even
+on team-site pages where no player row carries an id — which is what makes the grouping tractable.
+
+**Rules** — a real `player_id` is its own `person_id`; only synthetics resolve through their group:
+
+| classification | rule |
+|---|---|
+| `real_anchor` | group holds exactly one real id → that id is canonical |
+| `minted` | group holds no real id → mint `person:<16 hex>` from the key |
+| `multi_real_id` | two or more real ids → UNLINKED (which one is not determined) |
+| `same_game_conflict` | two of the group's ids occur in one game → UNLINKED |
+| `non_person_name` | the "name" is `/`, the `/ for X` source defect → UNLINKED |
+
+Refusals are checked BEFORE the linking rules, so a defect is never merged away by an anchor that
+happens to exist. On the current corpus: **4,177 of 4,189 synthetic records (99.7%) linked**, 12
+unlinked, each with a reason in the artifact's `unlinked[]`. Never a guess — an unlinked player is a
+measured negative.
+
+**Scope is one season and one team**, stated in `meta.not_attempted` as measured numbers rather than
+left implicit: 134 `(season, name)` pairs sit on more than one team (a mid-season move is not
+separable from two same-named people), and cross-season linkage does not exist at all because
+PrestoSports reissues every player id AND every team id each season (issue #41 Gap 1).
+
+**CLI and the no-commit guard:**
+
+```bash
+python -m bc_pipeline.person_map --input games/ --output artifacts/latest/person_map.json
+python -m bc_pipeline.person_map --check-no-commit
+```
+
+`--check-no-commit` behaves exactly like the frequency guard below: regenerate in memory, compare
+with `generated_at` normalized on both sides, exit 0 + `NO-OP` or exit 2 + `CHANGED`, writing nothing.
+
+**Ordering matters.** The artifact is derived FROM `games/**` and written back INTO it, so regenerate
+it BEFORE a re-parse whenever the corpus has grown:
+
+```bash
+python -m bc_pipeline.person_map --input games/ --output artifacts/latest/person_map.json
+python -m bc_pipeline.reparse --version X.Y.Z --write
+```
+
+That round trip is safe because the map is a function of fields a re-parse does not change (season,
+team_id, name, player_id); regenerating it afterwards reports `NO-OP`. A re-parse with no artifact
+present is allowed — it leaves every synthetic `person_id` null and says so, and the run summary's
+`person_map_loaded` records which happened, so "no map" is never mistaken for "nobody linked".
 
 ### Artifacts: frequencies (`bc_pipeline.frequencies`)
 

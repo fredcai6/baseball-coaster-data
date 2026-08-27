@@ -194,3 +194,90 @@ Both decisions were cold-critic-reviewed at plan time (`.agent-work/epic-15/comm
 PLAN_RIGOR_RECORD.md`) and independently re-verified by a reviewer against a hand-count on a real game file
 different from the implementer's own (`.agent-work/epic-15/commander-21/crew-handoffs/
 g1-review-result.md`) before being adopted.
+
+## 9. `person_id` — within-season cross-game identity (issue #41 Gap 2, epic #15)
+
+Schema **1.7.0** (additive MINOR): `$defs.player_entry` gains optional, nullable `person_id`.
+
+### The problem the field exists to solve
+
+`player_id` is FILE-LOCAL. A real 16-char Presto id happens to be stable for a whole season, but a
+synthetic `syn:<side>:<n>` is assigned by boxscore ROW ORDER, so the same value denotes a different
+person in every file. Measured on the 1,484-game corpus: **`syn:away:8` is bound to 99 distinct
+display names in 2026 alone.** Any consumer joining on `player_id` across games silently mixes people
+together — and 10.0% of player records (4,189) carry a synthetic id, 29.5% of the 2026 season.
+
+### The key: `(season, team_id, name)`
+
+`team_id` is the decision that makes this tractable, and it was not obvious from issue #41's framing.
+It is **always a real Presto id, never synthetic** — 0 synthetic team ids in the corpus — even on the
+team-site pages whose *player* rows carry no ids at all. Adding it to the key collapses the apparent
+ambiguity: the **120** `(season, name)` pairs holding more than one real id drop to **4** once team is
+included. The other 116 were the same name on different teams, which is a different question (see
+"Not attempted").
+
+Note this makes the `M. Jackson` collision a non-threat here. `Manny Jackson` and `Marquis Jackson`
+are distinct display names holding distinct real ids on one roster; the ambiguity that motivated so
+much of #31 lives in **PBP narrative resolution** (`identity.resolve`), not in the identity table.
+
+### Assignment rules
+
+A **real** `player_id` is its own `person_id`, unconditionally — it is already the stable within-season
+key, and it is never absorbed into another person. Only **synthetics** resolve through their group:
+
+| classification | rule | groups | synthetic records |
+|---|---|---|---|
+| `real_anchor` | group holds exactly one real id → that id is canonical | 1,781 | 3,342 |
+| `minted` | group holds no real id → mint `person:<16 hex>` from the key | 168 | 835 |
+| `multi_real_id` | ≥2 real ids → UNLINKED, which one is not determined | 4 | 0 |
+| `same_game_conflict` | two of the group's ids occur in one game → UNLINKED | 1 | 4 |
+| `non_person_name` | the "name" is `/` (the `/ for X` source defect) → UNLINKED | 7 | 8 |
+
+**Refusals are evaluated before the linking rules**, so a defect can never be merged away by an anchor
+that happens to exist. Result: **4,177 of 4,189 synthetic records (99.7%) linked**, 12 unlinked, every
+one carrying a reason. Consistent with the standing doctrine — link on strong evidence, enumerate the
+rest, never guess; an unlinked player is a measured negative, not a failure.
+
+A lone synthetic still gets minted rather than left alone: `syn:away:3` appearing in only one game is
+still a value other people hold in other games, so leaving it would be both unjoinable and colliding.
+
+### Where it lives, and why both places
+
+The authority is **`artifacts/latest/person_map.json`** (mutable tier, caller-contract clause 2),
+regenerable like `frequencies.json`. The `person_id` on `player_entry` is a **materialized copy**
+refreshed at re-parse time. That split is deliberate: `games/**` is write-once, so a mapping that will
+be revised as evidence improves cannot be *owned* by a game file — but a consumer joining across games
+should not have to load a 3.8 MB side artifact to do it.
+
+The consequence is stated in the schema description rather than left implicit: a game added since the
+last re-parse may carry `null` until the artifact is regenerated and the corpus re-parsed.
+
+The artifact is derived FROM `games/**` and written back INTO it. That is safe only because the map is
+a function of fields a re-parse does not change (season, team_id, name, player_id) — proven by a unit
+idempotence test and, in practice, by `--check-no-commit` reporting NO-OP when regenerated against the
+rewritten corpus.
+
+### Minted id format
+
+`person:` + first 16 hex of `sha256("<season>\x1f<team_id>\x1f<name>")`. A pure function of the group
+key, so regeneration reproduces it on any machine with no counter or ordering dependency. The
+`person:` prefix keeps it out of both other id namespaces (real is bare `[a-z0-9]{16}`, synthetic is
+`syn:<side>:<n>`), so a minted id can never be mistaken for a `player_id`. Hashed rather than spelled
+out to keep it short enough to sit in every `player_entry`; the artifact always carries the full key
+alongside, so the mapping stays invertible for a human.
+
+### Not attempted, and reported as measured negatives
+
+- **Cross-team within a season** — 134 `(season, name)` pairs sit on more than one team. Not linked:
+  nothing in the identity table separates a mid-season move from two people with the same name.
+- **Cross-season (Gap 1)** — not attempted. PrestoSports reissues every player id AND every team id
+  each season, so no id-based signal survives a season boundary and team continuity is unavailable as
+  corroboration. `person_id` is explicitly within-season.
+
+Both are emitted in `meta.not_attempted` so a consumer reads a number rather than inferring silence.
+
+### Version-history gap
+
+`game.schema.json`'s `$comment` VERSION HISTORY runs 1.0.0 → 1.3.0 and then jumps to this entry:
+**1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without a history
+entry.** Recorded here rather than reconstructed, since the reconstruction would not be evidence.

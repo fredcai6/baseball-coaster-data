@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.4.0"
-SCHEMA_VERSION = "1.6.0"
+PARSER_VERSION = "0.5.0"
+SCHEMA_VERSION = "1.7.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1046,7 +1046,34 @@ def _build_lineups(
     return lineups
 
 
-def _players_table(player_table: identity.PlayerTable) -> Dict[str, dict]:
+def _person_id_for(
+    player_id: str, person_ids: Optional[Dict[str, Optional[str]]]
+) -> Optional[str]:
+    """The schema 1.7.0 ``person_id`` for one ``player_id`` in THIS game.
+
+    A REAL 16-char Presto id is its own person id: it is already stable for a
+    whole season, so it needs no consolidation layer and is never absorbed
+    into another person. That rule lives here, in exactly one place, which is
+    why ``person_map``'s artifact carries assignments for SYNTHETIC ids only.
+
+    A synthetic ``syn:<side>:<n>`` is per-GAME positional -- the same value is
+    a different person in another game -- so it can only be resolved from the
+    corpus-level map the caller passes in. With no map supplied, or with this
+    id deliberately unlinked in it, the answer is an honest ``None``: never a
+    guess, and never the synthetic id itself (which would fabricate a join key
+    that silently merges strangers).
+    """
+    if not player_id.startswith("syn:"):
+        return player_id
+    if not person_ids:
+        return None
+    return person_ids.get(player_id)
+
+
+def _players_table(
+    player_table: identity.PlayerTable,
+    person_ids: Optional[Dict[str, Optional[str]]] = None,
+) -> Dict[str, dict]:
     players: Dict[str, dict] = {}
     for team in (player_table.home, player_table.away):
         for pid, entry in team.players.items():
@@ -1058,6 +1085,7 @@ def _players_table(player_table: identity.PlayerTable) -> Dict[str, dict]:
                 "bats_side": entry.bats_side,
                 "positions": list(entry.positions),
                 "box_listed": entry.box_listed,
+                "person_id": _person_id_for(pid, person_ids),
             }
     return players
 
@@ -1071,11 +1099,18 @@ def parse_game(
     league_id: str = "pioneer",
     provider: str = "prestosports",
     id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
+    person_ids: Optional[Dict[str, Optional[str]]] = None,
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
     Raises ``NonFinalPageError`` if the page has no PBP panes (the negative-
     path contract) -- never fabricates a `final` file from such a page.
+
+    ``person_ids`` (schema 1.7.0, issue #41) maps this game's SYNTHETIC
+    ``player_id``s to their corpus-level ``person_id``, as built by
+    ``bc_pipeline.person_map`` and passed in by the re-parse driver. Real ids
+    resolve to themselves without it (see ``_person_id_for``); omitting it
+    leaves every synthetic player's ``person_id`` null rather than guessing.
     """
     root = parse_html(html)
     if not has_pbp_panes(root):
@@ -1097,7 +1132,7 @@ def parse_game(
         "pitching": _parse_box_pitching(root, player_table),
     }
     lineups = _build_lineups(player_table, subs_by_team)
-    players = _players_table(player_table)
+    players = _players_table(player_table, person_ids)
 
     parsed_at_iso = parsed_at or datetime.now(timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ"

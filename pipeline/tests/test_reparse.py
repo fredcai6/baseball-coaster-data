@@ -266,3 +266,61 @@ def test_reparse_passes_overrides_built_from_the_committed_file(tmp_path, monkey
     reparse.run_reparse(repo_root=root, config=None, write=False)
 
     assert seen["id_overrides"] == {("Pat Smith", "t1"): "abcdefghijklmnop"}
+
+
+# --- identity pinning: ambiguous keys (issue #41) --------------------------
+
+
+def _committed(players: dict) -> dict:
+    return {"players": players}
+
+
+def _entry(name: str, team_id: str) -> dict:
+    return {"name": name, "team_id": team_id, "last_name": name.split()[-1]}
+
+
+def test_id_overrides_pin_every_unambiguous_player():
+    overrides = reparse._committed_id_overrides(
+        _committed({
+            "realaaaaaaaaaaa1": _entry("Ann Real", "team1"),
+            "syn:home:1": _entry("Bob Ghost", "team1"),
+        })
+    )
+    assert overrides == {
+        ("Ann Real", "team1"): "realaaaaaaaaaaa1",
+        ("Bob Ghost", "team1"): "syn:home:1",
+    }
+
+
+def test_id_overrides_drop_a_name_held_by_two_players_on_one_team():
+    """Regression (issue #41). Built as a dict comprehension this key bound
+    to whichever id was iterated LAST, handing the box row an id the
+    synthetic counter had not reached yet and renumbering the game's
+    PBP-declared players. Real case: `20250801_s3fn`, two "R. Velazquez".
+    Pinning must PRESERVE identity, so an ambiguous key is refused and both
+    players fall through to normal assignment."""
+    overrides = reparse._committed_id_overrides(
+        _committed({
+            "syn:home:1": _entry("R. Velazquez", "team1"),
+            "syn:home:4": _entry("R. Velazquez", "team1"),
+            "syn:home:2": _entry("A. Lopez", "team1"),
+        })
+    )
+    assert ("R. Velazquez", "team1") not in overrides
+    # The unambiguous players on the same team are untouched by the refusal.
+    assert overrides == {("A. Lopez", "team1"): "syn:home:2"}
+
+
+def test_id_overrides_keep_a_name_shared_across_two_teams():
+    """The key is (name, team_id), so the same name on both rosters is two
+    distinct keys, not a collision -- pinning both is correct."""
+    overrides = reparse._committed_id_overrides(
+        _committed({
+            "realaaaaaaaaaaa1": _entry("Dee Twin", "team1"),
+            "realaaaaaaaaaaa2": _entry("Dee Twin", "team2"),
+        })
+    )
+    assert overrides == {
+        ("Dee Twin", "team1"): "realaaaaaaaaaaa1",
+        ("Dee Twin", "team2"): "realaaaaaaaaaaa2",
+    }
