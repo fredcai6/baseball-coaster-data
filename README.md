@@ -268,7 +268,7 @@ overwriting an already-committed `games/<season>/<game_id>.json` (write-once). R
 ```bash
 python -m bc_pipeline.backfill                       # walk every configured season until caught up
 python -m bc_pipeline.backfill --limit 20             # cap total NEW fetches this run (bounded slice)
-python -m bc_pipeline.backfill --config my-config.json --repo-root ..
+python -m bc_pipeline.backfill --config my-config.json    # --repo-root only if auto-detect can't find it
 ```
 
 It stops immediately (exit 1) on a detected challenge/WAF trip after escalating backoff (60s, 10min,
@@ -365,11 +365,23 @@ from the `pipeline/` directory:
 ```bash
 python -m bc_pipeline.refresh                       # backfill + regenerate frequencies if changed
 python -m bc_pipeline.refresh --limit 20             # cap total NEW fetches this run (bounded slice)
-python -m bc_pipeline.refresh --config my-config.json --repo-root ..
+python -m bc_pipeline.refresh --config my-config.json     # --repo-root only if auto-detect can't find it
 ```
 
 Its CLI flags mirror `bc_pipeline.backfill`'s own (`--config`, `--limit`, `--repo-root`, `--push`) —
 the two commands are siblings.
+
+**`--repo-root` is auto-detected.** Both CLIs walk up from the current directory looking for a
+checkout that has a `games/` directory, so running from `pipeline/` (as above) finds the repo root
+without being told. An explicit `--repo-root` is validated the same way and *refused* if it doesn't
+look like the data repo, rather than accepted and quietly misused.
+
+This matters because the previous default was `"."`, while the instruction above is to run from
+`pipeline/`. That combination resolved the root to `pipeline/`, where no `games/` exists — which
+silently disabled the corpus-aware fetch skip *and* the `out_path.exists()` write-once check, and
+aimed new game files at `pipeline/games/<season>/`, a second wrong corpus inside the repo. Nothing
+errored; it just did the wrong thing. A run that cannot locate the root now exits 2 with a loud
+message.
 
 **Sequencing:**
 

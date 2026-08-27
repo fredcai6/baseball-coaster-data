@@ -51,6 +51,7 @@ import argparse
 import json
 import random
 import subprocess
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -261,9 +262,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--repo-root",
         type=str,
-        default=".",
+        default=None,
         metavar="PATH",
-        help="Repository root containing games/ and artifacts/ (default: current directory).",
+        help=(
+            "Repository root containing games/ and artifacts/ (default: auto-detected "
+            "by walking up from the current directory for a checkout with a games/ dir)."
+        ),
     )
     parser.add_argument(
         "--push",
@@ -284,7 +288,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     # anything except the CLI's real run.
     from bc_pipeline.transport import real_transport
 
-    repo_root = Path(args.repo_root)
+    try:
+        repo_root = backfill.resolve_repo_root(args.repo_root)
+    except backfill.RepoRootError as exc:
+        print(f"[REFRESH] {exc}", file=sys.stderr)
+        return 2
 
     def commit_fn(paths: Sequence[Path], message: str) -> None:
         _git_commit_fn(paths, message, repo_root=repo_root)

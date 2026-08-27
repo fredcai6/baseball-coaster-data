@@ -23,6 +23,7 @@ from pathlib import Path
 import pytest
 
 from bc_pipeline import backfill, schedule
+from bc_pipeline.backfill import RepoRootError, resolve_repo_root
 from bc_pipeline.config import PipelineConfig
 from bc_pipeline.fetcher import ChallengeDetected, FetchResponse
 
@@ -591,3 +592,58 @@ def test_escalation_recovers_and_returns_clean_result_if_challenge_clears(tmp_pa
     assert not result.stopped_by_challenge
     assert escalation_sleeps == [60.0, 600.0]
     assert result.seasons[2026].parsed == 1
+
+
+# --- (h) repo-root resolution: the silently-wrong-root class of bug --------
+#
+# `--repo-root` defaulted to "." while the README told you to run from
+# `pipeline/`. That resolved the root to `pipeline/`, where no games/ exists,
+# which disabled BOTH the corpus-aware fetch skip and the out_path.exists()
+# write-once check, and pointed new game files at `pipeline/games/<season>/`.
+# Nothing errored -- it quietly did the wrong thing.
+
+
+def _make_fake_repo(root: Path) -> Path:
+    (root / ".git").mkdir(parents=True, exist_ok=True)
+    (root / "games").mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def test_repo_root_autodetected_from_a_subdirectory(tmp_path: Path) -> None:
+    repo = _make_fake_repo(tmp_path / "data")
+    nested = repo / "pipeline" / "bc_pipeline"
+    nested.mkdir(parents=True)
+    assert resolve_repo_root(None, start=nested) == repo.resolve()
+
+
+def test_repo_root_autodetected_at_the_root_itself(tmp_path: Path) -> None:
+    repo = _make_fake_repo(tmp_path / "data")
+    assert resolve_repo_root(None, start=repo) == repo.resolve()
+
+
+def test_autodetect_raises_when_no_data_repo_is_above(tmp_path: Path) -> None:
+    bare = tmp_path / "nowhere" / "deep"
+    bare.mkdir(parents=True)
+    with pytest.raises(RepoRootError, match="could not locate the data-repo root"):
+        resolve_repo_root(None, start=bare)
+
+
+def test_explicit_repo_root_missing_games_is_refused(tmp_path: Path) -> None:
+    """The exact shape of the bug: pointing at `pipeline/`, which has a
+    parent repo but no games/ of its own."""
+    repo = _make_fake_repo(tmp_path / "data")
+    pipeline_dir = repo / "pipeline"
+    pipeline_dir.mkdir()
+    with pytest.raises(RepoRootError, match="does not look like the data repo"):
+        resolve_repo_root(str(pipeline_dir))
+
+
+def test_explicit_repo_root_is_honoured_when_valid(tmp_path: Path) -> None:
+    repo = _make_fake_repo(tmp_path / "data")
+    assert resolve_repo_root(str(repo)) == repo.resolve()
+
+
+def test_autodetect_prefers_the_nearest_enclosing_repo(tmp_path: Path) -> None:
+    outer = _make_fake_repo(tmp_path / "outer")
+    inner = _make_fake_repo(outer / "vendor" / "inner")
+    assert resolve_repo_root(None, start=inner / "sub") == inner.resolve()
