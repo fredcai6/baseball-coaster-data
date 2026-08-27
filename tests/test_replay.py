@@ -403,3 +403,49 @@ def test_reached_and_did_not_score_is_NOT_the_rule():
         _runner_ev(3, [_runner("r1", 2, -1, out=True, cause="pickoff")]),
     ]
     assert _lob_warnings(events, box_lob=1) == []
+# --- issue #40: half-inning chronological ordering -------------------------
+
+
+def test_half_order_puts_top_before_bottom():
+    """`max()` on the raw (inning, half) tuple compares the half
+    LEXICOGRAPHICALLY, and "top" > "bottom" -- so the last half of a game
+    came out as the TOP of the final inning. Every walk-off was then
+    reported as a short half-inning, because `is_last_half` was False for
+    every bottom half and the exception could never fire."""
+    from bc_pipeline.replay import _half_order
+
+    keys = [(9, "top"), (9, "bottom"), (8, "bottom"), (1, "top")]
+    assert max(keys, key=_half_order) == (9, "bottom")
+    assert sorted(keys, key=_half_order) == [
+        (1, "top"), (8, "bottom"), (9, "top"), (9, "bottom"),
+    ]
+    # The raw comparison this replaced gets it wrong:
+    assert max(keys) == (9, "top")
+
+
+def test_walkoff_half_with_two_outs_is_accepted():
+    """Bottom of the last inning, home takes the lead, inning ends before a
+    third out."""
+    game = {"events": [
+        {"kind": "plate_appearance", "seq": 1, "inning": 9, "half": "top",
+         "batter": {"player_id": "a", "name_raw": "A", "resolved": True},
+         "outcome": {"type": "groundout", "modifiers": [], "fielders": [],
+                     "location": None, "outs_recorded": 3},
+         "runners": [{"player_id": f"a{i}", "from": 0, "to": -1, "out": True,
+                      "scored": False, "cause": "putout"} for i in range(3)]},
+        {"kind": "plate_appearance", "seq": 2, "inning": 9, "half": "bottom",
+         "batter": {"player_id": "h", "name_raw": "H", "resolved": True},
+         "outcome": {"type": "groundout", "modifiers": [], "fielders": [],
+                     "location": None, "outs_recorded": 2},
+         "runners": [{"player_id": f"h{i}", "from": 0, "to": -1, "out": True,
+                      "scored": False, "cause": "putout"} for i in range(2)]},
+        {"kind": "plate_appearance", "seq": 3, "inning": 9, "half": "bottom",
+         "batter": {"player_id": "w", "name_raw": "W", "resolved": True},
+         "outcome": {"type": "home_run", "modifiers": [], "fielders": [],
+                     "location": None, "outs_recorded": 0},
+         "runners": [{"player_id": "w", "from": 0, "to": 4, "out": False,
+                      "scored": True, "cause": "batted_ball"}]},
+    ]}
+    oracle = {"linescore": {"innings": {"away": [None] * 9, "home": [None] * 9},
+                            "totals": {"away": {"R": 0}, "home": {"R": 1}}}}
+    assert replay.check_outs_per_half(game, oracle).warnings == []

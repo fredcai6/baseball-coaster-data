@@ -418,6 +418,13 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
     return CheckResult(ok=not warnings, warnings=warnings)
 
 
+def _half_order(key: Tuple[int, str]) -> Tuple[int, int]:
+    """Chronological sort key for a (inning, half) group key: the top of an
+    inning precedes its bottom."""
+    inning, half = key
+    return (inning, 0 if half == "top" else 1)
+
+
 def check_outs_per_half(game: dict, oracle: dict) -> CheckResult:
     """Each half-inning's folded outs must sum to 3, except a legal walk-off
     (game ends on a winning run before the 3rd out) or an unbatted half
@@ -429,7 +436,13 @@ def check_outs_per_half(game: dict, oracle: dict) -> CheckResult:
     if not groups:
         return CheckResult(ok=True, warnings=[])
 
-    last_half_key = max(groups.keys())
+    # Order halves by (inning, top-then-bottom). `max()` on the raw
+    # (inning, half) tuple compares the half LEXICOGRAPHICALLY, and
+    # "top" > "bottom" -- so the last half of a game came out as the TOP of
+    # the final inning, `is_last_half` was False for every bottom half, and
+    # the walk-off exception below could never fire. Every walk-off was
+    # reported as a short half-inning (issue #40).
+    last_half_key = max(groups.keys(), key=_half_order)
 
     for key, evd in groups.items():
         total_outs = sum(d["outs_after"] - d["outs_before"] for _, d in evd)
