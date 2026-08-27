@@ -281,6 +281,76 @@ def test_repeat_run_skips_already_committed_games(tmp_path: Path) -> None:
     assert commits == []
 
 
+def test_fresh_machine_with_full_corpus_refetches_nothing(tmp_path: Path) -> None:
+    """The regression this exists for: a NEW workstation holding the committed
+    corpus but no checkpoint at all.
+
+    `test_repeat_run_skips_already_committed_games` above passes even without
+    the corpus-aware skip, because its second run inherits the first run's
+    checkpoint. Here the checkpoint is deleted between runs, which is exactly
+    the state a fresh machine starts in -- and what once caused a real refresh
+    to re-download 203 already-owned games (~45 min at the >= 10 s pacing
+    floor) before dying without committing anything.
+    """
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1", "20260402_g2"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+        _box_url(2026, "20260402_g2"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+
+    call_log: list[str] = []
+    commits: list = []
+    first = run(config, response_map, call_log, FakeClock(), tmp_path, commits, limit=None)
+    assert first.seasons[2026].parsed == 2
+
+    # Simulate the fresh machine: corpus intact, every trace of local
+    # fetch history gone.
+    checkpoint_path = Path(config.checkpoint_path)
+    assert checkpoint_path.exists()
+    checkpoint_path.unlink()
+
+    call_log.clear()
+    commits.clear()
+    second = run(config, response_map, call_log, FakeClock(), tmp_path, commits, limit=None)
+
+    assert second.seasons[2026].skipped_already_committed == 2
+    assert second.seasons[2026].parsed == 0
+    assert second.seasons[2026].fetched == 0
+    # The decisive assertion: only the schedule page was requested.
+    assert call_log == [_season_schedule_url(2026)]
+    assert commits == []
+
+
+def test_corpus_skip_still_reaches_genuinely_new_games(tmp_path: Path) -> None:
+    """Skipping owned games must not stop the walk -- the whole point is to
+    reach the new ones sooner."""
+    config = make_config(tmp_path, seasons=[2026])
+    response_map = {
+        _season_schedule_url(2026): FetchResponse(
+            status_code=200, body=_schedule_html(["20260401_g1", "20260402_g2"], 2026)
+        ),
+        _box_url(2026, "20260401_g1"): FetchResponse(status_code=200, body=FINAL_HTML),
+        _box_url(2026, "20260402_g2"): FetchResponse(status_code=200, body=FINAL_HTML),
+    }
+
+    call_log: list[str] = []
+    commits: list = []
+    run(config, response_map, call_log, FakeClock(), tmp_path, commits, limit=1)
+    Path(config.checkpoint_path).unlink()
+
+    call_log.clear()
+    commits.clear()
+    second = run(config, response_map, call_log, FakeClock(), tmp_path, commits, limit=None)
+
+    # One game was already owned; the other is genuinely new and gets fetched.
+    assert second.seasons[2026].skipped_already_committed == 1
+    assert second.seasons[2026].parsed == 1
+    assert second.seasons[2026].fetched == 1
+
+
 # --- (d) season order 2026 -> 2025 -> 2024 ----------------------------------
 
 
