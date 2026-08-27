@@ -418,3 +418,95 @@ def test_resolve_surname_collision_empty_full_name_never_vacuously_narrows():
     pid, resolved = table.resolve("Jackson", "away", "")
     assert resolved is False
     assert pid is None
+
+
+# --- issue #40: roster-name gaps ------------------------------------------
+#
+# The four names that accounted for the whole non-grammar slice of
+# "did not resolve uniquely" turned out to be, in every case, a difference
+# between the PBP narrative and the boxscore roster:
+#
+#   Terillli  vs Terilli        (insertion)
+#   Marcello  vs Marcelo        (insertion)
+#   Bagnieksi vs Bagnieski      (adjacent transposition)
+#   Lora      vs Lora Gonzalez  (compound surname, PBP names one part)
+#
+# The PBP and the box are keyed separately by the scorer, so a surname can
+# be misspelled in exactly one of them.
+
+
+def _team(*players):
+    return identity.TeamIdentity(
+        team_id="syn:team",
+        name="Synthetic",
+        players={
+            pid: identity.PlayerEntry(
+                player_id=pid, name=full, last_name=full.split()[-1],
+                team_id="syn:team", positions=["ph"],
+            )
+            for pid, full in players
+        },
+    )
+
+
+def _resolve(team, token):
+    table = identity.PlayerTable(home=team, away=_team(("syn:other", "Zeb Zzyzx")))
+    last = token.split()[-1]
+    return table.resolve(last, "home", token)
+
+
+def test_compound_surname_resolves_on_either_part():
+    team = _team(("p1", "Gary Lora Gonzalez"))
+    assert _resolve(team, "G. Lora") == ("p1", True)
+    assert _resolve(team, "G. Gonzalez") == ("p1", True)
+
+
+def test_compound_surname_needs_three_tokens():
+    """A plain "First Last" has no interior token, so nothing extra matches."""
+    from bc_pipeline.identity import _interior_surname_tokens
+    assert _interior_surname_tokens("Gary Lora Gonzalez") == ["Lora", "Gonzalez"]
+    assert _interior_surname_tokens("Gary Gonzalez") == []
+
+
+def test_single_edit_typos_resolve_when_unique_and_initial_agrees():
+    for full, pbp in (
+        ("Lucas Terilli", "Lucas Terillli"),
+        ("Noah Marcelo", "N. Marcello"),
+        ("Connor Bagnieski", "C. Bagnieksi"),
+    ):
+        team = _team(("p1", full))
+        assert _resolve(team, pbp) == ("p1", True), pbp
+
+
+def test_typo_path_refuses_when_the_first_initial_disagrees():
+    """First-initial agreement is an INDEPENDENT second constraint -- a lone
+    one-edit candidate is not enough on its own."""
+    team = _team(("p1", "Noah Marcelo"))
+    assert _resolve(team, "R. Marcello") == (None, False)
+
+
+def test_typo_path_refuses_when_two_candidates_are_within_one_edit():
+    team = _team(("p1", "Noah Marcelo"), ("p2", "Nate Marcella"))
+    assert _resolve(team, "N. Marcello") == (None, False)
+
+
+def test_typo_path_refuses_short_surnames():
+    """Below the length floor a one-edit window is too wide to be evidence."""
+    team = _team(("p1", "Mel Ott"))
+    assert _resolve(team, "M. Oty") == (None, False)
+
+
+def test_exact_match_still_wins_over_a_one_edit_neighbour():
+    """The fuzzy path runs only after exact AND prefix matching both fail, so
+    it can never override a real match."""
+    team = _team(("p1", "Noah Marcelo"), ("p2", "Nick Marcello"))
+    assert _resolve(team, "N. Marcello") == ("p2", True)
+
+
+def test_within_one_edit_covers_the_three_real_shapes_and_rejects_two():
+    from bc_pipeline.identity import _within_one_edit
+    assert _within_one_edit("terilli", "terillli")      # insertion
+    assert _within_one_edit("marcelo", "marcello")      # insertion
+    assert _within_one_edit("bagnieski", "bagnieksi")   # transposition
+    assert not _within_one_edit("smith", "smithers")    # 3 edits
+    assert not _within_one_edit("jackson", "johnson")   # 3 edits
