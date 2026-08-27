@@ -802,12 +802,19 @@ def _b_scored_plain(m: re.Match):
 
 
 def _b_stole(m: re.Match):
+    dest = m.group("dest")
     return RunnerMovement(
         name_token=m.group("name"),
         cause="stolen_base",
-        destination=m.group("dest"),
+        destination=dest,
         out=False,
-        scored=False,
+        # A steal of HOME is a run. This builder hardcoded scored=False, so
+        # "X stole home" folded to runs_on_play=0 and the run vanished from
+        # the linescore -- computed one FEWER run than the box, for that
+        # inning and therefore for the final total too. Every other builder
+        # already ties `scored` to a home destination; this was the only one
+        # that did not (issue #40).
+        scored=(dest == "home"),
         unearned=bool(m.groupdict().get("unearned")),
     )
 

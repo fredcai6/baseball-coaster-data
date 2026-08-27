@@ -1659,3 +1659,39 @@ def test_infield_fly_is_its_own_outcome_type():
 
 def test_infield_fly_preserves_an_infield_position():
     assert _pa("A. Shaver infield fly to 1b.").primary.fielders == ["1b"]
+
+
+def test_a_steal_of_home_is_a_run():
+    """`_b_stole` hardcoded scored=False, so "X stole home" folded to
+    runs_on_play=0 and the run vanished from the linescore -- computed one
+    FEWER run for that inning and therefore for the final total too. Every
+    other builder already ties `scored` to a home destination."""
+    (r,) = parse_clause_group("R. Preece stole home.").runners
+    assert (r.destination, r.scored, r.out) == ("home", True, False)
+
+
+def test_a_steal_of_another_base_is_not_a_run():
+    for base in ("second", "third"):
+        (r,) = parse_clause_group(f"R. Preece stole {base}.").runners
+        assert (r.destination, r.scored) == (base, False)
+
+
+def test_a_steal_of_home_can_be_unearned():
+    (r,) = parse_clause_group("R. Preece stole home, unearned.").runners
+    assert (r.scored, r.unearned) == (True, True)
+
+
+def test_no_builder_reaches_home_without_scoring():
+    """Corpus invariant, asserted structurally: a runner whose destination is
+    home and who is not out must be marked as having scored. This is the
+    class of bug the steal-of-home fix belongs to."""
+    for line in (
+        "R. Preece stole home.",
+        "R. Preece scored.",
+        "R. Preece scored on a wild pitch.",
+        "R. Preece scored on an error by ss.",
+        "R. Preece scored on the throw.",
+    ):
+        for r in parse_clause_group(line).runners:
+            if r.destination == "home" and not r.out:
+                assert r.scored, line
