@@ -1303,3 +1303,94 @@ def test_legacy_unguarded_pass_keeps_verb_bearing_lead_rows_parsing():
         parse_clause_group("K. Jimenez struck out swinging, out at first c to 1b."),
         ClauseGroup,
     )
+
+
+# --- issue #40: batter self-advance chaining on the PRIMARY clause ---------
+#
+# StatCrew narrates a batter who keeps running as one clause chain
+# ("A.J. Shaver singled to right field, advanced to second"). PRIMARY_RULES
+# only ever matched the whole thing or nothing, so 470 of the 531 remaining
+# `primary verb not recognized` lines in the 2026 slice were this shape.
+# #33 filed it as "batter self-advance (~290 lines), needs a parse.py
+# control-flow change"; it is really the same grammar-level chaining problem
+# already solved for runner clauses.
+
+
+def _pa(line):
+    result = parse_clause_group(line)
+    assert isinstance(result, ClauseGroup), f"expected a parse, got {result!r}"
+    assert result.kind == "plate_appearance"
+    return result
+
+
+def test_batter_self_advance_becomes_a_runner_record():
+    cg = _pa("A.J. Shaver singled to right field, advanced to second (1-0 B).")
+    assert cg.primary.outcome_type == "single"
+    assert cg.primary.location == "right field"
+    assert [(r.name_token, r.destination, r.cause) for r in cg.runners] == [
+        ("A.J. Shaver", "second", "advance")
+    ]
+
+
+def test_batter_self_advance_with_trailing_rbi_modifier():
+    """A modifier trailing the continuation belongs to the PRIMARY, not to
+    the movement."""
+    cg = _pa(
+        "William Bermudez singled to left field, advanced to second on an "
+        "error by lf, RBI (2-2 BKSBF)."
+    )
+    assert "RBI" in cg.primary.modifiers
+    assert [(r.name_token, r.destination, r.cause) for r in cg.runners] == [
+        ("William Bermudez", "second", "error")
+    ]
+
+
+def test_batter_thrown_out_stretching_is_an_out_record():
+    cg = _pa("Josh Duarte singled, out at second cf to ss (0-2 FF).")
+    assert cg.primary.outcome_type == "single"
+    assert [(r.name_token, r.destination, r.out) for r in cg.runners] == [
+        ("Josh Duarte", "second", True)
+    ]
+
+
+def test_dropped_third_strike_thrown_out_at_first():
+    cg = _pa("Pat Mills struck out looking, out at first c to 1b (1-2 SKBK).")
+    assert cg.primary.outcome_type == "strikeout_looking"
+    assert [(r.name_token, r.destination, r.out) for r in cg.runners] == [
+        ("Pat Mills", "first", True)
+    ]
+
+
+def test_batter_movements_precede_other_runners():
+    """The batter's own movement is emitted before the ';'-separated runner
+    clauses, matching narrative order."""
+    cg = _pa(
+        "Jacob Steele singled up the middle, advanced to second on the "
+        "throw (0-1 K); Jake Millan advanced to third."
+    )
+    names = [r.name_token for r in cg.runners]
+    assert names[0] == "Jacob Steele"
+    assert "Jake Millan" in names
+
+
+def test_hit_with_only_modifier_tail_still_uses_the_existing_path():
+    """`singled, RBI` is a plain _HIT_MOD_TAIL line -- the chain path must
+    decline it rather than duplicate that job."""
+    cg = _pa("G. Tonkel singled, RBI (0-0).")
+    assert cg.primary.outcome_type == "single"
+    assert "RBI" in cg.primary.modifiers
+    assert cg.runners == ()
+
+
+# --- issue #40: missing hit-location phrases -------------------------------
+
+
+def test_singled_down_the_line_locations():
+    for tok in ("lf", "rf"):
+        cg = _pa(f"Ty Yukumoto singled down the {tok} line (0-0).")
+        assert cg.primary.location == f"down the {tok} line"
+
+
+def test_doubled_through_the_side_and_up_the_middle():
+    assert _pa("J. Smith doubled through the right side (0-0).").primary.location == "right side"
+    assert _pa("J. Smith doubled up the middle (1-1 BK).").primary.location == "up the middle"
