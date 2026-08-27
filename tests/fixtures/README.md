@@ -98,7 +98,7 @@ not a placeholder. `meta.source_url` points at the honest team-site host
 ### Validation
 
 ```bash
-cd C:/PRograms/baseball-coaster-data
+cd ~/projects/baseball-coaster-data
 py -c "import json,jsonschema; s=json.load(open('schemas/game.schema.json')); jsonschema.Draft202012Validator(s).validate(json.load(open('tests/fixtures/game_20260709_h94w_top1.json'))); print('VALID')"
 # -> VALID
 ```

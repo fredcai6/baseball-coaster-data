@@ -64,10 +64,10 @@ schema's root `$comment`.
 The raw HTML this pipeline scrapes is never committed to this repo (see the caller contract
 above). It lives on the local PC instead, under a single configurable root.
 
-- **Archive root (default):** `C:/PRograms/bc-raw-archive` — PC-local, outside this git working
-  tree. This is a *default*, not a hard-coded path: pass `--config` (see below) with an
+- **Archive root (default):** `~/bc-raw-archive` — PC-local, outside this git working tree.
+  This is a *default*, not a hard-coded path: pass `--config` (see below) with an
   `archive_root` override to use a different location.
-- **Checkpoint file (default):** `C:/PRograms/bc-raw-archive/checkpoint.json` — a JSON map of
+- **Checkpoint file (default):** `~/bc-raw-archive/checkpoint.json` — a JSON map of
   `source-url -> {archived_path, fetched_at, content_hash, status}`. This checkpoint, not the
   archive directory's filenames, is the sole authority on "have I already fetched this URL" — a
   URL is skipped only when its checkpoint entry has `status: "done"`.
@@ -83,11 +83,23 @@ above). It lives on the local PC instead, under a single configurable root.
 | `min_interval_seconds` | `12.0`                                      | Minimum seconds between the start of any two fetches (must be `>= 10`, per an observed WAF trip). |
 | `jitter_seconds`       | `3.0`                                       | Extra random seconds (0..this) added on top of the minimum interval. |
 | `seasons`              | `[2026, 2025, 2024]`                        | Season years walked, in this order (2026 first).       |
-| `archive_root`         | `C:/PRograms/bc-raw-archive`                | Local filesystem root for archived raw HTML.            |
-| `checkpoint_path`      | `C:/PRograms/bc-raw-archive/checkpoint.json`| Local filesystem path to the checkpoint/resume file.    |
+| `archive_root`         | `~/bc-raw-archive`                          | Local filesystem root for archived raw HTML (absolute, outside the working tree). |
+| `checkpoint_path`      | `~/bc-raw-archive/checkpoint.json`          | Local filesystem path to the checkpoint/resume file.    |
 
 Override any subset of these via a small JSON file passed to `--config`; omitted fields keep their
 default.
+
+**Path invariants.** `archive_root` and `checkpoint_path` are normalized on construction
+(`~` and `$VAR` expanded, then resolved absolute) and are refused outright if they are
+relative, or if they resolve inside this git working tree. Both rules exist because a
+Windows-style `C:/...` path is *relative* on a POSIX host: the previous
+`C:/PRograms/bc-raw-archive` default silently materialized a raw archive at
+`pipeline/C:/PRograms/bc-raw-archive/` inside the tree. `.gitignore`'s `*.html` rule kept
+the raw HTML out of git, but the `checkpoint.json` beside it was untracked and unignored —
+the contract is "outside the repo", not "gitignored within the repo".
+
+The defaults are home-rooted for the Linux workstation that is the standing single writer
+for this repo. Any other host should pass `--config`.
 
 ### Running the CLI
 
@@ -199,6 +211,34 @@ PYTHONPATH=pipeline python -m pytest tests pipeline/tests -q
 
 CI (`.github/workflows/validate.yml`) runs this exact command on every push/PR, in
 addition to the schema-validation scripts below.
+
+### Write-once guard (`scripts/check_write_once.py`)
+
+Caller-contract clause 1 says `games/**` is write-once — a final game file changes only
+in an explicitly labeled re-parse commit. `scripts/check_write_once.py` is the check that
+makes that clause enforceable instead of merely stated, and CI runs it on every push/PR.
+
+It diffs a commit **range** (`--base`/`--head`, or `BASE_SHA`/`HEAD_SHA` in the
+environment) and classifies every `games/**` change in it:
+
+- **Additions pass.** A new game file is the pipeline doing its job.
+- **Modifications** are judged under the [semantic equality](#semantic-equality) rule:
+  the base and head blobs are compared after deleting the root `meta` block and every
+  `_derived` block at any depth. A diff confined to those is provenance/cache churn, not
+  a rewrite of the game — it passes with an informational note.
+- **Semantic modifications, deletions, and renames** require that *every* non-merge
+  commit in the range touching that path is a labeled re-parse commit, meaning a subject
+  matching `reparse(vX.Y.Z): ...` (the convention set by `reparse(v0.2.0)` and
+  `reparse(v0.3.0)`). Checking every commit rather than just the tip is deliberate: a
+  stray hand-edit riding in behind a legitimate re-parse must still be caught.
+
+A base of all zeros — what `github.event.before` carries on a branch's first push — is
+reported as a clean SKIP rather than an error; write-once is checked on the next push.
+`artifacts/**` is out of scope by construction (clause 2: it is the mutable tier).
+
+```bash
+python scripts/check_write_once.py --base <sha> --head <sha>
+```
 
 ## License
 
