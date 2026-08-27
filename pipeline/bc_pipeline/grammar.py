@@ -298,6 +298,23 @@ def _x_fielders_choice(m: re.Match):
     return (m.group("name"), [], None, _modifiers_from_tail(m.group("tail")))
 
 
+def _x_reached_on_interference(m: re.Match):
+    """"X reached on catcher's interference" -- the batter is awarded first
+    because the catcher interfered with the swing. No error is charged and,
+    critically, it is NOT an at-bat, which is why it needs its own type
+    rather than reached_on_error or fielders_choice (issue #40). The catcher
+    is the responsible fielder, so `fielders` carries "c"."""
+    mods = _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), ["c"], None, mods)
+
+
+def _x_batter_interference(m: re.Match):
+    """"X out on batter's interference" -- the batter is retired for
+    interfering with the catcher's play. An out with no batted ball, which
+    no existing type covers."""
+    return (m.group("name"), [], None, [])
+
+
 def _x_reached_on_error(m: re.Match):
     mods = ["error"] + _modifiers_from_tail(m.group("tail"))
     return (m.group("name"), [m.group("f")], None, mods)
@@ -503,6 +520,19 @@ PRIMARY_RULES: List[PrimaryRule] = [
         ),
         "popout",
         _x_popout_out_to,
+    ),
+    (
+        # Curly and straight apostrophes both occur in the corpus.
+        re.compile(
+            rf"^(?P<name>.+?) reached on catcher['\u2019]s interference{_HIT_MOD_TAIL}$"
+        ),
+        "reached_on_interference",
+        _x_reached_on_interference,
+    ),
+    (
+        re.compile(r"^(?P<name>.+?) out on batter['\u2019]s interference$"),
+        "batter_interference",
+        _x_batter_interference,
     ),
     (
         re.compile(r"^(?P<name>.+?) reached on a fielder's choice(?P<tail>.*)$"),
@@ -891,7 +921,7 @@ RUNNER_RULES: List[RunnerRule] = [
         _b_caught_stealing,
     ),
     (
-        re.compile(r"^(?P<name>.+?) out on the play$"),
+        re.compile(r"^(?P<name>.+?) out on the play(?:, interference)?$"),
         ("putout",),
         _b_out_on_the_play,
     ),
@@ -1113,6 +1143,10 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
     "intentional_walk": ("advance", "first", False, False),
     "hit_by_pitch": ("advance", "first", False, False),
     "reached_on_error": ("error", "first", False, False),
+    # Awarded first base; no error is charged, so a plain advance.
+    "reached_on_interference": ("advance", "first", False, False),
+    # Retired without a batted ball.
+    "batter_interference": ("putout", None, True, False),
     "fielders_choice": ("fielders_choice", "first", False, False),
     "strikeout_swinging": ("putout", None, True, False),
     "strikeout_looking": ("putout", None, True, False),

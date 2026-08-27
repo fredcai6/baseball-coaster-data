@@ -497,15 +497,25 @@ def check_lob(game: dict, oracle: dict) -> CheckResult:
 def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
     """Per-batter PA count from events must reconcile with what the box
     batting line implies. Formula (documented, since the box schema has no
-    HBP/SAC columns of its own): ``events_PA == box.AB + box.BB +
-    hbp_events + sac_events``, where ``hbp_events``/``sac_events`` are
-    counted directly from this batter's own events (outcome type
-    ``hit_by_pitch`` / ``sacrifice``) since the box has no dedicated column
-    for them."""
+    HBP/SAC/interference columns of its own): ``events_PA == box.AB +
+    box.BB + hbp_events + sac_events + interference_events``, where each
+    trailing term is counted directly from this batter's own events since
+    the box has no dedicated column for it.
+
+    ``interference_events`` counts ``reached_on_interference`` (schema
+    1.5.0). Catcher's interference awards the batter first base and is a
+    plate appearance that is NOT an at-bat, so it appears in neither AB nor
+    BB -- without this term every such PA would fail by exactly one. Note
+    ``batter_interference`` is deliberately absent: the batter is retired,
+    which IS charged as an at-bat, so it is already inside box.AB.
+
+    Extending this formula is an oracle-DEFINITION change, kept deliberate
+    and separately tested per issue #33's standing instruction."""
     warnings: List[str] = []
     events_pa: Dict[str, int] = {}
     hbp: Dict[str, int] = {}
     sac: Dict[str, int] = {}
+    interference: Dict[str, int] = {}
     for ev in game["events"]:
         if ev.get("kind") != "plate_appearance":
             continue
@@ -515,6 +525,8 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
         modifiers = ev["outcome"]["modifiers"]
         if outcome_type == "hit_by_pitch":
             hbp[pid] = hbp.get(pid, 0) + 1
+        elif outcome_type == "reached_on_interference":
+            interference[pid] = interference.get(pid, 0) + 1
         elif outcome_type == "sacrifice" or "SAC" in modifiers:
             # The grammar's closed outcome taxonomy expresses a sac bunt/fly
             # as the underlying batted-ball outcome (e.g. `flyout`) PLUS a
@@ -527,13 +539,20 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
             pid = line["player_id"]
             if pid not in events_pa:
                 continue  # box row with no PBP plate appearance in this game slice
-            expected = line["AB"] + line["BB"] + hbp.get(pid, 0) + sac.get(pid, 0)
+            expected = (
+                line["AB"]
+                + line["BB"]
+                + hbp.get(pid, 0)
+                + sac.get(pid, 0)
+                + interference.get(pid, 0)
+            )
             actual = events_pa[pid]
             if actual != expected:
                 warnings.append(
                     f"pa_counts: player {pid} events PA {actual} != box-implied "
                     f"PA {expected} (AB={line['AB']} BB={line['BB']} "
-                    f"HBP={hbp.get(pid, 0)} SAC={sac.get(pid, 0)})"
+                    f"HBP={hbp.get(pid, 0)} SAC={sac.get(pid, 0)} "
+                    f"INT={interference.get(pid, 0)})"
                 )
 
     return CheckResult(ok=not warnings, warnings=warnings)

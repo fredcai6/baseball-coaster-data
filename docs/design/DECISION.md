@@ -99,6 +99,29 @@ block. (This also appears in the README and in the schema's root `$comment`.)
   1.2.0; only new parses may emit `null` for either field. The two-name `"<in> to dh for <out>."`
   variant remains intentionally unimplemented (out of this gate's authorized scope) and still falls
   to `unparsed[]` unchanged.
+- **2026-08-27 — `schema_version` 1.4.0 → 1.5.0 (additive MINOR).** `$defs.outcome.properties.type.enum`
+  gains `reached_on_interference` and `batter_interference` (closed taxonomy 19 → 21). **Why:** neither
+  maps onto an existing type. *Catcher's interference* awards the batter first base with **no error
+  charged**, and is a plate appearance that is **not an at-bat** — `reached_on_error` and
+  `fielders_choice` misattribute the cause *and* are at-bats. *Batter's interference* is an out with
+  **no batted ball**, which nothing in the taxonomy covers. 25 lines across 25 games, 14 of them the
+  sole blocker on an otherwise clean-parse game. `fielders` carries `"c"` on
+  `reached_on_interference` (the catcher is the responsible fielder), preserving the same
+  no-defensive-info-loss requirement that shaped `foul_out` at 1.3.0.
+
+  **Paired oracle-definition change, deliberately separate:** `replay.check_pa_counts`'s formula
+  becomes `events_PA == box.AB + box.BB + hbp_events + sac_events + interference_events`. Catcher's
+  interference sits in neither AB nor BB, so without the new term every such plate appearance would
+  fail by exactly one. `batter_interference` is deliberately NOT in the formula — the batter is
+  retired, which IS charged as an at-bat, so it is already inside `box.AB`. Issue #33 requires oracle
+  definition changes be deliberate and separately tested; this one is both.
+
+  A runner retired on an interference play (`"C. Booth out on the play, interference."`) needs **no**
+  new cause — `putout` already fits — so `$defs.runner.properties.cause` stays frozen at 12.
+
+  Human-ratified via the Admiral (issue #40). Additive-only: every existing 1.4.0 file still validates
+  under 1.5.0. Lands in the next labeled re-parse.
+
 - **2026-08-27 — `schema_version` 1.3.0 → 1.4.0 (additive MINOR).** `$defs.player_entry.properties`
   gains `box_listed` (boolean, not required). **False** marks a player who appears ONLY in the PBP
   narrative and has no row in the boxscore's Batters/Pitchers tables. **Why:** StatCrew omits an

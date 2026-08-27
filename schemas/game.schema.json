@@ -25,7 +25,7 @@
     "schema_version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.4.0."
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.5.0."
     },
     "game_id": {
       "type": "string",
@@ -538,7 +538,9 @@
             "grounded_into_double_play",
             "sacrifice",
             "foul_out",
-            "strikeout"
+            "strikeout",
+            "reached_on_interference",
+            "batter_interference"
           ]
         },
         "modifiers": {

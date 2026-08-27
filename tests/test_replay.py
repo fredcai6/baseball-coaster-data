@@ -228,3 +228,52 @@ def test_bad_pa_counts_fails_only_check_pa_counts():
 
 def test_bad_illegal_transitions_fails_only_check_illegal_transitions():
     _assert_isolated_failure("bad_illegal_transitions.json", "illegal_transitions")
+
+
+# --- issue #40 / schema 1.5.0: interference in the pa_counts formula ------
+#
+# Catcher's interference awards the batter first base and is a plate
+# appearance that is NOT an at-bat, so it sits in neither AB nor BB. Without
+# an explicit term every such PA fails by exactly one. This is an oracle
+# DEFINITION change, which #33 requires be deliberate and separately tested.
+
+
+def _pa_counts_case(outcome_type, ab, bb):
+    """One batter, one plate appearance of `outcome_type`, against a box row
+    carrying `ab`/`bb`. Returns the check's warnings."""
+    pid = "syn:home:1"
+    game = {
+        "events": [
+            {
+                "kind": "plate_appearance",
+                "seq": 1,
+                "inning": 1,
+                "half": "bottom",
+                "batter": {"player_id": pid, "name_raw": "X", "resolved": True},
+                "outcome": {"type": outcome_type, "modifiers": [], "fielders": [],
+                            "location": None, "outs_recorded": 0},
+                "runners": [],
+            }
+        ]
+    }
+    oracle = {"box": {"batting": {"t1": [{"player_id": pid, "AB": ab, "BB": bb}]}}}
+    return replay.check_pa_counts(game, oracle).warnings
+
+
+def test_catchers_interference_is_a_pa_but_not_an_at_bat():
+    """AB=0, BB=0 and one interference PA must reconcile."""
+    assert _pa_counts_case("reached_on_interference", ab=0, bb=0) == []
+
+
+def test_catchers_interference_would_fail_without_its_term():
+    """Guard the guard: a plain walk with AB=0/BB=0 still fails, so the case
+    above is passing because of the new term and not because the check is
+    vacuous."""
+    assert _pa_counts_case("walk", ab=0, bb=0) != []
+
+
+def test_batter_interference_is_charged_as_an_at_bat():
+    """The batter is retired, so it is already inside box.AB and must NOT
+    get its own term -- AB=1 reconciles, AB=0 does not."""
+    assert _pa_counts_case("batter_interference", ab=1, bb=0) == []
+    assert _pa_counts_case("batter_interference", ab=0, bb=0) != []

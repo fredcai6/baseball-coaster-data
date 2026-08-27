@@ -38,7 +38,9 @@ def test_outcome_type_enum_gains_foul_out_and_strikeout():
     enum = set(schema["$defs"]["outcome"]["properties"]["type"]["enum"])
     assert "foul_out" in enum
     assert "strikeout" in enum
-    assert len(enum) == 19
+    # No count assertion: this file pins what 1.3.0 ADDED, and the taxonomy
+    # grows on later additive MINORs (21 members at 1.5.0). Exact frozen
+    # membership is guarded by scripts/check_schema_invariants.py.
 
 
 def test_foul_out_event_validates(fx):

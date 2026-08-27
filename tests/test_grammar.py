@@ -149,18 +149,25 @@ def test_grammar_miss_on_unrecognized_runner_clause():
 # ---------------------------------------------------------------------------
 
 
-def test_primary_rules_cover_all_19_outcomes():
+def test_primary_rules_cover_every_outcome_in_the_taxonomy():
+    """PRIMARY_RULES and the closed taxonomy must agree EXACTLY -- no rule
+    emitting a type the schema does not admit, and no admitted type without
+    a rule to produce it.
+
+    Deliberately asserts the set relationship, not a member count: the count
+    moves on every additive MINOR (19 at 1.3.0, 21 at 1.5.0), and the exact
+    frozen membership is guarded by scripts/check_schema_invariants.py,
+    which is the real gate. A count here only ever drifts and gets bumped.
+    """
     schema = load_schema()
     enum = set(schema["$defs"]["outcome"]["properties"]["type"]["enum"])
-    assert len(enum) == 19
     covered = {outcome_type for _regex, outcome_type, _extractor in PRIMARY_RULES}
     assert covered == enum
 
 
-def test_runner_rules_cover_all_12_causes():
+def test_runner_rules_cover_every_cause_in_the_taxonomy():
     schema = load_schema()
     enum = set(schema["$defs"]["runner"]["properties"]["cause"]["enum"])
-    assert len(enum) == 12
     covered: set = set()
     for _regex, causes, _builder in RUNNER_RULES:
         covered |= set(causes)
@@ -1542,3 +1549,50 @@ def test_stole_base_accepts_an_unearned_tail():
     assert isinstance(result, ClauseGroup)
     (r,) = result.runners
     assert (r.cause, r.destination, r.unearned) == ("stolen_base", "second", True)
+
+
+# --- issue #40 / schema 1.5.0: interference -------------------------------
+
+
+def test_reached_on_catchers_interference():
+    cg = _pa("Pat Mills reached on catcher's interference (1-2 FKB).")
+    assert cg.primary.outcome_type == "reached_on_interference"
+    # The catcher is the responsible fielder -- no defensive-info loss.
+    assert cg.primary.fielders == ["c"]
+
+
+def test_reached_on_catchers_interference_curly_apostrophe():
+    """Both apostrophe forms occur in the corpus."""
+    cg = _pa("Michael O'Hara reached on catcher’s interference (1-2 KBF).")
+    assert cg.primary.outcome_type == "reached_on_interference"
+
+
+def test_reached_on_catchers_interference_with_rbi_and_runners():
+    cg = _pa(
+        "Enzo Apodaca reached on catcher's interference, RBI (0-1 K); "
+        "Xavier Casserilla advanced to second."
+    )
+    assert cg.primary.outcome_type == "reached_on_interference"
+    assert "RBI" in cg.primary.modifiers
+    assert [r.name_token for r in cg.runners] == ["Xavier Casserilla"]
+
+
+def test_out_on_batters_interference():
+    cg = _pa("Bryce Cannon out on batter's interference (1-2 KFB).")
+    assert cg.primary.outcome_type == "batter_interference"
+    assert cg.primary.fielders == []
+
+
+def test_out_on_batters_interference_without_a_count_tail():
+    result = parse_clause_group("E. Doskow out on batter's interference.")
+    assert isinstance(result, ClauseGroup)
+    assert result.primary.outcome_type == "batter_interference"
+
+
+def test_runner_out_on_the_play_interference_needs_no_new_cause():
+    """A runner retired on an interference play is simply out -- `putout`
+    already fits, so the cause enum stays frozen at 12 members."""
+    result = parse_clause_group("C. Booth out on the play, interference.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "runner_event"
+    assert [(r.cause, r.out) for r in result.runners] == [("putout", True)]
