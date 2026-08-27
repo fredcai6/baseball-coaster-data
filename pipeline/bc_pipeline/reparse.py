@@ -43,9 +43,9 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Sequence
+from typing import Callable, Dict, List, Optional, Sequence, Set, Tuple
 
-from bc_pipeline import archive, parse, replay, serialize
+from bc_pipeline import archive, career_map, parse, person_map, replay, serialize
 from bc_pipeline.backfill import RepoRootError, resolve_repo_root
 from bc_pipeline.config import PipelineConfig, load_config
 
@@ -76,6 +76,8 @@ class ReparseResult:
     wrote: int = 0
     commit_subject: Optional[str] = None
     allowed_partial: bool = False
+    person_map_loaded: bool = False
+    career_map_loaded: bool = False
 
     def summary(self) -> dict:
         """A stable, serializable corpus-level delta."""
@@ -106,6 +108,10 @@ class ReparseResult:
             "wrote": self.wrote,
             "commit_subject": self.commit_subject,
             "allowed_partial": self.allowed_partial,
+            # Reported so a run with no person-map is never mistaken for a
+            # run where nothing linked (schema 1.7.0 person_id, issue #41).
+            "person_map_loaded": self.person_map_loaded,
+            "career_map_loaded": self.career_map_loaded,
             # A game that stops replaying is the one thing a re-parse must
             # never do quietly, so it is surfaced at the top level.
             "regressions": [
@@ -154,15 +160,76 @@ def _committed_id_overrides(committed: dict) -> Dict[Tuple[str, str], str]:
     more than one season have a different id in each), so cross-season
     linkage is a separate `person_id` layer the schema already anticipates
     on `player_entry`.
+
+    AMBIGUOUS (name, team_id) KEYS ARE DROPPED, never resolved by last-wins.
+    A committed file can carry two players under one (name, team_id) -- the
+    corpus has one, `20250801_s3fn`, where a box row and a PBP-declared row
+    both read "R. Velazquez". Built as a plain dict comprehension, that key
+    silently bound to whichever id was iterated last, which handed the BOX
+    row an id the counter had not reached yet and renumbered the game's
+    PBP-declared players (syn:home:3 -> :5, syn:home:4 -> :6). Pinning is
+    supposed to PRESERVE identity, so an ambiguous key is refused: both
+    players fall through to normal assignment, which reproduces the
+    committed numbering exactly. Never guess which one the caller meant.
     """
-    return {
-        (entry["name"], entry["team_id"]): pid
-        for pid, entry in (committed.get("players") or {}).items()
-    }
+    by_key: Dict[Tuple[str, str], str] = {}
+    ambiguous: Set[Tuple[str, str]] = set()
+    for pid, entry in (committed.get("players") or {}).items():
+        key = (entry["name"], entry["team_id"])
+        if key in by_key and by_key[key] != pid:
+            ambiguous.add(key)
+        by_key[key] = pid
+    for key in ambiguous:
+        del by_key[key]
+    return by_key
 
 
 def _committed_games(repo_root: Path) -> List[Path]:
     return sorted(repo_root.glob("games/*/*.json"))
+
+
+#: Default location of the person-map artifact, relative to the repo root.
+PERSON_MAP_PATH = "artifacts/latest/person_map.json"
+
+#: Default location of the career-map artifact, relative to the repo root.
+CAREER_MAP_PATH = "artifacts/latest/career_map.json"
+
+
+def _load_person_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
+    """Load the person-map artifact, or None when it is not present.
+
+    Schema 1.7.0's ``person_id`` is populated from this file. It is
+    deliberately OPTIONAL rather than a hard gate: a re-parse must still be
+    runnable on a corpus that has never had one built, and a missing map
+    leaves every synthetic player's ``person_id`` null (an honest unknown)
+    instead of failing the whole run. The summary reports which of the two
+    happened, so "no map" can never be mistaken for "nobody linked".
+
+    Note the artifact is derived FROM ``games/**`` and then written back INTO
+    it. That is safe because it is keyed only on fields a re-parse does not
+    change -- season, team_id, name, player_id -- so regenerating it after
+    the re-parse reproduces the same mapping (proven by an idempotence test).
+    Regenerate the artifact BEFORE the re-parse whenever the corpus has grown.
+    """
+    artifact_path = Path(path) if path else repo_root / PERSON_MAP_PATH
+    if not artifact_path.is_file():
+        return None
+    return json.loads(artifact_path.read_text(encoding="utf-8"))
+
+
+def _load_career_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
+    """Load the career-map artifact, or None when it is not present.
+
+    Optional on the same terms as the person map (see ``_load_person_map``):
+    a missing map leaves every ``career_id`` null -- an honest unknown --
+    rather than failing a whole re-parse, and the summary reports which
+    happened. A career map without a person map is useless, since careers
+    are keyed by person id, so the summary reports both flags separately.
+    """
+    artifact_path = Path(path) if path else repo_root / CAREER_MAP_PATH
+    if not artifact_path.is_file():
+        return None
+    return json.loads(artifact_path.read_text(encoding="utf-8"))
 
 
 def run_reparse(
@@ -172,11 +239,34 @@ def run_reparse(
     write: bool = False,
     allow_partial: bool = False,
     limit: Optional[int] = None,
+    person_map_path: Optional[str] = None,
+    career_map_path: Optional[str] = None,
     print_fn: Callable[[str], None] = print,
 ) -> ReparseResult:
     result = ReparseResult(allowed_partial=allow_partial)
     html_by_id = _archived_html_by_game_id(config)
     paths = _committed_games(repo_root)
+    person_artifact = _load_person_map(repo_root, person_map_path)
+    result.person_map_loaded = person_artifact is not None
+    if person_artifact is None:
+        print_fn(
+            "[REPARSE] no person_map artifact found -- every synthetic player's "
+            "person_id will be null. Run `python -m bc_pipeline.person_map` first "
+            "to populate schema 1.7.0's cross-game join key."
+        )
+    career_artifact = _load_career_map(repo_root, career_map_path)
+    result.career_map_loaded = career_artifact is not None
+    career_ids = (
+        career_map.career_ids_for_persons(career_artifact)
+        if career_artifact is not None
+        else None
+    )
+    if career_artifact is None:
+        print_fn(
+            "[REPARSE] no career_map artifact found -- every career_id will be null. "
+            "Run `python -m bc_pipeline.career_map` first to populate schema 1.9.0's "
+            "cross-season join key."
+        )
 
     missing = [p.stem for p in paths if p.stem not in html_by_id]
     result.missing_archive = missing
@@ -203,6 +293,12 @@ def run_reparse(
                     source_url=committed["meta"]["source_url"],
                     fetched_at=committed["meta"]["fetched_at"],
                     id_overrides=_committed_id_overrides(committed),
+                    person_ids=(
+                        person_map.assignments_for_game(person_artifact, gid)
+                        if person_artifact is not None
+                        else None
+                    ),
+                    career_ids=career_ids,
                 ),
                 html,
             )
@@ -252,6 +348,14 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--allow-partial", action="store_true",
                    help="Proceed even when some committed games have no archived HTML.")
     p.add_argument("--limit", type=int, default=None, metavar="N")
+    p.add_argument("--person-map", default=None, metavar="PATH",
+                   help=("person_map artifact to populate schema 1.7.0 person_id "
+                         f"(default: <repo-root>/{PERSON_MAP_PATH}). Missing is "
+                         "allowed and reported; synthetic person_id stays null."))
+    p.add_argument("--career-map", default=None, metavar="PATH",
+                   help=("career_map artifact to populate schema 1.9.0 career_id "
+                         f"(default: <repo-root>/{CAREER_MAP_PATH}). Missing is "
+                         "allowed and reported; career_id stays null."))
     p.add_argument("--config", default=None)
     p.add_argument("--repo-root", default=None)
     return p
@@ -275,6 +379,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         write=args.write,
         allow_partial=args.allow_partial,
         limit=args.limit,
+        person_map_path=args.person_map,
+        career_map_path=args.career_map,
     )
     if result.missing_archive and not args.allow_partial:
         return 1
@@ -295,6 +401,26 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 0
     if args.commit and result.wrote:
         _git_commit(repo_root, subject, print)
+    if result.wrote:
+        # Every artifact under artifacts/latest/ is derived FROM games/**, so a
+        # re-parse leaves all of them stale by construction. That is not
+        # hypothetical: frequencies.json sat stale across reparse(v0.4.0),
+        # validating cleanly the whole time, because a schema check cannot see
+        # staleness. Say so loudly here, and let CI enforce it
+        # (scripts/check_artifacts_current.py).
+        print(
+            f"[REPARSE] {result.wrote} game file(s) rewritten -- every derived "
+            "artifact under artifacts/latest/ is now STALE. Regenerate and commit:\n"
+            "    python -m bc_pipeline.person_map  --input ../games --output "
+            "../artifacts/latest/person_map.json\n"
+            "    python -m bc_pipeline.team_map    --input ../games --output "
+            "../artifacts/latest/team_map.json\n"
+            "    python -m bc_pipeline.career_map  --input ../games --output "
+            "../artifacts/latest/career_map.json\n"
+            "    python -m bc_pipeline.frequencies --input ../games --output "
+            "../artifacts/latest/frequencies.json\n"
+            "  then verify with: python scripts/check_artifacts_current.py"
+        )
     return 0
 
 

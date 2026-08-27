@@ -39,6 +39,13 @@ jobs:
       - name: Validate frequency artifact against its schema
         run: python scripts/validate_frequencies.py
 
+      - name: Check derived artifacts are current with games/**
+        # A schema check passes on a perfectly well-formed STALE artifact --
+        # which is how artifacts/latest/frequencies.json sat unnoticed across
+        # reparse(v0.4.0). This regenerates each artifact in memory and
+        # compares (generated_at normalized) against what is committed.
+        run: python scripts/check_artifacts_current.py
+
       - name: Enforce the games/** write-once contract
         # Caller-contract clause 1: a final game file changes only in a
         # labeled `reparse(vX.Y.Z):` commit. On a PR the range is base..head;

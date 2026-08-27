@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://baseball-coaster/schema/game.schema.json",
   "title": "baseball-coaster per-game file (games/<season>/<game_id>.json)",
-  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine \u2014 the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31).",
+  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine \u2014 the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31). 1.7.0 (additive MINOR) `$defs.player_entry` gains optional nullable `person_id`, the within-season cross-GAME join key: `player_id` is file-local and a synthetic `syn:<side>:<n>` is per-game positional, so joining on it silently mixes people together. Populated from `artifacts/latest/person_map.json` (issue #41 Gap 2). No existing property removed, renamed, or retyped. NOTE: this history has a gap -- 1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without an entry here. 1.8.0 (additive MINOR) `$defs.team` gains optional nullable `franchise_id`, the cross-season club key: `team_id` is reissued every season (0 of 12 multi-season teams keep theirs), so joining a franchise across years on it silently breaks. Minted from the exact team name; registry at `artifacts/latest/team_map.json` (issue #41, team half). No existing property removed, renamed, or retyped. 1.9.0 (additive MINOR) `$defs.player_entry` gains optional nullable `career_id`, the CROSS-SEASON key above person_id: Presto reissues every player id each year, so no source id survives a season boundary. Linked on exact display name + franchise continuity + one-person-per-season, never on name alone (the corpus contains proven same-name different people). Registry and every refused pair: `artifacts/latest/career_map.json` (issue #41 Gap 1). No existing property removed, renamed, or retyped.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -25,7 +25,7 @@
     "schema_version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.6.0."
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.9.0."
     },
     "game_id": {
       "type": "string",
@@ -143,7 +143,7 @@
     "player_entry": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Per-game identity home (GRAFT 1's stated home). player_id MUST equal this entry's map key in `players`. `box_listed` (1.4.0) marks a PBP-declared player. A future cross-season person_id is an ADDITIVE MINOR field here \u2014 this entry is where it lands, not player_ref.",
+      "description": "Per-game identity home (GRAFT 1's stated home). player_id MUST equal this entry's map key in `players`. `box_listed` (1.4.0) marks a PBP-declared player. `person_id` (1.7.0) is the cross-GAME join key that `player_id` cannot be, and `career_id` (1.9.0) the cross-SEASON key above it; both landed here, as this description always anticipated, not on player_ref.",
       "required": [
         "player_id",
         "name",
@@ -183,6 +183,22 @@
         "box_listed": {
           "type": "boolean",
           "description": "False when this player appears ONLY in the PBP narrative and has no row in the boxscore's Batters/Pitchers tables -- StatCrew omits an all-zero row for a player who entered but never batted or reached, and (rarely) omits a player who did record a plate appearance. The PBP is authority that they were in the game, so they are admitted to `players`; this flag marks that their identity is PBP-declared, so a consumer never mistakes the absence of box stats for zero stats. Absent means True (every pre-1.4.0 file is boxscore-derived)."
+        },
+        "person_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^([a-z0-9]{16}|person:[0-9a-f]{16})$",
+          "description": "WITHIN-SEASON stable person key (1.7.0). `player_id` is FILE-LOCAL: a real 16-char Presto id is stable for a season, but a synthetic `syn:<side>:<n>` is assigned by boxscore ROW ORDER, so the same value means a different person in every game (measured: `syn:away:8` is bound to 99 distinct names in 2026). `person_id` is the id to join on across games. It is the real `player_id` when the player has one, else a minted `person:<16 hex>` derived from (season, team_id, name). NULL means the evidence did not support a link and the player is deliberately unlinked -- an honest negative, never a guess. NEVER a `syn:` value. Scope is one season and one team: PrestoSports reissues every player AND team id each season, so cross-season linkage does not exist here, and a mid-season team change yields one person_id per team. AUTHORITY: `artifacts/latest/person_map.json` -- this field is a materialized copy refreshed at re-parse time, so a game added since the last re-parse may carry null until the artifact is regenerated and the corpus re-parsed. Absent means unknown (every pre-1.7.0 file)."
+        },
+        "career_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^career:[0-9a-f]{16}$",
+          "description": "CROSS-SEASON player key (1.9.0), one level above `person_id`. `person_id` is stable across every GAME of a season and deliberately no further, because PrestoSports reissues every player id each year. `career_id` is the key that spans seasons. Two persons in consecutive seasons are linked ONLY when their display names are exactly equal, that name resolves to exactly one person in EACH season, and they share a franchise (`teams[].franchise_id`). Name alone is NOT sufficient and the corpus proves it: two different `Jack Lynch`es both played in 2024, appearing on the same date for different clubs. Franchise continuity is required because it is the one signal that measurably separates the cases (likelihood ratio ~7 vs ~2 for position overlap, which fires on ~45% of people who are definitively not each other and is therefore unused). The honest cost: a player who CHANGED clubs between seasons is left unlinked, in a singleton career -- a complete answer, not a missing value. AUTHORITY: `artifacts/latest/career_map.json`, which enumerates every refused pair with its reason. Like `person_id`, this is a materialized copy refreshed at re-parse time. Null only where `person_id` is null. Absent means unknown (every pre-1.9.0 file)."
         }
       }
     },
@@ -199,8 +215,17 @@
         },
         "name": {
           "type": "string"
+        },
+        "franchise_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^franchise:[0-9a-f]{16}$",
+          "description": "CROSS-SEASON franchise key (1.8.0). `team_id` is SEASON-LOCAL: PrestoSports reissues it every year, and the corpus proves it exhaustively -- of the 12 teams appearing in more than one season, ZERO keep their `team_id`, and no `team_id` is ever reused. Any multi-season question about a club (park factors, franchise run environment) silently breaks when joined on `team_id`; `franchise_id` is the key that survives. Minted as `franchise:<16 hex>` from the exact team NAME, which the corpus supports: within a season name <-> team_id is 1:1, and no team here has ever renamed. A club that RENAMES would get a new franchise_id and needs an explicit alias -- never an inferred one. A relocated-and-renamed club is NOT linked to its predecessor: nothing distinguishes that from an expansion team, and roster continuity was measured and rejected as a signal (it misidentifies 3 of 21 cases where the answer is already known). Registry and the full continuity record: `artifacts/latest/team_map.json`. Unlike `person_id`, this needs no corpus-level evidence -- it is a pure function of the name in this file, so it is always populated and can never drift. Absent means unknown (every pre-1.8.0 file)."
         }
-      }
+      },
+      "description": "One side's team. `team_id` is SEASON-LOCAL (Presto reissues it yearly); `franchise_id` (1.8.0) is the cross-season key to join a club on."
     },
     "source": {
       "type": "object",

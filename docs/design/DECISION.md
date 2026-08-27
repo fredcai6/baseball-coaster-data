@@ -194,3 +194,236 @@ Both decisions were cold-critic-reviewed at plan time (`.agent-work/epic-15/comm
 PLAN_RIGOR_RECORD.md`) and independently re-verified by a reviewer against a hand-count on a real game file
 different from the implementer's own (`.agent-work/epic-15/commander-21/crew-handoffs/
 g1-review-result.md`) before being adopted.
+
+## 9. `person_id` — within-season cross-game identity (issue #41 Gap 2, epic #15)
+
+Schema **1.7.0** (additive MINOR): `$defs.player_entry` gains optional, nullable `person_id`.
+
+### The problem the field exists to solve
+
+`player_id` is FILE-LOCAL. A real 16-char Presto id happens to be stable for a whole season, but a
+synthetic `syn:<side>:<n>` is assigned by boxscore ROW ORDER, so the same value denotes a different
+person in every file. Measured on the 1,484-game corpus: **`syn:away:8` is bound to 99 distinct
+display names in 2026 alone.** Any consumer joining on `player_id` across games silently mixes people
+together — and 10.0% of player records (4,189) carry a synthetic id, 29.5% of the 2026 season.
+
+### The key: `(season, team_id, name)`
+
+`team_id` is the decision that makes this tractable, and it was not obvious from issue #41's framing.
+It is **always a real Presto id, never synthetic** — 0 synthetic team ids in the corpus — even on the
+team-site pages whose *player* rows carry no ids at all. Adding it to the key collapses the apparent
+ambiguity: the **120** `(season, name)` pairs holding more than one real id drop to **4** once team is
+included. The other 116 were the same name on different teams, which is a different question (see
+"Not attempted").
+
+Note this makes the `M. Jackson` collision a non-threat here. `Manny Jackson` and `Marquis Jackson`
+are distinct display names holding distinct real ids on one roster; the ambiguity that motivated so
+much of #31 lives in **PBP narrative resolution** (`identity.resolve`), not in the identity table.
+
+### Assignment rules
+
+A **real** `player_id` is its own `person_id`, unconditionally — it is already the stable within-season
+key, and it is never absorbed into another person. Only **synthetics** resolve through their group:
+
+| classification | rule | groups | synthetic records |
+|---|---|---|---|
+| `real_anchor` | group holds exactly one real id → that id is canonical | 1,781 | 3,342 |
+| `minted` | group holds no real id → mint `person:<16 hex>` from the key | 168 | 835 |
+| `multi_real_id` | ≥2 real ids → UNLINKED, which one is not determined | 4 | 0 |
+| `same_game_conflict` | two of the group's ids occur in one game → UNLINKED | 1 | 4 |
+| `non_person_name` | the "name" is `/` (the `/ for X` source defect) → UNLINKED | 7 | 8 |
+
+**Refusals are evaluated before the linking rules**, so a defect can never be merged away by an anchor
+that happens to exist. Result: **4,177 of 4,189 synthetic records (99.7%) linked**, 12 unlinked, every
+one carrying a reason. Consistent with the standing doctrine — link on strong evidence, enumerate the
+rest, never guess; an unlinked player is a measured negative, not a failure.
+
+A lone synthetic still gets minted rather than left alone: `syn:away:3` appearing in only one game is
+still a value other people hold in other games, so leaving it would be both unjoinable and colliding.
+
+### Where it lives, and why both places
+
+The authority is **`artifacts/latest/person_map.json`** (mutable tier, caller-contract clause 2),
+regenerable like `frequencies.json`. The `person_id` on `player_entry` is a **materialized copy**
+refreshed at re-parse time. That split is deliberate: `games/**` is write-once, so a mapping that will
+be revised as evidence improves cannot be *owned* by a game file — but a consumer joining across games
+should not have to load a 3.8 MB side artifact to do it.
+
+The consequence is stated in the schema description rather than left implicit: a game added since the
+last re-parse may carry `null` until the artifact is regenerated and the corpus re-parsed.
+
+The artifact is derived FROM `games/**` and written back INTO it. That is safe only because the map is
+a function of fields a re-parse does not change (season, team_id, name, player_id) — proven by a unit
+idempotence test and, in practice, by `--check-no-commit` reporting NO-OP when regenerated against the
+rewritten corpus.
+
+### Minted id format
+
+`person:` + first 16 hex of `sha256("<season>\x1f<team_id>\x1f<name>")`. A pure function of the group
+key, so regeneration reproduces it on any machine with no counter or ordering dependency. The
+`person:` prefix keeps it out of both other id namespaces (real is bare `[a-z0-9]{16}`, synthetic is
+`syn:<side>:<n>`), so a minted id can never be mistaken for a `player_id`. Hashed rather than spelled
+out to keep it short enough to sit in every `player_entry`; the artifact always carries the full key
+alongside, so the mapping stays invertible for a human.
+
+### Not attempted, and reported as measured negatives
+
+- **Cross-team within a season** — 134 `(season, name)` pairs sit on more than one team. Not linked:
+  nothing in the identity table separates a mid-season move from two people with the same name.
+- **Cross-season (Gap 1)** — not attempted. PrestoSports reissues every player id AND every team id
+  each season, so no id-based signal survives a season boundary and team continuity is unavailable as
+  corroboration. `person_id` is explicitly within-season.
+
+Both are emitted in `meta.not_attempted` so a consumer reads a number rather than inferring silence.
+
+### Version-history gap
+
+`game.schema.json`'s `$comment` VERSION HISTORY runs 1.0.0 → 1.3.0 and then jumps to this entry:
+**1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without a history
+entry.** Recorded here rather than reconstructed, since the reconstruction would not be evidence.
+
+## 10. `franchise_id` — cross-season team identity (issue #41 team half, epic #15)
+
+Schema **1.8.0** (additive MINOR): `$defs.team` gains optional, nullable `franchise_id`.
+
+### The problem
+
+`team_id` is SEASON-LOCAL. PrestoSports reissues it every year, and the corpus proves it
+exhaustively: of the **12** teams appearing in more than one season, **zero** keep their `team_id`,
+and **no `team_id` is ever reused**. Any multi-season question about a club — park factors, a
+franchise's run environment, three-year trends — silently breaks when joined on `team_id`.
+
+This was also the blocker #41 named for the *player* half: "team continuity is unusable as a linking
+signal until team identity is solved." It is now solved, which unblocks Gap 1.
+
+### The key: exact team name
+
+Two preconditions, both checked on every build rather than assumed, and both currently clean:
+
+- Within a season, name ↔ `team_id` is **1:1** — no name held by two ids, no id carrying two names.
+- **No team in this corpus has ever renamed.** Every name appearing in consecutive seasons keeps its
+  exact spelling.
+
+A violation of either raises `AmbiguousTeamIdentity` and fails the build. The whole key rests on that
+invariant, so a violation is the signal to redesign the key, not to degrade past it.
+
+`franchise_id` is minted as `franchise:<16 hex>` from `sha256(name)`. Minted rather than anchored on
+a real id because — unlike a player's Presto id, which is at least stable *within* a season — no team
+id survives a season boundary at all. There is nothing to anchor to.
+
+### Roster continuity was tested as a second signal, and rejected
+
+A relocated club keeps some of its players, so roster overlap is the obvious corroborating signal. It
+was measured against the cases where the answer is already known — a team present in both seasons
+under one name — and it **fails**:
+
+- Same-name overlap runs only **15–37%**. Minor-league rosters turn over that hard.
+- On **3 of 21** checkable season-pairs the top roster match is the **wrong team**. 2025's
+  `Colorado Springs Sky Sox` best-matches `Grand Junction Jackalopes` at 11.6% *even though the Sky
+  Sox exist that season under their own name*. In 2025→2026, both `Idaho Falls Chukars` and
+  `Yuba-Sutter Freebirds` best-match `Long Beach Coast`.
+
+A signal that misidentifies cases we can check is not trusted on cases we cannot.
+`build_team_map` recomputes this discriminating-power number every run and reports it in
+`meta.not_attempted.roster_signal`, so the refusal stays evidence-backed rather than becoming
+folklore — and so it will visibly change if the corpus ever makes the signal good.
+
+### What that means for the 2026 turnover
+
+2025 lost `Colorado Springs Sky Sox`, `Grand Junction Jackalopes` and `Rocky Mountain Vibes`; 2026
+gained `Modesto Roadsters`, `RedPocket Mobiles` and `Long Beach Coast`. Whether any arrival is a
+relocation of a departure **is not determinable from this corpus**, and the one available
+corroborating signal has just been shown unreliable. They are left as separate franchises and
+enumerated in `continuity` so the question stays visible rather than silently answered either way.
+15 franchises over 36 season-team records; 12 span more than one season.
+
+### Two deliberate differences from `person_id`
+
+1. **No artifact dependency, and no drift.** `franchise_id` is a pure function of the team name,
+   which is present in every file — so `parse` computes it directly and it can never fall out of sync
+   with the registry. `person_id` needs corpus-level grouping, so it is materialized at re-parse time
+   and `refresh` reports its drift. `team_map.json` is a registry and an evidence record, not an
+   input.
+2. **A synthetic `syn:team:<side>` id is exempt from the invariants and never becomes a join key.** A
+   team-site boxscore links only the host's caption, so the opponent gets a file-local id that
+   denotes a different club in every file. The corpus currently has none (it is fetched from league
+   pages, which link both), but the fetch path produces them and the golden fixture is one. The
+   franchise still resolves, because the key is the name — which a team-site page renders correctly.
+
+The records are keyed on the `(season, team_id, name)` **triple**, not on `(season, team_id)`.
+Keying by id would let two clubs sharing `syn:team:away` in one season overwrite each other and
+silently drop a franchise — caught by test, not by inspection.
+
+## 11. `career_id` — cross-season player identity (issue #41 Gap 1, epic #15)
+
+Schema **1.9.0** (additive MINOR): `$defs.player_entry` gains optional, nullable `career_id`.
+
+`person_id` (§9) is stable across every *game* of a season and deliberately no further. This is the
+layer above it. #41 named the blocker — *"team continuity is unusable as a linking signal until team
+identity is solved"* — and §10 solved it, so franchise continuity is now available.
+
+### Exact display name is necessary but NOT sufficient — proven, not assumed
+
+The corpus contains people who share a full display name and are provably different: **two
+`Jack Lynch`es both played in 2024** (30 games and 81 games), appearing on the **same date** for
+**different franchises**. One person cannot do that. Three such pairs are proven this way, and
+`build_career_map` recomputes them every run into `meta.evidence`. A rule linking on name alone would
+merge strangers.
+
+### Signal selection, measured against an exact null
+
+For each candidate signal: how often it fires on same-name consecutive-season pairs, versus on the
+**null** — every consecutive-season person pair with a *different* name, who are definitively not the
+same person. Computed exactly over all 839,861 such pairs, never sampled, so the artifact stays
+deterministic.
+
+| signal | fires on same-name | fires on null | likelihood ratio | used |
+|---|---|---|---|---|
+| franchise continuity | 51.7% | 7.1% | **7.33** | yes |
+| position overlap | 96.1% | 44.7% | 2.15 | **no** |
+
+Position overlap *feels* like evidence and is nearly a rubber stamp: it fires on almost half of people
+who are definitely not each other. It is kept in the artifact as a measured negative so the choice
+stays visible and will change if the data ever does. Franchise continuity genuinely separates the
+cases — and independently, none of the three proven-different pairs shares a franchise, so requiring
+it would have refused all three.
+
+### The rule
+
+Two persons in consecutive seasons link iff (1) they share a display-name spelling, (2) that name
+resolves to exactly one person in **each** season, and (3) they share a franchise. Careers are the
+connected components. Result: **173 links, 1,782 careers from 1,955 persons, 160 spanning more than
+one season** (147 two-season, 13 three-season).
+
+Two invariants are asserted on every build, never assumed: no career holds two persons from one
+season, and every member shares a spelling with the rest.
+
+### Refusals
+
+- `franchise_changed` (98 pairs) — the honest cost. A player who changed clubs between seasons stays
+  unlinked. It is exactly the shape of every proven-different pair, and nothing else in the data
+  separates the two cases.
+- `ambiguous_within_season` (55 pairs) — the name resolves to more than one person in one season.
+  `person_map` deliberately does not merge across teams within a season, so that ambiguity is
+  inherited rather than papered over.
+
+Every person still gets a `career_id`, including an unlinked one: a **singleton career is a complete
+answer, not a missing value**.
+
+### Display names are aliases, not a key
+
+A person can carry more than one spelling — the corpus has real Presto ids rendered both `J. Smith`
+and `Jonathan Smith`. Storing one name per person (last-wins) would silently pick a spelling and drop
+the other from name-based grouping. That is the same hazard as `reparse._committed_id_overrides`
+(§9), and it was found the same way: by an invariant check on the rebuilt corpus, not by inspection.
+Names are therefore kept as a set per person; a career records every `alias` and picks its label
+deterministically (longest, then alphabetical). Two persons need not carry identical name sets — only
+a shared spelling.
+
+### Anchoring
+
+`career_id` is `career:<16 hex>` from `sha256(earliest season + earliest person_id)`. Anchored on the
+earliest member so extending the corpus **forward** — adding a season, extending a career by a year —
+does not re-key it and invalidate stored references. The tradeoff, stated rather than hidden:
+back-filling an *earlier* season would re-key any career it extends backwards. The corpus grows
+forward.
