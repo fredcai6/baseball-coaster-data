@@ -502,7 +502,7 @@ PRIMARY_RULES: List[PrimaryRule] = [
             r" to (?P<loc>[a-z][a-z ]*?)"
             r"|(?P<middle> up the middle)"
             r"| through the (?P<side>left|right) side"
-            r"| down the (?P<line>[a-z]{2}) line"
+            r"| down the (?P<line>[a-z0-9]{2}) line"
             rf")?{_HIT_MOD_TAIL}$"
         ),
         "single",
@@ -511,7 +511,7 @@ PRIMARY_RULES: List[PrimaryRule] = [
     (
         re.compile(
             r"^(?P<name>.+?) doubled(?: to (?P<loc>[a-z][a-z ]*?)"
-            r"| down (?P<loc2>[a-z][a-z ]*?)"
+            r"| down (?P<loc2>[a-z][a-z0-9 ]*?)"
             r"|(?P<middle2> up the middle)"
             r"| through the (?P<side2>left|right) side"
             rf")?{_HIT_MOD_TAIL}$"
@@ -707,6 +707,7 @@ def _b_stole(m: re.Match):
         destination=m.group("dest"),
         out=False,
         scored=False,
+        unearned=bool(m.groupdict().get("unearned")),
     )
 
 
@@ -736,6 +737,35 @@ def _b_out_at_base(m: re.Match):
         cause="force_out",
         destination=m.group("base"),
         out=True,
+        scored=False,
+    )
+
+
+def _b_picked_off(m: re.Match):
+    """A bare "X picked off" -- the runner is RETIRED.
+
+    Distinct from `_b_pickoff` below, which serves "X Failed pickoff
+    attempt": a throw over that the runner survives. Same word, opposite
+    outcome, so they cannot share a builder.
+    """
+    return RunnerMovement(
+        name_token=m.group("name"),
+        cause="pickoff",
+        destination=None,
+        out=True,
+        scored=False,
+    )
+
+
+def _c_picked_off(m: "re.Match", name_token: str) -> RunnerMovement:
+    """"..., picked off" trailing an already-stated out ("X out at first p to
+    1b to ss, picked off") -- the narrative names the same retirement twice,
+    so this records the CAUSE without double-counting the out."""
+    return RunnerMovement(
+        name_token=name_token,
+        cause="pickoff",
+        destination=None,
+        out=False,
         scored=False,
     )
 
@@ -821,7 +851,10 @@ RUNNER_RULES: List[RunnerRule] = [
         _b_scored_plain,
     ),
     (
-        re.compile(rf"^(?P<name>.+?) stole (?P<dest>{_DEST_ALT})$"),
+        re.compile(
+            rf"^(?P<name>.+?) stole (?P<dest>{_DEST_ALT})"
+            rf"(?:, (?P<unearned>unearned))?$"
+        ),
         ("stolen_base",),
         _b_stole,
     ),
@@ -839,6 +872,11 @@ RUNNER_RULES: List[RunnerRule] = [
         re.compile(r"^(?P<name>.+?) out at (?P<base>first|second|third|home)\b.*$"),
         ("force_out",),
         _b_out_at_base,
+    ),
+    (
+        re.compile(r"^(?P<name>.+?) picked off$"),
+        ("pickoff",),
+        _b_picked_off,
     ),
     (
         re.compile(r"^(?P<name>.+?) Failed pickoff attempt$"),
@@ -1185,6 +1223,10 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         _c_advance_on_causephrase,
     ),
     (
+        re.compile(r"^picked off$"),
+        _c_picked_off,
+    ),
+    (
         # Dropped third strike: the batter strikes out but REACHES on the
         # ball getting away -- "struck out swinging, reached first on a
         # passed ball". The strikeout stands as the primary outcome (it is a
@@ -1264,7 +1306,9 @@ def _match_whole_clause(
     return None
 
 
-def _match_continuations(rest: str, name_token: str) -> Optional[List[RunnerMovement]]:
+def _match_continuations(
+    rest: str, name_token: str, *, exclude: Tuple[Callable, ...] = ()
+) -> Optional[List[RunnerMovement]]:
     """Parse ``rest`` as one or more comma-joined continuation fragments, all
     inheriting ``name_token``. Returns None if any fragment is unrecognized.
 
@@ -1278,10 +1322,14 @@ def _match_continuations(rest: str, name_token: str) -> Optional[List[RunnerMove
     for k in range(len(parts), 0, -1):
         frag = ", ".join(parts[:k])
         for regex, builder in CONTINUATION_RULES:
+            if builder in exclude:
+                continue
             m = regex.fullmatch(frag)
             if not m:
                 continue
-            tail = _match_continuations(", ".join(parts[k:]), name_token)
+            tail = _match_continuations(
+                ", ".join(parts[k:]), name_token, exclude=exclude
+            )
             if tail is None:
                 continue
             return [builder(m, name_token)] + tail
@@ -1403,7 +1451,14 @@ def _match_primary_chain(rest: str):
             # existing _HIT_MOD_TAIL should have taken. Decline rather than
             # duplicate its job.
             continue
-        movements = _match_continuations(", ".join(tail_parts), name)
+        # A pickoff retires a BASERUNNER, never the batter. Allowing it as a
+        # primary continuation let "X out at first p to 1b, picked off" -- a
+        # runner picked off and thrown out -- be claimed by the primary chain
+        # as a batter groundout, which both lost an out and invented a plate
+        # appearance. 18 games regressed on exactly this.
+        movements = _match_continuations(
+            ", ".join(tail_parts), name, exclude=(_c_picked_off,)
+        )
         if movements is None:
             continue
         mods = list(modifiers) + _expand_rbi_modifiers(trailing_mods)
