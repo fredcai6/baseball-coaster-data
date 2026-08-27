@@ -234,3 +234,22 @@ def test_unparseable_blob_escalates_rather_than_crashing(repo: Path) -> None:
 )
 def test_reparse_subject_convention(subject: str, expected: bool) -> None:
     assert bool(guard.REPARSE_SUBJECT.match(subject)) is expected
+
+
+def test_a_force_pushed_away_base_skips_instead_of_failing(repo: Path, capsys) -> None:
+    """A force-push (rebasing a branch onto a moved master) leaves
+    `github.event.before` pointing at a commit that no longer exists, and
+    `git diff <gone>..<head>` then fails outright. That is the same
+    situation as a new branch -- no base to diff against -- not a contract
+    violation, so it must skip rather than fail the build."""
+    gone = "deadbeef" * 5
+    code = guard.main(["--base", gone, "--head", "HEAD", "--repo-root", str(repo)])
+    assert code == 0
+    assert "force-push" in capsys.readouterr().out
+
+
+def test_a_real_base_is_still_checked(repo: Path) -> None:
+    """Guard the guard: the skip must not swallow a genuine base."""
+    base = _rev(repo, "HEAD~1")
+    assert guard._rev_exists(base, repo) is True
+    assert guard._rev_exists("deadbeef" * 5, repo) is False

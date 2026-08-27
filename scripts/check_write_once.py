@@ -108,6 +108,15 @@ def _blob_at(rev: str, path: str, repo_root: Path) -> str:
     return _git("show", f"{rev}:{path}", repo_root=repo_root)
 
 
+def _rev_exists(rev: str, repo_root: Path) -> bool:
+    """Is ``rev`` a commit this repository actually has?"""
+    proc = subprocess.run(
+        ("git", "cat-file", "-e", f"{rev}^{{commit}}"),
+        cwd=repo_root, capture_output=True, text=True,
+    )
+    return proc.returncode == 0
+
+
 def _changed_game_files(base: str, head: str, repo_root: Path) -> list[tuple[str, str]]:
     """Every (status, path) under games/** changed between base and head.
 
@@ -208,6 +217,18 @@ def main(argv: list[str] | None = None) -> int:
     if not args.base or ZERO_SHA.match(args.base):
         print("SKIP: no base commit to diff against (new branch or unset "
               "--base/$BASE_SHA); write-once is checked on the next push.")
+        return 0
+
+    if not _rev_exists(args.base, repo_root):
+        # A FORCE-PUSH (rebasing a branch onto a moved master) leaves
+        # `github.event.before` pointing at a commit that no longer exists in
+        # the repository, and `git diff <gone>..<head>` then fails outright.
+        # That is the same situation as a new branch -- there is no base to
+        # diff against -- not a contract violation, so it skips for the same
+        # reason rather than failing the build.
+        print(f"SKIP: base commit {args.base[:9]} is not present in this "
+              "repository (force-push rewrote history); write-once is checked "
+              "on the next push.")
         return 0
 
     try:
