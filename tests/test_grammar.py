@@ -1050,18 +1050,29 @@ def test_out_at_first_sac_row_still_wins_when_sac_present():
 
 def test_out_at_first_does_not_swallow_struck_out_compound():
     # verbatim games corpus: "K. Jimenez struck out swinging, out at first c
-    # to 1b." -- a DIFFERENT (dropped-third-strike) narrative shape, not one
-    # of this gate's 10 target families and out of scope for this gate. The
-    # new bare row's negative lookahead must NOT match this by treating
-    # "K. Jimenez struck out swinging," as if it were a player name (which
-    # would misfile it as a groundout plate_appearance) -- it must stay
-    # exactly the SAME pre-existing (unrelated, out-of-scope) shape the
-    # RUNNER_RULES "out at base" fallback already produced before this
-    # gate's change: a runner_event, never a plate_appearance/groundout.
+    # to 1b." -- a dropped-third-strike shape.
+    #
+    # HISTORY: this test originally asserted `kind == "runner_event"`. That
+    # was never the CORRECT reading -- it pinned the pre-existing behaviour
+    # because the shape was explicitly out of scope for that gate, and the
+    # RUNNER_RULES "out at base" fallback produced a runner_event whose name
+    # capture had swallowed "K. Jimenez struck out swinging,". The assertion
+    # existed to stop that gate's new bare row from CHANGING the shape, not
+    # to bless it.
+    #
+    # #40's primary-clause chaining resolves it properly: this is a plate
+    # appearance whose outcome is the strikeout (it is a strikeout in the
+    # box) with the batter then thrown out at first. Expectation updated to
+    # the correct reading; the original intent -- that the name must not be
+    # swallowed -- is now asserted directly.
     result = parse_clause_group("K. Jimenez struck out swinging, out at first c to 1b.")
     assert isinstance(result, ClauseGroup)
-    assert result.kind == "runner_event"
-    assert result.primary is None
+    assert result.kind == "plate_appearance"
+    assert result.primary.outcome_type == "strikeout_swinging"
+    assert result.primary.name_token == "K. Jimenez"
+    assert [(r.name_token, r.destination, r.out) for r in result.runners] == [
+        ("K. Jimenez", "first", True)
+    ]
 
 
 def test_out_at_first_does_not_swallow_picked_off_compound():

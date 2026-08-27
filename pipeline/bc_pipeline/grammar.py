@@ -1459,25 +1459,44 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
         #      with ';'). Every part must match a RUNNER_RULES row for this
         #      to count -- otherwise it's a genuine miss.
         primary: Optional[PrimaryClause] = None
-        for regex, outcome_type, extractor in PRIMARY_RULES:
-            pm = regex.fullmatch(primary_raw)
-            if pm:
-                name, fielders, location, modifiers = extractor(pm)
-                primary = PrimaryClause(
-                    name_token=name,
-                    outcome_type=outcome_type,
-                    fielders=fielders,
-                    location=location,
-                    modifiers=modifiers,
-                    count=None,
-                    pitches=None,
-                )
-                break
+        nocount_batter_movements: List[RunnerMovement] = []
+        whole_nc = _match_primary_whole(primary_raw)
+        if whole_nc is None:
+            # issue #40: the batter's own trailing self-advance chain, on the
+            # NO-COUNT path too. StatCrew omits the whole count-tail for many
+            # rows -- overwhelmingly so in the historical template -- and
+            # wiring the chain only into the count-tail branch left every
+            # count-less line to fall through to RUNNER_RULES, whose greedy
+            # name capture then swallowed the lead clause. That is why the
+            # 2025 slice gained so much less from the first pass.
+            chained_nc = _match_primary_chain(primary_raw)
+            if chained_nc is not None:
+                extracted, outcome_type, nocount_batter_movements = chained_nc
+                whole_nc = (extracted, outcome_type)
+        if whole_nc is None:
+            # Pre-#40 unguarded pass, so nothing that parsed before stops.
+            for regex, outcome_type, extractor in PRIMARY_RULES:
+                pm = regex.fullmatch(primary_raw)
+                if pm:
+                    whole_nc = (extractor(pm), outcome_type)
+                    break
+        if whole_nc is not None:
+            (name, fielders, location, modifiers), outcome_type = whole_nc
+            primary = PrimaryClause(
+                name_token=name,
+                outcome_type=outcome_type,
+                fielders=fielders,
+                location=location,
+                modifiers=modifiers,
+                count=None,
+                pitches=None,
+            )
 
         if primary is not None:
             runners_or_miss = _match_runner_clauses(parts[1:], raw_line)
             if isinstance(runners_or_miss, GrammarMiss):
                 return runners_or_miss
+            runners_or_miss = list(nocount_batter_movements) + list(runners_or_miss)
             return ClauseGroup(
                 kind="plate_appearance",
                 primary=primary,
