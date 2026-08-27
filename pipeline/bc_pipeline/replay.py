@@ -374,6 +374,10 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
             runs = sum(d["runs_on_play"] for _, d in groups[key])
             computed[side].append(runs)
 
+    #: The last inning that actually has folded events -- anything past it is
+    #: linescore-table padding rather than a played half.
+    last_played_inning = max((inn for inn, _half in groups), default=0)
+
     oracle_innings = oracle["linescore"]["innings"]
     for side in ("away", "home"):
         oi = oracle_innings[side]
@@ -386,6 +390,22 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
                 # as long as the OTHER side agrees it's absent-or-null too;
                 # a genuine numeric disagreement is caught by the else branch.
                 if o_val is not None and c_val is None:
+                    # A TRAILING inning the oracle scores as 0 with no folded
+                    # events is not a mismatch: the boxscore's linescore table
+                    # renders columns past the end of the game (extra-inning
+                    # columns on a 9-inning game, a 9th and 10th column on a
+                    # 7-inning doubleheader game) and fills them with 0
+                    # rather than leaving them blank. 0 runs and 0 events
+                    # agree with each other.
+                    #
+                    # Deliberately narrow: an INTERIOR inning with no events
+                    # is still reported even at 0, because that would be
+                    # genuinely missing play-by-play, and any NON-ZERO
+                    # expectation is always reported. Across the 1,484-game
+                    # corpus this silences 189 warnings and keeps 4 (issue
+                    # #40).
+                    if o_val == 0 and (i + 1) > last_played_inning:
+                        continue
                     warnings.append(
                         f"linescore: {side} inning {i + 1} has no folded events but "
                         f"oracle expects {o_val}"
