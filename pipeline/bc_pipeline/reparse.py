@@ -18,7 +18,9 @@ Sequencing:
     corpus straddling two parser versions -- some files regenerated, some
     not -- with no marker saying which is which. ``--allow-partial`` opts
     out deliberately and is reported loudly in the summary.
- 3. Re-parse + replay each game from its archived HTML.
+ 3. Re-parse + replay each game from its archived HTML, PINNING every
+    player to the id the committed file already uses (see
+    ``_committed_id_overrides``).
  4. Compare against the committed file under SEMANTIC equality
     (``serialize.semantic_equal``: meta and every ``_derived`` block
     stripped), so a run that changes nothing but provenance is reported as
@@ -132,6 +134,33 @@ def _archived_html_by_game_id(config: PipelineConfig) -> Dict[str, Path]:
     return out
 
 
+def _committed_id_overrides(committed: dict) -> Dict[Tuple[str, str], str]:
+    """(display name, team_id) -> the player_id this game already uses.
+
+    Identity MUST survive a re-parse. The site's player-link markup changed
+    from ``players?id=<16-char>`` to ``/sports/bsb/<yr>/players/<name-slug>``
+    between the original fetch and any later one, and `identity.py` only
+    recognizes the former. Re-deriving identity from freshly-fetched HTML
+    therefore re-keys most of the roster to synthetic ``syn:<side>:<n>`` ids
+    -- measured at 10.4% synthetic before, 72.9% after -- which silently
+    breaks every cross-game join the corpus exists to support.
+
+    Pinning by (name, team_id) matches 99.95% of committed players across a
+    212-game sample (5,977 of 5,980). Anyone unmatched, and anyone genuinely
+    new to the file, falls through to normal id assignment.
+
+    Note this pins WITHIN-season identity, which is all the source provides:
+    Presto reissues its player ids every season (218 players appearing in
+    more than one season have a different id in each), so cross-season
+    linkage is a separate `person_id` layer the schema already anticipates
+    on `player_entry`.
+    """
+    return {
+        (entry["name"], entry["team_id"]): pid
+        for pid, entry in (committed.get("players") or {}).items()
+    }
+
+
 def _committed_games(repo_root: Path) -> List[Path]:
     return sorted(repo_root.glob("games/*/*.json"))
 
@@ -173,6 +202,7 @@ def run_reparse(
                     html,
                     source_url=committed["meta"]["source_url"],
                     fetched_at=committed["meta"]["fetched_at"],
+                    id_overrides=_committed_id_overrides(committed),
                 ),
                 html,
             )

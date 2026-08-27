@@ -190,3 +190,79 @@ def test_a_parse_failure_is_reported_never_swallowed(tmp_path, monkeypatch):
 
 def test_cli_rejects_a_non_semver_version():
     assert reparse.main(["--version", "0.4", "--repo-root", "."]) == 2
+
+
+# --- issue #40: identity must survive a re-parse ---------------------------
+#
+# The site's player-link markup changed from `players?id=<16-char>` to
+# `/sports/bsb/<yr>/players/<name-slug>` between the original fetch and any
+# later one, and identity.py only recognizes the former. Re-deriving identity
+# from freshly-fetched HTML therefore re-keys most of the roster to synthetic
+# ids -- measured at 10.4% synthetic before a re-parse and 72.9% after --
+# which silently breaks every cross-game join the corpus exists to support.
+
+
+def test_committed_id_overrides_keys_on_name_and_team():
+    committed = {
+        "players": {
+            "abcdefghijklmnop": {"name": "Pat Smith", "team_id": "t1"},
+            "syn:home:3": {"name": "Jordan Lee", "team_id": "t2"},
+        }
+    }
+    assert reparse._committed_id_overrides(committed) == {
+        ("Pat Smith", "t1"): "abcdefghijklmnop",
+        ("Jordan Lee", "t2"): "syn:home:3",
+    }
+
+
+def test_committed_id_overrides_on_a_file_with_no_players():
+    assert reparse._committed_id_overrides({}) == {}
+
+
+def test_an_override_beats_the_source_id_in_the_html():
+    """The override must WIN over whatever the freshly-fetched page says --
+    that is the whole point. A page rendering a DIFFERENT id for the same
+    player must not re-key the corpus."""
+    from bc_pipeline import html_struct, identity
+
+    html = """
+    <table><caption><span class="team-name">Synthetic</span></caption>
+      <tr><th scope="row" class="row-head">
+        <span class="position">cf</span>
+        <a href="/x/players?id=freshidfreshid00" class="player-name">Pat Smith</a>
+      </th><td>1</td></tr>
+    </table>
+    """
+    table = html_struct.find_all(html_struct.parse_html(html), "table")[0]
+    pinned = identity._build_team_identity(
+        table, "home", id_overrides={("Pat Smith", identity._team_id_and_name(table, "home")[0]): "pinnedidpinnedid"}
+    )
+    assert "pinnedidpinnedid" in pinned.players
+    assert "freshidfreshid00" not in pinned.players
+
+    # Without the override, the page's own id is used as before.
+    plain = identity._build_team_identity(table, "home")
+    assert "freshidfreshid00" in plain.players
+
+
+def test_reparse_passes_overrides_built_from_the_committed_file(tmp_path, monkeypatch):
+    """End-to-end: the driver must hand parse_game the committed id map, so a
+    re-parse cannot silently re-key players."""
+    committed = _game("g1")
+    committed["players"] = {"abcdefghijklmnop": {"name": "Pat Smith", "team_id": "t1"}}
+    root = _make_repo(tmp_path, {"g1": committed})
+    html = tmp_path / "raw.html"
+    html.write_text("<html></html>", encoding="utf-8")
+    monkeypatch.setattr(reparse, "_archived_html_by_game_id", lambda cfg: {"g1": html})
+
+    seen = {}
+
+    def fake_parse(html_text, **kwargs):
+        seen.update(kwargs)
+        return committed
+
+    monkeypatch.setattr(reparse.parse, "parse_game", fake_parse)
+    monkeypatch.setattr(reparse.replay, "replay_game", lambda g, h: committed)
+    reparse.run_reparse(repo_root=root, config=None, write=False)
+
+    assert seen["id_overrides"] == {("Pat Smith", "t1"): "abcdefghijklmnop"}

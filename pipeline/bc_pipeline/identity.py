@@ -453,7 +453,10 @@ def _row_identity(row: Node) -> Tuple[Optional[str], str, Optional[str]]:
     return source_id, name, position
 
 
-def _build_team_identity(table: Node, side: str) -> TeamIdentity:
+def _build_team_identity(
+    table: Node, side: str, *,
+    id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
+) -> TeamIdentity:
     team_id, team_name = _team_id_and_name(table, side)
     team = TeamIdentity(team_id=team_id, name=team_name)
 
@@ -469,7 +472,17 @@ def _build_team_identity(table: Node, side: str) -> TeamIdentity:
         # Per-player id assignment: the real 16-char id when the row links one
         # (league pages link BOTH teams), else a deterministic syn:<side>:<n>
         # (team-site pages don't link the opponent). Never invent a real id.
-        if source_id is not None:
+        override = (id_overrides or {}).get((name, team_id))
+        if override is not None:
+            # A caller (the re-parse driver) is pinning this player to an id
+            # the corpus already uses. The SOURCE id is deliberately ignored
+            # when an override exists: the site's player-link markup changed
+            # from `players?id=<16-char>` to `/players/<name-slug>` between
+            # the original fetch and any later one, so re-deriving identity
+            # from freshly-fetched HTML silently re-keys most of the roster
+            # and breaks every cross-game join. See reparse.py (issue #40).
+            player_id = override
+        elif source_id is not None:
             player_id = source_id
         elif name in syn_ids_by_name:
             player_id = syn_ids_by_name[name]
@@ -493,7 +506,9 @@ def _build_team_identity(table: Node, side: str) -> TeamIdentity:
     return team
 
 
-def build_player_table(root: Node) -> PlayerTable:
+def build_player_table(
+    root: Node, *, id_overrides: Optional[Dict[Tuple[str, str], str]] = None
+) -> PlayerTable:
     """Build the per-game identity table for both sides from the boxscore DOM.
 
     Home vs. away is resolved from the linescore's row order (away first, home
@@ -530,7 +545,7 @@ def build_player_table(root: Node) -> PlayerTable:
                 f"two Batters tables both resolved to the {side!r} side "
                 f"({away_name!r}/{home_name!r}); ambiguous, refusing to guess"
             )
-        by_side[side] = _build_team_identity(table, side)
+        by_side[side] = _build_team_identity(table, side, id_overrides=id_overrides)
 
     if "home" not in by_side or "away" not in by_side:
         raise ValueError("could not resolve both home and away Batters tables in boxscore")
