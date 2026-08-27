@@ -16,7 +16,7 @@ Wired into `.github/workflows/validate.yml` as a CI step (Admiral fix-now at
 the issue-#21 merge, discharging the paired-guard lesson: a new validation
 script must run in CI, not just locally). Also runnable manually.
 
-Run:  py scripts/validate_frequencies.py [--target PATH]
+Run:  python scripts/validate_frequencies.py [--target PATH]
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ DEFAULT_TARGET = REPO_ROOT / "artifacts" / "latest" / "frequencies.json"
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="py scripts/validate_frequencies.py",
+        prog="python scripts/validate_frequencies.py",
         description=__doc__,
     )
     parser.add_argument(

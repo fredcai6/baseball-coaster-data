@@ -12,6 +12,7 @@ This module does zero network I/O and zero fetching -- config only.
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 
@@ -26,18 +27,64 @@ DEFAULT_MIN_INTERVAL_SECONDS: float = 12.0
 #: Default jitter range, in seconds, added on top of the minimum interval.
 DEFAULT_JITTER_SECONDS: float = 3.0
 
-#: Default PC-local root for raw archived HTML -- deliberately OUTSIDE this
-#: git repository (launch-order Pre-Ruling: "PC-local, outside the git
-#: repo"). Do not change this default to a path under the repo working tree
-#: (e.g. "pipeline/..."), even though .gitignore's *.html rule would still
-#: keep the raw HTML itself out of git -- the checkpoint JSON alongside it
-#: would not be excluded, and the contract is "outside the repo", not
-#: "gitignored within the repo".
-DEFAULT_ARCHIVE_ROOT: str = "C:/PRograms/bc-raw-archive"
+#: This repository's working tree, used by the outside-the-repo invariant
+#: below. `.git` may be a directory or (in a worktree) a file; when neither
+#: is present we are running from an installed copy rather than a checkout
+#: and the invariant has nothing to police.
+_REPO_ROOT: Path = Path(__file__).resolve().parents[2]
 
-#: Default PC-local checkpoint file path (resume progress marker) -- same
-#: outside-the-repo rationale as DEFAULT_ARCHIVE_ROOT above.
-DEFAULT_CHECKPOINT_PATH: str = "C:/PRograms/bc-raw-archive/checkpoint.json"
+
+def _repo_working_tree() -> Path | None:
+    return _REPO_ROOT if (_REPO_ROOT / ".git").exists() else None
+
+
+def normalize_local_path(value: str, field_name: str) -> str:
+    """Resolve a configured local path to an absolute one, and refuse any
+    path that lands inside this git working tree.
+
+    Enforces the launch-order Pre-Ruling ("PC-local, outside the git repo").
+    The raw archive must not live under the working tree even though
+    .gitignore's `*.html` rule would keep the raw HTML itself out of git --
+    the checkpoint JSON alongside it would NOT be excluded, and the contract
+    is "outside the repo", not "gitignored within the repo".
+
+    Resolution is also what stops a RELATIVE path from silently taking root
+    under whatever the current working directory happens to be, which is how
+    a Windows-shaped default (`C:/...`) once materialized a raw archive at
+    `pipeline/C:/PRograms/...` inside the tree on a POSIX host.
+    """
+    expanded = Path(os.path.expandvars(os.path.expanduser(value)))
+    if not expanded.is_absolute():
+        raise ValueError(
+            f"{field_name} must be an absolute path (or '~'-rooted); got {value!r}, "
+            f"which would resolve against the current working directory and so "
+            f"point somewhere different depending on where the pipeline is run "
+            f"from. Note that a Windows-style path like 'C:/...' is RELATIVE on "
+            f"a POSIX host."
+        )
+    expanded = expanded.resolve()
+    working_tree = _repo_working_tree()
+    if working_tree is not None and expanded.is_relative_to(working_tree):
+        raise ValueError(
+            f"{field_name} must live OUTSIDE this git working tree "
+            f"(launch-order Pre-Ruling: 'PC-local, outside the git repo'); "
+            f"{value!r} resolves to {expanded}, which is inside {working_tree}. "
+            f"A relative path resolves against the current working directory -- "
+            f"pass an absolute path, or one starting with '~'."
+        )
+    return str(expanded)
+
+
+#: Default PC-local root for raw archived HTML -- deliberately OUTSIDE this
+#: git repository, per the Pre-Ruling quoted in `normalize_local_path`, which
+#: enforces it for configured overrides too. Home-rooted so it is absolute on
+#: the Linux workstation that is now the standing single writer for this repo
+#: (see the "Raw archive & fetching" README section); override via --config.
+DEFAULT_ARCHIVE_ROOT: str = str(Path.home() / "bc-raw-archive")
+
+#: Default PC-local checkpoint file path (resume progress marker) -- lives
+#: alongside the archive, same outside-the-repo rationale.
+DEFAULT_CHECKPOINT_PATH: str = str(Path.home() / "bc-raw-archive" / "checkpoint.json")
 
 
 @dataclass
@@ -73,6 +120,8 @@ class PipelineConfig:
             )
         if self.jitter_seconds < 0:
             raise ValueError(f"jitter_seconds must be >= 0; got {self.jitter_seconds!r}")
+        self.archive_root = normalize_local_path(self.archive_root, "archive_root")
+        self.checkpoint_path = normalize_local_path(self.checkpoint_path, "checkpoint_path")
 
 
 def load_config(path: str | Path | None) -> PipelineConfig:

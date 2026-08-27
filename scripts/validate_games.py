@@ -13,7 +13,7 @@ non-zero with a LOUD message naming each offending file (and the jsonschema
 or JSON error) on ANY violation. All failures are aggregated and reported;
 the run does not stop at the first bad file.
 
-Run:  py scripts/validate_games.py
+Run:  python scripts/validate_games.py
 """
 
 from __future__ import annotations

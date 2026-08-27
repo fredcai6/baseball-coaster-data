@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # Full history: the write-once guard diffs a commit RANGE, so both
+          # the base commit and every commit reaching it must be present.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,3 +38,13 @@ jobs:
 
       - name: Validate frequency artifact against its schema
         run: python scripts/validate_frequencies.py
+
+      - name: Enforce the games/** write-once contract
+        # Caller-contract clause 1: a final game file changes only in a
+        # labeled `reparse(vX.Y.Z):` commit. On a PR the range is base..head;
+        # on a push it is before..after (all-zero `before` on a branch's first
+        # push makes the guard skip cleanly).
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: python scripts/check_write_once.py

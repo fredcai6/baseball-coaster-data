@@ -5,7 +5,7 @@ Asserts the five FROZEN invariants of the hybrid game schema (B base + 3 C
 grafts). Each invariant fails LOUDLY: a clear message on stderr and a non-zero
 exit. On full success prints `all invariants passed`.
 
-Run:  py scripts/check_schema_invariants.py
+Run:  python scripts/check_schema_invariants.py
 """
 
 from __future__ import annotations
