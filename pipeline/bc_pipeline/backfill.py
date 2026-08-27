@@ -50,6 +50,7 @@ import json
 import random
 import re
 import subprocess
+import sys
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -101,6 +102,51 @@ def _game_id_from_url(url: str) -> str:
     if not m:
         raise ValueError(f"could not extract game_id from boxscore url: {url!r}")
     return m.group(1)
+
+
+class RepoRootError(RuntimeError):
+    """The data-repo root could not be determined, or does not look like one."""
+
+
+def _looks_like_data_repo(candidate: Path) -> bool:
+    """A data-repo root owns BOTH the git checkout and the corpus directory."""
+    return (candidate / ".git").exists() and (candidate / "games").is_dir()
+
+
+def resolve_repo_root(explicit: str | None, *, start: Path | None = None) -> Path:
+    """Resolve the data-repo root for a CLI run, or raise :class:`RepoRootError`.
+
+    Used by the ``backfill`` and ``refresh`` CLIs -- NOT by ``run_backfill``
+    itself, which stays permissive so tests can drive it against a bare
+    ``tmp_path`` that has no ``games/`` yet.
+
+    The default used to be ``"."`` while the README told you to run from
+    ``pipeline/``. That combination silently resolved the root to
+    ``pipeline/``, where no ``games/`` exists, which disabled the
+    corpus-aware fetch skip AND the ``out_path.exists()`` write-once check,
+    and pointed new game files at ``pipeline/games/<season>/`` -- a second,
+    wrong corpus inside the repo. Nothing failed; it just did the wrong
+    thing quietly. Auto-detection plus a loud error replaces that.
+    """
+    if explicit is not None:
+        candidate = Path(explicit).resolve()
+        if not _looks_like_data_repo(candidate):
+            raise RepoRootError(
+                f"--repo-root {explicit!r} resolves to {candidate}, which does not "
+                f"look like the data repo (expected both a .git entry and a games/ "
+                f"directory there)."
+            )
+        return candidate
+
+    start = (start or Path.cwd()).resolve()
+    for candidate in (start, *start.parents):
+        if _looks_like_data_repo(candidate):
+            return candidate
+    raise RepoRootError(
+        f"could not locate the data-repo root from {start} (looked for a directory "
+        f"containing both .git and games/, walking upward). Pass --repo-root "
+        f"explicitly."
+    )
 
 
 def _corpus_holds_game(url: str, *, season: int, repo_root: Path) -> bool:
@@ -610,9 +656,12 @@ def build_arg_parser():
     parser.add_argument(
         "--repo-root",
         type=str,
-        default=".",
+        default=None,
         metavar="PATH",
-        help="Repository root containing games/ (default: current directory).",
+        help=(
+            "Repository root containing games/ (default: auto-detected by walking "
+            "up from the current directory for a checkout with a games/ dir)."
+        ),
     )
     parser.add_argument(
         "--push",
@@ -632,7 +681,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     # importable/mockable for anything except the CLI's real run.
     from bc_pipeline.transport import real_transport
 
-    repo_root = Path(args.repo_root)
+    try:
+        repo_root = resolve_repo_root(args.repo_root)
+    except RepoRootError as exc:
+        print(f"[BACKFILL] {exc}", file=sys.stderr)
+        return 2
 
     def commit_fn(paths: Sequence[Path], message: str) -> None:
         _default_commit_fn(paths, message, repo_root=repo_root)
