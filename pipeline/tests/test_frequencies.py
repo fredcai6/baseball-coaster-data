@@ -33,6 +33,23 @@ def _load_hand_count_game() -> dict:
 
 
 # ---------------------------------------------------------------------------
+# PROVENANCE NOTE (issue #40, reparse(v0.4.0)). The tallies below were
+# originally hand-counted against a parse that was MISSING THREE REAL PLAYS
+# -- three PBP lines that landed in `unparsed[]` under parser v0.3.0 and are
+# parsed correctly under v0.4.0:
+#
+#   "Pat Mills struck out looking, out at first c to 1b (1-2 SKBK)."
+#       -> strikeout_looking, team tlqlpupbujjreauc batting
+#   "A.J. Shaver singled to right field, advanced to second (1-0 B); ..."
+#       -> single,            team tlqlpupbujjreauc batting
+#   "Sam Canton doubled to left field (1-2 SFBFF); Wesley Mitchell ..."
+#       -> double,            allowed by tlqlpupbujjreauc pitching
+#
+# The counts were adjusted by exactly those three plays and nothing else --
+# the arithmetic is shown per surface below so a reader can re-verify the
+# change without re-tallying the whole game. `unparsed_count` for this game
+# went 3 -> 0. Surface (c) is UNCHANGED: that batter was not involved.
+#
 # Hand-count reconciliation: proves aggregation correct against
 # independently hand-tallied ground truth (not merely internally
 # self-consistent). The expected counts below were tallied by a small,
@@ -61,10 +78,12 @@ def test_hand_count_reconciliation_all_four_surfaces():
 
     # (a) team tlqlpupbujjreauc's BATTING table -- hand tally: double:3,
     # flyout:8, groundout:6, hit_by_pitch:1, home_run:1, lineout:1, popout:1,
-    # single:5, strikeout_looking:1, strikeout_swinging:9, walk:9 (total 45;
-    # every other one of the 19 taxonomy types is 0 for this team/game).
+    # single:6, strikeout_looking:2, strikeout_swinging:9, walk:9 (total 47;
+    # every other taxonomy type is 0 for this team/game).
+    # v0.3.0 -> v0.4.0: single 5->6 (Shaver), strikeout_looking 1->2 (Mills),
+    # total 45->47. All other types unchanged.
     team_batting = artifact["league"]["batting"]["teams"]["tlqlpupbujjreauc"]
-    assert team_batting["total_plate_appearances"] == 45
+    assert team_batting["total_plate_appearances"] == 47
     expected_team_batting_counts = {t: 0 for t in frequencies.OUTCOME_TYPES}
     expected_team_batting_counts.update(
         {
@@ -75,26 +94,27 @@ def test_hand_count_reconciliation_all_four_surfaces():
             "home_run": 1,
             "lineout": 1,
             "popout": 1,
-            "single": 5,
-            "strikeout_looking": 1,
+            "single": 6,
+            "strikeout_looking": 2,
             "strikeout_swinging": 9,
             "walk": 9,
         }
     )
     assert team_batting["counts"] == expected_team_batting_counts
-    # Rate check: walk rate for this team's batting = 9/45 = 0.2.
-    assert team_batting["rates"]["walk"] == 9 / 45
+    # Rate check: walk rate for this team's batting = 9/47.
+    assert team_batting["rates"]["walk"] == 9 / 47
 
     # (b) that SAME team's PITCHING table (what tlqlpupbujjreauc's pitcher(s)
-    # allowed) -- hand tally: double:5, flyout:9, grounded_into_double_play:2,
+    # allowed) -- hand tally: double:6, flyout:9, grounded_into_double_play:2,
     # groundout:6, home_run:1, lineout:2, single:10, strikeout_swinging:5,
-    # walk:4 (total 44).
+    # walk:4 (total 45).
+    # v0.3.0 -> v0.4.0: double 5->6 (Canton), total 44->45.
     team_pitching = artifact["league"]["pitching"]["teams"]["tlqlpupbujjreauc"]
-    assert team_pitching["total_plate_appearances"] == 44
+    assert team_pitching["total_plate_appearances"] == 45
     expected_team_pitching_counts = {t: 0 for t in frequencies.OUTCOME_TYPES}
     expected_team_pitching_counts.update(
         {
-            "double": 5,
+            "double": 6,
             "flyout": 9,
             "grounded_into_double_play": 2,
             "groundout": 6,
@@ -106,8 +126,8 @@ def test_hand_count_reconciliation_all_four_surfaces():
         }
     )
     assert team_pitching["counts"] == expected_team_pitching_counts
-    # Rate check: single-allowed rate = 10/44.
-    assert team_pitching["rates"]["single"] == 10 / 44
+    # Rate check: single-allowed rate = 10/45.
+    assert team_pitching["rates"]["single"] == 10 / 45
 
     # (c) individual player BATTING line: batter xtti55f7ey0u6ih4 -- hand
     # tally: groundout:2, single:1, strikeout_looking:1, strikeout_swinging:1,
@@ -130,9 +150,11 @@ def test_hand_count_reconciliation_all_four_surfaces():
 
     # (d) individual player PITCHING line: pitcher hq5v434ekgu367lf -- hand
     # tally: flyout:6, groundout:4, hit_by_pitch:1, home_run:1, popout:1,
-    # single:3, strikeout_swinging:6, walk:4 (total 26).
+    # single:4, strikeout_looking:1, strikeout_swinging:6, walk:4 (total 28).
+    # v0.3.0 -> v0.4.0: single 3->4 (Shaver), strikeout_looking 0->1 (Mills),
+    # total 26->28 -- this pitcher faced both recovered batters.
     player_pitching = artifact["league"]["pitching"]["players"]["hq5v434ekgu367lf"]
-    assert player_pitching["total_plate_appearances"] == 26
+    assert player_pitching["total_plate_appearances"] == 28
     expected_player_pitching_counts = {t: 0 for t in frequencies.OUTCOME_TYPES}
     expected_player_pitching_counts.update(
         {
@@ -141,14 +163,15 @@ def test_hand_count_reconciliation_all_four_surfaces():
             "hit_by_pitch": 1,
             "home_run": 1,
             "popout": 1,
-            "single": 3,
+            "single": 4,
+            "strikeout_looking": 1,
             "strikeout_swinging": 6,
             "walk": 4,
         }
     )
     assert player_pitching["counts"] == expected_player_pitching_counts
-    # Rate check: strikeout_swinging rate = 6/26.
-    assert player_pitching["rates"]["strikeout_swinging"] == 6 / 26
+    # Rate check: strikeout_swinging rate = 6/28.
+    assert player_pitching["rates"]["strikeout_swinging"] == 6 / 28
 
     # by_season["2026"] must reproduce the same figures (only game in the
     # aggregation, single season).
