@@ -1070,6 +1070,7 @@ def parse_game(
     parsed_at: Optional[str] = None,
     league_id: str = "pioneer",
     provider: str = "prestosports",
+    id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
@@ -1086,7 +1087,7 @@ def parse_game(
     date_iso = _extract_date_iso(root)
     season = int(date_iso[:4])
 
-    player_table = identity.build_player_table(root)
+    player_table = identity.build_player_table(root, id_overrides=id_overrides)
     lines = _iter_halves(root)
     events, unparsed, subs_by_team = build_events(lines, player_table)
 
