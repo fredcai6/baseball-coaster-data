@@ -310,6 +310,10 @@ def _x_single(m: re.Match):
         loc = "up the middle"
     elif m.group("side") is not None:
         loc = f"{m.group('side')} side"
+    elif m.groupdict().get("line") is not None:
+        # "down the lf line" / "down the rf line" -- 35 lines in the 2026
+        # slice alone, the largest single location gap (issue #40).
+        loc = f"down the {m.group('line')} line"
     else:
         loc = None
     mods = _hit_modifiers_from_tail(m.group("mods"))
@@ -318,6 +322,10 @@ def _x_single(m: re.Match):
 
 def _x_double(m: re.Match):
     loc = m.group("loc") if m.group("loc") is not None else m.group("loc2")
+    if loc is None and m.groupdict().get("middle2") is not None:
+        loc = "up the middle"
+    elif loc is None and m.groupdict().get("side2") is not None:
+        loc = f"{m.group('side2')} side"
     mods = _hit_modifiers_from_tail(m.group("mods"))
     return (m.group("name"), [], loc, mods)
 
@@ -494,6 +502,7 @@ PRIMARY_RULES: List[PrimaryRule] = [
             r" to (?P<loc>[a-z][a-z ]*?)"
             r"|(?P<middle> up the middle)"
             r"| through the (?P<side>left|right) side"
+            r"| down the (?P<line>[a-z]{2}) line"
             rf")?{_HIT_MOD_TAIL}$"
         ),
         "single",
@@ -502,7 +511,10 @@ PRIMARY_RULES: List[PrimaryRule] = [
     (
         re.compile(
             r"^(?P<name>.+?) doubled(?: to (?P<loc>[a-z][a-z ]*?)"
-            rf"| down (?P<loc2>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
+            r"| down (?P<loc2>[a-z][a-z ]*?)"
+            r"|(?P<middle2> up the middle)"
+            r"| through the (?P<side2>left|right) side"
+            rf")?{_HIT_MOD_TAIL}$"
         ),
         "double",
         _x_double,
@@ -767,6 +779,13 @@ RUNNER_RULES: List[RunnerRule] = [
         ),
         ("error",),
         _b_advance_on_error,
+    ),
+    (
+        re.compile(
+            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on the throw$"
+        ),
+        ("advance",),
+        _b_advance_plain,
     ),
     (
         re.compile(rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT})$"),
@@ -1159,6 +1178,14 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         _c_advance_on_causephrase,
     ),
     (
+        # "advanced to second on the throw" -- the batter/runner takes an
+        # extra base while a throw goes elsewhere. Modelled as a plain
+        # advance: no error was charged and no distinct cause exists for it
+        # in the closed taxonomy.
+        re.compile(rf"^advanced to (?P<dest>{_DEST_ALT}) on the throw$"),
+        _c_advance_plain,
+    ),
+    (
         re.compile(rf"^advanced to (?P<dest>{_DEST_ALT})$"),
         _c_advance_plain,
     ),
@@ -1299,6 +1326,70 @@ def _match_runner_clauses(
     return runners
 
 
+#: Tokens that are PRIMARY-clause modifiers rather than runner movement --
+#: they may trail a chained continuation ("singled to left field, advanced to
+#: second on an error by lf, RBI") and belong on the PrimaryClause, not on a
+#: RunnerMovement.
+_MODIFIER_ONLY_RE = re.compile(r"^(?:\d+ RBI|RBI|bunt|SAC|ground-rule|unearned)$")
+
+
+def _match_primary_whole(rest: str):
+    """Match ``rest`` against PRIMARY_RULES. Returns
+    ``((name, fielders, location, modifiers), outcome_type)`` or None."""
+    for regex, outcome_type, extractor in PRIMARY_RULES:
+        pm = regex.fullmatch(rest)
+        if not pm:
+            continue
+        name = pm.groupdict().get("name")
+        if name and _name_capture_is_swallowed(name):
+            continue
+        return extractor(pm), outcome_type
+    return None
+
+
+def _match_primary_chain(rest: str):
+    """Parse ``rest`` as a PRIMARY_RULES lead plus name-elided continuations
+    describing the BATTER's own further movement (issue #40).
+
+    StatCrew narrates a batter who keeps running as one clause chain --
+    "A.J. Shaver singled to right field, advanced to second" -- and
+    PRIMARY_RULES only ever matched the whole thing or nothing. 470 of the
+    531 remaining `primary verb not recognized` lines in the 2026 slice are
+    this shape.
+
+    Returns ``((name, fielders, location, modifiers), outcome_type,
+    batter_movements)`` or None. The batter's movements are emitted as
+    ordinary RunnerMovement records keyed to the batter's own name, which
+    parse.py's `_merge_same_runner` then folds into one net-path record --
+    the same machinery that already handles a runner narrated across two
+    clauses.
+    """
+    parts = rest.split(", ")
+    if len(parts) < 2:
+        return None
+    for k in range(len(parts) - 1, 0, -1):
+        head = _match_primary_whole(", ".join(parts[:k]))
+        if head is None:
+            continue
+        (name, fielders, location, modifiers), outcome_type = head
+        tail_parts = list(parts[k:])
+        # Trailing modifier tokens belong to the PRIMARY, not to a movement.
+        trailing_mods: List[str] = []
+        while tail_parts and _MODIFIER_ONLY_RE.fullmatch(tail_parts[-1]):
+            trailing_mods.insert(0, tail_parts.pop())
+        if not tail_parts:
+            # Nothing but modifiers followed -- that is a plain hit-tail the
+            # existing _HIT_MOD_TAIL should have taken. Decline rather than
+            # duplicate its job.
+            continue
+        movements = _match_continuations(", ".join(tail_parts), name)
+        if movements is None:
+            continue
+        mods = list(modifiers) + _expand_rbi_modifiers(trailing_mods)
+        return (name, fielders, location, mods), outcome_type, movements
+    return None
+
+
 def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
 
@@ -1399,20 +1490,32 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     pitches = tail_m.group("pitches")
 
     primary = None
-    for regex, outcome_type, extractor in PRIMARY_RULES:
-        pm = regex.fullmatch(rest)
-        if pm:
-            name, fielders, location, modifiers = extractor(pm)
-            primary = PrimaryClause(
-                name_token=name,
-                outcome_type=outcome_type,
-                fielders=fielders,
-                location=location,
-                modifiers=modifiers,
-                count=Count(balls=balls, strikes=strikes),
-                pitches=pitches,
-            )
-            break
+    batter_movements: List[RunnerMovement] = []
+    whole = _match_primary_whole(rest)
+    if whole is None:
+        # issue #40: the batter's own trailing self-advance chain.
+        chained = _match_primary_chain(rest)
+        if chained is not None:
+            extracted, outcome_type, batter_movements = chained
+            whole = (extracted, outcome_type)
+    if whole is None:
+        # Pre-#40 unguarded pass, so no line that parsed before stops parsing.
+        for regex, outcome_type, extractor in PRIMARY_RULES:
+            pm = regex.fullmatch(rest)
+            if pm:
+                whole = (extractor(pm), outcome_type)
+                break
+    if whole is not None:
+        (name, fielders, location, modifiers), outcome_type = whole
+        primary = PrimaryClause(
+            name_token=name,
+            outcome_type=outcome_type,
+            fielders=fielders,
+            location=location,
+            modifiers=modifiers,
+            count=Count(balls=balls, strikes=strikes),
+            pitches=pitches,
+        )
 
     if primary is None:
         return GrammarMiss(
@@ -1422,6 +1525,7 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     runners_or_miss = _match_runner_clauses(parts[1:], raw_line)
     if isinstance(runners_or_miss, GrammarMiss):
         return runners_or_miss
+    runners_or_miss = list(batter_movements) + list(runners_or_miss)
 
     return ClauseGroup(
         kind="plate_appearance",
