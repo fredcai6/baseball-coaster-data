@@ -794,3 +794,44 @@ def test_declaration_refuses_without_an_unambiguous_anchor():
     result = _sub_events("A. Nobody pinch hit for B. Alsonobody.")
     events = result[0] if isinstance(result, tuple) else result
     assert [e for e in events if e["kind"] == "substitution"] == []
+
+
+# --- issue #40: empty PBP cells are layout, not narrative -----------------
+
+
+def test_empty_pbp_cells_do_not_become_unparsed_entries():
+    """An empty `td.text` cell carries nothing to represent as an event and
+    nothing to preserve verbatim. It used to reach the grammar and land in
+    unparsed[] as "empty clause body" -- 27 entries across the archived
+    corpus, 8 of them the only thing keeping a game off clean-parse.
+
+    This does not weaken the never-drop guarantee in parse.py's docstring:
+    that covers PBP narrative LINES, and an empty cell is not one.
+    """
+    from _support import SAMPLES_DIR
+    from bc_pipeline.html_struct import parse_html
+
+    html = (SAMPLES_DIR / "boxscore_20260709_final.html").read_text(encoding="utf-8")
+    lines = parse._iter_halves(parse_html(html))
+    assert lines, "sample must yield PBP lines at all"
+    blank = [l for l in lines if not l.text.strip()]
+    assert blank == [], f"blank PBP lines leaked through: {blank[:3]}"
+
+    game = parse.parse_game(
+        html,
+        source_url="https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260709_h94w.xml",
+        fetched_at="2026-07-09T00:00:00Z",
+    )
+    assert [
+        u for u in (game.get("unparsed") or []) if u.get("reason") == "empty clause body"
+    ] == []
+
+
+def test_line_index_still_reflects_source_cell_position():
+    """A skipped cell must leave a visible gap rather than silently
+    renumbering its neighbours."""
+    import inspect
+
+    src = inspect.getsource(parse)
+    assert "for idx, td in enumerate(cells):" in src
+    assert "line_index=idx," in src
