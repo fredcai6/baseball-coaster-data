@@ -761,7 +761,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on an error by "
+            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on an? "
+            rf"(?:throwing |fielding )?error by "
             rf"(?P<f>[a-z0-9]+)(?:, (?P<unearned>unearned))?$"
         ),
         ("error",),
@@ -1040,6 +1041,226 @@ BATTER_OUTCOME_CAUSE: Dict[str, Tuple[str, Optional[str], bool, bool]] = {
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# CONTINUATION_RULES -- issue #40.
+#
+# A comma-joined fragment that continues the SAME runner's movement with the
+# name elided ("... , advanced to third", "... , out at second ss to 2b",
+# "... , scored, unearned"). RUNNER_RULES enumerates specific (first, second)
+# PAIRS -- e.g. there is a compound row for `advanced to D1 on a (wild pitch|
+# passed ball|balk), advanced to D2` but none for the error cause -- while
+# the corpus uses the cross product of a handful of lead verbs and a handful
+# of continuations. Where no pair row exists, a lead-anchored row's greedy
+# `(?P<name>.+?)` absorbs the unmatched lead clause instead of failing, so
+# the line parses into a plausible-but-wrong record whose only symptom is a
+# name that never resolves. These rows let the chain be parsed compositionally
+# instead.
+#
+# Every row is anchored with NO name group: the name is inherited from the
+# lead clause by `_match_clause_chain`.
+# ---------------------------------------------------------------------------
+
+_UNEARNED_TAIL = r"(?:, (?P<unearned>unearned))?"
+
+
+def _c_out_at(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="force_out",
+        destination=m.group("base"),
+        out=True,
+        scored=False,
+    )
+
+
+def _c_advance_on_error(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="error",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+        unearned=bool(m.group("unearned")),
+    )
+
+
+def _c_advance_on_causephrase(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause=_CAUSEPHRASE[m.group("causephrase")],
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+    )
+
+
+def _c_advance_plain(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="advance",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+    )
+
+
+def _c_scored(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="advance",
+        destination="home",
+        out=False,
+        scored=True,
+        unearned=bool(m.group("unearned")),
+    )
+
+
+def _c_scored_on_error(m: "re.Match", name_token: str) -> RunnerMovement:
+    return RunnerMovement(
+        name_token=name_token,
+        cause="error",
+        destination="home",
+        out=False,
+        scored=True,
+        unearned=bool(m.group("unearned")),
+    )
+
+
+CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
+    # "out at second ss to 2b" / "out at home 3b to c" -- the trailing token
+    # run is a throw chain, deliberately not captured (RUNNER_RULES' own
+    # out-at row treats it the same way).
+    (
+        re.compile(r"^out at (?P<base>first|second|third|home)\b.*$"),
+        _c_out_at,
+    ),
+    (
+        re.compile(
+            rf"^scored on an error by (?P<f>[a-z0-9]+){_UNEARNED_TAIL}$"
+        ),
+        _c_scored_on_error,
+    ),
+    (
+        re.compile(rf"^scored{_UNEARNED_TAIL}$"),
+        _c_scored,
+    ),
+    (
+        re.compile(
+            rf"^advanced to (?P<dest>{_DEST_ALT}) on an? "
+            rf"(?:throwing |fielding )?error by (?P<f>[a-z0-9]+){_UNEARNED_TAIL}$"
+        ),
+        _c_advance_on_error,
+    ),
+    (
+        re.compile(
+            rf"^advanced to (?P<dest>{_DEST_ALT}) on a "
+            rf"(?P<causephrase>wild pitch|passed ball|balk)$"
+        ),
+        _c_advance_on_causephrase,
+    ),
+    (
+        re.compile(rf"^advanced to (?P<dest>{_DEST_ALT})$"),
+        _c_advance_plain,
+    ),
+]
+
+
+#: Verb tokens that can never appear inside a player's NAME. A rule whose
+#: `(?P<name>.+?)` capture contains one of these -- or a comma -- has greedily
+#: absorbed an unmatched lead clause rather than matched a name (issue #40).
+#: Treating that as a non-match is what lets `_match_clause_chain` get a look
+#: at the line; without this guard the greedy row always wins first and the
+#: chain path is unreachable.
+_NAME_VERB_RE = re.compile(
+    r"\b(?:advanced|scored|stole|singled|doubled|tripled|homered|walked|"
+    r"struck|grounded|flied|lined|popped|fouled|reached|picked|caught|"
+    r"sacrificed|hit|out)\b"
+)
+
+
+#: Genuine comma-bearing name suffixes ("Cobb, Jr") -- a comma alone is not
+#: evidence of a swallowed clause.
+_NAME_SUFFIX_RE = re.compile(r",\s*(?:Jr|Sr|II|III|IV|V)\.?$", re.IGNORECASE)
+
+
+def _name_capture_is_swallowed(name: str) -> bool:
+    """True when a `name` capture is really an unmatched lead clause.
+
+    Fail-loud posture: a wrong-but-plausible parse is worse than an honest
+    `unparsed[]` entry, because its only downstream symptom is a name that
+    never resolves -- which reads as an identity problem and gets triaged as
+    one. (It did: issue #33 classified 1,318 such lines as irreducible
+    identity ambiguity when 97.5% were this.)
+    """
+    if _NAME_VERB_RE.search(name):
+        return True
+    return "," in _NAME_SUFFIX_RE.sub("", name)
+
+
+def _match_whole_clause(
+    clause: str, *, guard: bool = True
+) -> Optional[List[RunnerMovement]]:
+    """Match ``clause`` against RUNNER_RULES, or None. Preserves the exact
+    pre-#40 semantics -- the chaining path below is only ever reached when
+    this returns None, so no line that parsed before can parse differently."""
+    for regex, _causes, builder in RUNNER_RULES:
+        m = regex.fullmatch(clause)
+        if not m:
+            continue
+        if guard and "name" in (m.groupdict() or {}):
+            captured = m.group("name")
+            if captured and _name_capture_is_swallowed(captured):
+                continue
+        result = builder(m)
+        return result if isinstance(result, list) else [result]
+    return None
+
+
+def _match_continuations(rest: str, name_token: str) -> Optional[List[RunnerMovement]]:
+    """Parse ``rest`` as one or more comma-joined continuation fragments, all
+    inheriting ``name_token``. Returns None if any fragment is unrecognized.
+
+    Fragments are consumed LONGEST-FIRST because a continuation can itself
+    contain a comma ("scored, unearned"); a shortest-first walk would match
+    the bare "scored" row and then choke on a dangling "unearned".
+    """
+    if not rest:
+        return []
+    parts = rest.split(", ")
+    for k in range(len(parts), 0, -1):
+        frag = ", ".join(parts[:k])
+        for regex, builder in CONTINUATION_RULES:
+            m = regex.fullmatch(frag)
+            if not m:
+                continue
+            tail = _match_continuations(", ".join(parts[k:]), name_token)
+            if tail is None:
+                continue
+            return [builder(m, name_token)] + tail
+    return None
+
+
+def _match_clause_chain(clause: str) -> Optional[List[RunnerMovement]]:
+    """Parse ``clause`` as a lead RUNNER_RULES clause plus name-elided
+    continuations. Returns None when no such split parses cleanly.
+
+    The lead is tried LONGEST-FIRST so a lead row that legitimately contains
+    a comma (e.g. the `advanced to D, scored on an error by f` compound row)
+    still wins over a shorter split.
+    """
+    parts = clause.split(", ")
+    if len(parts) < 2:
+        return None
+    for k in range(len(parts) - 1, 0, -1):
+        lead = _match_whole_clause(", ".join(parts[:k]))
+        if not lead:
+            continue
+        tail = _match_continuations(", ".join(parts[k:]), lead[-1].name_token)
+        if tail is not None:
+            return lead + tail
+    return None
+
+
 def _match_runner_clauses(
     clauses: List[str], raw_line: str
 ) -> Union[List[RunnerMovement], GrammarMiss]:
@@ -1057,18 +1278,20 @@ def _match_runner_clauses(
         clause = clause.strip()
         if not clause:
             continue
-        matched = False
-        for regex, _causes, builder in RUNNER_RULES:
-            rm = regex.fullmatch(clause)
-            if rm:
-                result = builder(rm)
-                if isinstance(result, list):
-                    runners.extend(result)
-                else:
-                    runners.append(result)
-                matched = True
-                break
-        if not matched:
+        # issue #40, in strict precedence order:
+        #   1. a whole-clause RUNNER_RULES match whose name looks like a name;
+        #   2. a lead clause plus name-elided continuations;
+        #   3. the pre-#40 unguarded match, so NO line that parsed before can
+        #      stop parsing -- rows whose lead legitimately carries a verb
+        #      ("X picked off, out at first p to 1b") still land here.
+        movements = _match_whole_clause(clause)
+        if movements is None:
+            movements = _match_clause_chain(clause)
+        if movements is None:
+            movements = _match_whole_clause(clause, guard=False)
+        if movements is not None:
+            runners.extend(movements)
+        else:
             return GrammarMiss(
                 raw=raw_line,
                 reason=f"runner clause not recognized: {clause!r}",

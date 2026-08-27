@@ -1209,3 +1209,97 @@ def test_real_sample_zero_grammar_miss():
             )
     assert misses == [], [m.reason for m in misses]
     assert sum(outcome_counts.values()) > 0
+
+
+# --- issue #40: name-elided continuation chaining --------------------------
+#
+# RUNNER_RULES enumerates specific (lead, continuation) PAIRS -- there is a
+# compound row for `advanced to D1 on a (wild pitch|passed ball|balk),
+# advanced to D2` but none for the error cause. Where no pair row exists, a
+# lead-anchored row's greedy `(?P<name>.+?)` absorbed the unmatched lead
+# clause instead of failing, producing a plausible-but-wrong record whose only
+# symptom was a name that never resolved downstream. 97.5% of the corpus's
+# "runner clause name did not resolve uniquely" lines were this, not identity
+# ambiguity.
+
+
+def _runners(line):
+    result = parse_clause_group(line)
+    assert isinstance(result, ClauseGroup), f"expected a parse, got {result!r}"
+    return [(r.name_token, r.destination, r.cause, r.out, r.scored) for r in result.runners]
+
+
+def test_chain_advance_on_error_then_advance():
+    assert _runners("D. Covino advanced to second on an error by p, advanced to third.") == [
+        ("D. Covino", "second", "error", False, False),
+        ("D. Covino", "third", "advance", False, False),
+    ]
+
+
+def test_chain_advance_then_scored_unearned():
+    """The continuation itself contains a comma, so fragments must be
+    consumed longest-first or the bare `scored` row matches and leaves a
+    dangling `unearned`."""
+    assert _runners("A. Mendoza advanced to third on a wild pitch, scored, unearned.") == [
+        ("A. Mendoza", "third", "wild_pitch", False, False),
+        ("A. Mendoza", "home", "advance", False, True),
+    ]
+
+
+def test_chain_stole_then_advance_on_error():
+    assert _runners("R. Preece stole second, advanced to third on an error by c.") == [
+        ("R. Preece", "second", "stolen_base", False, False),
+        ("R. Preece", "third", "error", False, False),
+    ]
+
+
+def test_chain_advance_then_out_at_base():
+    assert _runners("B. Knight advanced to third, out at home 3b to c.") == [
+        ("B. Knight", "third", "advance", False, False),
+        ("B. Knight", "home", "force_out", True, False),
+    ]
+
+
+def test_chain_advance_on_throwing_error_then_advance():
+    assert _runners("M. Backstrom advanced to second on a throwing error by p, advanced to third.") == [
+        ("M. Backstrom", "second", "error", False, False),
+        ("M. Backstrom", "third", "advance", False, False),
+    ]
+
+
+def test_preexisting_pair_row_still_wins_unchanged():
+    """The documented `passed ball` compound predates #40 and must be
+    untouched -- chaining is only reached when nothing else matched."""
+    assert _runners("Mata advanced to second on a passed ball, advanced to third.") == [
+        ("Mata", "second", "passed_ball", False, False),
+        ("Mata", "third", "advance", False, False),
+    ]
+
+
+def test_name_capture_guard_rejects_a_swallowed_clause():
+    from bc_pipeline.grammar import _name_capture_is_swallowed
+    assert _name_capture_is_swallowed("D. Covino advanced to second on an error by p,")
+    assert _name_capture_is_swallowed("C. Bess singled,")
+    assert _name_capture_is_swallowed("K. Jimenez struck out swinging,")
+
+
+def test_name_capture_guard_accepts_real_names_including_suffixes():
+    from bc_pipeline.grammar import _name_capture_is_swallowed
+    for name in ("D. Covino", "Mata", "Cobb, Jr", "Cobb, Jr.", "Ken Griffey, III",
+                 "Lucas Terillli", "B. Knight"):
+        assert not _name_capture_is_swallowed(name), name
+
+
+def test_legacy_unguarded_pass_keeps_verb_bearing_lead_rows_parsing():
+    """A handful of pre-#40 rows legitimately carry a verb in the lead
+    ("picked off", "struck out swinging"). The guard would reject them, so an
+    unguarded pass runs last -- no line that parsed before may stop parsing.
+    """
+    assert isinstance(
+        parse_clause_group("D. Covino picked off, out at first p to 1b to ss."),
+        ClauseGroup,
+    )
+    assert isinstance(
+        parse_clause_group("K. Jimenez struck out swinging, out at first c to 1b."),
+        ClauseGroup,
+    )
