@@ -343,7 +343,7 @@ def _x_home_run(m: re.Match):
 
 
 def _x_walk(m: re.Match):
-    mods = [m.group("mod")] if m.group("mod") else []
+    mods = _expand_rbi_modifiers([m.group("mod")]) if m.group("mod") else []
     return (m.group("name"), [], None, mods)
 
 
@@ -541,7 +541,9 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_intentional_walk,
     ),
     (
-        re.compile(r"^(?P<name>.+?) walked(?:, (?P<mod>RBI))?$"),
+        # A bases-loaded walk forces in a run, so the tail can be "N RBI"
+        # and not just a bare "RBI" (issue #40).
+        re.compile(r"^(?P<name>.+?) walked(?:, (?P<mod>\d+ RBI|RBI))?$"),
         "walk",
         _x_walk,
     ),
@@ -669,6 +671,10 @@ def _b_scored_on_causephrase(m: re.Match):
         destination="home",
         out=False,
         scored=True,
+        # The sibling scored-on-error row already carried this tail; the
+        # causephrase row did not, so every "scored on a wild pitch,
+        # unearned" line was a miss (issue #40).
+        unearned=bool(m.groupdict().get("unearned")),
     )
 
 
@@ -795,7 +801,8 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             r"^(?P<name>.+?) scored on a "
-            r"(?P<causephrase>wild pitch|passed ball|balk)$"
+            r"(?P<causephrase>wild pitch|passed ball|balk)"
+            r"(?:, (?P<unearned>unearned))?$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_scored_on_causephrase,
@@ -1174,6 +1181,20 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         re.compile(
             rf"^advanced to (?P<dest>{_DEST_ALT}) on a "
             rf"(?P<causephrase>wild pitch|passed ball|balk)$"
+        ),
+        _c_advance_on_causephrase,
+    ),
+    (
+        # Dropped third strike: the batter strikes out but REACHES on the
+        # ball getting away -- "struck out swinging, reached first on a
+        # passed ball". The strikeout stands as the primary outcome (it is a
+        # strikeout in the box); this records the batter reaching anyway.
+        # `_DEST_ALT` deliberately omits "first" -- a runner cannot ADVANCE
+        # to first -- but a dropped third strike is precisely a batter
+        # REACHING first, so this row needs its own alternation.
+        re.compile(
+            r"^reached (?P<dest>first|second|third|home) on a "
+            r"(?P<causephrase>wild pitch|passed ball|balk)$"
         ),
         _c_advance_on_causephrase,
     ),

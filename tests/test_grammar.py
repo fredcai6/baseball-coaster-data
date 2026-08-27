@@ -1394,3 +1394,65 @@ def test_singled_down_the_line_locations():
 def test_doubled_through_the_side_and_up_the_middle():
     assert _pa("J. Smith doubled through the right side (0-0).").primary.location == "right side"
     assert _pa("J. Smith doubled up the middle (1-1 BK).").primary.location == "up the middle"
+
+
+# --- issue #40: dropped third strike, unearned tails, bases-loaded walk ----
+
+
+def test_dropped_third_strike_batter_reaches_on_passed_ball():
+    """The strikeout stands as the primary outcome -- it IS a strikeout in
+    the box -- while the batter reaches anyway."""
+    cg = _pa("J. Smith struck out swinging, reached first on a passed ball (0-2 KKS).")
+    assert cg.primary.outcome_type == "strikeout_swinging"
+    assert [(r.name_token, r.destination, r.cause, r.out) for r in cg.runners] == [
+        ("J. Smith", "first", "passed_ball", False)
+    ]
+
+
+def test_dropped_third_strike_on_wild_pitch_bare_strikeout():
+    cg = _pa("J. Smith struck out, reached first on a wild pitch (1-2 BKKS).")
+    assert cg.primary.outcome_type == "strikeout"
+    assert [(r.destination, r.cause) for r in cg.runners] == [("first", "wild_pitch")]
+
+
+def test_dropped_third_strike_alongside_other_runners():
+    cg = _pa(
+        "J. Smith struck out looking, reached first on a wild pitch (0-2 KK); "
+        "T. Rover advanced to second."
+    )
+    assert [r.name_token for r in cg.runners] == ["J. Smith", "T. Rover"]
+
+
+def test_reached_first_is_allowed_where_advanced_to_first_is_not():
+    """`_DEST_ALT` omits "first" because a runner cannot ADVANCE to first;
+    a dropped third strike is precisely a batter REACHING it, so that row
+    carries its own alternation."""
+    from bc_pipeline.grammar import _DEST_ALT
+    assert "first" not in _DEST_ALT
+    cg = _pa("J. Smith struck out swinging, reached first on a passed ball (0-2 KKS).")
+    assert cg.runners[0].destination == "first"
+
+
+def test_scored_on_causephrase_accepts_an_unearned_tail():
+    """The sibling scored-on-error row already carried this tail; the
+    causephrase row did not, so every such line was a miss."""
+    for phrase, cause in (("wild pitch", "wild_pitch"), ("passed ball", "passed_ball")):
+        result = parse_clause_group(f"D. Ratfield scored on a {phrase}, unearned.")
+        assert isinstance(result, ClauseGroup), phrase
+        (r,) = result.runners
+        assert (r.cause, r.scored, r.unearned) == (cause, True, True)
+
+
+def test_bases_loaded_walk_carries_an_n_rbi_tail():
+    """A bases-loaded walk forces in a run, so the tail can be "N RBI" and
+    not only a bare "RBI"."""
+    cg = _pa("Kyle Schmack walked, 3 RBI (3-0 BBBB).")
+    assert cg.primary.outcome_type == "walk"
+    # `_expand_rbi_modifiers` keeps the literal count AND appends a bare
+    # "RBI" so exact-match membership checks downstream still fire.
+    assert cg.primary.modifiers == ["3 RBI", "RBI"]
+
+
+def test_plain_walk_and_single_rbi_walk_unchanged():
+    assert _pa("A. Smith walked (3-0 BBBB).").primary.modifiers == []
+    assert _pa("A. Smith walked, RBI (3-0 BBBB).").primary.modifiers == ["RBI"]
