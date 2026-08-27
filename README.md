@@ -33,7 +33,8 @@ schemas/          the JSON Schemas game files and artifacts are validated agains
                   game.schema.json (current: 1.8.0) and frequencies.schema.json
 docs/design/      the schema design record: the three candidates + the DECISION
 tests/fixtures/   golden fixtures for the parser/validator
-scripts/          CI + validation helper scripts
+scripts/          CI + validation helper scripts (including check_artifacts_current.py,
+                  which fails CI when a derived artifact is stale w.r.t. games/**)
 .github/workflows/ continuous-integration workflows
 ```
 
@@ -49,6 +50,19 @@ every pipeline run relies on:
 2. **`artifacts/**` is mutable.** Everything under `artifacts/` is derived from `games/**` and
    may be regenerated freely. Each artifact carries a `meta.generated_at` timestamp so a consumer
    can tell when it was last rebuilt.
+
+   Because they are derived, **a re-parse leaves every one of them stale by construction**, and a
+   schema check cannot see that — a stale artifact is still perfectly well-formed. That is not
+   hypothetical: `frequencies.json` sat stale across `reparse(v0.4.0)` (which took replayable games
+   from 84 to 999) while `validate_frequencies.py` passed on it the whole time. CI now checks
+   freshness directly with `scripts/check_artifacts_current.py`, which regenerates each artifact in
+   memory and compares it against what is committed:
+
+   ```bash
+   python scripts/check_artifacts_current.py
+   ```
+
+   `bc_pipeline.reparse` also prints the regeneration commands after any `--write` run.
 
 3. **Raw scraped HTML is never committed.** The raw boxscore/PBP HTML that games are parsed from
    lives on the local PC, outside git. It is not part of this repo. `.gitignore` excludes `*.html`

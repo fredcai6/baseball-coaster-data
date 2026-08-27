@@ -361,6 +361,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 0
     if args.commit and result.wrote:
         _git_commit(repo_root, subject, print)
+    if result.wrote:
+        # Every artifact under artifacts/latest/ is derived FROM games/**, so a
+        # re-parse leaves all of them stale by construction. That is not
+        # hypothetical: frequencies.json sat stale across reparse(v0.4.0),
+        # validating cleanly the whole time, because a schema check cannot see
+        # staleness. Say so loudly here, and let CI enforce it
+        # (scripts/check_artifacts_current.py).
+        print(
+            f"[REPARSE] {result.wrote} game file(s) rewritten -- every derived "
+            "artifact under artifacts/latest/ is now STALE. Regenerate and commit:\n"
+            "    python -m bc_pipeline.person_map  --input ../games --output "
+            "../artifacts/latest/person_map.json\n"
+            "    python -m bc_pipeline.team_map    --input ../games --output "
+            "../artifacts/latest/team_map.json\n"
+            "    python -m bc_pipeline.frequencies --input ../games --output "
+            "../artifacts/latest/frequencies.json\n"
+            "  then verify with: python scripts/check_artifacts_current.py"
+        )
     return 0
 
 
