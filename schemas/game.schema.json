@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://baseball-coaster/schema/game.schema.json",
   "title": "baseball-coaster per-game file (games/<season>/<game_id>.json)",
-  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine — the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31).",
+  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine \u2014 the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -25,7 +25,7 @@
     "schema_version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.3.0."
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.4.0."
     },
     "game_id": {
       "type": "string",
@@ -45,43 +45,68 @@
       "format": "date",
       "description": "ISO local game date (source pane has no timezone)."
     },
-    "source": { "$ref": "#/$defs/source" },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
     "teams": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["home", "away"],
+      "required": [
+        "home",
+        "away"
+      ],
       "properties": {
-        "home": { "$ref": "#/$defs/team" },
-        "away": { "$ref": "#/$defs/team" }
+        "home": {
+          "$ref": "#/$defs/team"
+        },
+        "away": {
+          "$ref": "#/$defs/team"
+        }
       }
     },
     "players": {
       "type": "object",
       "description": "The per-game identity table: keys are file-local pids (the `pid` $def), each value is the player entry whose player_id MUST equal its map key. GRAFT 1's stated identity home.",
-      "propertyNames": { "$ref": "#/$defs/pid" },
+      "propertyNames": {
+        "$ref": "#/$defs/pid"
+      },
       "additionalProperties": false,
       "patternProperties": {
-        "^([a-z0-9]{16}|syn:(home|away):[0-9]+)$": { "$ref": "#/$defs/player_entry" }
+        "^([a-z0-9]{16}|syn:(home|away):[0-9]+)$": {
+          "$ref": "#/$defs/player_entry"
+        }
       }
     },
-    "linescore": { "$ref": "#/$defs/linescore" },
-    "box": { "$ref": "#/$defs/box" },
+    "linescore": {
+      "$ref": "#/$defs/linescore"
+    },
+    "box": {
+      "$ref": "#/$defs/box"
+    },
     "lineups": {
       "type": "object",
       "description": "Batting order + substitutions per team_id.",
-      "additionalProperties": { "$ref": "#/$defs/lineup_side" }
+      "additionalProperties": {
+        "$ref": "#/$defs/lineup_side"
+      }
     },
     "events": {
       "type": "array",
       "description": "The ordered spine; strictly ordered by seq, mixing all event kinds.",
-      "items": { "$ref": "#/$defs/event" }
+      "items": {
+        "$ref": "#/$defs/event"
+      }
     },
     "unparsed": {
       "type": "array",
       "description": "Verbatim source lines the parser could not classify, with location. A non-empty array means events[] is not a complete reconstruction; the file is still published (finals are not blocked on a perfect parse) but flagged.",
-      "items": { "$ref": "#/$defs/unparsed_line" }
+      "items": {
+        "$ref": "#/$defs/unparsed_line"
+      }
     },
-    "meta": { "$ref": "#/$defs/meta" }
+    "meta": {
+      "$ref": "#/$defs/meta"
+    }
   },
   "$defs": {
     "pid": {
@@ -93,11 +118,20 @@
       "type": "object",
       "additionalProperties": false,
       "description": "GRAFT 1: a player reference is an OBJECT (B field names). A future cross-season person_id attaches to the PLAYERS TABLE entry (the identity home), NOT here.",
-      "required": ["player_id", "name_raw", "resolved"],
+      "required": [
+        "player_id",
+        "name_raw",
+        "resolved"
+      ],
       "properties": {
-        "player_id": { "$ref": "#/$defs/pid" },
+        "player_id": {
+          "$ref": "#/$defs/pid"
+        },
         "name_raw": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Raw narrative token, or null when the source region does not name the player (e.g. pitcher-of-record resolved from the lineup)."
         },
         "resolved": {
@@ -109,76 +143,161 @@
     "player_entry": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Per-game identity home (GRAFT 1's stated home). player_id MUST equal this entry's map key in `players`. A future cross-season person_id is an ADDITIVE MINOR field here — this entry is where it lands, not player_ref.",
-      "required": ["player_id", "name", "last_name", "team_id", "positions"],
+      "description": "Per-game identity home (GRAFT 1's stated home). player_id MUST equal this entry's map key in `players`. `box_listed` (1.4.0) marks a PBP-declared player. A future cross-season person_id is an ADDITIVE MINOR field here \u2014 this entry is where it lands, not player_ref.",
+      "required": [
+        "player_id",
+        "name",
+        "last_name",
+        "team_id",
+        "positions"
+      ],
       "properties": {
-        "player_id": { "$ref": "#/$defs/pid" },
-        "name": { "type": "string", "description": "Display name from boxscore link text." },
-        "last_name": { "type": "string", "description": "Token PBP narrative uses; the join surface." },
-        "team_id": { "type": "string" },
+        "player_id": {
+          "$ref": "#/$defs/pid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name from boxscore link text."
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Token PBP narrative uses; the join surface."
+        },
+        "team_id": {
+          "type": "string"
+        },
         "bats_side": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Not in source; reserved, null for now."
         },
         "positions": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Positions seen in box/lineup this game."
+        },
+        "box_listed": {
+          "type": "boolean",
+          "description": "False when this player appears ONLY in the PBP narrative and has no row in the boxscore's Batters/Pitchers tables -- StatCrew omits an all-zero row for a player who entered but never batted or reached, and (rarely) omits a player who did record a plate appearance. The PBP is authority that they were in the game, so they are admitted to `players`; this flag marks that their identity is PBP-declared, so a consumer never mistakes the absence of box stats for zero stats. Absent means True (every pre-1.4.0 file is boxscore-derived)."
         }
       }
     },
     "team": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["team_id", "name"],
+      "required": [
+        "team_id",
+        "name"
+      ],
       "properties": {
-        "team_id": { "type": "string" },
-        "name": { "type": "string" }
+        "team_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
       }
     },
     "source": {
       "type": "object",
       "additionalProperties": false,
       "description": "GRAFT 2: competition identity, so a multi-league query never has to guess.",
-      "required": ["provider", "league_id"],
+      "required": [
+        "provider",
+        "league_id"
+      ],
       "properties": {
-        "provider": { "type": "string", "enum": ["prestosports"] },
-        "league_id": { "type": "string", "description": "e.g. \"pioneer\"." },
-        "site": { "type": "string", "description": "Host the file was scraped from, e.g. \"pioneerleague.com\"." }
+        "provider": {
+          "type": "string",
+          "enum": [
+            "prestosports"
+          ]
+        },
+        "league_id": {
+          "type": "string",
+          "description": "e.g. \"pioneer\"."
+        },
+        "site": {
+          "type": "string",
+          "description": "Host the file was scraped from, e.g. \"pioneerleague.com\"."
+        }
       }
     },
     "rhe": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["R", "H", "E"],
+      "required": [
+        "R",
+        "H",
+        "E"
+      ],
       "properties": {
-        "R": { "type": "integer" },
-        "H": { "type": "integer" },
-        "E": { "type": "integer" }
+        "R": {
+          "type": "integer"
+        },
+        "H": {
+          "type": "integer"
+        },
+        "E": {
+          "type": "integer"
+        }
       }
     },
     "linescore": {
       "type": "object",
       "additionalProperties": false,
-      "description": "The primary oracle. null in an innings array encodes the literal \"X\" (that half was not batted — walk-off/unbatted).",
-      "required": ["innings", "totals"],
+      "description": "The primary oracle. null in an innings array encodes the literal \"X\" (that half was not batted \u2014 walk-off/unbatted).",
+      "required": [
+        "innings",
+        "totals"
+      ],
       "properties": {
         "innings": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["away", "home"],
+          "required": [
+            "away",
+            "home"
+          ],
           "properties": {
-            "away": { "type": "array", "items": { "type": ["integer", "null"] } },
-            "home": { "type": "array", "items": { "type": ["integer", "null"] } }
+            "away": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "home": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            }
           }
         },
         "totals": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["away", "home"],
+          "required": [
+            "away",
+            "home"
+          ],
           "properties": {
-            "away": { "$ref": "#/$defs/rhe" },
-            "home": { "$ref": "#/$defs/rhe" }
+            "away": {
+              "$ref": "#/$defs/rhe"
+            },
+            "home": {
+              "$ref": "#/$defs/rhe"
+            }
           }
         }
       }
@@ -186,52 +305,114 @@
     "batting_line": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["player_id", "pos", "AB", "R", "H", "RBI", "BB", "SO", "LOB", "AVG"],
+      "required": [
+        "player_id",
+        "pos",
+        "AB",
+        "R",
+        "H",
+        "RBI",
+        "BB",
+        "SO",
+        "LOB",
+        "AVG"
+      ],
       "properties": {
-        "player_id": { "$ref": "#/$defs/pid" },
-        "pos": { "type": "string" },
-        "AB": { "type": "integer" },
-        "R": { "type": "integer" },
-        "H": { "type": "integer" },
-        "RBI": { "type": "integer" },
-        "BB": { "type": "integer" },
-        "SO": { "type": "integer" },
-        "LOB": { "type": "integer" },
-        "AVG": { "type": "string", "description": "Season-to-date rate, verbatim source string (e.g. \".395\")." }
+        "player_id": {
+          "$ref": "#/$defs/pid"
+        },
+        "pos": {
+          "type": "string"
+        },
+        "AB": {
+          "type": "integer"
+        },
+        "R": {
+          "type": "integer"
+        },
+        "H": {
+          "type": "integer"
+        },
+        "RBI": {
+          "type": "integer"
+        },
+        "BB": {
+          "type": "integer"
+        },
+        "SO": {
+          "type": "integer"
+        },
+        "LOB": {
+          "type": "integer"
+        },
+        "AVG": {
+          "type": "string",
+          "description": "Season-to-date rate, verbatim source string (e.g. \".395\")."
+        }
       }
     },
     "pitching_line": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["player_id", "IP", "H", "R", "ER", "BB", "SO"],
+      "required": [
+        "player_id",
+        "IP",
+        "H",
+        "R",
+        "ER",
+        "BB",
+        "SO"
+      ],
       "properties": {
-        "player_id": { "$ref": "#/$defs/pid" },
-        "IP": { "type": "string", "description": "Baseball notation (e.g. \"5.2\"); kept a string to avoid a lossy float cast." },
-        "H": { "type": "integer" },
-        "R": { "type": "integer" },
-        "ER": { "type": "integer" },
-        "BB": { "type": "integer" },
-        "SO": { "type": "integer" }
+        "player_id": {
+          "$ref": "#/$defs/pid"
+        },
+        "IP": {
+          "type": "string",
+          "description": "Baseball notation (e.g. \"5.2\"); kept a string to avoid a lossy float cast."
+        },
+        "H": {
+          "type": "integer"
+        },
+        "R": {
+          "type": "integer"
+        },
+        "ER": {
+          "type": "integer"
+        },
+        "BB": {
+          "type": "integer"
+        },
+        "SO": {
+          "type": "integer"
+        }
       }
     },
     "box": {
       "type": "object",
       "additionalProperties": false,
       "description": "Secondary oracle + season-rate context. Keyed by team_id.",
-      "required": ["batting", "pitching"],
+      "required": [
+        "batting",
+        "pitching"
+      ],
       "properties": {
         "batting": {
           "type": "object",
           "additionalProperties": {
             "type": "array",
-            "items": { "$ref": "#/$defs/batting_line" }
+            "items": {
+              "$ref": "#/$defs/batting_line"
+            }
           }
         },
         "pitching": {
           "type": "object",
           "additionalProperties": {
             "type": "array",
-            "items": { "$ref": "#/$defs/pitching_line" }
+            "items": {
+              "$ref": "#/$defs/pitching_line"
+            }
           }
         }
       }
@@ -239,38 +420,82 @@
     "lineup_side": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["batting_order", "substitutions"],
+      "required": [
+        "batting_order",
+        "substitutions"
+      ],
       "properties": {
         "batting_order": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["slot", "player_id"],
+            "required": [
+              "slot",
+              "player_id"
+            ],
             "properties": {
-              "slot": { "type": "integer", "minimum": 1, "maximum": 9 },
-              "player_id": { "$ref": "#/$defs/pid" }
+              "slot": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9
+              },
+              "player_id": {
+                "$ref": "#/$defs/pid"
+              }
             }
           }
         },
         "substitutions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/substitution" }
+          "items": {
+            "$ref": "#/$defs/substitution"
+          }
         }
       }
     },
     "substitution": {
       "type": "object",
       "additionalProperties": false,
-      "description": "B §5 substitution shape, reused in lineups[].substitutions and in the substitution event body.",
-      "required": ["slot", "player_out", "player_in", "kind", "after_event_seq"],
+      "description": "B \u00a75 substitution shape, reused in lineups[].substitutions and in the substitution event body.",
+      "required": [
+        "slot",
+        "player_out",
+        "player_in",
+        "kind",
+        "after_event_seq"
+      ],
       "properties": {
-        "slot": { "type": ["integer", "null"], "minimum": 1, "maximum": 9, "description": "Batting-order slot (1-9), or null = the substitute is not in the batting order (a DH-game pitching change). Added nullable in 1.1.0 (additive MINOR); min/max constrain only the integer branch." },
-        "player_out": { "anyOf": [{ "$ref": "#/$defs/pid" }, { "type": "null" }], "description": "Outgoing player, or null = the historical bare DH-slot-entry shape names no outgoing player. Added nullable in 1.2.0 (additive MINOR)." },
-        "player_in": { "$ref": "#/$defs/pid" },
+        "slot": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 9,
+          "description": "Batting-order slot (1-9), or null = the substitute is not in the batting order (a DH-game pitching change). Added nullable in 1.1.0 (additive MINOR); min/max constrain only the integer branch."
+        },
+        "player_out": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/pid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Outgoing player, or null = the historical bare DH-slot-entry shape names no outgoing player. Added nullable in 1.2.0 (additive MINOR)."
+        },
+        "player_in": {
+          "$ref": "#/$defs/pid"
+        },
         "kind": {
           "type": "string",
-          "enum": ["offensive", "defensive", "pitching"],
+          "enum": [
+            "offensive",
+            "defensive",
+            "pitching"
+          ],
           "description": "Closed substitution kind. B names \"offensive\" and \"pitching\"; \"defensive\" is the grounded complement."
         },
         "after_event_seq": {
@@ -283,11 +508,17 @@
     "outcome": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "modifiers", "fielders", "outs_recorded", "location"],
+      "required": [
+        "type",
+        "modifiers",
+        "fielders",
+        "outs_recorded",
+        "location"
+      ],
       "properties": {
         "type": {
           "type": "string",
-          "description": "CLOSED taxonomy (B §6.4). Anything outside this set routes the line to unparsed[] and CI fails until the taxonomy is extended.",
+          "description": "CLOSED taxonomy (B \u00a76.4). Anything outside this set routes the line to unparsed[] and CI fails until the taxonomy is extended.",
           "enum": [
             "single",
             "double",
@@ -312,47 +543,93 @@
         },
         "modifiers": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "e.g. RBI, SAC, unearned, intentional, unassisted, DP, FC, error. Not a frozen enum."
         },
         "fielders": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Fielding chain as position tokens, in order; [] when none."
         },
-        "outs_recorded": { "type": "integer", "minimum": 0, "description": "Outs THIS event adds." },
-        "location": { "type": ["string", "null"], "description": "Free-text hit location, or null." }
+        "outs_recorded": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Outs THIS event adds."
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Free-text hit location, or null."
+        }
       }
     },
     "count": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["balls", "strikes"],
+      "required": [
+        "balls",
+        "strikes"
+      ],
       "properties": {
-        "balls": { "type": "integer", "minimum": 0 },
-        "strikes": { "type": "integer", "minimum": 0 }
+        "balls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "strikes": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "runner": {
       "type": "object",
       "additionalProperties": false,
-      "description": "B §6.3 from→to primitive. player_id is a BARE pid (not a player_ref).",
-      "required": ["player_id", "from", "to", "cause", "out", "scored"],
+      "description": "B \u00a76.3 from\u2192to primitive. player_id is a BARE pid (not a player_ref).",
+      "required": [
+        "player_id",
+        "from",
+        "to",
+        "cause",
+        "out",
+        "scored"
+      ],
       "properties": {
-        "player_id": { "$ref": "#/$defs/pid" },
+        "player_id": {
+          "$ref": "#/$defs/pid"
+        },
         "from": {
           "type": "integer",
-          "enum": [-1, 0, 1, 2, 3, 4],
+          "enum": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
           "description": "0=box (batter origin), 1|2|3=bases, 4=home, -1=off the bases (retired)."
         },
         "to": {
           "type": "integer",
-          "enum": [-1, 0, 1, 2, 3, 4],
+          "enum": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
           "description": "Same domain as `from`."
         },
         "cause": {
           "type": "string",
-          "description": "CLOSED runner-cause taxonomy (B §6.3), the asserted mechanism from the runner clause verb.",
+          "description": "CLOSED runner-cause taxonomy (B \u00a76.3), the asserted mechanism from the runner clause verb.",
           "enum": [
             "batted_ball",
             "advance",
@@ -368,39 +645,96 @@
             "putout"
           ]
         },
-        "out": { "type": "boolean" },
-        "scored": { "type": "boolean" },
-        "earned": { "type": "boolean", "description": "Per-run asserted flag; present for a scored run." },
-        "rbi": { "type": "boolean", "description": "Per-run asserted flag; present for a scored run." }
+        "out": {
+          "type": "boolean"
+        },
+        "scored": {
+          "type": "boolean"
+        },
+        "earned": {
+          "type": "boolean",
+          "description": "Per-run asserted flag; present for a scored run."
+        },
+        "rbi": {
+          "type": "boolean",
+          "description": "Per-run asserted flag; present for a scored run."
+        }
       }
     },
     "summary": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["R", "H", "E", "LOB"],
+      "required": [
+        "R",
+        "H",
+        "E",
+        "LOB"
+      ],
       "properties": {
-        "R": { "type": "integer" },
-        "H": { "type": "integer" },
-        "E": { "type": "integer" },
-        "LOB": { "type": "integer" }
+        "R": {
+          "type": "integer"
+        },
+        "H": {
+          "type": "integer"
+        },
+        "E": {
+          "type": "integer"
+        },
+        "LOB": {
+          "type": "integer"
+        }
       }
     },
     "_derived": {
       "type": "object",
       "additionalProperties": true,
-      "description": "Regenerable base-out CACHE (B §6.5). CI-stamped by the canonical replayer, NEVER hand-authored, validated against the linescore/box/inning_summary oracles before it may persist. EXCLUDED from semantic equality. New analytic keys accrete here — this is the SOLE object in the schema that carries additionalProperties:true.",
+      "description": "Regenerable base-out CACHE (B \u00a76.5). CI-stamped by the canonical replayer, NEVER hand-authored, validated against the linescore/box/inning_summary oracles before it may persist. EXCLUDED from semantic equality. New analytic keys accrete here \u2014 this is the SOLE object in the schema that carries additionalProperties:true.",
       "properties": {
-        "outs_before": { "type": "integer" },
-        "bases_before": { "type": "array", "items": { "type": "boolean" } },
-        "bases_before_ids": { "type": "array", "items": { "type": ["string", "null"] } },
-        "base_out_state": { "type": "string" },
-        "away_score_before": { "type": "integer" },
-        "home_score_before": { "type": "integer" },
-        "outs_after": { "type": "integer" },
-        "bases_after": { "type": "array", "items": { "type": "boolean" } },
-        "runs_on_play": { "type": "integer" },
-        "re24_state_before": { "type": "string" },
-        "pa_number_of_batter": { "type": "integer" }
+        "outs_before": {
+          "type": "integer"
+        },
+        "bases_before": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "bases_before_ids": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "base_out_state": {
+          "type": "string"
+        },
+        "away_score_before": {
+          "type": "integer"
+        },
+        "home_score_before": {
+          "type": "integer"
+        },
+        "outs_after": {
+          "type": "integer"
+        },
+        "bases_after": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "runs_on_play": {
+          "type": "integer"
+        },
+        "re24_state_before": {
+          "type": "string"
+        },
+        "pa_number_of_batter": {
+          "type": "integer"
+        }
       }
     },
     "event": {
@@ -417,39 +751,107 @@
         "scoring_play"
       ],
       "properties": {
-        "seq": { "type": "integer", "minimum": 0, "description": "0-based global order; the sort key and sub-anchor." },
-        "inning": { "type": "integer", "minimum": 1 },
-        "half": { "type": "string", "enum": ["top", "bottom"] },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0-based global order; the sort key and sub-anchor."
+        },
+        "inning": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "half": {
+          "type": "string",
+          "enum": [
+            "top",
+            "bottom"
+          ]
+        },
         "kind": {
           "type": "string",
-          "enum": ["plate_appearance", "runner_event", "substitution", "inning_summary"]
+          "enum": [
+            "plate_appearance",
+            "runner_event",
+            "substitution",
+            "inning_summary"
+          ]
         },
-        "batting_team": { "type": "string" },
-        "fielding_team": { "type": "string" },
-        "narrative": { "type": "string", "description": "Verbatim source line; the ground truth every structured field derives from." },
-        "scoring_play": { "type": "boolean", "description": "Source rendered this line <strong> (a run scored); asserted flag." },
-        "_derived": { "$ref": "#/$defs/_derived" },
-        "batter": { "$ref": "#/$defs/player_ref" },
-        "pitcher": { "$ref": "#/$defs/player_ref" },
-        "outcome": { "$ref": "#/$defs/outcome" },
+        "batting_team": {
+          "type": "string"
+        },
+        "fielding_team": {
+          "type": "string"
+        },
+        "narrative": {
+          "type": "string",
+          "description": "Verbatim source line; the ground truth every structured field derives from."
+        },
+        "scoring_play": {
+          "type": "boolean",
+          "description": "Source rendered this line <strong> (a run scored); asserted flag."
+        },
+        "_derived": {
+          "$ref": "#/$defs/_derived"
+        },
+        "batter": {
+          "$ref": "#/$defs/player_ref"
+        },
+        "pitcher": {
+          "$ref": "#/$defs/player_ref"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
         "count": {
-          "anyOf": [{ "$ref": "#/$defs/count" }, { "type": "null" }],
+          "anyOf": [
+            {
+              "$ref": "#/$defs/count"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "description": "Balls/strikes at this plate appearance, or null when the source PBP line carries no count-tail (the historical template). Added nullable in 1.2.0 (additive MINOR)."
         },
         "pitches": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[BFKSH]*$",
           "description": "Pitch-result string over the observed alphabet, or null when the source omits it (first-pitch ball in play)."
         },
-        "runners": { "type": "array", "items": { "$ref": "#/$defs/runner" } },
-        "substitution": { "$ref": "#/$defs/substitution" },
-        "summary": { "$ref": "#/$defs/summary" }
+        "runners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/runner"
+          }
+        },
+        "substitution": {
+          "$ref": "#/$defs/substitution"
+        },
+        "summary": {
+          "$ref": "#/$defs/summary"
+        }
       },
       "allOf": [
         {
-          "if": { "properties": { "kind": { "const": "plate_appearance" } } },
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "plate_appearance"
+              }
+            }
+          },
           "then": {
-            "required": ["batter", "pitcher", "outcome", "count", "pitches", "runners"],
+            "required": [
+              "batter",
+              "pitcher",
+              "outcome",
+              "count",
+              "pitches",
+              "runners"
+            ],
             "properties": {
               "summary": false,
               "substitution": false
@@ -457,9 +859,17 @@
           }
         },
         {
-          "if": { "properties": { "kind": { "const": "runner_event" } } },
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "runner_event"
+              }
+            }
+          },
           "then": {
-            "required": ["runners"],
+            "required": [
+              "runners"
+            ],
             "properties": {
               "batter": false,
               "pitcher": false,
@@ -472,9 +882,17 @@
           }
         },
         {
-          "if": { "properties": { "kind": { "const": "substitution" } } },
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "substitution"
+              }
+            }
+          },
           "then": {
-            "required": ["substitution"],
+            "required": [
+              "substitution"
+            ],
             "properties": {
               "batter": false,
               "pitcher": false,
@@ -487,9 +905,17 @@
           }
         },
         {
-          "if": { "properties": { "kind": { "const": "inning_summary" } } },
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "inning_summary"
+              }
+            }
+          },
           "then": {
-            "required": ["summary"],
+            "required": [
+              "summary"
+            ],
             "properties": {
               "batter": false,
               "pitcher": false,
@@ -506,26 +932,49 @@
     "unparsed_line": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["location", "raw", "reason"],
+      "required": [
+        "location",
+        "raw",
+        "reason"
+      ],
       "properties": {
         "location": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["inning", "half", "line_index"],
+          "required": [
+            "inning",
+            "half",
+            "line_index"
+          ],
           "properties": {
-            "inning": { "type": "integer" },
-            "half": { "type": "string", "enum": ["top", "bottom"] },
-            "line_index": { "type": "integer" }
+            "inning": {
+              "type": "integer"
+            },
+            "half": {
+              "type": "string",
+              "enum": [
+                "top",
+                "bottom"
+              ]
+            },
+            "line_index": {
+              "type": "integer"
+            }
           }
         },
-        "raw": { "type": "string", "description": "The verbatim missed line." },
-        "reason": { "type": "string" }
+        "raw": {
+          "type": "string",
+          "description": "The verbatim missed line."
+        },
+        "reason": {
+          "type": "string"
+        }
       }
     },
     "meta": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Provenance. EXCLUDED from semantic equality — a re-parse by the same parser version reproduces a byte-identical file except this block and every _derived cache.",
+      "description": "Provenance. EXCLUDED from semantic equality \u2014 a re-parse by the same parser version reproduces a byte-identical file except this block and every _derived cache.",
       "required": [
         "parser_version",
         "source_url",
@@ -536,22 +985,54 @@
         "parse"
       ],
       "properties": {
-        "parser_version": { "type": "string" },
-        "source_url": { "type": "string" },
-        "source_sha256": { "type": "string", "description": "Hash of the fetched HTML; the reproducibility anchor." },
-        "fetched_at": { "type": "string", "format": "date-time" },
-        "parsed_at": { "type": "string", "format": "date-time" },
-        "derived_replayer_version": { "type": "string", "description": "Which replayer stamped _derived.*; the cache-invalidation key." },
+        "parser_version": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string"
+        },
+        "source_sha256": {
+          "type": "string",
+          "description": "Hash of the fetched HTML; the reproducibility anchor."
+        },
+        "fetched_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "parsed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "derived_replayer_version": {
+          "type": "string",
+          "description": "Which replayer stamped _derived.*; the cache-invalidation key."
+        },
         "parse": {
           "type": "object",
           "additionalProperties": false,
           "description": "GRAFT 3: parse-integrity signals.",
-          "required": ["events_count", "unparsed_count", "replayable", "warnings"],
+          "required": [
+            "events_count",
+            "unparsed_count",
+            "replayable",
+            "warnings"
+          ],
           "properties": {
-            "events_count": { "type": "integer" },
-            "unparsed_count": { "type": "integer" },
-            "replayable": { "type": "boolean" },
-            "warnings": { "type": "array", "items": { "type": "string" } }
+            "events_count": {
+              "type": "integer"
+            },
+            "unparsed_count": {
+              "type": "integer"
+            },
+            "replayable": {
+              "type": "boolean"
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       }
