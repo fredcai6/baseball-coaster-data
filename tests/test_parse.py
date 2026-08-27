@@ -632,3 +632,97 @@ def test_last_name_token_suffix_without_comma_unaffected():
 
 def test_last_name_token_plain_name_unaffected():
     assert parse._last_name_token("J. McLaughli") == "McLaughli"
+
+
+# --- pinch runner inherits the replaced runner's base (issue #33) ----------
+#
+# parse.py tracks base occupancy by player_id in `base_occ`, and a runner
+# clause resolves its own `from` by looking the runner up there. The
+# substitution branch updated slot_occupant/current_pitcher but never
+# base_occ, so a pinch runner was untracked the moment he entered. The
+# `from_base is None` fallback then fired and emitted `from` == the clause's
+# own destination -- which the g6 replayer correctly flags as an illegal
+# transition, since that base is not occupied at event start.
+#
+# 59 of the 60 illegal_transition warnings across the corpus's clean-parse
+# games traced to exactly this.
+
+
+def _pinch_run_table():
+    away = identity.TeamIdentity(
+        team_id="syn:team:away",
+        name="Synthetic Away",
+        players={
+            "syn:away:1": identity.PlayerEntry(
+                player_id="syn:away:1", name="Pat Smith", last_name="Smith",
+                team_id="syn:team:away", positions=["1b"],
+            ),
+            "syn:away:2": identity.PlayerEntry(
+                player_id="syn:away:2", name="Cole Robinson", last_name="Robinson",
+                team_id="syn:team:away", positions=["pr"],
+            ),
+        },
+    )
+    home = identity.TeamIdentity(
+        team_id="syn:team:home",
+        name="Synthetic Home",
+        players={
+            "syn:home:1": identity.PlayerEntry(
+                player_id="syn:home:1", name="Jordan Lee", last_name="Lee",
+                team_id="syn:team:home", positions=["p"],
+            ),
+        },
+    )
+    return identity.PlayerTable(home=home, away=away)
+
+
+def _events_for(texts):
+    lines = [
+        parse.PbpLine(inning=1, half="top", line_index=i, text=t, is_strong=False)
+        for i, t in enumerate(texts)
+    ]
+    return parse.build_events(lines, _pinch_run_table())
+
+
+def _runner_records(events, pid):
+    return [
+        r
+        for ev in events
+        for r in (ev.get("runners") or [])
+        if r["player_id"] == pid
+    ]
+
+
+def test_pinch_runner_inherits_the_base_of_the_runner_he_replaced():
+    result = _events_for([
+        "Pat Smith walked.",
+        "Cole Robinson pinch ran for Pat Smith.",
+        "Cole Robinson stole second.",
+    ])
+    events = result[0] if isinstance(result, tuple) else result
+    recs = _runner_records(events, "syn:away:2")
+    assert recs, "the pinch runner's steal should produce a runner record"
+    stolen = recs[-1]
+    # The whole point: origin is the INHERITED first base, not a fallback to
+    # the clause's own destination (which would emit from == to == 2).
+    assert stolen["from"] == 1, f"expected from=1 (inherited), got {stolen!r}"
+    assert stolen["to"] == 2
+    assert stolen["from"] != stolen["to"]
+
+
+def test_replaced_runner_no_longer_occupies_the_base():
+    """The outgoing runner must be cleared, not left aliasing the base --
+    otherwise the fold sees two runners where the box sees one."""
+    result = _events_for([
+        "Pat Smith walked.",
+        "Cole Robinson pinch ran for Pat Smith.",
+        "Cole Robinson stole second.",
+    ])
+    events = result[0] if isinstance(result, tuple) else result
+    # After the substitution, no later clause should assert movement FROM a
+    # base for the replaced player.
+    later = [
+        r for ev in events for r in (ev.get("runners") or [])
+        if r["player_id"] == "syn:away:1" and ev.get("kind") == "runner_event"
+    ]
+    assert later == [], f"replaced runner should not move again, got {later!r}"

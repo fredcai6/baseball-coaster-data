@@ -502,6 +502,25 @@ def build_events(
                 current_pitcher[team_id] = in_pid
             if slot is not None:
                 slot_occupant[team_id][slot] = in_pid
+            # A substitute for a player standing on a base INHERITS that base.
+            # `base_occ` is keyed by player_id and is what a later runner
+            # clause reads to resolve its own `from` (see the `from_base is
+            # None` fallback above). Without this transfer the incoming runner
+            # is untracked, that fallback fires, and the clause is emitted with
+            # `from` == `to` -- which the g6 replayer then correctly flags as
+            # an illegal transition, because the destination base is not
+            # occupied at event start. 59 of the 60 illegal_transition
+            # warnings across the corpus's clean-parse games trace to exactly
+            # this (issue #33).
+            #
+            # Not gated on substitution.kind: whatever the announcement is
+            # called, if the outgoing player is on a base then the incoming
+            # player physically takes that base. A pitching change cannot
+            # trip this, since a fielding pitcher occupies no base.
+            if out_pid is not None and in_pid is not None:
+                for _base, _occ_pid in list(base_occ.items()):
+                    if _occ_pid == out_pid:
+                        base_occ[_base] = in_pid
             # Under a DH rule the pitcher is not in the batting order ->
             # slot=None (schema 1.1.0 made substitution.slot nullable, so
             # this is now a real event, not an unparsed[] residue). `kind`
