@@ -801,12 +801,28 @@ def _iter_halves(root: Node) -> List[PbpLine]:
                 if td.tag == "td"
             ]
             for idx, td in enumerate(cells):
+                text = text_of(td)
+                if not text.strip():
+                    # An EMPTY `td.text` cell is layout, not narrative. It
+                    # carries nothing to represent as an event and nothing to
+                    # preserve verbatim, so it is skipped here rather than
+                    # reaching the grammar and landing in `unparsed[]` as an
+                    # "empty clause body" -- 27 such entries across the
+                    # archived corpus, 8 of them the sole thing keeping a game
+                    # off clean-parse (issue #40).
+                    #
+                    # This does not weaken the never-drop guarantee in this
+                    # module's docstring: that covers PBP narrative lines, and
+                    # an empty cell is not one. `line_index` still enumerates
+                    # the SOURCE cells, so a skipped cell leaves a visible gap
+                    # rather than silently renumbering its neighbours.
+                    continue
                 lines.append(
                     PbpLine(
                         inning=inning,
                         half=half,
                         line_index=idx,
-                        text=text_of(td),
+                        text=text,
                         is_strong=is_strong(td),
                     )
                 )
