@@ -2790,7 +2790,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [
           "RBI"
         ],
@@ -3363,7 +3363,7 @@
         "fielders": [
           "lf"
         ],
-        "location": "the lf line",
+        "location": "down the lf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -3680,7 +3680,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [
           "2 RBI",
           "RBI"
@@ -5822,6 +5822,74 @@
         "away_score_before": 7,
         "base_out_state": "100|0",
         "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "B. Ryan",
+        "player_id": "kgffa368lrq9k6fz",
+        "resolved": true
+      },
+      "batting_team": "jecryyfq7srh87br",
+      "count": null,
+      "fielding_team": "z7y9gph0l9ltq3lq",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "B. Ryan reached on a fielder's choice to third base; T. Lomack advanced to second, advanced to third on an error by 3b.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [
+          "to third base"
+        ],
+        "outs_recorded": 0,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "2p7ntprl8kefvjh1",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "kgffa368lrq9k6fz",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "rqmfp43xtsbpfjbf",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 107
+    },
+    {
+      "_derived": {
+        "away_score_before": 7,
+        "base_out_state": "101|0",
+        "bases_after": [
           false,
           true,
           false
@@ -5829,7 +5897,7 @@
         "bases_before": [
           true,
           false,
-          false
+          true
         ],
         "home_score_before": 2,
         "outs_after": 1,
@@ -5878,7 +5946,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "kgffa368lrq9k6fz",
           "scored": false,
@@ -5887,7 +5955,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "rqmfp43xtsbpfjbf",
           "rbi": true,
@@ -5896,7 +5964,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 107
+      "seq": 108
     },
     {
       "_derived": {
@@ -5934,7 +6002,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [
           "RBI"
         ],
@@ -5968,7 +6036,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
@@ -6028,7 +6096,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
@@ -6088,7 +6156,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "jecryyfq7srh87br",
@@ -6098,7 +6166,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 1 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 1,
         "H": 1,
@@ -6271,23 +6339,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:02:10Z",
     "parse": {
-      "events_count": 112,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[pa_counts] pa_counts: player xm5c6hanhwrxj016 events PA 5 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player kgffa368lrq9k6fz events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 107 runner kgffa368lrq9k6fz advances from base 2 which was not occupied at event start"
-      ]
+      "events_count": 113,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:15:17Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "94b8e5217318815f72825acefa676a5426f00b5e130e5010bbe4711529dd9a4b",
+    "parsed_at": "2026-08-27T21:11:18Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "09d76816a7175b3de4ef4ef760f4bc09ad98aae42405a4d43ab474498c510c89",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240730_aw6g.xml"
   },
   "players": {
     "2p7ntprl8kefvjh1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cooper",
       "name": "Luke Cooper",
       "player_id": "2p7ntprl8kefvjh1",
@@ -6298,6 +6363,7 @@
     },
     "38zhcbl9g9k6xt4t": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lane",
       "name": "Dawson Lane",
       "player_id": "38zhcbl9g9k6xt4t",
@@ -6308,6 +6374,7 @@
     },
     "5yttq9y9fco5xnmr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kirtley",
       "name": "Christian Kirtley",
       "player_id": "5yttq9y9fco5xnmr",
@@ -6318,6 +6385,7 @@
     },
     "7ta8lyaitqov5yq3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Atwood",
       "name": "Andy Atwood",
       "player_id": "7ta8lyaitqov5yq3",
@@ -6328,6 +6396,7 @@
     },
     "86umucj67wa7b160": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harford",
       "name": "Casey Harford",
       "player_id": "86umucj67wa7b160",
@@ -6338,6 +6407,7 @@
     },
     "9v5x5zk9t4mz5ads": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Penner",
       "name": "Ty Penner",
       "player_id": "9v5x5zk9t4mz5ads",
@@ -6348,6 +6418,7 @@
     },
     "aewetgv8n1lv9gn7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Howell",
       "name": "Gabe Howell",
       "player_id": "aewetgv8n1lv9gn7",
@@ -6358,6 +6429,7 @@
     },
     "jpedyqg9ytsempza": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leach",
       "name": "Dylan Leach",
       "player_id": "jpedyqg9ytsempza",
@@ -6368,6 +6440,7 @@
     },
     "kgffa368lrq9k6fz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ryan",
       "name": "Brendan Ryan",
       "player_id": "kgffa368lrq9k6fz",
@@ -6378,6 +6451,7 @@
     },
     "l16242pilsjbir7k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Clarkson",
       "name": "TJ Clarkson",
       "player_id": "l16242pilsjbir7k",
@@ -6388,6 +6462,7 @@
     },
     "mlgwg524sgj5ed9k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McLaughlin",
       "name": "JD McLaughlin",
       "player_id": "mlgwg524sgj5ed9k",
@@ -6398,6 +6473,7 @@
     },
     "mteel8sz0vl9wpzt": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Willie",
       "name": "Daniel Willie",
       "player_id": "mteel8sz0vl9wpzt",
@@ -6408,6 +6484,7 @@
     },
     "o1fzwb8p33un4x3z": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Guilamo",
       "name": "Freddy Guilamo",
       "player_id": "o1fzwb8p33un4x3z",
@@ -6418,6 +6495,7 @@
     },
     "opmv7e55f51wuw25": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Spencer",
       "name": "Shane Spencer",
       "player_id": "opmv7e55f51wuw25",
@@ -6428,6 +6506,7 @@
     },
     "rqmfp43xtsbpfjbf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lomack",
       "name": "Taylor Lomack",
       "player_id": "rqmfp43xtsbpfjbf",
@@ -6438,6 +6517,7 @@
     },
     "sbhsqh5dk30vk7kx": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Engman",
       "name": "Jared Engman",
       "player_id": "sbhsqh5dk30vk7kx",
@@ -6448,6 +6528,7 @@
     },
     "shmgk7u5prgpdcgm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jackson",
       "name": "Trevor Jackson",
       "player_id": "shmgk7u5prgpdcgm",
@@ -6458,6 +6539,7 @@
     },
     "thi7ecydmzhu5baz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wurtz",
       "name": "Gabe Wurtz",
       "player_id": "thi7ecydmzhu5baz",
@@ -6468,6 +6550,7 @@
     },
     "u7cwgjy128v3l4u1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kline",
       "name": "Jacob Kline",
       "player_id": "u7cwgjy128v3l4u1",
@@ -6478,6 +6561,7 @@
     },
     "urrj3d3z0tz4cn7i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Evans",
       "name": "Blake Evans",
       "player_id": "urrj3d3z0tz4cn7i",
@@ -6488,6 +6572,7 @@
     },
     "uy12pt249g1owsts": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Huntzinger",
       "name": "Jerome Huntzinger",
       "player_id": "uy12pt249g1owsts",
@@ -6498,6 +6583,7 @@
     },
     "v1f1putp8f776blk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Booker",
       "name": "Kyle Booker",
       "player_id": "v1f1putp8f776blk",
@@ -6508,6 +6594,7 @@
     },
     "xm5c6hanhwrxj016": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Castillo",
       "name": "Chad Castillo",
       "player_id": "xm5c6hanhwrxj016",
@@ -6518,6 +6605,7 @@
     },
     "z9bdtpt5yzn6phlr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Fitzgerald",
       "name": "Ben Fitzgerald",
       "player_id": "z9bdtpt5yzn6phlr",
@@ -6528,6 +6616,7 @@
     },
     "zk4oi8kjczby9ezm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Denning",
       "name": "Connor Denning",
       "player_id": "zk4oi8kjczby9ezm",
@@ -6537,7 +6626,7 @@
       "team_id": "jecryyfq7srh87br"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -6555,15 +6644,5 @@
       "team_id": "jecryyfq7srh87br"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 1
-      },
-      "raw": "B. Ryan reached on a fielder's choice to third base; T. Lomack advanced to second, advanced to third on an error by 3b.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

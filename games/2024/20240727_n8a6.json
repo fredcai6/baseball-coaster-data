@@ -5585,7 +5585,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "hwvwiq264gkppgh0",
           "scored": false,
@@ -6955,7 +6955,7 @@
         "away_score_before": 13,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
@@ -6978,7 +6978,7 @@
       "runners": [
         {
           "cause": "balk",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "yq2oka34kos6ljto",
           "scored": false,
@@ -6989,6 +6989,72 @@
       "seq": 125
     },
     {
+      "_derived": {
+        "away_score_before": 13,
+        "base_out_state": "010|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 10,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "R. Major",
+        "player_id": "of30cu7blhtqgcjj",
+        "resolved": true
+      },
+      "batting_team": "wq5td5flfeeumd82",
+      "count": null,
+      "fielding_team": "4hgc4se23g09mrqm",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "R. Major singled; C. Chatham advanced to third, out at home 2b to 1b to c.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "95gbasl0yx1gsw58",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "of30cu7blhtqgcjj",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": true,
+          "player_id": "yq2oka34kos6ljto",
+          "scored": false,
+          "to": 4
+        }
+      ],
+      "scoring_play": false,
+      "seq": 126
+    },
+    {
       "batting_team": "wq5td5flfeeumd82",
       "fielding_team": "4hgc4se23g09mrqm",
       "half": "top",
@@ -6996,7 +7062,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 126,
+      "seq": 127,
       "summary": {
         "E": 0,
         "H": 3,
@@ -7062,7 +7128,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7122,7 +7188,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7191,7 +7257,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 129
+      "seq": 130
     },
     {
       "batting_team": "4hgc4se23g09mrqm",
@@ -7201,7 +7267,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 130,
+      "seq": 131,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7423,25 +7489,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:59:26Z",
     "parse": {
-      "events_count": 131,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player of30cu7blhtqgcjj events PA 5 != box-implied PA 6 (AB=5 BB=0 HBP=0 SAC=1)",
-        "[illegal_transitions] illegal_transition: seq 92 runner hwvwiq264gkppgh0 advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 125 runner yq2oka34kos6ljto advances from base 2 which was not occupied at event start"
-      ]
+      "events_count": 132,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:15:15Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "cbc4917275ddc457aa7218e71eeef9740d92ad71166fc5a95e927351db1ce930",
+    "parsed_at": "2026-08-27T21:11:18Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "58ddadab7ffd30a5e14f34fd55d1276fc83e38b38e270b724ddb0e271a98a128",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240727_n8a6.xml"
   },
   "players": {
     "5vd6dwoaj00ngle4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Green",
       "name": "Caden Green",
       "player_id": "5vd6dwoaj00ngle4",
@@ -7452,6 +7513,7 @@
     },
     "91jdicgbk4tmbrnk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jablonski",
       "name": "Jacob Jablonski",
       "player_id": "91jdicgbk4tmbrnk",
@@ -7462,6 +7524,7 @@
     },
     "95gbasl0yx1gsw58": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hempel",
       "name": "Luke Hempel",
       "player_id": "95gbasl0yx1gsw58",
@@ -7472,6 +7535,7 @@
     },
     "9kqnejirklvoikti": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bohning",
       "name": "Brandon Bohning",
       "player_id": "9kqnejirklvoikti",
@@ -7482,6 +7546,7 @@
     },
     "avpsx2qaduubvx7h": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harrison",
       "name": "Connor Harrison",
       "player_id": "avpsx2qaduubvx7h",
@@ -7492,6 +7557,7 @@
     },
     "aw07u2r2viwnmdzg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hanson",
       "name": "Chase Hanson",
       "player_id": "aw07u2r2viwnmdzg",
@@ -7502,6 +7568,7 @@
     },
     "ejjvip09zufm08ji": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rojas",
       "name": "Freddy Rojas Jr.",
       "player_id": "ejjvip09zufm08ji",
@@ -7512,6 +7579,7 @@
     },
     "en3s39qfbmkhybft": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Serratos",
       "name": "Oscar Serratos Jr.",
       "player_id": "en3s39qfbmkhybft",
@@ -7522,6 +7590,7 @@
     },
     "f3efkg1s7kbcokz9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Iannantone",
       "name": "Nick Iannantone",
       "player_id": "f3efkg1s7kbcokz9",
@@ -7532,6 +7601,7 @@
     },
     "fu9t69ot5sqemdf9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mccarthy",
       "name": "Ryan Mccarthy",
       "player_id": "fu9t69ot5sqemdf9",
@@ -7542,6 +7612,7 @@
     },
     "g6ywfhe3b2k1o8bc": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Robertson",
       "name": "Trae Robertson",
       "player_id": "g6ywfhe3b2k1o8bc",
@@ -7552,6 +7623,7 @@
     },
     "hwvwiq264gkppgh0": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hurdle",
       "name": "Devin Hurdle",
       "player_id": "hwvwiq264gkppgh0",
@@ -7562,6 +7634,7 @@
     },
     "k5rcleqay7vnp21i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Torrealba",
       "name": "Jose Torrealba",
       "player_id": "k5rcleqay7vnp21i",
@@ -7572,6 +7645,7 @@
     },
     "kon77aglbiqv05v6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Coleman",
       "name": "Austyn Coleman",
       "player_id": "kon77aglbiqv05v6",
@@ -7582,6 +7656,7 @@
     },
     "l8xf2v4o45fekc9t": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pinazzi",
       "name": "Nicolo Pinazzi",
       "player_id": "l8xf2v4o45fekc9t",
@@ -7592,6 +7667,7 @@
     },
     "ng8ccszxr8e7olf2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cloude",
       "name": "Ryan Cloude",
       "player_id": "ng8ccszxr8e7olf2",
@@ -7602,6 +7678,7 @@
     },
     "ngztjamb7gyli5de": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wyatt",
       "name": "Tyler Wyatt",
       "player_id": "ngztjamb7gyli5de",
@@ -7612,6 +7689,7 @@
     },
     "o80ebiiht8tlgxtg": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Podkul",
       "name": "Frank Podkul",
       "player_id": "o80ebiiht8tlgxtg",
@@ -7622,6 +7700,7 @@
     },
     "of30cu7blhtqgcjj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Major",
       "name": "Ryan Major",
       "player_id": "of30cu7blhtqgcjj",
@@ -7632,6 +7711,7 @@
     },
     "pdzrh8j18y8ey7od": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Yanez",
       "name": "Hernan Yanez",
       "player_id": "pdzrh8j18y8ey7od",
@@ -7642,6 +7722,7 @@
     },
     "pesp4dvx1ealaw3m": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Washington",
       "name": "Xane Washington",
       "player_id": "pesp4dvx1ealaw3m",
@@ -7652,6 +7733,7 @@
     },
     "pqj1tua56mz1jf4s": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lynch",
       "name": "Jack Lynch",
       "player_id": "pqj1tua56mz1jf4s",
@@ -7662,6 +7744,7 @@
     },
     "q13vtm4wki9sm0jc": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Walker",
       "name": "Zaid Walker",
       "player_id": "q13vtm4wki9sm0jc",
@@ -7672,6 +7755,7 @@
     },
     "r6fgla0jmdiygiu2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Holgate",
       "name": "Ryan Holgate",
       "player_id": "r6fgla0jmdiygiu2",
@@ -7682,6 +7766,7 @@
     },
     "ul7h0bcu6o7du6ue": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gonzalez",
       "name": "Roberto Gonzalez",
       "player_id": "ul7h0bcu6o7du6ue",
@@ -7692,6 +7777,7 @@
     },
     "vtp5ksexz970stpl": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hickey",
       "name": "Matthew Hickey",
       "player_id": "vtp5ksexz970stpl",
@@ -7702,6 +7788,7 @@
     },
     "vviwxn1drm7cwlyk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barrera",
       "name": "Brett Barrera",
       "player_id": "vviwxn1drm7cwlyk",
@@ -7712,6 +7799,7 @@
     },
     "x41lkemkkye4unth": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hughes",
       "name": "Rob Hughes",
       "player_id": "x41lkemkkye4unth",
@@ -7722,6 +7810,7 @@
     },
     "xk2o184at8ug84wo": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Shanks",
       "name": "Jacob Shanks",
       "player_id": "xk2o184at8ug84wo",
@@ -7732,6 +7821,7 @@
     },
     "yq2oka34kos6ljto": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Chatham",
       "name": "Cael Chatham",
       "player_id": "yq2oka34kos6ljto",
@@ -7741,7 +7831,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -7759,15 +7849,5 @@
       "team_id": "4hgc4se23g09mrqm"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 10
-      },
-      "raw": "R. Major singled; C. Chatham advanced to third, out at home 2b to 1b to c.\n                                                                                                                                                                                        \t\t\t\t\t(3 out)",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

@@ -1795,8 +1795,8 @@
         "away_score_before": 2,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -1805,6 +1805,77 @@
           false
         ],
         "home_score_before": 0,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Brendan O'Sullivan",
+        "player_id": "syn:home:5",
+        "resolved": true
+      },
+      "batting_team": "gnd7gosh9l5fc5us",
+      "count": {
+        "balls": 1,
+        "strikes": 0
+      },
+      "fielding_team": "ndn2a2djbgbd0lh4",
+      "half": "bottom",
+      "inning": 2,
+      "kind": "plate_appearance",
+      "narrative": "Brendan O'Sullivan singled, advanced to second (1-0 B); Paul Winland scored on an error by cf, unearned.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:7",
+        "resolved": true
+      },
+      "pitches": "B",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:home:5",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "error",
+          "earned": false,
+          "from": 1,
+          "out": false,
+          "player_id": "4wq5cjcl7qx8k41p",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 22
+    },
+    {
+      "_derived": {
+        "away_score_before": 2,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 1,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 1,
@@ -1851,7 +1922,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 22
+      "seq": 23
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -1861,7 +1932,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 23,
+      "seq": 24,
       "summary": {
         "E": 0,
         "H": 2,
@@ -1883,7 +1954,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -1930,7 +2001,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 24
+      "seq": 25
     },
     {
       "_derived": {
@@ -1946,7 +2017,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -1999,7 +2070,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 25
+      "seq": 26
     },
     {
       "_derived": {
@@ -2015,7 +2086,7 @@
           true,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -2078,7 +2149,103 @@
         }
       ],
       "scoring_play": false,
-      "seq": 26
+      "seq": 27
+    },
+    {
+      "_derived": {
+        "away_score_before": 2,
+        "base_out_state": "111|0",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 1,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 2,
+        "runs_on_play": 3
+      },
+      "batter": {
+        "name_raw": "Kingston Liniak",
+        "player_id": "syn:away:4",
+        "resolved": true
+      },
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "gnd7gosh9l5fc5us",
+      "half": "top",
+      "inning": 3,
+      "kind": "plate_appearance",
+      "narrative": "Kingston Liniak singled to center field, advanced to second, advanced to third, 2 RBI (1-1 BF); Bryce Cannon scored on an error by 3b, unearned; Tyler Williams scored; Osiris Johnson scored.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [
+          "2 RBI",
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:home:6",
+        "resolved": true
+      },
+      "pitches": "BF",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:away:4",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "error",
+          "earned": false,
+          "from": 1,
+          "out": false,
+          "player_id": "syn:away:3",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "gece0gqd5zskx8y6",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "dhom60hfa5q8nmnw",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 28
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -2088,9 +2255,9 @@
       "kind": "substitution",
       "narrative": "Brock Mayer to p for Charlie Hurley.",
       "scoring_play": false,
-      "seq": 27,
+      "seq": 29,
       "substitution": {
-        "after_event_seq": 26,
+        "after_event_seq": 28,
         "kind": "pitching",
         "player_in": "syn:home:7",
         "player_out": "syn:home:6",
@@ -2099,19 +2266,19 @@
     },
     {
       "_derived": {
-        "away_score_before": 2,
-        "base_out_state": "111|0",
+        "away_score_before": 5,
+        "base_out_state": "001|0",
         "bases_after": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
         "bases_before": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -2156,23 +2323,23 @@
         }
       ],
       "scoring_play": false,
-      "seq": 28
+      "seq": 30
     },
     {
       "_derived": {
-        "away_score_before": 2,
-        "base_out_state": "111|1",
+        "away_score_before": 5,
+        "base_out_state": "001|1",
         "bases_after": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
         "bases_before": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 2,
@@ -2219,23 +2386,23 @@
         }
       ],
       "scoring_play": false,
-      "seq": 29
+      "seq": 31
     },
     {
       "_derived": {
-        "away_score_before": 2,
-        "base_out_state": "111|2",
+        "away_score_before": 5,
+        "base_out_state": "001|2",
         "bases_after": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
         "bases_before": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
@@ -2282,7 +2449,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 30
+      "seq": 32
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -2292,7 +2459,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 31,
+      "seq": 33,
       "summary": {
         "E": 0,
         "H": 3,
@@ -2302,7 +2469,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 2,
+        "away_score_before": 5,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -2314,7 +2481,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -2363,11 +2530,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 32
+      "seq": 34
     },
     {
       "_derived": {
-        "away_score_before": 2,
+        "away_score_before": 5,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -2379,7 +2546,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 2,
@@ -2424,11 +2591,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 33
+      "seq": 35
     },
     {
       "_derived": {
-        "away_score_before": 2,
+        "away_score_before": 5,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -2440,7 +2607,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 2,
@@ -2485,11 +2652,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 34
+      "seq": 36
     },
     {
       "_derived": {
-        "away_score_before": 2,
+        "away_score_before": 5,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -2501,7 +2668,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 2,
@@ -2546,7 +2713,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 35
+      "seq": 37
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -2556,7 +2723,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 36,
+      "seq": 38,
       "summary": {
         "E": 0,
         "H": 0,
@@ -2566,7 +2733,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 2,
+        "away_score_before": 5,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -2578,7 +2745,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -2630,11 +2797,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 37
+      "seq": 39
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -2646,7 +2813,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -2693,11 +2860,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 38
+      "seq": 40
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -2709,7 +2876,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 3,
@@ -2756,11 +2923,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 39
+      "seq": 41
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -2772,7 +2939,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
@@ -2817,7 +2984,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 40
+      "seq": 42
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -2827,7 +2994,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 41,
+      "seq": 43,
       "summary": {
         "E": 0,
         "H": 1,
@@ -2837,7 +3004,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -2849,7 +3016,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -2894,11 +3061,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 42
+      "seq": 44
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -2910,7 +3077,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 2,
@@ -2957,11 +3124,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 43
+      "seq": 45
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -2973,7 +3140,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 2,
@@ -3020,11 +3187,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 44
+      "seq": 46
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -3036,10 +3203,10 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -3081,7 +3248,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 45
+      "seq": 47
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -3091,7 +3258,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 46,
+      "seq": 48,
       "summary": {
         "E": 0,
         "H": 1,
@@ -3107,9 +3274,9 @@
       "kind": "substitution",
       "narrative": "Michael Riley to p for Brock Mayer.",
       "scoring_play": false,
-      "seq": 47,
+      "seq": 49,
       "substitution": {
-        "after_event_seq": 46,
+        "after_event_seq": 48,
         "kind": "pitching",
         "player_in": "479z0zo65df8trgo",
         "player_out": "syn:home:7",
@@ -3118,7 +3285,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -3130,7 +3297,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3155,7 +3322,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -3177,11 +3344,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 48
+      "seq": 50
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "010|0",
         "bases_after": [
           true,
@@ -3193,10 +3360,10 @@
           true,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -3238,11 +3405,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 49
+      "seq": 51
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "110|0",
         "bases_after": [
           true,
@@ -3254,7 +3421,7 @@
           true,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3317,11 +3484,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 50
+      "seq": 52
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 6,
         "base_out_state": "111|0",
         "bases_after": [
           true,
@@ -3333,7 +3500,7 @@
           true,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3408,25 +3575,119 @@
         }
       ],
       "scoring_play": true,
-      "seq": 51
+      "seq": 53
     },
     {
       "_derived": {
-        "away_score_before": 4,
+        "away_score_before": 7,
         "base_out_state": "111|0",
         "bases_after": [
+          false,
           true,
-          true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "Justin Boyd",
+        "player_id": "syn:away:1",
+        "resolved": true
+      },
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "count": {
+        "balls": 2,
+        "strikes": 0
+      },
+      "fielding_team": "gnd7gosh9l5fc5us",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "Justin Boyd doubled down the lf line, 2 RBI (2-0 BB); Leiker Figueroa advanced to third, out at home lf to ss to c; Logan Sutter scored; Kingston Liniak scored.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "down the lf line",
+        "modifiers": [
+          "2 RBI",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "double"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "479z0zo65df8trgo",
+        "resolved": true
+      },
+      "pitches": "BB",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:away:1",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": true,
+          "player_id": "syn:away:7",
+          "scored": false,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "syn:away:6",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "syn:away:4",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 54
+    },
+    {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "010|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -3471,7 +3732,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "syn:away:1",
           "scored": false,
@@ -3479,25 +3740,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 52
+      "seq": 55
     },
     {
       "_derived": {
-        "away_score_before": 4,
-        "base_out_state": "111|1",
+        "away_score_before": 9,
+        "base_out_state": "001|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
-          true,
-          true,
+          false,
+          false,
           true
         ],
-        "home_score_before": 0,
-        "outs_after": 1,
-        "outs_before": 1,
+        "home_score_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
@@ -3554,7 +3815,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 53
+      "seq": 56
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -3564,9 +3825,9 @@
       "kind": "substitution",
       "narrative": "Brady Chavez to p for Michael Riley.",
       "scoring_play": false,
-      "seq": 54,
+      "seq": 57,
       "substitution": {
-        "after_event_seq": 53,
+        "after_event_seq": 56,
         "kind": "pitching",
         "player_in": "syn:home:8",
         "player_out": "479z0zo65df8trgo",
@@ -3575,21 +3836,21 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
-        "base_out_state": "110|1",
+        "away_score_before": 10,
+        "base_out_state": "100|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
-        "home_score_before": 0,
-        "outs_after": 2,
-        "outs_before": 1,
+        "home_score_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -3632,7 +3893,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 55
+      "seq": 58
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -3642,7 +3903,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 4 Runs, 5 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 56,
+      "seq": 59,
       "summary": {
         "E": 0,
         "H": 5,
@@ -3652,7 +3913,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -3664,7 +3925,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 2,
@@ -3712,11 +3973,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 57
+      "seq": 60
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "100|0",
         "bases_after": [
           false,
@@ -3728,7 +3989,7 @@
           false,
           false
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3753,7 +4014,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -3783,11 +4044,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 58
+      "seq": 61
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "011|0",
         "bases_after": [
           true,
@@ -3799,7 +4060,7 @@
           true,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3844,11 +4105,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 59
+      "seq": 62
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "111|0",
         "bases_after": [
           false,
@@ -3860,7 +4121,7 @@
           true,
           true
         ],
-        "home_score_before": 0,
+        "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -3935,11 +4196,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 60
+      "seq": 63
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "001|2",
         "bases_after": [
           false,
@@ -3951,7 +4212,7 @@
           false,
           true
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
@@ -4000,7 +4261,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 61
+      "seq": 64
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -4010,7 +4271,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 62,
+      "seq": 65,
       "summary": {
         "E": 0,
         "H": 2,
@@ -4020,7 +4281,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4032,7 +4293,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -4079,11 +4340,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 63
+      "seq": 66
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4095,7 +4356,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 4,
@@ -4140,11 +4401,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 64
+      "seq": 67
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -4156,10 +4417,10 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -4201,11 +4462,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 65
+      "seq": 68
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -4217,7 +4478,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -4266,7 +4527,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 66
+      "seq": 69
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -4276,7 +4537,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 67,
+      "seq": 70,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4292,9 +4553,9 @@
       "kind": "substitution",
       "narrative": "Lucas Alaniz to p for Corbin Talley.",
       "scoring_play": false,
-      "seq": 68,
+      "seq": 71,
       "substitution": {
-        "after_event_seq": 67,
+        "after_event_seq": 70,
         "kind": "pitching",
         "player_in": "syn:away:9",
         "player_out": "syn:away:8",
@@ -4303,7 +4564,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4315,7 +4576,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 3,
@@ -4364,11 +4625,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 69
+      "seq": 72
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4380,7 +4641,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 3,
@@ -4425,15 +4686,15 @@
         }
       ],
       "scoring_play": false,
-      "seq": 70
+      "seq": 73
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -4441,10 +4702,73 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Paul Winland",
+        "player_id": "4wq5cjcl7qx8k41p",
+        "resolved": true
+      },
+      "batting_team": "gnd7gosh9l5fc5us",
+      "count": {
+        "balls": 2,
+        "strikes": 2
+      },
+      "fielding_team": "ndn2a2djbgbd0lh4",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "Paul Winland singled to center field, advanced to second on an error by cf (2-2 BKFB).",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:9",
+        "resolved": true
+      },
+      "pitches": "BKFB",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "4wq5cjcl7qx8k41p",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 74
+    },
+    {
+      "_derived": {
+        "away_score_before": 10,
+        "base_out_state": "010|2",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4486,23 +4810,23 @@
         }
       ],
       "scoring_play": false,
-      "seq": 71
+      "seq": 75
     },
     {
       "_derived": {
-        "away_score_before": 5,
-        "base_out_state": "100|2",
+        "away_score_before": 10,
+        "base_out_state": "110|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
@@ -4549,7 +4873,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 72
+      "seq": 76
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -4559,7 +4883,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 73,
+      "seq": 77,
       "summary": {
         "E": 1,
         "H": 1,
@@ -4575,9 +4899,9 @@
       "kind": "substitution",
       "narrative": "Langston Burkett to p for Brady Chavez.",
       "scoring_play": false,
-      "seq": 74,
+      "seq": 78,
       "substitution": {
-        "after_event_seq": 73,
+        "after_event_seq": 77,
         "kind": "pitching",
         "player_in": "syn:home:9",
         "player_out": "syn:home:8",
@@ -4586,7 +4910,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4598,7 +4922,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -4645,11 +4969,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 75
+      "seq": 79
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4661,10 +4985,10 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -4706,11 +5030,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 76
+      "seq": 80
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -4722,7 +5046,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -4769,7 +5093,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 77
+      "seq": 81
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -4779,7 +5103,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 78,
+      "seq": 82,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4795,9 +5119,9 @@
       "kind": "substitution",
       "narrative": "Cole Tremain to p for Lucas Alaniz.",
       "scoring_play": false,
-      "seq": 79,
+      "seq": 83,
       "substitution": {
-        "after_event_seq": 78,
+        "after_event_seq": 82,
         "kind": "pitching",
         "player_in": "syn:away:10",
         "player_out": "syn:away:9",
@@ -4806,7 +5130,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4818,7 +5142,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -4865,11 +5189,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 80
+      "seq": 84
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4881,7 +5205,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 4,
@@ -4928,11 +5252,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 81
+      "seq": 85
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -4944,7 +5268,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -4991,7 +5315,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 82
+      "seq": 86
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -5001,7 +5325,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 83,
+      "seq": 87,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5017,9 +5341,9 @@
       "kind": "substitution",
       "narrative": "Austin Balentine to p for Langston Burkett.",
       "scoring_play": false,
-      "seq": 84,
+      "seq": 88,
       "substitution": {
-        "after_event_seq": 83,
+        "after_event_seq": 87,
         "kind": "pitching",
         "player_in": "syn:home:10",
         "player_out": "syn:home:9",
@@ -5028,7 +5352,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -5040,7 +5364,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -5085,11 +5409,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 85
+      "seq": 89
     },
     {
       "_derived": {
-        "away_score_before": 5,
+        "away_score_before": 10,
         "base_out_state": "100|0",
         "bases_after": [
           false,
@@ -5101,7 +5425,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -5163,11 +5487,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 86
+      "seq": 90
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -5179,7 +5503,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -5226,11 +5550,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 87
+      "seq": 91
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "100|0",
         "bases_after": [
           true,
@@ -5242,7 +5566,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -5289,7 +5613,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 92
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -5299,9 +5623,9 @@
       "kind": "substitution",
       "narrative": "Kolton Reynolds pinch hit for Kingston Liniak.",
       "scoring_play": false,
-      "seq": 89,
+      "seq": 93,
       "substitution": {
-        "after_event_seq": 88,
+        "after_event_seq": 92,
         "kind": "offensive",
         "player_in": "syn:away:5",
         "player_out": "syn:away:4",
@@ -5310,7 +5634,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -5322,7 +5646,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 1,
@@ -5369,11 +5693,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 94
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -5385,7 +5709,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -5432,7 +5756,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 91
+      "seq": 95
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -5442,7 +5766,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 92,
+      "seq": 96,
       "summary": {
         "E": 0,
         "H": 2,
@@ -5458,9 +5782,9 @@
       "kind": "substitution",
       "narrative": "Kolton Reynolds to lf.",
       "scoring_play": false,
-      "seq": 93,
+      "seq": 97,
       "substitution": {
-        "after_event_seq": 92,
+        "after_event_seq": 96,
         "kind": "defensive",
         "player_in": "syn:away:5",
         "player_out": null,
@@ -5475,9 +5799,9 @@
       "kind": "substitution",
       "narrative": "Blake Smith to p for Cole Tremain.",
       "scoring_play": false,
-      "seq": 94,
+      "seq": 98,
       "substitution": {
-        "after_event_seq": 93,
+        "after_event_seq": 97,
         "kind": "pitching",
         "player_in": "syn:away:11",
         "player_out": "syn:away:10",
@@ -5486,7 +5810,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5498,7 +5822,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -5546,11 +5870,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 99
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "010|0",
         "bases_after": [
           false,
@@ -5562,7 +5886,7 @@
           true,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -5609,11 +5933,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 100
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "010|1",
         "bases_after": [
           false,
@@ -5625,7 +5949,7 @@
           true,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 4,
@@ -5670,11 +5994,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 101
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "010|2",
         "bases_after": [
           false,
@@ -5686,10 +6010,10 @@
           true,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -5731,7 +6055,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 102
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -5741,7 +6065,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 99,
+      "seq": 103,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5751,7 +6075,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5763,7 +6087,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -5810,11 +6134,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 104
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -5826,10 +6150,10 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
       "batter": {
@@ -5871,11 +6195,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -5887,7 +6211,7 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -5940,11 +6264,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 106
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "110|1",
         "bases_after": [
           true,
@@ -5956,7 +6280,7 @@
           true,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -6017,11 +6341,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 107
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "101|2",
         "bases_after": [
           true,
@@ -6033,7 +6357,7 @@
           false,
           true
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -6080,7 +6404,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 108
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -6090,7 +6414,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 105,
+      "seq": 109,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6106,9 +6430,9 @@
       "kind": "substitution",
       "narrative": "Preston Kelly to p for Blake Smith.",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 110,
       "substitution": {
-        "after_event_seq": 105,
+        "after_event_seq": 109,
         "kind": "pitching",
         "player_in": "si8cg6t1pnyul1f5",
         "player_out": "syn:away:11",
@@ -6117,7 +6441,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6129,10 +6453,10 @@
           false,
           false
         ],
-        "home_score_before": 1,
+        "home_score_before": 2,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
       "batter": {
@@ -6181,7 +6505,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 107
+      "seq": 111
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6191,9 +6515,9 @@
       "kind": "substitution",
       "narrative": "Dawson Goines to p for Preston Kelly.",
       "scoring_play": false,
-      "seq": 108,
+      "seq": 112,
       "substitution": {
-        "after_event_seq": 107,
+        "after_event_seq": 111,
         "kind": "pitching",
         "player_in": "syn:away:12",
         "player_out": "si8cg6t1pnyul1f5",
@@ -6202,7 +6526,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6214,7 +6538,7 @@
           false,
           false
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -6261,11 +6585,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 113
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -6277,7 +6601,7 @@
           false,
           false
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -6324,11 +6648,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 114
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -6340,7 +6664,7 @@
           false,
           false
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -6387,11 +6711,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 115
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "100|2",
         "bases_after": [
           false,
@@ -6403,7 +6727,7 @@
           false,
           false
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -6458,11 +6782,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 116
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "011|2",
         "bases_after": [
           true,
@@ -6474,7 +6798,7 @@
           true,
           true
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -6519,11 +6843,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 117
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 12,
         "base_out_state": "111|2",
         "bases_after": [
           true,
@@ -6535,7 +6859,7 @@
           true,
           true
         ],
-        "home_score_before": 2,
+        "home_score_before": 3,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -6582,7 +6906,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 118
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6592,7 +6916,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 119,
       "summary": {
         "E": 0,
         "H": 3,
@@ -6682,35 +7006,35 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 26,
+          "after_event_seq": 28,
           "kind": "pitching",
           "player_in": "syn:home:7",
           "player_out": "syn:home:6",
           "slot": null
         },
         {
-          "after_event_seq": 46,
+          "after_event_seq": 48,
           "kind": "pitching",
           "player_in": "479z0zo65df8trgo",
           "player_out": "syn:home:7",
           "slot": null
         },
         {
-          "after_event_seq": 53,
+          "after_event_seq": 56,
           "kind": "pitching",
           "player_in": "syn:home:8",
           "player_out": "479z0zo65df8trgo",
           "slot": null
         },
         {
-          "after_event_seq": 73,
+          "after_event_seq": 77,
           "kind": "pitching",
           "player_in": "syn:home:9",
           "player_out": "syn:home:8",
           "slot": null
         },
         {
-          "after_event_seq": 83,
+          "after_event_seq": 87,
           "kind": "pitching",
           "player_in": "syn:home:10",
           "player_out": "syn:home:9",
@@ -6759,49 +7083,49 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 67,
+          "after_event_seq": 70,
           "kind": "pitching",
           "player_in": "syn:away:9",
           "player_out": "syn:away:8",
           "slot": null
         },
         {
-          "after_event_seq": 78,
+          "after_event_seq": 82,
           "kind": "pitching",
           "player_in": "syn:away:10",
           "player_out": "syn:away:9",
           "slot": null
         },
         {
-          "after_event_seq": 88,
+          "after_event_seq": 92,
           "kind": "offensive",
           "player_in": "syn:away:5",
           "player_out": "syn:away:4",
           "slot": 7
         },
         {
-          "after_event_seq": 92,
+          "after_event_seq": 96,
           "kind": "defensive",
           "player_in": "syn:away:5",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 93,
+          "after_event_seq": 97,
           "kind": "pitching",
           "player_in": "syn:away:11",
           "player_out": "syn:away:10",
           "slot": null
         },
         {
-          "after_event_seq": 105,
+          "after_event_seq": 109,
           "kind": "pitching",
           "player_in": "si8cg6t1pnyul1f5",
           "player_out": "syn:away:11",
           "slot": null
         },
         {
-          "after_event_seq": 107,
+          "after_event_seq": 111,
           "kind": "pitching",
           "player_in": "syn:away:12",
           "player_out": "si8cg6t1pnyul1f5",
@@ -6814,33 +7138,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:40:21Z",
     "parse": {
-      "events_count": 116,
-      "replayable": false,
-      "unparsed_count": 4,
-      "warnings": [
-        "[linescore] linescore: away inning 3 computed 0 != oracle 3",
-        "[linescore] linescore: away inning 5 computed 2 != oracle 4",
-        "[linescore] linescore: home inning 2 computed 0 != oracle 1",
-        "[linescore] linescore: computed away final R 7 != oracle total 12",
-        "[linescore] linescore: computed home final R 2 != oracle total 3",
-        "[outs_per_half] outs_per_half: inning 5 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 3 top folded LOB 3 != inning_summary LOB 1",
-        "[lob] lob: inning 5 top folded LOB 2 != inning_summary LOB 1",
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player syn:away:1 events PA 5 != box-implied PA 6 (AB=4 BB=2 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player syn:away:4 events PA 3 != box-implied PA 4 (AB=2 BB=2 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player 4wq5cjcl7qx8k41p events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player syn:home:5 events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)"
-      ]
+      "events_count": 120,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:06Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:11:59Z",
+    "parser_version": "0.4.0",
     "source_sha256": "3db5bbbf822ce80252bbf225e546c86c48feb5b74573e0aab1f0cd067cd40d76",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260719_nv7v.xml"
   },
   "players": {
     "2y16esu8w84t2090": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Handron",
       "name": "Max Handron",
       "player_id": "2y16esu8w84t2090",
@@ -6851,6 +7162,7 @@
     },
     "479z0zo65df8trgo": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Riley",
       "name": "Michael Riley",
       "player_id": "479z0zo65df8trgo",
@@ -6859,6 +7171,7 @@
     },
     "4wq5cjcl7qx8k41p": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Winland",
       "name": "Paul Winland",
       "player_id": "4wq5cjcl7qx8k41p",
@@ -6869,6 +7182,7 @@
     },
     "5w7du1822fw3aj3e": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Blythe",
       "name": "Noah Blythe",
       "player_id": "5w7du1822fw3aj3e",
@@ -6879,6 +7193,7 @@
     },
     "b9rvuohpqkybze8a": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Beale",
       "name": "Myles Beale",
       "player_id": "b9rvuohpqkybze8a",
@@ -6889,6 +7204,7 @@
     },
     "dhom60hfa5q8nmnw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnson",
       "name": "Osiris Johnson",
       "player_id": "dhom60hfa5q8nmnw",
@@ -6899,6 +7215,7 @@
     },
     "gece0gqd5zskx8y6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Williams",
       "name": "Tyler Williams",
       "player_id": "gece0gqd5zskx8y6",
@@ -6909,6 +7226,7 @@
     },
     "ly42v4qy0of9uuxa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ly42v4qy0of9uuxa",
@@ -6919,6 +7237,7 @@
     },
     "si8cg6t1pnyul1f5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kelly",
       "name": "Preston Kelly",
       "player_id": "si8cg6t1pnyul1f5",
@@ -6927,6 +7246,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Boyd",
       "name": "Justin Boyd",
       "player_id": "syn:away:1",
@@ -6937,6 +7257,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tremain",
       "name": "Cole Tremain",
       "player_id": "syn:away:10",
@@ -6945,6 +7266,7 @@
     },
     "syn:away:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Blake Smith",
       "player_id": "syn:away:11",
@@ -6953,6 +7275,7 @@
     },
     "syn:away:12": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Goines",
       "name": "Dawson Goines",
       "player_id": "syn:away:12",
@@ -6963,6 +7286,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lojewski",
       "name": "Jacob Lojewski",
       "player_id": "syn:away:2",
@@ -6973,6 +7297,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cannon",
       "name": "Bryce Cannon",
       "player_id": "syn:away:3",
@@ -6983,6 +7308,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Liniak",
       "name": "Kingston Liniak",
       "player_id": "syn:away:4",
@@ -6993,6 +7319,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Reynolds",
       "name": "Kolton Reynolds",
       "player_id": "syn:away:5",
@@ -7003,6 +7330,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sutter",
       "name": "Logan Sutter",
       "player_id": "syn:away:6",
@@ -7013,6 +7341,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Figueroa",
       "name": "Leiker Figueroa",
       "player_id": "syn:away:7",
@@ -7023,6 +7352,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Talley",
       "name": "Corbin Talley",
       "player_id": "syn:away:8",
@@ -7033,6 +7363,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Alaniz",
       "name": "Lucas Alaniz",
       "player_id": "syn:away:9",
@@ -7041,6 +7372,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "syn:home:1",
@@ -7051,6 +7383,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Balentine",
       "name": "Austin Balentine",
       "player_id": "syn:home:10",
@@ -7061,6 +7394,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "syn:home:2",
@@ -7071,6 +7405,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ybarra",
       "name": "Jeter Ybarra",
       "player_id": "syn:home:3",
@@ -7081,6 +7416,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Conner Smith",
       "player_id": "syn:home:4",
@@ -7091,6 +7427,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Sullivan",
       "name": "Brendan O'Sullivan",
       "player_id": "syn:home:5",
@@ -7101,6 +7438,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hurley",
       "name": "Charlie Hurley",
       "player_id": "syn:home:6",
@@ -7111,6 +7449,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mayer",
       "name": "Brock Mayer",
       "player_id": "syn:home:7",
@@ -7119,6 +7458,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Chavez",
       "name": "Brady Chavez",
       "player_id": "syn:home:8",
@@ -7127,6 +7467,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burkett",
       "name": "Langston Burkett",
       "player_id": "syn:home:9",
@@ -7134,7 +7475,7 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7152,42 +7493,5 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 2,
-        "line_index": 3
-      },
-      "raw": "Brendan O'Sullivan singled, advanced to second (1-0 B); Paul Winland scored on an error by cf, unearned.",
-      "reason": "primary verb not recognized: \"Brendan O'Sullivan singled, advanced to second\""
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 3,
-        "line_index": 3
-      },
-      "raw": "Kingston Liniak singled to center field, advanced to second, advanced to third, 2 RBI (1-1 BF); Bryce Cannon scored on an error by 3b, unearned; Tyler Williams scored; Osiris Johnson scored.",
-      "reason": "primary verb not recognized: 'Kingston Liniak singled to center field, advanced to second, advanced to third, 2 RBI'"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 5
-      },
-      "raw": "Justin Boyd doubled down the lf line, 2 RBI (2-0 BB); Leiker Figueroa advanced to third, out at home lf to ss to c; Logan Sutter scored; Kingston Liniak scored.",
-      "reason": "runner clause name did not resolve uniquely"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 3
-      },
-      "raw": "Paul Winland singled to center field, advanced to second on an error by cf (2-2 BKFB).",
-      "reason": "primary verb not recognized: 'Paul Winland singled to center field, advanced to second on an error by cf'"
-    }
-  ]
+  "unparsed": []
 }

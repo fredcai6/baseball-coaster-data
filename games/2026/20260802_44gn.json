@@ -2555,7 +2555,7 @@
         "fielders": [
           "lf"
         ],
-        "location": "the lf line",
+        "location": "down the lf line",
         "modifiers": [
           "RBI"
         ],
@@ -5529,7 +5529,7 @@
         "fielders": [
           "lf"
         ],
-        "location": "the lf line",
+        "location": "down the lf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -5881,7 +5881,7 @@
         "away_score_before": 4,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
@@ -5904,7 +5904,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "830vnpp9rbd1qsvr",
           "scored": false,
@@ -5917,14 +5917,14 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "110|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
           true,
           false
         ],
         "bases_before": [
-          true,
+          false,
           true,
           false
         ],
@@ -6419,6 +6419,99 @@
       "seq": 113
     },
     {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "111|2",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "Dylan Wilkinson",
+        "player_id": "syn:home:7",
+        "resolved": true
+      },
+      "batting_team": "qqpt4ybnm28oyy1e",
+      "count": {
+        "balls": 1,
+        "strikes": 2
+      },
+      "fielding_team": "maotayco79j2g2lx",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Dylan Wilkinson reached first on an error by 2b (1-2 SBFFF); Tyler Ganus advanced to third; Garrett Bevacqua scored on the error, unearned; Colson Lawrence scored, unearned.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "error"
+        ],
+        "outs_recorded": 0,
+        "type": "reached_on_error"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:11",
+        "resolved": true
+      },
+      "pitches": "SBFFF",
+      "runners": [
+        {
+          "cause": "error",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:home:7",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "c9jl6o52w04y3bul",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "error",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "syn:home:6",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "syn:home:5",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 114
+    },
+    {
       "batting_team": "qqpt4ybnm28oyy1e",
       "fielding_team": "maotayco79j2g2lx",
       "half": "bottom",
@@ -6426,7 +6519,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 0 Hits, 2 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 114,
+      "seq": 115,
       "summary": {
         "E": 2,
         "H": 0,
@@ -6641,31 +6734,27 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:56:03Z",
     "parse": {
-      "events_count": 115,
+      "events_count": 116,
       "replayable": false,
-      "unparsed_count": 3,
+      "unparsed_count": 2,
       "warnings": [
         "[linescore] linescore: away inning 4 computed 2 != oracle 3",
-        "[linescore] linescore: home inning 9 computed 0 != oracle 2",
         "[linescore] linescore: computed away final R 4 != oracle total 5",
-        "[linescore] linescore: computed home final R 4 != oracle total 6",
         "[outs_per_half] outs_per_half: inning 4 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[outs_per_half] outs_per_half: inning 5 bottom totals 1 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 5 bottom folded LOB 1 != inning_summary LOB 0",
-        "[lob] lob: inning 9 bottom folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player syn:home:7 events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 104 runner 830vnpp9rbd1qsvr advances from base 2 which was not occupied at event start"
+        "[pa_counts] pa_counts: player syn:home:2 events PA 4 != box-implied PA 5 (AB=4 BB=0 HBP=0 SAC=1 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T15:20:09Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:02Z",
+    "parser_version": "0.4.0",
     "source_sha256": "fbbbe7f15e0a87f8b49122c9b7a5b8df5cdb983fef29f6bf4d9098d3a7ac8015",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260802_44gn.xml"
   },
   "players": {
     "3gpxu42krrgcj6a3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Roche",
       "name": "Patrick Roche Jr.",
       "player_id": "3gpxu42krrgcj6a3",
@@ -6676,6 +6765,7 @@
     },
     "830vnpp9rbd1qsvr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pitts",
       "name": "Robert Pitts",
       "player_id": "830vnpp9rbd1qsvr",
@@ -6686,6 +6776,7 @@
     },
     "c9jl6o52w04y3bul": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ganus",
       "name": "Tyler Ganus",
       "player_id": "c9jl6o52w04y3bul",
@@ -6696,6 +6787,7 @@
     },
     "oumqix0pv1jk5cc8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McMan",
       "name": "Parker McMan",
       "player_id": "oumqix0pv1jk5cc8",
@@ -6706,6 +6798,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pelc",
       "name": "Eddy Pelc",
       "player_id": "syn:away:1",
@@ -6716,6 +6809,7 @@
     },
     "syn:away:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dixon",
       "name": "Jake Dixon",
       "player_id": "syn:away:10",
@@ -6724,6 +6818,7 @@
     },
     "syn:away:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Grosjean",
       "name": "Gary Grosjean",
       "player_id": "syn:away:11",
@@ -6734,6 +6829,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bardowell",
       "name": "Matthew Bardowell",
       "player_id": "syn:away:2",
@@ -6744,6 +6840,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vest",
       "name": "Cooper Vest",
       "player_id": "syn:away:3",
@@ -6754,6 +6851,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Corona",
       "name": "Emilio Corona",
       "player_id": "syn:away:4",
@@ -6764,6 +6862,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bess",
       "name": "Cuba Bess",
       "player_id": "syn:away:5",
@@ -6774,6 +6873,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rosengard",
       "name": "Benjamin Rosengard",
       "player_id": "syn:away:6",
@@ -6784,6 +6884,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Whittle",
       "name": "David Whittle",
       "player_id": "syn:away:7",
@@ -6794,6 +6895,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mata",
       "name": "Anthony Mata",
       "player_id": "syn:away:8",
@@ -6804,6 +6906,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jablonski",
       "name": "Jacob Jablonski",
       "player_id": "syn:away:9",
@@ -6814,6 +6917,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Valentine",
       "name": "Chase Valentine",
       "player_id": "syn:home:1",
@@ -6824,6 +6928,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kneip",
       "name": "Kaden Kneip",
       "player_id": "syn:home:10",
@@ -6832,6 +6937,7 @@
     },
     "syn:home:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ramallo",
       "name": "Jonathan Ramallo",
       "player_id": "syn:home:11",
@@ -6842,6 +6948,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jordan",
       "name": "Cole Jordan",
       "player_id": "syn:home:2",
@@ -6852,6 +6959,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lane",
       "name": "Carmine Lane",
       "player_id": "syn:home:3",
@@ -6862,6 +6970,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ferraro-Nahr",
       "name": "Giuseppe Ferraro-Nahr",
       "player_id": "syn:home:4",
@@ -6872,6 +6981,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lawrence",
       "name": "Colson Lawrence",
       "player_id": "syn:home:5",
@@ -6882,6 +6992,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bevacqua",
       "name": "Garrett Bevacqua",
       "player_id": "syn:home:6",
@@ -6892,6 +7003,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wilkinson",
       "name": "Dylan Wilkinson",
       "player_id": "syn:home:7",
@@ -6902,6 +7014,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dodson",
       "name": "Hank Dodson",
       "player_id": "syn:home:8",
@@ -6912,6 +7025,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lewis",
       "name": "Kyle Lewis",
       "player_id": "syn:home:9",
@@ -6920,6 +7034,7 @@
     },
     "urxa9mmchubhb8h6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Faulks",
       "name": "Ryan Faulks",
       "player_id": "urxa9mmchubhb8h6",
@@ -6928,6 +7043,7 @@
     },
     "wrdn1n9n97xox2nd": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Brien",
       "name": "Matthew O'Brien",
       "player_id": "wrdn1n9n97xox2nd",
@@ -6937,7 +7053,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6973,15 +7089,6 @@
       },
       "raw": "Cole Jordan flied into double play p to 1b, bunt (0-0); Chase Valentine out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
       "reason": "primary verb not recognized: 'Cole Jordan flied into double play p to 1b, bunt'"
-    },
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 6
-      },
-      "raw": "Dylan Wilkinson reached first on an error by 2b (1-2 SBFFF); Tyler Ganus advanced to third; Garrett Bevacqua scored on the error, unearned; Colson Lawrence scored, unearned.",
-      "reason": "runner clause not recognized: 'Garrett Bevacqua scored on the error, unearned'"
     }
   ]
 }

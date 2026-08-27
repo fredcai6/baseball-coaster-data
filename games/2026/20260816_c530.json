@@ -4273,7 +4273,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -4320,7 +4320,7 @@
         "base_out_state": "010|0",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -4329,8 +4329,79 @@
           false
         ],
         "home_score_before": 1,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Mitchell Sanford",
+        "player_id": "f2g0dgtvhc3mm3q3",
+        "resolved": true
+      },
+      "batting_team": "gnd7gosh9l5fc5us",
+      "count": {
+        "balls": 1,
+        "strikes": 0
+      },
+      "fielding_team": "maotayco79j2g2lx",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "Mitchell Sanford singled to right field (1-0 B); Noah Blythe advanced to third, out at home rf to c.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": "right field",
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "wcos7mqc7wolufgw",
+        "resolved": true
+      },
+      "pitches": "B",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "f2g0dgtvhc3mm3q3",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": true,
+          "player_id": "5w7du1822fw3aj3e",
+          "scored": false,
+          "to": 4
+        }
+      ],
+      "scoring_play": false,
+      "seq": 74
+    },
+    {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 1,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -4375,7 +4446,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "f2g0dgtvhc3mm3q3",
           "scored": false,
@@ -4383,12 +4454,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 74
+      "seq": 75
     },
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "110|0",
+        "base_out_state": "110|1",
         "bases_after": [
           false,
           true,
@@ -4400,8 +4471,8 @@
           false
         ],
         "home_score_before": 1,
-        "outs_after": 2,
-        "outs_before": 0,
+        "outs_after": 3,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -4456,7 +4527,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 75
+      "seq": 76
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -4466,7 +4537,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 76,
+      "seq": 77,
       "summary": {
         "E": 0,
         "H": 3,
@@ -4482,9 +4553,9 @@
       "kind": "substitution",
       "narrative": "Mitchell Sanford to lf.",
       "scoring_play": false,
-      "seq": 77,
+      "seq": 78,
       "substitution": {
-        "after_event_seq": 76,
+        "after_event_seq": 77,
         "kind": "defensive",
         "player_in": "f2g0dgtvhc3mm3q3",
         "player_out": null,
@@ -4499,9 +4570,9 @@
       "kind": "substitution",
       "narrative": "Jake Allgeyer to 2b.",
       "scoring_play": false,
-      "seq": 78,
+      "seq": 79,
       "substitution": {
-        "after_event_seq": 77,
+        "after_event_seq": 78,
         "kind": "defensive",
         "player_in": "syn:away:1",
         "player_out": null,
@@ -4516,9 +4587,9 @@
       "kind": "substitution",
       "narrative": "Eddy Pelc pinch hit for Johnny Pappas.",
       "scoring_play": false,
-      "seq": 79,
+      "seq": 80,
       "substitution": {
-        "after_event_seq": 78,
+        "after_event_seq": 79,
         "kind": "offensive",
         "player_in": "syn:home:8",
         "player_out": "syn:home:7",
@@ -4584,7 +4655,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 80
+      "seq": 81
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -4594,9 +4665,9 @@
       "kind": "substitution",
       "narrative": "Brock Mayer to p for Reed Butz.",
       "scoring_play": false,
-      "seq": 81,
+      "seq": 82,
       "substitution": {
-        "after_event_seq": 80,
+        "after_event_seq": 81,
         "kind": "pitching",
         "player_in": "syn:away:8",
         "player_out": "2a3fi4fzl2f3kxw4",
@@ -4662,7 +4733,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 82
+      "seq": 83
     },
     {
       "_derived": {
@@ -4731,7 +4802,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 83
+      "seq": 84
     },
     {
       "_derived": {
@@ -4810,7 +4881,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 84
+      "seq": 85
     },
     {
       "_derived": {
@@ -4871,7 +4942,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 85
+      "seq": 86
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -4881,7 +4952,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 86,
+      "seq": 87,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4897,9 +4968,9 @@
       "kind": "substitution",
       "narrative": "Johnny Pappas to c for Eddy Pelc.",
       "scoring_play": false,
-      "seq": 87,
+      "seq": 88,
       "substitution": {
-        "after_event_seq": 86,
+        "after_event_seq": 87,
         "kind": "defensive",
         "player_in": "syn:home:7",
         "player_out": "syn:home:8",
@@ -4967,7 +5038,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "_derived": {
@@ -5030,7 +5101,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 89
+      "seq": 90
     },
     {
       "_derived": {
@@ -5091,7 +5162,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 91
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -5101,7 +5172,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 91,
+      "seq": 92,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5117,9 +5188,9 @@
       "kind": "substitution",
       "narrative": "Tyler Bates to p for Brock Mayer.",
       "scoring_play": false,
-      "seq": 92,
+      "seq": 93,
       "substitution": {
-        "after_event_seq": 91,
+        "after_event_seq": 92,
         "kind": "pitching",
         "player_in": "bfbff9lv7bpfzuwj",
         "player_out": "syn:away:8",
@@ -5187,7 +5258,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
@@ -5256,7 +5327,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 94
+      "seq": 95
     },
     {
       "_derived": {
@@ -5333,7 +5404,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "_derived": {
@@ -5418,7 +5489,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "_derived": {
@@ -5507,7 +5578,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
@@ -5583,7 +5654,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
@@ -5646,7 +5717,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -5656,7 +5727,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 100,
+      "seq": 101,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5672,9 +5743,9 @@
       "kind": "substitution",
       "narrative": "Jaxon Byrd to p for Steven Ordorica.",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "substitution": {
-        "after_event_seq": 100,
+        "after_event_seq": 101,
         "kind": "pitching",
         "player_in": "syn:home:13",
         "player_out": "wcos7mqc7wolufgw",
@@ -5740,7 +5811,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
@@ -5809,7 +5880,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
@@ -5881,7 +5952,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -5891,7 +5962,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 105,
+      "seq": 106,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5907,9 +5978,9 @@
       "kind": "substitution",
       "narrative": "Christian Diaz to p for Tyler Bates.",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "substitution": {
-        "after_event_seq": 105,
+        "after_event_seq": 106,
         "kind": "pitching",
         "player_in": "syn:away:9",
         "player_out": "bfbff9lv7bpfzuwj",
@@ -5924,9 +5995,9 @@
       "kind": "substitution",
       "narrative": "Cooper Vest pinch hit for Spence Coffman.",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "substitution": {
-        "after_event_seq": 106,
+        "after_event_seq": 107,
         "kind": "offensive",
         "player_in": "syn:home:1",
         "player_out": "5vkkunmqsafkal3f",
@@ -5992,7 +6063,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
@@ -6055,7 +6126,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
@@ -6118,7 +6189,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -6128,7 +6199,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6239,35 +6310,35 @@
           "slot": 2
         },
         {
-          "after_event_seq": 76,
+          "after_event_seq": 77,
           "kind": "defensive",
           "player_in": "f2g0dgtvhc3mm3q3",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 77,
+          "after_event_seq": 78,
           "kind": "defensive",
           "player_in": "syn:away:1",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 80,
+          "after_event_seq": 81,
           "kind": "pitching",
           "player_in": "syn:away:8",
           "player_out": "2a3fi4fzl2f3kxw4",
           "slot": null
         },
         {
-          "after_event_seq": 91,
+          "after_event_seq": 92,
           "kind": "pitching",
           "player_in": "bfbff9lv7bpfzuwj",
           "player_out": "syn:away:8",
           "slot": null
         },
         {
-          "after_event_seq": 105,
+          "after_event_seq": 106,
           "kind": "pitching",
           "player_in": "syn:away:9",
           "player_out": "bfbff9lv7bpfzuwj",
@@ -6337,28 +6408,28 @@
           "slot": null
         },
         {
-          "after_event_seq": 78,
+          "after_event_seq": 79,
           "kind": "offensive",
           "player_in": "syn:home:8",
           "player_out": "syn:home:7",
           "slot": 9
         },
         {
-          "after_event_seq": 86,
+          "after_event_seq": 87,
           "kind": "defensive",
           "player_in": "syn:home:7",
           "player_out": "syn:home:8",
           "slot": 9
         },
         {
-          "after_event_seq": 100,
+          "after_event_seq": 101,
           "kind": "pitching",
           "player_in": "syn:home:13",
           "player_out": "wcos7mqc7wolufgw",
           "slot": null
         },
         {
-          "after_event_seq": 106,
+          "after_event_seq": 107,
           "kind": "offensive",
           "player_in": "syn:home:1",
           "player_out": "5vkkunmqsafkal3f",
@@ -6371,21 +6442,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:12:22Z",
     "parse": {
-      "events_count": 112,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 7 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
-      ]
+      "events_count": 113,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:12Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:05Z",
+    "parser_version": "0.4.0",
     "source_sha256": "b29995de7484d0c6c6c1af9d056d22f091d376bd9d988182b1f04d8183d6f477",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260816_c530.xml"
   },
   "players": {
     "2a3fi4fzl2f3kxw4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Butz",
       "name": "Reed Butz",
       "player_id": "2a3fi4fzl2f3kxw4",
@@ -6396,6 +6466,7 @@
     },
     "5vkkunmqsafkal3f": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Coffman",
       "name": "Spence Coffman",
       "player_id": "5vkkunmqsafkal3f",
@@ -6406,6 +6477,7 @@
     },
     "5w7du1822fw3aj3e": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Blythe",
       "name": "Noah Blythe",
       "player_id": "5w7du1822fw3aj3e",
@@ -6416,6 +6488,7 @@
     },
     "830vnpp9rbd1qsvr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pitts",
       "name": "Robert Pitts",
       "player_id": "830vnpp9rbd1qsvr",
@@ -6426,6 +6499,7 @@
     },
     "axaqcwd6178obd99": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rogers",
       "name": "TJ Rogers",
       "player_id": "axaqcwd6178obd99",
@@ -6436,6 +6510,7 @@
     },
     "bfbff9lv7bpfzuwj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bates",
       "name": "Tyler Bates",
       "player_id": "bfbff9lv7bpfzuwj",
@@ -6444,6 +6519,7 @@
     },
     "f2g0dgtvhc3mm3q3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sanford",
       "name": "Mitchell Sanford",
       "player_id": "f2g0dgtvhc3mm3q3",
@@ -6454,6 +6530,7 @@
     },
     "ly42v4qy0of9uuxa": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ly42v4qy0of9uuxa",
@@ -6464,6 +6541,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "syn:away:1",
@@ -6474,6 +6552,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ybarra",
       "name": "Jeter Ybarra",
       "player_id": "syn:away:2",
@@ -6484,6 +6563,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "O'Sullivan",
       "name": "Brendan O'Sullivan",
       "player_id": "syn:away:3",
@@ -6494,6 +6574,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smith",
       "name": "Conner Smith",
       "player_id": "syn:away:4",
@@ -6504,6 +6585,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Johnstone",
       "name": "Logan Johnstone",
       "player_id": "syn:away:5",
@@ -6512,6 +6594,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Crawford",
       "name": "Ethan Crawford",
       "player_id": "syn:away:6",
@@ -6522,6 +6605,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "syn:away:7",
@@ -6532,6 +6616,7 @@
     },
     "syn:away:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mayer",
       "name": "Brock Mayer",
       "player_id": "syn:away:8",
@@ -6540,6 +6625,7 @@
     },
     "syn:away:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Diaz",
       "name": "Christian Diaz",
       "player_id": "syn:away:9",
@@ -6550,6 +6636,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vest",
       "name": "Cooper Vest",
       "player_id": "syn:home:1",
@@ -6560,6 +6647,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wozniak",
       "name": "Brett Wozniak",
       "player_id": "syn:home:10",
@@ -6570,6 +6658,7 @@
     },
     "syn:home:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Grosjean",
       "name": "Gary Grosjean",
       "player_id": "syn:home:11",
@@ -6578,6 +6667,7 @@
     },
     "syn:home:12": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dixon",
       "name": "Jake Dixon",
       "player_id": "syn:home:12",
@@ -6586,6 +6676,7 @@
     },
     "syn:home:13": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Byrd",
       "name": "Jaxon Byrd",
       "player_id": "syn:home:13",
@@ -6596,6 +6687,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Corona",
       "name": "Emilio Corona",
       "player_id": "syn:home:2",
@@ -6606,6 +6698,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bess",
       "name": "Cuba Bess",
       "player_id": "syn:home:3",
@@ -6616,6 +6709,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bardowell",
       "name": "Matthew Bardowell",
       "player_id": "syn:home:4",
@@ -6626,6 +6720,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Rosengard",
       "name": "Benjamin Rosengard",
       "player_id": "syn:home:5",
@@ -6636,6 +6731,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jablonski",
       "name": "Jacob Jablonski",
       "player_id": "syn:home:6",
@@ -6646,6 +6742,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pappas",
       "name": "Johnny Pappas",
       "player_id": "syn:home:7",
@@ -6656,6 +6753,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pelc",
       "name": "Eddy Pelc",
       "player_id": "syn:home:8",
@@ -6664,6 +6762,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mata",
       "name": "Anthony Mata",
       "player_id": "syn:home:9",
@@ -6674,6 +6773,7 @@
     },
     "wcos7mqc7wolufgw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Ordorica",
       "name": "Steven Ordorica",
       "player_id": "wcos7mqc7wolufgw",
@@ -6681,7 +6781,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6699,15 +6799,5 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 3
-      },
-      "raw": "Mitchell Sanford singled to right field (1-0 B); Noah Blythe advanced to third, out at home rf to c.\n                                                                                                                                                                                        \t\t\t\t\t(1 out)",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

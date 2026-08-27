@@ -6028,13 +6028,81 @@
         "base_out_state": "010|1",
         "bases_after": [
           false,
-          false,
+          true,
           true
         ],
         "bases_before": [
           false,
           true,
           false
+        ],
+        "home_score_before": 8,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "E. Underwood",
+        "player_id": "g90mk4clcqv0igif",
+        "resolved": true
+      },
+      "batting_team": "0twkgtzg9upvsarx",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "E. Underwood singled to second base, advanced to second on an error by 2b; T. Darden advanced to third.",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "am7czikji3iecp9k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "g90mk4clcqv0igif",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "nu266budl9xp0y6n",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 111
+    },
+    {
+      "_derived": {
+        "away_score_before": 7,
+        "base_out_state": "011|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -6083,7 +6151,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "g90mk4clcqv0igif",
           "scored": false,
@@ -6092,7 +6160,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "nu266budl9xp0y6n",
           "rbi": true,
@@ -6101,7 +6169,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
@@ -6159,7 +6227,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
@@ -6197,7 +6265,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
@@ -6255,7 +6323,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "0twkgtzg9upvsarx",
@@ -6265,7 +6333,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "summary": {
         "E": 1,
         "H": 1,
@@ -6281,9 +6349,9 @@
       "kind": "substitution",
       "narrative": "B. Turner to rf for T. Darden.",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "substitution": {
-        "after_event_seq": 115,
+        "after_event_seq": 116,
         "kind": "defensive",
         "player_in": "0q2ueofnwczg7zky",
         "player_out": "nu266budl9xp0y6n",
@@ -6298,9 +6366,9 @@
       "kind": "substitution",
       "narrative": "T. Jones to p for N. McBride.",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "substitution": {
-        "after_event_seq": 116,
+        "after_event_seq": 117,
         "kind": "pitching",
         "player_in": "67b8ea7qqbxy32hs",
         "player_out": "kbm2x2mv6jhpshm4",
@@ -6369,7 +6437,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 118
+      "seq": 119
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -6379,7 +6447,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 119,
+      "seq": 120,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6518,14 +6586,14 @@
           "slot": 9
         },
         {
-          "after_event_seq": 115,
+          "after_event_seq": 116,
           "kind": "defensive",
           "player_in": "0q2ueofnwczg7zky",
           "player_out": "nu266budl9xp0y6n",
           "slot": 9
         },
         {
-          "after_event_seq": 116,
+          "after_event_seq": 117,
           "kind": "pitching",
           "player_in": "67b8ea7qqbxy32hs",
           "player_out": "kbm2x2mv6jhpshm4",
@@ -6608,24 +6676,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T17:36:33Z",
     "parse": {
-      "events_count": 120,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player g90mk4clcqv0igif events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player 0eizxt7jyojivt05 events PA 5 != box-implied PA 4 (AB=2 BB=1 HBP=1 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 111 runner g90mk4clcqv0igif advances from base 3 which was not occupied at event start"
-      ]
+      "events_count": 121,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:17:02Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "c1f8441e0efe875e4ef85883e18843177f25f7829ab665b3c99c587f0ccaa257",
+    "parsed_at": "2026-08-27T21:11:44Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "4b1c867f21c4dee8205e9f6c6548907e7869b3a9918c78f438e2fa0bb145d704",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250821_nc0p.xml"
   },
   "players": {
     "0bfeemnqzdz9of4k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Allgeyer",
       "name": "Jake Allgeyer",
       "player_id": "0bfeemnqzdz9of4k",
@@ -6636,6 +6700,7 @@
     },
     "0eizxt7jyojivt05": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Myro",
       "name": "Paul Myro IV",
       "player_id": "0eizxt7jyojivt05",
@@ -6646,6 +6711,7 @@
     },
     "0q2ueofnwczg7zky": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Turner",
       "name": "Braxton Turner",
       "player_id": "0q2ueofnwczg7zky",
@@ -6656,6 +6722,7 @@
     },
     "2nm8smw9i29cjoz2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Begora",
       "name": "Jeremiah Begora",
       "player_id": "2nm8smw9i29cjoz2",
@@ -6666,6 +6733,7 @@
     },
     "4woeenyn10mjj560": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santos",
       "name": "Esai Santos",
       "player_id": "4woeenyn10mjj560",
@@ -6676,6 +6744,7 @@
     },
     "668fl4ripb9e2dtp": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Crawford",
       "name": "Ethan Crawford",
       "player_id": "668fl4ripb9e2dtp",
@@ -6686,6 +6755,7 @@
     },
     "67b8ea7qqbxy32hs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jones",
       "name": "Trey Jones",
       "player_id": "67b8ea7qqbxy32hs",
@@ -6696,6 +6766,7 @@
     },
     "6pepnwlmp3ma7k4o": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Santini",
       "name": "J.C. Santini",
       "player_id": "6pepnwlmp3ma7k4o",
@@ -6706,6 +6777,7 @@
     },
     "725f9esndmqr653u": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Woodcox",
       "name": "Drew Woodcox",
       "player_id": "725f9esndmqr653u",
@@ -6716,6 +6788,7 @@
     },
     "8phcki62wnpcaou7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tatum",
       "name": "Dillon Tatum",
       "player_id": "8phcki62wnpcaou7",
@@ -6726,6 +6799,7 @@
     },
     "91hpm9jadqjr3p18": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tremain",
       "name": "Cole Tremain",
       "player_id": "91hpm9jadqjr3p18",
@@ -6736,6 +6810,7 @@
     },
     "a8k7z5bbeuii76ei": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Richardson",
       "name": "Conner Richardson",
       "player_id": "a8k7z5bbeuii76ei",
@@ -6746,6 +6821,7 @@
     },
     "ah5xs6ri7rw1as3k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tanner",
       "name": "Gabe Tanner",
       "player_id": "ah5xs6ri7rw1as3k",
@@ -6756,6 +6832,7 @@
     },
     "am7czikji3iecp9k": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Sullivan",
       "name": "Connor Sullivan",
       "player_id": "am7czikji3iecp9k",
@@ -6766,6 +6843,7 @@
     },
     "cfetr828oix8pp6g": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cobb",
       "name": "Tremayne Cobb Jr.",
       "player_id": "cfetr828oix8pp6g",
@@ -6776,6 +6854,7 @@
     },
     "ctm99vma4pub5ygl": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leehey",
       "name": "Nick Leehey",
       "player_id": "ctm99vma4pub5ygl",
@@ -6786,6 +6865,7 @@
     },
     "edtt17c787jdojxm": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Almanza",
       "name": "Christian Almanza",
       "player_id": "edtt17c787jdojxm",
@@ -6796,6 +6876,7 @@
     },
     "g90mk4clcqv0igif": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Underwood",
       "name": "Ethan Underwood",
       "player_id": "g90mk4clcqv0igif",
@@ -6806,6 +6887,7 @@
     },
     "hb4w8pl6p2jubt8w": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Drewek",
       "name": "Davis Drewek",
       "player_id": "hb4w8pl6p2jubt8w",
@@ -6816,6 +6898,7 @@
     },
     "jbrczbrfcu3icv1p": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jung-Goldberg",
       "name": "Max Jung-Goldberg",
       "player_id": "jbrczbrfcu3icv1p",
@@ -6826,6 +6909,7 @@
     },
     "kbm2x2mv6jhpshm4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McBride",
       "name": "Noah McBride",
       "player_id": "kbm2x2mv6jhpshm4",
@@ -6836,6 +6920,7 @@
     },
     "khi08v8wenrg4bst": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Marrufo",
       "name": "Christian Marrufo",
       "player_id": "khi08v8wenrg4bst",
@@ -6846,6 +6931,7 @@
     },
     "ndqc0h3j170spypq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bufford",
       "name": "Cam Bufford",
       "player_id": "ndqc0h3j170spypq",
@@ -6856,6 +6942,7 @@
     },
     "nu266budl9xp0y6n": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Darden",
       "name": "Taylor Darden",
       "player_id": "nu266budl9xp0y6n",
@@ -6866,6 +6953,7 @@
     },
     "radqy7or094qlalr": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gienger",
       "name": "Murphy Gienger",
       "player_id": "radqy7or094qlalr",
@@ -6876,6 +6964,7 @@
     },
     "rh7y8mjx5x58ptri": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hjelle",
       "name": "Jake Hjelle",
       "player_id": "rh7y8mjx5x58ptri",
@@ -6886,6 +6975,7 @@
     },
     "rqibaab795yyg29r": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Buggs",
       "name": "Darryl Buggs",
       "player_id": "rqibaab795yyg29r",
@@ -6896,6 +6986,7 @@
     },
     "u4ez913apwkdp86i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Locklear",
       "name": "Jeremiah Locklear",
       "player_id": "u4ez913apwkdp86i",
@@ -6906,6 +6997,7 @@
     },
     "vkeltex4ceuf8kjs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Harris",
       "name": "Daniel Harris IV",
       "player_id": "vkeltex4ceuf8kjs",
@@ -6916,6 +7008,7 @@
     },
     "zbfzoaqwmf3w43ow": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Marcelo",
       "name": "Noah Marcelo",
       "player_id": "zbfzoaqwmf3w43ow",
@@ -6925,7 +7018,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -6943,15 +7036,5 @@
       "team_id": "zgzmksngghvq54yy"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 5
-      },
-      "raw": "E. Underwood singled to second base, advanced to second on an error by 2b; T. Darden advanced to third.",
-      "reason": "runner clause name did not resolve uniquely"
-    }
-  ]
+  "unparsed": []
 }

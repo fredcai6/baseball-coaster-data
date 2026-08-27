@@ -1285,7 +1285,7 @@
         "fielders": [
           "lf"
         ],
-        "location": "the lf line",
+        "location": "down the lf line",
         "modifiers": [],
         "outs_recorded": 0,
         "type": "double"
@@ -6285,14 +6285,52 @@
         "away_score_before": 8,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 1,
+        "runs_on_play": 0
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "fielding_team": "gwwjqo5s6nki4x8c",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "Cameron Bowen stole second, advanced to third on a throwing error by c.",
+      "runners": [
+        {
+          "cause": "stolen_base",
+          "from": 1,
+          "out": false,
+          "player_id": "syn:home:1",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 111
+    },
+    {
+      "_derived": {
+        "away_score_before": 8,
+        "base_out_state": "001|1",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 3,
         "outs_after": 1,
@@ -6339,7 +6377,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6349,9 +6387,9 @@
       "kind": "substitution",
       "narrative": "Bodee Wright pinch ran for Charlie Muniz.",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "substitution": {
-        "after_event_seq": 111,
+        "after_event_seq": 112,
         "kind": "offensive",
         "player_in": "syn:home:4",
         "player_out": "syn:home:3",
@@ -6361,16 +6399,16 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "100|1",
+        "base_out_state": "101|1",
         "bases_after": [
           true,
           true,
-          false
+          true
         ],
         "bases_before": [
           true,
           false,
-          false
+          true
         ],
         "home_score_before": 3,
         "outs_after": 1,
@@ -6417,7 +6455,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "syn:home:4",
           "scored": false,
@@ -6425,12 +6463,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "110|1",
+        "base_out_state": "111|1",
         "bases_after": [
           true,
           true,
@@ -6439,7 +6477,7 @@
         "bases_before": [
           true,
           true,
-          false
+          true
         ],
         "home_score_before": 3,
         "outs_after": 1,
@@ -6508,7 +6546,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 4,
+          "from": 3,
           "out": false,
           "player_id": "syn:home:1",
           "rbi": true,
@@ -6517,7 +6555,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6527,9 +6565,9 @@
       "kind": "substitution",
       "narrative": "Cole Calnon pinch ran for Pat Mills.",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "substitution": {
-        "after_event_seq": 114,
+        "after_event_seq": 115,
         "kind": "offensive",
         "player_in": "syn:home:6",
         "player_out": "3o1d4ejqjxj9802j",
@@ -6544,9 +6582,9 @@
       "kind": "substitution",
       "narrative": "Eddie Thompson to p for Hunter Hargett.",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "substitution": {
-        "after_event_seq": 115,
+        "after_event_seq": 116,
         "kind": "pitching",
         "player_in": "syn:away:7",
         "player_out": "syn:away:6",
@@ -6612,7 +6650,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
@@ -6675,7 +6713,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6685,7 +6723,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 119,
+      "seq": 120,
       "summary": {
         "E": 1,
         "H": 2,
@@ -6796,7 +6834,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 115,
+          "after_event_seq": 116,
           "kind": "pitching",
           "player_in": "syn:away:7",
           "player_out": "syn:away:6",
@@ -6866,14 +6904,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 111,
+          "after_event_seq": 112,
           "kind": "offensive",
           "player_in": "syn:home:4",
           "player_out": "syn:home:3",
           "slot": 3
         },
         {
-          "after_event_seq": 114,
+          "after_event_seq": 115,
           "kind": "offensive",
           "player_in": "syn:home:6",
           "player_out": "3o1d4ejqjxj9802j",
@@ -6886,21 +6924,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:56:18Z",
     "parse": {
-      "events_count": 120,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 113 runner syn:home:4 advances from base 2 which was not occupied at event start"
-      ]
+      "events_count": 121,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:09Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:02Z",
+    "parser_version": "0.4.0",
     "source_sha256": "89ac8ad3db6ba62e41a0cc04d23d05451c25547a3078531f3d6b4f0bb095965e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260802_0we0.xml"
   },
   "players": {
     "0y61reek2k11wgjw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Soper",
       "name": "Michael Soper",
       "player_id": "0y61reek2k11wgjw",
@@ -6911,6 +6948,7 @@
     },
     "3lm0wwho43rdy1aj": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lee",
       "name": "Ryan Lee",
       "player_id": "3lm0wwho43rdy1aj",
@@ -6921,6 +6959,7 @@
     },
     "3o1d4ejqjxj9802j": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mills",
       "name": "Pat Mills",
       "player_id": "3o1d4ejqjxj9802j",
@@ -6931,6 +6970,7 @@
     },
     "9jvhhfltpd5oqobw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burns",
       "name": "Nin Burns II",
       "player_id": "9jvhhfltpd5oqobw",
@@ -6941,6 +6981,7 @@
     },
     "dmmxwk2edd8lfzr8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mitchell",
       "name": "Wesley Mitchell",
       "player_id": "dmmxwk2edd8lfzr8",
@@ -6951,6 +6992,7 @@
     },
     "eqdyvg4ngztn2e2w": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Canton",
       "name": "Sam Canton",
       "player_id": "eqdyvg4ngztn2e2w",
@@ -6961,6 +7003,7 @@
     },
     "mrk0ntf9a9ba4hby": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hernandez",
       "name": "Ray Hernandez",
       "player_id": "mrk0ntf9a9ba4hby",
@@ -6971,6 +7014,7 @@
     },
     "oezhc52yzuwae728": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lester",
       "name": "Parker Lester",
       "player_id": "oezhc52yzuwae728",
@@ -6981,6 +7025,7 @@
     },
     "rottofm8tpmmf11l": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Inouye",
       "name": "Ryan Inouye",
       "player_id": "rottofm8tpmmf11l",
@@ -6989,6 +7034,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vaughan",
       "name": "Casey Vaughan",
       "player_id": "syn:away:1",
@@ -6999,6 +7045,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Trimble",
       "name": "Justin Trimble",
       "player_id": "syn:away:2",
@@ -7009,6 +7056,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Smiley",
       "name": "Demarckus Smiley",
       "player_id": "syn:away:3",
@@ -7019,6 +7067,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barrera",
       "name": "Emilio Barrera",
       "player_id": "syn:away:4",
@@ -7029,6 +7078,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bryant",
       "name": "Mason Bryant",
       "player_id": "syn:away:5",
@@ -7037,6 +7087,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hargett",
       "name": "Hunter Hargett",
       "player_id": "syn:away:6",
@@ -7045,6 +7096,7 @@
     },
     "syn:away:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Thompson",
       "name": "Eddie Thompson",
       "player_id": "syn:away:7",
@@ -7055,6 +7107,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bowen",
       "name": "Cameron Bowen",
       "player_id": "syn:home:1",
@@ -7065,6 +7118,7 @@
     },
     "syn:home:10": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Alizaeh Gutierrez",
       "player_id": "syn:home:10",
@@ -7073,6 +7127,7 @@
     },
     "syn:home:11": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mullins",
       "name": "Hayden Mullins",
       "player_id": "syn:home:11",
@@ -7081,6 +7136,7 @@
     },
     "syn:home:12": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hartman",
       "name": "Lucas Hartman",
       "player_id": "syn:home:12",
@@ -7091,6 +7147,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Jacob Gutierrez",
       "player_id": "syn:home:2",
@@ -7101,6 +7158,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Muniz",
       "name": "Charlie Muniz",
       "player_id": "syn:home:3",
@@ -7111,6 +7169,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wright",
       "name": "Bodee Wright",
       "player_id": "syn:home:4",
@@ -7119,6 +7178,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cootway",
       "name": "Adam Cootway",
       "player_id": "syn:home:5",
@@ -7129,6 +7189,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Calnon",
       "name": "Cole Calnon",
       "player_id": "syn:home:6",
@@ -7139,6 +7200,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McHenry",
       "name": "John McHenry",
       "player_id": "syn:home:7",
@@ -7149,6 +7211,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Shaver",
       "name": "A.J. Shaver",
       "player_id": "syn:home:8",
@@ -7159,6 +7222,7 @@
     },
     "syn:home:9": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Boncal",
       "name": "Hudson Boncal",
       "player_id": "syn:home:9",
@@ -7169,6 +7233,7 @@
     },
     "whk442245hjxc11i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dooley",
       "name": "Ty Dooley",
       "player_id": "whk442245hjxc11i",
@@ -7178,7 +7243,7 @@
       "team_id": "gwwjqo5s6nki4x8c"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7196,15 +7261,5 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "Cameron Bowen stole second, advanced to third on a throwing error by c.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Cameron Bowen stole second, advanced to third on a throwing error by c'"
-    }
-  ]
+  "unparsed": []
 }

@@ -5067,7 +5067,7 @@
         "fielders": [
           "rf"
         ],
-        "location": "the rf line",
+        "location": "down the rf line",
         "modifiers": [
           "2 RBI",
           "RBI"
@@ -5806,6 +5806,69 @@
         "away_score_before": 2,
         "base_out_state": "111|1",
         "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 12,
+        "outs_after": 2,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Nin Burns II",
+        "player_id": "9jvhhfltpd5oqobw",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 3,
+        "strikes": 2
+      },
+      "fielding_team": "gwwjqo5s6nki4x8c",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Nin Burns II infield fly to 2b (3-2 KBFFBFBF).",
+      "outcome": {
+        "fielders": [
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "infield_fly"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "884vdy1n24490aks",
+        "resolved": true
+      },
+      "pitches": "KBFFBFBF",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "9jvhhfltpd5oqobw",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 98
+    },
+    {
+      "_derived": {
+        "away_score_before": 2,
+        "base_out_state": "111|2",
+        "bases_after": [
           false,
           true,
           true
@@ -5816,8 +5879,8 @@
           true
         ],
         "home_score_before": 12,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 2
       },
@@ -5893,12 +5956,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "011|1",
+        "base_out_state": "011|2",
         "bases_after": [
           false,
           true,
@@ -5910,8 +5973,8 @@
           true
         ],
         "home_score_before": 14,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
@@ -5956,7 +6019,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -5966,7 +6029,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 100,
+      "seq": 101,
       "summary": {
         "E": 0,
         "H": 3,
@@ -6033,7 +6096,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "_derived": {
@@ -6097,7 +6160,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
@@ -6175,7 +6238,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
@@ -6236,7 +6299,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -6299,7 +6362,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -6364,7 +6427,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "batting_team": "gwwjqo5s6nki4x8c",
@@ -6374,7 +6437,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6540,22 +6603,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:53:07Z",
     "parse": {
-      "events_count": 108,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player 9jvhhfltpd5oqobw events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0)"
-      ]
+      "events_count": 109,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T15:20:09Z",
-    "parser_version": "0.3.0",
+    "parsed_at": "2026-08-27T21:12:01Z",
+    "parser_version": "0.4.0",
     "source_sha256": "5a6954b643408967ca71147100c52eacf3bbd85148a0abcac623627b3ea88558",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260731_32fn.xml"
   },
   "players": {
     "0y61reek2k11wgjw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Soper",
       "name": "Michael Soper",
       "player_id": "0y61reek2k11wgjw",
@@ -6566,6 +6627,7 @@
     },
     "3o1d4ejqjxj9802j": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mills",
       "name": "Pat Mills",
       "player_id": "3o1d4ejqjxj9802j",
@@ -6576,6 +6638,7 @@
     },
     "884vdy1n24490aks": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Graves",
       "name": "Quentin Graves",
       "player_id": "884vdy1n24490aks",
@@ -6586,6 +6649,7 @@
     },
     "9jvhhfltpd5oqobw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Burns",
       "name": "Nin Burns II",
       "player_id": "9jvhhfltpd5oqobw",
@@ -6596,6 +6660,7 @@
     },
     "dmmxwk2edd8lfzr8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Mitchell",
       "name": "Wesley Mitchell",
       "player_id": "dmmxwk2edd8lfzr8",
@@ -6606,6 +6671,7 @@
     },
     "eqdyvg4ngztn2e2w": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Canton",
       "name": "Sam Canton",
       "player_id": "eqdyvg4ngztn2e2w",
@@ -6616,6 +6682,7 @@
     },
     "oezhc52yzuwae728": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lester",
       "name": "Parker Lester",
       "player_id": "oezhc52yzuwae728",
@@ -6626,6 +6693,7 @@
     },
     "rottofm8tpmmf11l": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Inouye",
       "name": "Ryan Inouye",
       "player_id": "rottofm8tpmmf11l",
@@ -6634,6 +6702,7 @@
     },
     "syn:away:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Vaughan",
       "name": "Casey Vaughan",
       "player_id": "syn:away:1",
@@ -6644,6 +6713,7 @@
     },
     "syn:away:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Trimble",
       "name": "Justin Trimble",
       "player_id": "syn:away:2",
@@ -6654,6 +6724,7 @@
     },
     "syn:away:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Stengren",
       "name": "Drew Stengren",
       "player_id": "syn:away:3",
@@ -6664,6 +6735,7 @@
     },
     "syn:away:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barrera",
       "name": "Emilio Barrera",
       "player_id": "syn:away:4",
@@ -6674,6 +6746,7 @@
     },
     "syn:away:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Leerssen",
       "name": "Josh Leerssen",
       "player_id": "syn:away:5",
@@ -6684,6 +6757,7 @@
     },
     "syn:away:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Berenti",
       "name": "Julian Berenti",
       "player_id": "syn:away:6",
@@ -6692,6 +6766,7 @@
     },
     "syn:home:1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bowen",
       "name": "Cameron Bowen",
       "player_id": "syn:home:1",
@@ -6702,6 +6777,7 @@
     },
     "syn:home:2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Gutierrez",
       "name": "Jacob Gutierrez",
       "player_id": "syn:home:2",
@@ -6712,6 +6788,7 @@
     },
     "syn:home:3": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Muniz",
       "name": "Charlie Muniz",
       "player_id": "syn:home:3",
@@ -6722,6 +6799,7 @@
     },
     "syn:home:4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Cootway",
       "name": "Adam Cootway",
       "player_id": "syn:home:4",
@@ -6732,6 +6810,7 @@
     },
     "syn:home:5": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "McHenry",
       "name": "John McHenry",
       "player_id": "syn:home:5",
@@ -6742,6 +6821,7 @@
     },
     "syn:home:6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Shaver",
       "name": "A.J. Shaver",
       "player_id": "syn:home:6",
@@ -6752,6 +6832,7 @@
     },
     "syn:home:7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Calnon",
       "name": "Cole Calnon",
       "player_id": "syn:home:7",
@@ -6762,6 +6843,7 @@
     },
     "syn:home:8": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Almeda",
       "name": "J.J. Almeda",
       "player_id": "syn:home:8",
@@ -6772,6 +6854,7 @@
     },
     "tg5vinbjr7njs9e1": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wyatt",
       "name": "Tyler Wyatt",
       "player_id": "tg5vinbjr7njs9e1",
@@ -6782,6 +6865,7 @@
     },
     "whk442245hjxc11i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Dooley",
       "name": "Ty Dooley",
       "player_id": "whk442245hjxc11i",
@@ -6791,7 +6875,7 @@
       "team_id": "gwwjqo5s6nki4x8c"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6809,15 +6893,5 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 5
-      },
-      "raw": "Nin Burns II infield fly to 2b (3-2 KBFFBFBF).\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "primary verb not recognized: 'Nin Burns II infield fly to 2b'"
-    }
-  ]
+  "unparsed": []
 }

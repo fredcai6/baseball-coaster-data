@@ -6682,13 +6682,71 @@
         "away_score_before": 8,
         "base_out_state": "000|0",
         "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 7,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "G. Kueber",
+        "player_id": "fzfduce250h6dagk",
+        "resolved": true
+      },
+      "batting_team": "ybsjgrorwgm7zp91",
+      "count": null,
+      "fielding_team": "0f7i5wcuhuv2tipc",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "G. Kueber singled, advanced to second on an error by ss.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "gwi1jo0wy0jbydxw",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "fzfduce250h6dagk",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 121
+    },
+    {
+      "_derived": {
+        "away_score_before": 8,
+        "base_out_state": "010|0",
+        "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
           false,
-          false,
+          true,
           false
         ],
         "home_score_before": 7,
@@ -6738,7 +6796,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 4,
+          "from": 2,
           "out": false,
           "player_id": "fzfduce250h6dagk",
           "rbi": true,
@@ -6747,7 +6805,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 121
+      "seq": 122
     },
     {
       "batting_team": "ybsjgrorwgm7zp91",
@@ -6757,9 +6815,9 @@
       "kind": "substitution",
       "narrative": "H. Bryan pinch ran for A. Chouinard.",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "substitution": {
-        "after_event_seq": 121,
+        "after_event_seq": 122,
         "kind": "offensive",
         "player_in": "u5obcvsxszazzd7q",
         "player_out": "o5fu9y7u3ifzg3uf",
@@ -6822,7 +6880,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "u5obcvsxszazzd7q",
           "scored": false,
@@ -6830,7 +6888,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 123
+      "seq": 124
     },
     {
       "_derived": {
@@ -6908,7 +6966,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 124
+      "seq": 125
     },
     {
       "_derived": {
@@ -6974,7 +7032,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 125
+      "seq": 126
     },
     {
       "_derived": {
@@ -7048,7 +7106,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 126
+      "seq": 127
     },
     {
       "batting_team": "ybsjgrorwgm7zp91",
@@ -7058,7 +7116,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 127,
+      "seq": 128,
       "summary": {
         "E": 0,
         "H": 2,
@@ -7074,7 +7132,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 128,
+      "seq": 129,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7285,7 +7343,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 121,
+          "after_event_seq": 122,
           "kind": "offensive",
           "player_in": "u5obcvsxszazzd7q",
           "player_out": "o5fu9y7u3ifzg3uf",
@@ -7298,25 +7356,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:07:53Z",
     "parse": {
-      "events_count": 129,
-      "replayable": false,
-      "unparsed_count": 2,
-      "warnings": [
-        "[linescore] linescore: away inning 10 has no folded events but oracle expects 0",
-        "[linescore] linescore: home inning 10 has no folded events but oracle expects 0",
-        "[pa_counts] pa_counts: player lwwp8l2xhq4f6ao2 events PA 5 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0)",
-        "[pa_counts] pa_counts: player fzfduce250h6dagk events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0)",
-        "[illegal_transitions] illegal_transition: seq 123 runner u5obcvsxszazzd7q advances from base 2 which was not occupied at event start"
-      ]
+      "events_count": 130,
+      "replayable": true,
+      "unparsed_count": 1,
+      "warnings": []
     },
-    "parsed_at": "2026-07-18T02:15:55Z",
-    "parser_version": "0.3.0",
-    "source_sha256": "49f5b63719fdc673651c5be670f3af5ed514d3d03032b21324b144a26355deb7",
+    "parsed_at": "2026-08-27T21:11:27Z",
+    "parser_version": "0.4.0",
+    "source_sha256": "c0fd719b050b989da1176e7f6eee6b08755cc50c2cb12aed4ab0d54d8fcd9582",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250605_l4nk.xml"
   },
   "players": {
     "0ft9lg3nvo4ujr2t": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Binns",
       "name": "Malik Binns",
       "player_id": "0ft9lg3nvo4ujr2t",
@@ -7327,6 +7380,7 @@
     },
     "0o9u3ttxvvf8kbg6": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bryant",
       "name": "Mason Bryant",
       "player_id": "0o9u3ttxvvf8kbg6",
@@ -7337,6 +7391,7 @@
     },
     "2rlq2219lcuet2nz": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Linscott",
       "name": "Sam Linscott",
       "player_id": "2rlq2219lcuet2nz",
@@ -7347,6 +7402,7 @@
     },
     "3yiq4n1v89zyvyqs": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Barry",
       "name": "Leyton Barry",
       "player_id": "3yiq4n1v89zyvyqs",
@@ -7357,6 +7413,7 @@
     },
     "408wo7y8z2rup78z": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Lada",
       "name": "Bobby Lada",
       "player_id": "408wo7y8z2rup78z",
@@ -7367,6 +7424,7 @@
     },
     "6smhfmt8evxiuzhl": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hernandez",
       "name": "Mark Hernandez",
       "player_id": "6smhfmt8evxiuzhl",
@@ -7377,6 +7435,7 @@
     },
     "acd4kfl5a68c09lq": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Juran",
       "name": "Adam Juran",
       "player_id": "acd4kfl5a68c09lq",
@@ -7387,6 +7446,7 @@
     },
     "dqdbqmqxdvguj8et": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Strack",
       "name": "Caleb Strack",
       "player_id": "dqdbqmqxdvguj8et",
@@ -7397,6 +7457,7 @@
     },
     "fmsc2vh4bj22enfc": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Coddou",
       "name": "Parker Coddou",
       "player_id": "fmsc2vh4bj22enfc",
@@ -7407,6 +7468,7 @@
     },
     "fqu82j6ptw1sgi84": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Jones",
       "name": "Otto Jones",
       "player_id": "fqu82j6ptw1sgi84",
@@ -7417,6 +7479,7 @@
     },
     "fzfduce250h6dagk": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kueber",
       "name": "Garrett Kueber",
       "player_id": "fzfduce250h6dagk",
@@ -7427,6 +7490,7 @@
     },
     "ghm09i6tfggvalui": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Pregent",
       "name": "Christian Pregent",
       "player_id": "ghm09i6tfggvalui",
@@ -7437,6 +7501,7 @@
     },
     "gwi1jo0wy0jbydxw": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bates",
       "name": "Ethan Bates",
       "player_id": "gwi1jo0wy0jbydxw",
@@ -7447,6 +7512,7 @@
     },
     "jkhyj03ouuq9t3je": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Tofteland",
       "name": "Dane Tofteland",
       "player_id": "jkhyj03ouuq9t3je",
@@ -7457,6 +7523,7 @@
     },
     "k53732cztf43sx3s": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wright",
       "name": "Kerry Wright",
       "player_id": "k53732cztf43sx3s",
@@ -7467,6 +7534,7 @@
     },
     "kj52okpii7s3iadf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Booth",
       "name": "Carter Booth",
       "player_id": "kj52okpii7s3iadf",
@@ -7477,6 +7545,7 @@
     },
     "lwwp8l2xhq4f6ao2": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bess",
       "name": "Cuba Bess",
       "player_id": "lwwp8l2xhq4f6ao2",
@@ -7487,6 +7556,7 @@
     },
     "nq85kiyuao3c4y7p": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Orsak",
       "name": "River Orsak",
       "player_id": "nq85kiyuao3c4y7p",
@@ -7497,6 +7567,7 @@
     },
     "o5fu9y7u3ifzg3uf": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Chouinard",
       "name": "Austin Chouinard",
       "player_id": "o5fu9y7u3ifzg3uf",
@@ -7507,6 +7578,7 @@
     },
     "ospawevye4ncs3mb": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Adams",
       "name": "Alex Adams",
       "player_id": "ospawevye4ncs3mb",
@@ -7517,6 +7589,7 @@
     },
     "qhr9fd04v9xxb6n4": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Brusa",
       "name": "Gio Brusa",
       "player_id": "qhr9fd04v9xxb6n4",
@@ -7527,6 +7600,7 @@
     },
     "qxdm87vhxw3s16s7": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Butcher",
       "name": "Will Butcher",
       "player_id": "qxdm87vhxw3s16s7",
@@ -7537,6 +7611,7 @@
     },
     "raa5ctbb9jusdhue": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Duarte",
       "name": "Josh Duarte",
       "player_id": "raa5ctbb9jusdhue",
@@ -7547,6 +7622,7 @@
     },
     "rxalgprfm9zt3b2g": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wozniak",
       "name": "Brett Wozniak",
       "player_id": "rxalgprfm9zt3b2g",
@@ -7557,6 +7633,7 @@
     },
     "u5obcvsxszazzd7q": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Bryan",
       "name": "Hunter Bryan",
       "player_id": "u5obcvsxszazzd7q",
@@ -7567,6 +7644,7 @@
     },
     "wlz8dp2iohnf9p9i": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Wallace",
       "name": "Landon Wallace",
       "player_id": "wlz8dp2iohnf9p9i",
@@ -7577,6 +7655,7 @@
     },
     "x8r6n22qj9009w87": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Garcia",
       "name": "Tristin Garcia",
       "player_id": "x8r6n22qj9009w87",
@@ -7587,6 +7666,7 @@
     },
     "y7c9e2ksnigp7y4v": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Kratz",
       "name": "Caden Kratz",
       "player_id": "y7c9e2ksnigp7y4v",
@@ -7597,6 +7677,7 @@
     },
     "yhhyudzre3ig7qms": {
       "bats_side": null,
+      "box_listed": true,
       "last_name": "Hext",
       "name": "Cooper Hext",
       "player_id": "yhhyudzre3ig7qms",
@@ -7606,7 +7687,7 @@
       "team_id": "0f7i5wcuhuv2tipc"
     }
   },
-  "schema_version": "1.3.0",
+  "schema_version": "1.6.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7625,15 +7706,6 @@
     }
   },
   "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 0
-      },
-      "raw": "G. Kueber singled, advanced to second on an error by ss.",
-      "reason": "runner clause name did not resolve uniquely"
-    },
     {
       "location": {
         "half": "top",
