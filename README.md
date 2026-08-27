@@ -69,8 +69,22 @@ above). It lives on the local PC instead, under a single configurable root.
   `archive_root` override to use a different location.
 - **Checkpoint file (default):** `~/bc-raw-archive/checkpoint.json` — a JSON map of
   `source-url -> {archived_path, fetched_at, content_hash, status}`. This checkpoint, not the
-  archive directory's filenames, is the sole authority on "have I already fetched this URL" — a
-  URL is skipped only when its checkpoint entry has `status: "done"`.
+  archive directory's filenames, is the authority on "has *this machine* already fetched this
+  URL" — a URL passes that check only when its checkpoint entry has `status: "done"`.
+- **The corpus outranks the checkpoint.** `backfill` also skips any URL whose
+  `games/<season>/<game_id>.json` already exists, *before* consulting the checkpoint, so a game
+  the repo owns is never re-downloaded. The distinction matters because the checkpoint is a
+  **machine-local** fact while `games/**` is the **durable** one: a fresh workstation has no
+  checkpoint, and a checkpoint-only rule makes it re-download the entire committed corpus (~4.8 h
+  at the `>= 10 s` pacing floor for 2024–2026) before it can reach a single new game. This is not
+  hypothetical — it cost a real run ~45 minutes of redundant fetching. `bc_pipeline.fetch`'s own
+  CLI passes no such predicate, because it archives raw without owning a corpus.
+
+  One consequence worth knowing: a skipped-at-fetch game is never re-parsed, so the committed
+  file's content-drift check (its stored idempotency key vs a fresh re-parse of the archived
+  HTML) does not run for it. That check only ever ran when the raw HTML was present locally, and
+  detecting drift is a deliberate re-parse's job — but it is a behavior change, not a pure
+  optimization.
 - **Archive filename contract:** `<url-slug>__<fetched-at-microseconds>__<content-hash>.html` —
   the source URL (slugified), the fetch timestamp (integer microseconds since the epoch, so two
   fetches of the same URL are always distinguishable), and a truncated sha256 of the body. A name

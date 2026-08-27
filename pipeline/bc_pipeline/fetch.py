@@ -82,6 +82,12 @@ class RunResult:
 
     fetched: list[str] = field(default_factory=list)
     skipped_already_done: list[str] = field(default_factory=list)
+    #: Boxscore URLs whose canonical game file the corpus ALREADY holds, so
+    #: they were never fetched. Distinct from ``skipped_already_done``, which
+    #: is a checkpoint fact ("this machine downloaded it") rather than a
+    #: corpus fact ("the repo owns the parsed game"). See the
+    #: ``already_committed_fn`` note on :func:`run_pipeline`.
+    skipped_already_committed: list[str] = field(default_factory=list)
     planned: list[str] = field(default_factory=list)
     schedule_urls: list[str] = field(default_factory=list)
     challenge: ChallengeDetected | None = None
@@ -151,6 +157,7 @@ def run_pipeline(
     clock_fn: Callable[[], float] = time.monotonic,
     jitter_fn: Callable[[float, float], float] = random.uniform,
     wall_clock_fn: Callable[[], float] = time.time,
+    already_committed_fn: Callable[[str], bool] | None = None,
 ) -> RunResult:
     """Compose schedule-walk + paced-fetch + archive into one bounded run.
 
@@ -168,7 +175,17 @@ def run_pipeline(
            accumulating across seasons. A challenge here stops the run.
         3. For each accumulated boxscore URL, in order:
            - Skip (no fetch, does not count against ``limit``) if
-             ``archive.should_fetch_url`` says it's already done.
+             ``already_committed_fn`` says the corpus already holds this
+             game. The checkpoint is a MACHINE-local fact ("did this box
+             download the raw HTML"); the corpus is the durable one ("does
+             the repo own the parsed game"). Consulting only the checkpoint
+             means a fresh machine re-downloads the entire committed corpus
+             before it can reach a single new game -- ~4.8 h at the >= 10 s
+             pacing floor for the 2024-2026 backfill. Callers that know the
+             repo layout (``backfill``) pass this; ``fetch``'s own CLI, which
+             archives raw without owning a corpus, does not.
+           - Skip (same terms) if ``archive.should_fetch_url`` says it's
+             already done.
            - In ``--dry-run`` mode: record it as "planned" and move on --
              the transport is never called for boxscore URLs in dry-run.
            - Otherwise: fetch it through the paced fetcher. A challenge here
@@ -194,9 +211,16 @@ def run_pipeline(
 
     fetched: list[str] = []
     skipped: list[str] = []
+    skipped_committed: list[str] = []
     planned: list[str] = []
 
     for url in boxscore_urls:
+        # Corpus first: a game the repo already owns is never re-fetched,
+        # whatever this machine's checkpoint happens to say.
+        if already_committed_fn is not None and already_committed_fn(url):
+            skipped_committed.append(url)
+            continue
+
         if not archive.should_fetch_url(config, url):
             skipped.append(url)
             continue
@@ -222,6 +246,7 @@ def run_pipeline(
             return RunResult(
                 fetched=fetched,
                 skipped_already_done=skipped,
+                skipped_already_committed=skipped_committed,
                 schedule_urls=schedule_urls_walked,
                 challenge=detected,
             )
@@ -233,6 +258,7 @@ def run_pipeline(
     return RunResult(
         fetched=fetched,
         skipped_already_done=skipped,
+        skipped_already_committed=skipped_committed,
         planned=planned,
         schedule_urls=schedule_urls_walked,
         challenge=None,

@@ -103,6 +103,21 @@ def _game_id_from_url(url: str) -> str:
     return m.group(1)
 
 
+def _corpus_holds_game(url: str, *, season: int, repo_root: Path) -> bool:
+    """Does `games/<season>/<game_id>.json` already exist for this URL?
+
+    The predicate handed to ``fetch.run_pipeline`` as ``already_committed_fn``
+    so an already-owned game is never re-downloaded. A URL whose game_id
+    cannot be extracted returns False -- an unfetchable-looking URL is the
+    fetch path's problem to report, not something to silently skip here.
+    """
+    try:
+        game_id = _game_id_from_url(url)
+    except ValueError:
+        return False
+    return (repo_root / "games" / str(season) / f"{game_id}.json").exists()
+
+
 def _iso_from_epoch(epoch_seconds: float) -> str:
     """Format a ``time.time()``-style epoch float as an ISO-8601 UTC string."""
     return datetime.fromtimestamp(epoch_seconds, tz=timezone.utc).strftime(
@@ -435,6 +450,9 @@ def run_backfill(
             transport,
             limit=remaining_limit,
             dry_run=False,
+            already_committed_fn=lambda url, _s=season: _corpus_holds_game(
+                url, season=_s, repo_root=repo_root
+            ),
             print_fn=print_fn,
             sleep_fn=sleep_fn,
             clock_fn=clock_fn,
@@ -446,6 +464,22 @@ def run_backfill(
         summary.skipped_already_done = len(fetch_result.skipped_already_done)
         if remaining_limit is not None:
             remaining_limit -= len(fetch_result.fetched)
+
+        # Games the corpus already owns were never fetched, so there is no
+        # archived HTML to parse -- they are recorded straight from the URL
+        # rather than routed through _process_boxscore_url (which reads the
+        # checkpoint's archived_path and would report a spurious failure).
+        for url in fetch_result.skipped_already_committed:
+            result.games.append(
+                GameOutcome(
+                    url=url,
+                    season=season,
+                    game_id=_game_id_from_url(url),
+                    outcome="skipped_already_committed",
+                    reason="corpus already holds this game; not re-fetched",
+                )
+            )
+            summary.skipped_already_committed += 1
 
         checkpoint = archive.load_checkpoint(config.checkpoint_path)
 

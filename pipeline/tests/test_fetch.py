@@ -297,3 +297,126 @@ def test_orchestrator_paces_between_fetches(tmp_path: Path) -> None:
     # 4 total fetches (1 schedule + 3 boxscore) -> 3 gaps, each paced.
     assert len(clock.sleep_calls) == 3
     assert all(s >= config.min_interval_seconds for s in clock.sleep_calls)
+
+
+# --- (g) corpus-aware skip: never re-fetch a game the repo already owns ----
+#
+# The checkpoint is a MACHINE fact ("did this box download the raw HTML");
+# the corpus is the DURABLE one ("does the repo own the parsed game"). A
+# fresh machine has an empty checkpoint, so consulting only the checkpoint
+# makes it re-download the entire committed corpus before it can reach a
+# single new game. `already_committed_fn` closes that gap.
+
+
+def test_already_committed_urls_are_never_fetched(tmp_path: Path) -> None:
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+
+    result = run(
+        config,
+        make_response_map(),
+        call_log,
+        FakeClock(),
+        limit=None,
+        already_committed_fn=lambda url: url in {BOX_A, BOX_C},
+    )
+
+    assert result.fetched == [BOX_B]
+    assert result.skipped_already_committed == [BOX_A, BOX_C]
+    assert result.skipped_already_done == []
+    # The decisive assertion: no transport call was ever made for them.
+    assert BOX_A not in call_log
+    assert BOX_C not in call_log
+
+
+def test_empty_checkpoint_plus_full_corpus_fetches_nothing(tmp_path: Path) -> None:
+    """The fresh-machine case that cost ~45 min of real re-downloading: no
+    checkpoint at all, but the corpus already holds every game."""
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+    assert not Path(config.checkpoint_path).exists()
+
+    result = run(
+        config,
+        make_response_map(),
+        call_log,
+        FakeClock(),
+        limit=None,
+        already_committed_fn=lambda _url: True,
+    )
+
+    assert result.fetched == []
+    assert result.skipped_already_committed == [BOX_A, BOX_B, BOX_C]
+    # Only the schedule page was ever requested.
+    assert call_log == [SCHEDULE_URL]
+
+
+def test_corpus_skips_do_not_consume_the_limit(tmp_path: Path) -> None:
+    """A skip is not a fetch: `--limit 2` must still yield two real fetches
+    even when earlier URLs were skipped as already-owned."""
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+
+    result = run(
+        config,
+        make_response_map(),
+        call_log,
+        FakeClock(),
+        limit=2,
+        already_committed_fn=lambda url: url == BOX_A,
+    )
+
+    assert result.fetched == [BOX_B, BOX_C]
+    assert result.skipped_already_committed == [BOX_A]
+
+
+def test_corpus_skip_takes_precedence_over_the_checkpoint(tmp_path: Path) -> None:
+    """Corpus is checked FIRST. A game the repo owns is skipped as
+    already-committed even if the checkpoint would have re-fetched it."""
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+
+    result = run(
+        config,
+        make_response_map(),
+        call_log,
+        FakeClock(),
+        limit=None,
+        already_committed_fn=lambda url: url == BOX_A,
+    )
+
+    assert BOX_A in result.skipped_already_committed
+    assert BOX_A not in result.skipped_already_done
+
+
+def test_omitting_already_committed_fn_preserves_prior_behaviour(tmp_path: Path) -> None:
+    """`fetch`'s own CLI archives raw without owning a corpus, so it passes
+    no predicate -- that path must behave exactly as before."""
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+
+    result = run(config, make_response_map(), call_log, FakeClock(), limit=None)
+
+    assert result.fetched == [BOX_A, BOX_B, BOX_C]
+    assert result.skipped_already_committed == []
+
+
+def test_corpus_skip_survives_a_challenge_stop(tmp_path: Path) -> None:
+    """A challenge returns early; the skips recorded before it must still be
+    reported rather than silently dropped."""
+    config = make_config(tmp_path)
+    call_log: list[str] = []
+    response_map = make_response_map()
+    response_map[BOX_B] = FetchResponse(status_code=403, body="<html>Access Denied</html>")
+
+    result = run(
+        config,
+        response_map,
+        call_log,
+        FakeClock(),
+        limit=None,
+        already_committed_fn=lambda url: url == BOX_A,
+    )
+
+    assert result.challenge is not None
+    assert result.skipped_already_committed == [BOX_A]
