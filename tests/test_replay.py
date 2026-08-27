@@ -277,3 +277,54 @@ def test_batter_interference_is_charged_as_an_at_bat():
     get its own term -- AB=1 reconciles, AB=0 does not."""
     assert _pa_counts_case("batter_interference", ab=1, bb=0) == []
     assert _pa_counts_case("batter_interference", ab=0, bb=0) != []
+
+
+# --- issue #40: a sacrifice FLY is a sacrifice too -------------------------
+#
+# StatCrew spells the bunt ", SAC" but the fly ", sacrifice fly" in full.
+# check_pa_counts tested `"SAC" in modifiers` by exact membership, so every
+# sacrifice fly was missed. A sacrifice is not charged as an at-bat, so
+# events_PA came out one HIGHER than box.AB + box.BB + ... and the game
+# failed pa_counts. That one token accounted for the +1 direction in 284 of
+# 299 pa_counts mismatches across clean-parse games.
+
+
+def _pa_counts_with_modifiers(outcome_type, modifiers, ab, bb):
+    pid = "syn:home:1"
+    game = {
+        "events": [
+            {
+                "kind": "plate_appearance", "seq": 1, "inning": 1, "half": "bottom",
+                "batter": {"player_id": pid, "name_raw": "X", "resolved": True},
+                "outcome": {"type": outcome_type, "modifiers": modifiers, "fielders": [],
+                            "location": None, "outs_recorded": 1},
+                "runners": [],
+            }
+        ]
+    }
+    oracle = {"box": {"batting": {"t1": [{"player_id": pid, "AB": ab, "BB": bb}]}}}
+    return replay.check_pa_counts(game, oracle).warnings
+
+
+def test_sacrifice_fly_is_a_plate_appearance_but_not_an_at_bat():
+    """AB=0 and one sac-fly PA must reconcile."""
+    assert _pa_counts_with_modifiers("flyout", ["sacrifice fly", "RBI"], ab=0, bb=0) == []
+
+
+def test_sacrifice_bunt_spelling_still_counts():
+    assert _pa_counts_with_modifiers("groundout", ["SAC", "bunt"], ab=0, bb=0) == []
+
+
+def test_an_ordinary_flyout_is_still_an_at_bat():
+    """Guard the guard: without the sacrifice modifier, AB=0 must FAIL, so
+    the two cases above pass because of the modifier and not because the
+    check went vacuous."""
+    assert _pa_counts_with_modifiers("flyout", ["RBI"], ab=0, bb=0) != []
+    assert _pa_counts_with_modifiers("flyout", ["RBI"], ab=1, bb=0) == []
+
+
+def test_sac_modifier_set_covers_both_spellings():
+    from bc_pipeline.replay import _SAC_MODIFIERS
+
+    assert "SAC" in _SAC_MODIFIERS
+    assert "sacrifice fly" in _SAC_MODIFIERS

@@ -494,6 +494,12 @@ def check_lob(game: dict, oracle: dict) -> CheckResult:
     return CheckResult(ok=not warnings, warnings=warnings)
 
 
+#: Modifier tokens that mark a plate appearance as a SACRIFICE, which is not
+#: charged as an at-bat. StatCrew spells the bunt ", SAC" and the fly
+#: ", sacrifice fly"; both must count.
+_SAC_MODIFIERS = {"SAC", "sacrifice fly"}
+
+
 def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
     """Per-batter PA count from events must reconcile with what the box
     batting line implies. Formula (documented, since the box schema has no
@@ -527,11 +533,20 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
             hbp[pid] = hbp.get(pid, 0) + 1
         elif outcome_type == "reached_on_interference":
             interference[pid] = interference.get(pid, 0) + 1
-        elif outcome_type == "sacrifice" or "SAC" in modifiers:
+        elif outcome_type == "sacrifice" or _SAC_MODIFIERS & set(modifiers):
             # The grammar's closed outcome taxonomy expresses a sac bunt/fly
             # as the underlying batted-ball outcome (e.g. `flyout`) PLUS a
-            # "SAC" modifier -- not as the generic `sacrifice` type -- so
-            # both spellings must be checked.
+            # modifier -- not as the generic `sacrifice` type -- so both
+            # spellings must be checked.
+            #
+            # StatCrew writes the BUNT as ", SAC" but the FLY as ", sacrifice
+            # fly" in full. This check previously tested `"SAC" in modifiers`
+            # by exact membership, so every sacrifice fly was missed: the
+            # batter is charged no at-bat for it, so `events_PA` came out one
+            # HIGHER than `box.AB + box.BB + ...` and the game failed
+            # pa_counts. That single token accounted for the +1 direction in
+            # 284 of 299 pa_counts mismatches across clean-parse games
+            # (issue #40).
             sac[pid] = sac.get(pid, 0) + 1
 
     for team_id, lines in oracle["box"]["batting"].items():
