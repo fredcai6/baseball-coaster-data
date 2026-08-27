@@ -903,7 +903,7 @@ def test_doubled_ground_rule_modifier():
     result = parse_clause_group("N. Player doubled down the lf line, ground-rule")
     p = result.primary
     assert p.outcome_type == "double"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "ground-rule" in p.modifiers
 
 
@@ -923,7 +923,7 @@ def test_tripled_down_the_line_location():
     result = parse_clause_group("N. Player tripled down the lf line, RBI")
     p = result.primary
     assert p.outcome_type == "triple"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "RBI" in p.modifiers
 
 
@@ -932,7 +932,7 @@ def test_home_run_down_the_line_location():
     result = parse_clause_group("N. Player homered down the lf line, 3 RBI")
     p = result.primary
     assert p.outcome_type == "home_run"
-    assert p.location == "the lf line"
+    assert p.location == "down the lf line"
     assert "3 RBI" in p.modifiers
 
 
@@ -1467,3 +1467,78 @@ def test_bases_loaded_walk_carries_an_n_rbi_tail():
 def test_plain_walk_and_single_rbi_walk_unchanged():
     assert _pa("A. Smith walked (3-0 BBBB).").primary.modifiers == []
     assert _pa("A. Smith walked, RBI (3-0 BBBB).").primary.modifiers == ["RBI"]
+
+
+# --- issue #40: pickoff family + position-token hit locations --------------
+
+
+def test_bare_picked_off_is_an_out():
+    """A bare "X picked off" RETIRES the runner -- unlike "X Failed pickoff
+    attempt", a throw over the runner survives. Same word, opposite outcome."""
+    result = parse_clause_group("C. Seltzer picked off.")
+    assert isinstance(result, ClauseGroup)
+    assert [(r.name_token, r.cause, r.out) for r in result.runners] == [
+        ("C. Seltzer", "pickoff", True)
+    ]
+
+
+def test_failed_pickoff_attempt_is_not_an_out():
+    result = parse_clause_group("C. Seltzer Failed pickoff attempt.")
+    assert isinstance(result, ClauseGroup)
+    assert [(r.cause, r.out) for r in result.runners] == [("pickoff", False)]
+
+
+def test_picked_off_then_thrown_out_with_a_long_throw_chain():
+    result = parse_clause_group("D. Buggs picked off, out at second p to 2b to 3b to ss.")
+    assert isinstance(result, ClauseGroup)
+    assert [(r.destination, r.cause, r.out) for r in result.runners] == [
+        (None, "pickoff", True),
+        ("second", "force_out", True),
+    ]
+    # parse.py's _merge_same_runner collapses these into ONE net-path record,
+    # so the runner is retired once, not twice.
+
+
+def test_out_at_base_then_picked_off_stays_a_runner_event():
+    """REGRESSION (18 games): a pickoff retires a BASERUNNER, never the
+    batter. Allowing "picked off" as a PRIMARY continuation let this line be
+    claimed as a batter groundout -- which both lost an out
+    ("outs_per_half: totals 2 outs, expected 3") and invented a plate
+    appearance ("pa_counts: events PA N != box-implied N-1")."""
+    result = parse_clause_group("C. Cortez out at first p to 1b, picked off.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "runner_event"
+    assert [(r.destination, r.out) for r in result.runners] == [("first", True)]
+
+
+def test_grounded_out_still_parses_as_a_plate_appearance():
+    result = parse_clause_group("J. Smith grounded out to ss.")
+    assert isinstance(result, ClauseGroup)
+    assert result.kind == "plate_appearance"
+
+
+def test_hit_location_accepts_a_position_token_with_a_digit():
+    """"down the 1b line" / "down the 3b line" -- the position token is not
+    two letters, which the first pass assumed."""
+    assert _pa("Ty Yukumoto singled down the 1b line (0-0).").primary.location == "down the 1b line"
+    assert _pa("N. Player doubled down the 3b line (0-0).").primary.location == "down the 3b line"
+
+
+def test_hit_location_format_is_consistent_across_hit_types():
+    """The double rule used to yield "the lf line" while the single rule
+    yielded "down the lf line" -- two strings for the same physical location,
+    which a consumer joining on location would trip over. Normalized onto the
+    form that keeps its preposition, parallel to "up the middle"."""
+    single = parse_clause_group("Ty Yukumoto singled down the lf line (0-0)").primary.location
+    double = parse_clause_group("N. Player doubled down the lf line, ground-rule").primary.location
+    assert single == double == "down the lf line"
+    # Locations that never carried a preposition are untouched.
+    assert parse_clause_group("N. Player doubled to left field (0-0)").primary.location == "left field"
+    assert parse_clause_group("N. Player doubled up the middle (0-0)").primary.location == "up the middle"
+
+
+def test_stole_base_accepts_an_unearned_tail():
+    result = parse_clause_group("R. Preece stole second, unearned.")
+    assert isinstance(result, ClauseGroup)
+    (r,) = result.runners
+    assert (r.cause, r.destination, r.unearned) == ("stolen_base", "second", True)
