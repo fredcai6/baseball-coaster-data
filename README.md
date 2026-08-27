@@ -391,14 +391,15 @@ otherwise-healthy early run, while still meaning something at line granularity.
 ## Refresh
 
 `bc_pipeline.refresh` is the ONE command that keeps this repo current: it runs the backfill driver
-(above) to pick up every newly-FINAL game, then regenerates the frequency artifact (below) only if
-that regeneration actually changed something. It is a thin orchestration layer — it calls
-`bc_pipeline.backfill.run_backfill_with_escalation` and `bc_pipeline.frequencies`'s public functions
-unchanged; it adds no pick-up/idempotency/batching logic and no aggregation logic of its own. Run it
-from the `pipeline/` directory:
+(above) to pick up every newly-FINAL game, then regenerates each derived artifact — the person map
+and the frequency artifact — only if that regeneration actually changed something. It is a thin
+orchestration layer: it calls `bc_pipeline.backfill.run_backfill_with_escalation` and the public
+functions of `bc_pipeline.person_map` and `bc_pipeline.frequencies` unchanged; it adds no
+pick-up/idempotency/batching logic and no aggregation or linking logic of its own. Run it from the
+`pipeline/` directory:
 
 ```bash
-python -m bc_pipeline.refresh                       # backfill + regenerate frequencies if changed
+python -m bc_pipeline.refresh                       # backfill + regenerate derived artifacts if changed
 python -m bc_pipeline.refresh --limit 20             # cap total NEW fetches this run (bounded slice)
 python -m bc_pipeline.refresh --config my-config.json     # --repo-root only if auto-detect can't find it
 ```
@@ -422,18 +423,28 @@ message.
 
 1. Run the backfill escalation loop (fetch -> parse -> replay -> commit every discoverable newly-FINAL
    game, one season at a time — see "Backfill" above).
-2. If that stopped on a detected challenge/WAF trip, **skip frequency regeneration entirely** and
-   exit 1 — `games/**` reflects only a partial refresh at that point, and regenerating the frequency
-   artifact over incomplete state would silently mask the stop. A resumed run picks back up exactly
+2. If that stopped on a detected challenge/WAF trip, **skip artifact regeneration entirely** and
+   exit 1 — `games/**` reflects only a partial refresh at that point, and regenerating over
+   incomplete state would silently mask the stop. That matters most for the person map, which would
+   otherwise mint person ids from an incomplete roster picture. A resumed run picks back up exactly
    where the backfill half left off.
-3. Otherwise, regenerate the frequency artifact in memory and compare it (with `meta.generated_at`
-   normalized on both sides) against whatever is currently committed at
-   `artifacts/latest/frequencies.json`. If they compare equal (or nothing is committed yet and there
-   is genuinely nothing to aggregate), this is a **NO-OP** — nothing is written, nothing is
-   committed. If they differ, the fresh artifact is written and committed with the SAME commit
-   mechanism used for game-file commits, under its own distinct commit message
-   (`"refresh: regenerate frequency artifacts"`), separate from any game-file batch commit.
-4. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
+3. Otherwise, regenerate each artifact in memory and compare it (with `meta.generated_at` normalized
+   on both sides) against whatever is currently committed under `artifacts/latest/`. If they compare
+   equal (or nothing is committed yet and there is genuinely nothing to aggregate), this is a
+   **NO-OP** — nothing is written, nothing is committed. If they differ, the fresh artifact is
+   written and committed with the SAME commit mechanism used for game-file commits, under its own
+   distinct commit message, separate from any game-file batch commit. The **person map** goes first
+   (`"refresh: regenerate person map"`) because it is the identity layer every other reading of the
+   corpus sits on; the **frequency artifact** follows
+   (`"refresh: regenerate frequency artifacts"`).
+4. Report **`person_id` drift**. `person_id` lives in two places: the person-map artifact, which is
+   authoritative and was just regenerated, and a materialized copy on every `players[].person_id`,
+   which only a labeled `reparse(vX.Y.Z)` commit can refresh because `games/**` is write-once. A
+   refresh that picked up new games leaves the two diverged. `run_refresh` does not resolve that (it
+   has no license to rewrite game files) — it counts the committed player records whose stored
+   `person_id` disagrees with the fresh map and prints the number. `0` means the corpus is in sync;
+   anything else is the signal that a re-parse is due, and names the command.
+5. Print a one-line summary (new games parsed, game-file commit count, frequency-artifact
    NO-OP-or-CHANGED) and exit 0 (or 1 if step 2 fired).
 
 ### Artifacts: person_map (`bc_pipeline.person_map`)
