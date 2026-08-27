@@ -449,3 +449,54 @@ def test_walkoff_half_with_two_outs_is_accepted():
     oracle = {"linescore": {"innings": {"away": [None] * 9, "home": [None] * 9},
                             "totals": {"away": {"R": 0}, "home": {"R": 1}}}}
     assert replay.check_outs_per_half(game, oracle).warnings == []
+# --- issue #40: trailing linescore columns are table padding ---------------
+
+
+def _linescore_game(events):
+    return {"events": events}
+
+
+def _ls_oracle(away, home, away_total=0, home_total=0):
+    return {"linescore": {"innings": {"away": away, "home": home},
+                          "totals": {"away": {"R": away_total},
+                                     "home": {"R": home_total}}},
+            "box": {"batting": {}}}
+
+
+def _one_inning(inning, half, runs=0):
+    return {"kind": "plate_appearance", "seq": inning * 10 + (0 if half == "top" else 1),
+            "inning": inning, "half": half,
+            "batter": {"player_id": "b", "name_raw": "B", "resolved": True},
+            "outcome": {"type": "home_run" if runs else "groundout", "modifiers": [],
+                        "fielders": [], "location": None, "outs_recorded": 0 if runs else 1},
+            "runners": ([{"player_id": "b", "from": 0, "to": 4, "out": False,
+                          "scored": True, "cause": "batted_ball"}] if runs else
+                        [{"player_id": "b", "from": 0, "to": -1, "out": True,
+                          "scored": False, "cause": "putout"}])}
+
+
+def test_trailing_zero_inning_with_no_events_is_not_a_mismatch():
+    """The boxscore renders linescore columns past the end of the game and
+    fills them with 0 -- extra-inning columns on a 9-inning game, a 9th and
+    10th column on a 7-inning doubleheader. 0 runs and 0 events agree."""
+    events = [_one_inning(1, "top"), _one_inning(1, "bottom")]
+    oracle = _ls_oracle(away=[0, 0, 0], home=[0, 0, 0])
+    assert replay.check_linescore(_linescore_game(events), oracle).warnings == []
+
+
+def test_trailing_inning_with_a_nonzero_expectation_is_still_reported():
+    """A non-zero run count with no events is genuinely missing play."""
+    events = [_one_inning(1, "top"), _one_inning(1, "bottom")]
+    oracle = _ls_oracle(away=[0, 3], home=[0, 0], away_total=3)
+    ws = replay.check_linescore(_linescore_game(events), oracle).warnings
+    assert any("has no folded events" in w for w in ws)
+
+
+def test_interior_inning_with_no_events_is_still_reported():
+    """Deliberately narrow: only TRAILING innings are excused. An interior
+    gap would be genuinely missing play-by-play."""
+    events = [_one_inning(1, "top"), _one_inning(1, "bottom"),
+              _one_inning(3, "top"), _one_inning(3, "bottom")]
+    oracle = _ls_oracle(away=[0, 0, 0], home=[0, 0, 0])
+    ws = replay.check_linescore(_linescore_game(events), oracle).warnings
+    assert any("inning 2" in w for w in ws)
