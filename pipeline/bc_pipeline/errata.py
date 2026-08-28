@@ -20,8 +20,29 @@ tight as their evidence supports.
 
 ADMISSIBILITY -- both must hold:
 
-  1. The phenomenon is essentially unique in the corpus (N=1 or 2). At
-     higher N it is a rule, and it gets scored like one.
+  1. No general rule can reach it. Usually that is because the phenomenon
+     is essentially unique (N=1 or 2) and so cannot be scored; at higher N,
+     a rule is normally the right answer and gets scored like one.
+
+     ONE POPULATION is admitted despite being large, deliberately and with
+     the owner's ruling: `inflated_inning_summary_lob`, 34 entries. A source
+     Inning Summary reports one more runner left on base than its own half's
+     plays put there. Measured, the defect sits at 2.01% of FINAL
+     half-innings (29 of 1,445) against 0.030% everywhere else (7 of
+     23,486) -- a 67x concentration -- spread evenly over all 12 home clubs
+     and all three seasons, which makes it a close-out artifact of the
+     scoring software rather than one scorer or a fault of ours. Ruled out
+     by measurement: the summary tags are not misaligned by a half (99.80%
+     match in place), walk-offs explain only 5, and the play type ending the
+     half carries no signal.
+
+     The reason it is errata and not a rule: the only rule available would
+     be "in a final half-inning, when the tag exceeds the fold by one,
+     believe the fold" -- which fires blind on every future instance,
+     including any that turn out to be OUR bug. That is precisely the
+     failure this file exists to avoid. Per-line entries pinned to a hash,
+     each carrying its own arithmetic, cannot fire on anything but the exact
+     lines a human checked.
   2. Other evidence IN THE SAME GAME forces the correction: the batting
      order, the boxscore line, the linescore, an inning summary. The
      `evidence` field must name it, in enough detail that a reader can

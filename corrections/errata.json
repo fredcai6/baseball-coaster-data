@@ -4,13 +4,527 @@
     {
       "erratum_id": "20240524_j5eu-1",
       "game_id": "20240524_j5eu",
-      "location": { "inning": 2, "half": "bottom", "line_index": 0 },
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 0
+      },
       "raw_sha256": "0fdeb54ef4f763257e7fb40ec50cc40a4bae2feabd59cd540dc06e3283b0cb87",
       "raw_excerpt": "M. Castillo lined out to 1b. (1 out)",
       "replace": "M. Castillo",
       "with": "R. Gonzalez",
       "class": "misidentified_batter",
       "evidence": "The scorer typed M. Castillo on two consecutive lines: bottom 2nd reads 'M. Castillo lined out to 1b.' then 'M. Castillo grounded out to 2b.' A batter cannot bat twice in a row, and this is the only back-to-back same-batter pair in all 1,484 games. The lineup cycle forces which line is wrong. Counting plate appearances for the home side: the bottom 1st is Backstrom, Washington, Lynch, Morris, Rojas Jr (order positions 1-5); the bottom 2nd holds positions 6-8; the bottom 3rd is Major, Backstrom, Washington, Lynch, Morris, Rojas Jr, Gonzalez (positions 9-15). The cycle checks at two independent points -- position 10 is Backstrom, equal to position 1, and position 14 is Rojas Jr, equal to position 5 -- so position 15 being Gonzalez forces position 6 to be Gonzalez too. Position 6 is this line. Corroborated by the boxscore, which gives Roberto Gonzalez one MORE plate appearance than the events credit him and Marcos Castillo exactly one FEWER, and by the following two lines already reading Castillo (position 7) and Fernandez (position 8) in order."
+    },
+    {
+      "erratum_id": "20240523_5giq-1",
+      "game_id": "20240523_5giq",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "865a7736b58664ee6c9e526865a48bc84a94b3f214c482461e7bb43ccd57338f",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chuck Steele, Pearce Howard. The last plate appearance was \"N. Ultsch struck out looking.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240523_bldd-1",
+      "game_id": "20240523_bldd",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 9
+      },
+      "raw_sha256": "7eec4684096692d8e5e4e61a2a4168af3c30bf2cedbed4f58d190f8d402cbe5b",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Dan Covino, Tyler Davis. The last plate appearance was \"T. Lozano flied out to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240524_91ql-1",
+      "game_id": "20240524_91ql",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 8
+      },
+      "raw_sha256": "3bb91973d55f50540217cab97e65a0b7d84be9740db359b1dbba860f5daaa823",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Landen Barns. The last plate appearance was \"N. Ultsch grounded out to p.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240526_0rv7-1",
+      "game_id": "20240526_0rv7",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 10
+      },
+      "raw_sha256": "abafbcd2c3e699d12ca9de47c1051a3c697f778bd76b1bc1d175f35137ceec01",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 1 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chad Castillo, Gavin Tonkel, JD McLaughlin, Trevor Sheehan. The last plate appearance was \"J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240612_w4tf-1",
+      "game_id": "20240612_w4tf",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "1c1ae1fd8f8617100000470360965b9a463c7d0ae208cb66f8c25fd8fda25178",
+      "raw_excerpt": "Inning Summary: 0 Runs , 3 Hits , 0 Errors , 4 LOB",
+      "replace": "4 LOB",
+      "with": "3 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Alec Sanchez, Cameron Thompson, Mike Rosario, Roberto Pena. The last plate appearance was \"C. Gordon struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240625_3h5e-1",
+      "game_id": "20240625_3h5e",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "872a6c5b78e6bbb8a9687ac4c531aa596b0fd4af61359468360d4887da8590d5",
+      "raw_excerpt": "Inning Summary: 1 Runs , 1 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Cameron Thompson. The last plate appearance was \"K. Willman struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240625_xrri-1",
+      "game_id": "20240625_xrri",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "d2fac5759c6e614cd411ee2b0e27692903b5774e0fc77c5bbe971a0145bcf3b4",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Raymond Gil. The last plate appearance was \"J. Cone out at first 1b to p.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240711_nsik-1",
+      "game_id": "20240711_nsik",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 17
+      },
+      "raw_sha256": "9459e605f00a5f7ef6e3669e449f91a01ea7fa7dfe1fa93f2ca9b3300a18651b",
+      "raw_excerpt": "Inning Summary: 6 Runs , 3 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Abe Valdez, Brendan Ryan, Briley Knight, Connor Denning, Dustin Crenshaw, Gabe Wurtz, Jacob Kline, Taylor Lomack. The last plate appearance was \"B. Ryan doubled, 3 RBI; D. Crenshaw scored; B. Knight scored; A. Valdez scored.\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240712_k5j6-1",
+      "game_id": "20240712_k5j6",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "86e8cd9299a312677dae3606fc64a34fc92795486c9a152c5405e54f2d35b2db",
+      "raw_excerpt": "Inning Summary: 1 Runs , 2 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Dario Gomez, Euro Diaz, Evan Scavotto, Garrett Kueber, Reece Yeargain. The last plate appearance was \"R. Yeargain singled to right center, 2 RBI; G. Kueber advanced to third, out at home rf to\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240724_o3th-1",
+      "game_id": "20240724_o3th",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 10
+      },
+      "raw_sha256": "fd006d9d607b4e498269ee95458de00d86305ea06e275211964e278af1895ba6",
+      "raw_excerpt": "Inning Summary: 1 Runs , 3 Hits , 1 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Alejandro Figueredo, Brayland Skinner, Ed Niemann, Jose Gonzalez. The last plate appearance was \"B. Blackford struck out looking.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240803_lwuz-1",
+      "game_id": "20240803_lwuz",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "20f370c094326aa93099240906580ae5bac4609f37763d69a7196a37c937dfe5",
+      "raw_excerpt": "Inning Summary: 1 Runs , 1 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"B. Evans flied out to lf.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240804_nbqn-1",
+      "game_id": "20240804_nbqn",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 10
+      },
+      "raw_sha256": "b6a1e75bd15bcfafaec8384f9c907d9f3214915c918e3711ee7d92f3276162d9",
+      "raw_excerpt": "Inning Summary: 2 Runs , 3 Hits , 1 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Alejandro Figueredo, Angel Mendoza, Braylin Marine, Kirkland Banks, Tanner Smith. The last plate appearance was \"B. Marine doubled, 2 RBI; A. Mendoza advanced to third, out at home lf to ss to c; K. Bank\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240822_sh30-1",
+      "game_id": "20240822_sh30",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 10
+      },
+      "raw_sha256": "865a7736b58664ee6c9e526865a48bc84a94b3f214c482461e7bb43ccd57338f",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Freddy Guilamo, Gabe Howell. The last plate appearance was \"R. McCarthy grounded out to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250522_20si-1",
+      "game_id": "20250522_20si",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"M. Jung-Gold struck out.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250525_moj2-1",
+      "game_id": "20250525_moj2",
+      "location": {
+        "inning": 7,
+        "half": "bottom",
+        "line_index": 8
+      },
+      "raw_sha256": "ed3cc5fc3adf572501410214eff86d76f5501a17a7f2b8134175eac75c9d4d13",
+      "raw_excerpt": "Inning Summary: 1 Runs , 2 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Alex Adams, Austin Chouinard, Dane Tofteland, Stephen Wilmer. The last plate appearance was \"G. Gonzalez lined out to rf.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250530_07p6-1",
+      "game_id": "20250530_07p6",
+      "location": {
+        "inning": 7,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "3bb91973d55f50540217cab97e65a0b7d84be9740db359b1dbba860f5daaa823",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Manny Jackson, Matt Fabian. The last plate appearance was \"M. Fabian reached on a fielder's choice; Man. Jackson out at second ss to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250617_gitd-1",
+      "game_id": "20250617_gitd",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "d848b1d2cf507a0c55a141d0417e23c0a4ecf4bb6a51d54fc8394a45b0bf4d2b",
+      "raw_excerpt": "Inning Summary: 2 Runs , 1 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Cam Bufford, Darryl Buggs, Esai Santos, Lou Helmig, Tremayne Cobb Jr.. The last plate appearance was \"C. Bufford singled to second base; D. Buggs advanced to second; Cobb, Jr advanced to third\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250626_uit4-1",
+      "game_id": "20250626_uit4",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"J. Lynch grounded out to 1b unassisted.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250701_wedt-1",
+      "game_id": "20250701_wedt",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "cf388b3cdce2923ca13d76ceaf61add1544a49ccb7917b32563bec690193bbae",
+      "raw_excerpt": "Inning Summary: 2 Runs , 3 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Dane Tofteland, Gary Lora Gonzalez, Will Butcher. The last plate appearance was \"A. Chouinard flied out to cf.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250705_lhuj-1",
+      "game_id": "20250705_lhuj",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 9
+      },
+      "raw_sha256": "fbc3666c1193f8a01cf25a128a7a5ae5a9573f5711ecb97e563d600f5fc7481e",
+      "raw_excerpt": "Inning Summary: 2 Runs , 2 Hits , 1 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Cooper Hext, Gio Brusa, Kirkland Banks, Mike Campagna. The last plate appearance was \"P. Coddou grounded out to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250717_uiiz-1",
+      "game_id": "20250717_uiiz",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "0d5264bb28128f7fc5db83b84763a819a383c464e6d0f3d2fcdb9f8bb796f5c3",
+      "raw_excerpt": "Inning Summary: 2 Runs , 1 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: Eddie Pelc, Tyler Wyatt. The last plate appearance was \"J. Jablonski struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250730_v9dw-1",
+      "game_id": "20250730_v9dw",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 13
+      },
+      "raw_sha256": "c23eff679fac7ab110c846dd6497720e0076a11d1b0703a51ee3e5d1c56d1251",
+      "raw_excerpt": "Inning Summary: 3 Runs , 2 Hits , 0 Errors , 4 LOB",
+      "replace": "4 LOB",
+      "with": "3 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Gabriel Vasquez, Garret Ostrander, Jacob Jablonski, Simon Baumgardt, Trevor Rogers, Tyler Wyatt. The last plate appearance was \"G. Morgan struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260519_wmxc-1",
+      "game_id": "20260519_wmxc",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "d2fac5759c6e614cd411ee2b0e27692903b5774e0fc77c5bbe971a0145bcf3b4",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Cuba Bess, Matthew Bardowell. The last plate appearance was \"Jacob Jablonski flied out to rf (2-1 BBK).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260520_g1o7-1",
+      "game_id": "20260520_g1o7",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Austin Folds grounded out to 3b (1-2 BSF).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260522_60np-1",
+      "game_id": "20260522_60np",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 16
+      },
+      "raw_sha256": "db03e8338029b005072f52b33bbbeafd559fc1a0a5e2cc681163b3b053736cf0",
+      "raw_excerpt": "Inning Summary: 6 Runs , 2 Hits , 3 Errors , 4 LOB",
+      "replace": "4 LOB",
+      "with": "3 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Austin Folds, Brandon Nigh, Caden Matlon, Ethan Underwood, Jeremiah Begora, Joseph Kalafut, Logan Meyer, Parker Depasquale. The last plate appearance was \"Austin Folds grounded out to 1b unassisted (1-1 KB).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260528_iwca-1",
+      "game_id": "20260528_iwca",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 13
+      },
+      "raw_sha256": "fe2ec90a8ada2113d6149135fbb111e7e042b07c1b489b7a8d8ef3aeb22f7e8b",
+      "raw_excerpt": "Inning Summary: 5 Runs , 5 Hits , 1 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Jeremy Piatkiewicz, Joskar Feliciano, Nich Klemp, Ty Yukumoto, William Bermudez. The last plate appearance was \"Enzo Apodaca lined out to cf (1-0 B).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260528_oaoo-1",
+      "game_id": "20260528_oaoo",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Jeter Ybarra grounded out to ss (1-1 FB).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260529_ebeg-1",
+      "game_id": "20260529_ebeg",
+      "location": {
+        "inning": 1,
+        "half": "top",
+        "line_index": 9
+      },
+      "raw_sha256": "d9988d67b0e075573d53e8d122729795bf6e70c3bbbebc2f0d65767d3a5d7289",
+      "raw_excerpt": "Inning Summary: 3 Runs , 3 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: Cooper Vest. The last plate appearance was \"Jacob Jablonski struck out swinging (1-2 FFFBS).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260603_g8ln-1",
+      "game_id": "20260603_g8ln",
+      "location": {
+        "inning": 7,
+        "half": "bottom",
+        "line_index": 10
+      },
+      "raw_sha256": "e53bf57b06f1b77c8a2e62ecd91e3195f986564ad1e7ad9c61815310db9189b4",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 4 LOB",
+      "replace": "4 LOB",
+      "with": "3 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Aidan Redahan, Anthony Manisero, Antonio Barranca. The last plate appearance was \"Tommy Specht flied out to cf (1-0 B).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260605_1xfr-1",
+      "game_id": "20260605_1xfr",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 8
+      },
+      "raw_sha256": "865a7736b58664ee6c9e526865a48bc84a94b3f214c482461e7bb43ccd57338f",
+      "raw_excerpt": "Inning Summary: 0 Runs , 1 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Carson Garner, Jake Millan. The last plate appearance was \"C. Hornung struck out looking (3-2 KSBBBK).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260605_upka-1",
+      "game_id": "20260605_upka",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Kingston Liniak popped up to 3b (0-0).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260616_z3p0-1",
+      "game_id": "20260616_z3p0",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "237b9fae50c3148f8123313c4d0b52d2df97d0e975d85ea85cb190f22d19a37a",
+      "raw_excerpt": "Inning Summary: 1 Runs , 1 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Bradley Pelle, Garrett Bevacqua, Kyler Stancato. The last plate appearance was \"Garrett Bevacqua walked (3-1 BBBKB); Kyler Stancato advanced to second; Bradley Pelle adva\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260726_u5ja-1",
+      "game_id": "20260726_u5ja",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 10
+      },
+      "raw_sha256": "f1130278f9f19be4a356cf7f960cab81f424dc9e32084358b13e6bc236d8c4a0",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Michael Soper lined out to 2b (0-0).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260730_mzgo-1",
+      "game_id": "20260730_mzgo",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 11
+      },
+      "raw_sha256": "d2fac5759c6e614cd411ee2b0e27692903b5774e0fc77c5bbe971a0145bcf3b4",
+      "raw_excerpt": "Inning Summary: 0 Runs , 0 Hits , 0 Errors , 2 LOB",
+      "replace": "2 LOB",
+      "with": "1 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Xavier Casserilla. The last plate appearance was \"Zack Stewart struck out looking (0-2 KFK).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     }
   ]
 }
