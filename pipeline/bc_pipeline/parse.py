@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.12.0"
+PARSER_VERSION = "0.13.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -435,13 +435,20 @@ def build_events(
         # SAME runner on this line chains off it. -1 (retired) is kept so a
         # subsequent clause doesn't re-place an out runner on a base.
         event_pos[pid] = -1 if rm.out else to_base
-        # Update the live cross-event base occupancy: vacate the base this
-        # clause left (only if the runner still holds it), and occupy the
-        # destination (unless out, scored, or off the bases).
-        if from_base in base_occ and base_occ[from_base] == pid:
-            del base_occ[from_base]
-        if not rm.out and to_base not in (-1, 4):
-            base_occ[to_base] = pid
+        # Cross-event base occupancy is deliberately NOT written here. Writing
+        # it per CLAUSE let one runner's transient intermediate stop clobber a
+        # DIFFERENT runner's live entry for the same numbered base on the same
+        # line: "P. Howard advanced to second, advanced to third ...; T.
+        # Fontenot advanced to third, scored ..." parks Howard on third, then
+        # Fontenot's own pass THROUGH third overwrites him, and Fontenot's
+        # score vacates it -- leaving Howard untracked. The next line's clause
+        # for him then falls back to `from` = 4, which replay's clear pass
+        # ignores (its _BASE_INDEXES is (1, 2, 3)), so he phantom-occupies
+        # third for the rest of the half.
+        #
+        # See `_apply_occupancy`, called once per LINE against the MERGED
+        # records -- the pattern the BATTER path below already established and
+        # the runner path never got (issue #33).
         return record
 
     def _merge_same_runner(records: List[dict]) -> List[dict]:
@@ -457,8 +464,13 @@ def build_events(
         second emitted entry with `from` = the intermediate base (2), which
         was NOT occupied before the event, reads as an illegal transition. The
         runner only ever HAD one net move this event (1 -> 3), so we emit one
-        record for it; cross-event occupancy is unaffected (base_occ was
-        already folded hop-by-hop inside _resolve_runner)."""
+        record for it.
+
+        Cross-event occupancy is applied FROM this merged output, by
+        `_apply_occupancy`. It used to be folded hop-by-hop inside
+        `_resolve_runner` instead, and that immediacy was the bug: an
+        intermediate stop is not an end-of-line position, so writing it could
+        evict a different runner genuinely standing there (issue #33)."""
         order: List[str] = []
         grouped: Dict[str, List[dict]] = {}
         for rec in records:
@@ -490,6 +502,33 @@ def build_events(
                         net[key] = rec[key]
             merged.append(net)
         return merged
+
+    def _apply_occupancy(records: List[dict]) -> None:
+        """Fold every named participant's NET end-of-line position into the
+        cross-event base occupancy, read from the MERGED records.
+
+        A base a runner merely passes THROUGH on the way to a further
+        destination, or to being retired, is never an end-of-line occupant,
+        so it must not reach `base_occ` even momentarily. Deferring every
+        write until the whole line is merged is what stops two runners whose
+        clauses transiently compute the same numbered base from clobbering
+        each other.
+
+        This is the batter's own established pattern, generalized to every
+        participant. It was previously applied to the batter alone, with a
+        comment explaining exactly why reading the merged record matters --
+        and the runner path, which needed it for the same reason, wrote
+        hop-by-hop instead. One rule in two places, the shape this codebase
+        keeps rediscovering (issue #33).
+        """
+        for rec in records:
+            pid = rec["player_id"]
+            final_base = rec["to"]
+            for base, occupant in list(base_occ.items()):
+                if occupant == pid and base != final_base:
+                    del base_occ[base]
+            if not rec["out"] and final_base not in (-1, 4):
+                base_occ[final_base] = pid
 
     for line in lines:
         half_key = (line.inning, line.half)
@@ -860,6 +899,8 @@ def build_events(
             if not ok:
                 _unparsed(line, "runner clause name did not resolve uniquely")
                 continue
+            merged_runners = _merge_same_runner(runners)
+            _apply_occupancy(merged_runners)
             _note_inferred_runners(line, cg)
             events.append(
                 {
@@ -871,7 +912,7 @@ def build_events(
                     "fielding_team": fielding_team_id,
                     "narrative": _display_narrative(line.text),
                     "scoring_play": line.is_strong,
-                    "runners": _merge_same_runner(runners),
+                    "runners": merged_runners,
                 }
             )
             seq += 1
@@ -1009,32 +1050,12 @@ def build_events(
 
         runner_records = _merge_same_runner(runner_records)
 
-        # Apply the batter's own base-occupancy update (runner clauses
-        # already updated themselves inside _resolve_runner).
-        #
-        # Read from the MERGED record, not from the primary verb's own
-        # destination: when the batter carries a chained self-advance
-        # ("reached on a fielder's choice, advanced to second on the throw")
-        # the merge is what knows he finished on second, while the primary
-        # verb alone says first. Setting occupancy from the primary put him
-        # back on a base he had already left, and the next line's clause for
-        # him then read the stale base -- surfacing as an illegal_transition
-        # two events later, nowhere near its cause (issue #40).
-        batter_final = next(
-            (
-                r
-                for r in runner_records
-                if r["player_id"] == batter_pid and r["from"] == 0
-            ),
-            None,
-        )
-        if batter_final is not None and not batter_final["out"]:
-            final_base = batter_final["to"]
-            for b, pid in list(base_occ.items()):
-                if pid == batter_pid and b != final_base:
-                    base_occ.pop(b, None)
-            if final_base not in (-1, 4):
-                base_occ[final_base] = batter_pid
+        # Apply EVERY named participant's base-occupancy update -- batter and
+        # runners alike -- from the MERGED records. This subsumes what used to
+        # be a batter-only block whose comment already explained why merged
+        # records are the right source; the runner path now gets the identical
+        # treatment instead of writing hop-by-hop (issue #33).
+        _apply_occupancy(runner_records)
         # Schema: "Outs THIS event adds." Read that off the MERGED runner
         # records -- the same primitives g6 replay folds -- not off the
         # primary verb's `out_flag`, which describes the verb rather than the
