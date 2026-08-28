@@ -58,3 +58,44 @@ def test_the_published_average_is_cumulative_not_per_game():
         assert abs(round(hits / at_bats, 3) - float(avg)) <= mod.TOLERANCE
         checked += 1
     assert checked >= 5
+
+
+# --- doubleheaders make the accumulation order ambiguous --------------------
+#
+# Two games share a date and nothing in the file says which was played first,
+# so accumulating in filename order manufactures a divergence where the data
+# is fine. 354 of 1,893 person-seasons contain a same-date pair. The
+# published averages settle it: only one order reproduces both rows.
+
+
+def _row(date, gid, ab, h, avg):
+    return (date, gid, ab, h, avg)
+
+
+def test_a_doubleheader_reconciles_in_whichever_order_works():
+    # Played g2 first (2-for-4 = .500), then g1 (1-for-4, cumulative 3/8
+    # = .375). Presented in the other order, which naive sorting would use.
+    rows = [
+        _row("2025-06-01", "g1", 4, 1, ".375"),
+        _row("2025-06-01", "g2", 4, 2, ".500"),
+    ]
+    assert mod._first_divergence(rows) is None
+
+
+def test_a_real_divergence_inside_a_doubleheader_is_still_reported():
+    # No ordering of these reproduces the published figures, so the oracle
+    # must still report rather than permuting its way out of a real gap.
+    rows = [
+        _row("2025-06-01", "g1", 4, 1, ".900"),
+        _row("2025-06-01", "g2", 4, 2, ".950"),
+    ]
+    assert mod._first_divergence(rows) is not None
+
+
+def test_an_ordinary_season_is_unaffected():
+    rows = [
+        _row("2025-05-20", "a", 3, 1, ".333"),
+        _row("2025-05-21", "b", 4, 2, ".429"),
+        _row("2025-05-22", "c", 6, 2, ".385"),
+    ]
+    assert mod._first_divergence(rows) is None

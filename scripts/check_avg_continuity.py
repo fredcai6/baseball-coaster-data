@@ -112,6 +112,65 @@ def _load(games_dir: Path):
     return seasons, skipped
 
 
+def _first_divergence(rows):
+    """The game_id where the running average first stops reproducing the
+    published one, or None if the whole season reconciles.
+
+    DOUBLEHEADERS make the order ambiguous. Two games share a date, and the
+    file name does not say which was played first -- so accumulating them in
+    filename order can manufacture a divergence where the data is fine. 354
+    of 1,893 person-seasons contain a same-date pair, so this is not a corner
+    case; sorting naively and reporting the result would have blamed a
+    missing game for what is really an ordering guess.
+
+    The published averages themselves settle it: only one order reproduces
+    both rows. So try the orderings of each same-date group and keep one that
+    reconciles, falling back to the first ordering when none does (a real
+    divergence, which is what we are looking for).
+    """
+    import itertools
+
+    by_date = collections.defaultdict(list)
+    for row in rows:
+        by_date[row[0]].append(row)
+
+    at_bats = hits = 0
+    for date in sorted(by_date):
+        group = by_date[date]
+        # More than a doubleheader would make the permutations expensive and
+        # does not occur; guard rather than assume.
+        orders = (
+            list(itertools.permutations(group)) if len(group) <= 3 else [tuple(group)]
+        )
+        chosen = None
+        for order in orders:
+            ab, h = at_bats, hits
+            if all(_row_reconciles(ab := ab + r[2], h := h + r[3], r[4]) for r in order):
+                chosen = (order, ab, h)
+                break
+        if chosen is None:
+            # No ordering of this date works: report the first game in it.
+            order = orders[0]
+            for row in order:
+                at_bats += row[2]
+                hits += row[3]
+                if not _row_reconciles(at_bats, hits, row[4]):
+                    return row[1]
+            return order[0][1]
+        order, at_bats, hits = chosen
+    return None
+
+
+def _row_reconciles(at_bats, hits, published):
+    if at_bats < MIN_AB:
+        return True
+    try:
+        target = float(published)
+    except (TypeError, ValueError):
+        return True
+    return abs(round(hits / at_bats, 3) - target) <= TOLERANCE
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--games", default=str(REPO_ROOT / "games"))
@@ -137,21 +196,7 @@ def main() -> int:
     failures = 0
 
     for rows in seasons.values():
-        rows.sort()
-        at_bats = hits = 0
-        first = None
-        for date, game_id, ab, h, avg in rows:
-            at_bats += ab
-            hits += h
-            try:
-                published = float(avg)
-            except (TypeError, ValueError):
-                continue
-            if at_bats < MIN_AB:
-                continue
-            computed = round(hits / at_bats, 3)
-            if abs(computed - published) > TOLERANCE and first is None:
-                first = game_id
+        first = _first_divergence(rows)
         if first is None:
             reconciled += 1
         else:
