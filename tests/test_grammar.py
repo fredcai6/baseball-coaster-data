@@ -1733,3 +1733,48 @@ def test_fielders_choice_without_a_chain_still_parses():
     )
     assert cg.primary.forced_out_at == "second"
     assert cg.primary.forced_out_chain is None
+
+
+# --- a STANDALONE dropped-foul-ball line that carries a count (#33) ---------
+#
+# The spliced-fragment stripper protected the standalone spelling with a
+# lookahead for the closing period, but a standalone line can also carry a
+# pitch count -- and then the stripper ate the only predicate on the line,
+# leaving "Eddy Pelc (3-1 BBKB)." and a `primary verb not recognized` refusal.
+# Tightening the lookahead cannot fix it: the genuinely spliced lines carry
+# counts too and must still be stripped. So the standalone shape is matched
+# positively, before the stripper runs.
+
+
+def test_standalone_dropped_foul_ball_with_a_count_asserts_nothing():
+    for text in (
+        "Eddy Pelc Dropped foul ball, E5 (3-1 BBKB).",
+        "Johnny Pappas Dropped foul ball, E3 (1-2 KBK).",
+        "Eddy Pelc Dropped foul ball, E5 (0-0).",
+    ):
+        cg = grammar.parse_clause_group(text)
+        assert cg.kind == "runner_event", text
+        assert cg.runners == (), text
+
+
+def test_standalone_dropped_foul_ball_without_a_count_still_asserts_nothing():
+    cg = grammar.parse_clause_group("E. Pelc Dropped foul ball, E5.")
+    assert cg.kind == "runner_event"
+    assert cg.runners == ()
+
+
+def test_a_spliced_dropped_foul_ball_is_still_stripped_so_the_real_verb_reads():
+    # The fragment is spliced INTO another statement, which must still parse.
+    # These carry counts too, which is why the fix cannot be a narrower
+    # lookahead on the stripper.
+    cg = grammar.parse_clause_group(
+        "Wesley Mitchell walkedDropped foul ball, E3 (3-2 BKBBFFB)."
+    )
+    assert cg.kind == "plate_appearance"
+    assert cg.primary.outcome_type == "walk"
+
+    cg = grammar.parse_clause_group(
+        "Enzo Apodaca Dropped foul ball, E2, homered to right field (2-2 BK)."
+    )
+    assert cg.kind == "plate_appearance"
+    assert cg.primary.outcome_type == "home_run"

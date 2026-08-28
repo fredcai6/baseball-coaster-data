@@ -2188,6 +2188,12 @@ def _match_primary_chain(rest: str):
 #: See `parse_clause_group` for what this removes and why it is safe.
 _SPLICED_FOUL_BALL_RE = re.compile(r"\s*Dropped foul ball, E\d+,?\s*(?=[^\s.])")
 
+#: A dropped foul ball narrated as the WHOLE line, one clause, with nothing
+#: after it -- as opposed to the same fragment spliced into another
+#: statement. No ';' is permitted: a line with clauses says something, and
+#: this shape by definition does not.
+_STANDALONE_FOUL_BALL_RE = re.compile(r"[^;]+ [Dd]ropped foul ball, E\d")
+
 
 def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
@@ -2210,6 +2216,45 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     # downstream always comes from the caller's original line, never from
     # this normalized working copy.
     stripped = _normalize_ws(body)
+
+    # A STANDALONE "X Dropped foul ball, E5 (3-1 BBKB)." -- recognized here,
+    # BEFORE the spliced-fragment stripper below can damage it.
+    #
+    # That stripper removes a "Dropped foul ball, E<n>" fragment StatCrew
+    # spliced into some OTHER statement, and it protects the standalone
+    # spelling with a lookahead for the closing period. But a standalone line
+    # can also carry a pitch count, and then the fragment is followed by
+    # " (3-1 BBKB)." rather than by the period -- so the lookahead let it
+    # through and the stripper ate the only predicate on the line, leaving
+    # "Eddy Pelc (3-1 BBKB)." and a `primary verb not recognized: 'Eddy Pelc'`
+    # refusal. The protection was right; it just did not cover the count.
+    #
+    # Tightening the lookahead cannot fix it, because the genuinely spliced
+    # lines carry counts too ("Wesley Mitchell walkedDropped foul ball, E3
+    # (3-2 BKBBFFB).") and must still be stripped. So match the standalone
+    # shape positively instead, which is unambiguous: the fragment ends the
+    # statement, and nothing else on the line asserts anything.
+    #
+    # The count is deliberately not carried onto anything. It is a
+    # mid-plate-appearance count and there is no outcome here to attach it
+    # to; inventing one is the silent-wrong-parse failure mode issue #40
+    # exists to remove. 4 lines across 4 games.
+    # Matched narrowly and positively: the WHOLE line, one clause, ending in
+    # the fragment. `_NO_MOVEMENT_RE` is deliberately NOT reused here -- its
+    # other alternative ("did not advance") appears as one clause among
+    # several on ordinary lines, and its leading `.+?` would happily swallow
+    # everything before it, silently reducing a real multi-clause play to
+    # "asserts nothing". Six games regressed on exactly that before this was
+    # narrowed.
+    _probe = stripped.rstrip(".").strip()
+    _count_m = _COUNT_TAIL_RE.fullmatch(_probe)
+    if _count_m:
+        _probe = _count_m.group("rest").strip()
+    if _STANDALONE_FOUL_BALL_RE.fullmatch(_probe):
+        return ClauseGroup(
+            kind="runner_event", runners=(), trailing_outs=trailing_outs
+        )
+
     # A "Dropped foul ball, E<n>" event StatCrew spliced INTO a plate
     # appearance's line instead of emitting it on its own:
     #
