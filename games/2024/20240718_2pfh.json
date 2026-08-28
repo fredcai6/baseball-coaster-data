@@ -1818,7 +1818,7 @@
         "away_score_before": 0,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -1828,7 +1828,7 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 2,
+        "outs_after": 3,
         "outs_before": 1,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
@@ -1851,7 +1851,7 @@
         ],
         "location": "shortstop",
         "modifiers": [],
-        "outs_recorded": 1,
+        "outs_recorded": 2,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -1862,12 +1862,12 @@
       "pitches": null,
       "runners": [
         {
-          "cause": "fielders_choice",
+          "cause": "force_out",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "w5vvrf58x6s94e3k",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "force_out",
@@ -1875,7 +1875,7 @@
           "out": true,
           "player_id": "gjq34ef6wze0r6ua",
           "scored": false,
-          "to": -1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -6010,14 +6010,14 @@
   "game_id": "20240718_2pfh",
   "inferred": [
     {
-      "asserted": "out at second attributed to gjq34ef6wze0r6ua, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "asserted": "line says the out was at second but a runner it NAMES is already out there, and two runners cannot be retired at one base on one play; the out is the batter's",
       "location": {
         "half": "top",
         "inning": 3,
         "line_index": 3
       },
       "raw": "N. Marcelo reached on a fielder's choice to shortstop, out at second 1b to 2b; M. O'Hara out at second ss to 2b.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
-      "rule": "unattributed_force_out"
+      "rule": "out_base_contradicts_fielding_chain"
     }
   ],
   "linescore": {
@@ -6171,15 +6171,12 @@
     "parse": {
       "events_count": 109,
       "inferred_count": 1,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 3 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 3 top folded LOB 1 != inning_summary LOB 0"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T17:17:38Z",
-    "parser_version": "0.11.0",
+    "parsed_at": "2026-08-28T19:15:02Z",
+    "parser_version": "0.16.0",
     "source_sha256": "68ef0e952d042c563408c75aef2218e1976529023d342e29f26c9cdd42e21511",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240718_2pfh.xml"
   },
