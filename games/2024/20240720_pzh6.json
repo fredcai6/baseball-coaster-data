@@ -8415,16 +8415,19 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.2.0",
+    "derived_replayer_version": "0.3.0",
     "fetched_at": "2026-07-12T18:51:36Z",
     "parse": {
       "events_count": 145,
       "inferred_count": 0,
-      "replayable": true,
+      "replayable": false,
       "unparsed_count": 0,
-      "warnings": []
+      "warnings": [
+        "[pa_counts] pa_counts: player wswcdo5rkhdrmp2h events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player g9dq0iop5jmi1z2o events PA 0 != box-implied PA 3 (AB=1 BB=2 HBP=0 SAC=0 INT=0)"
+      ]
     },
-    "parsed_at": "2026-08-28T16:12:10Z",
+    "parsed_at": "2026-08-28T16:22:57Z",
     "parser_version": "0.11.0",
     "source_sha256": "a1d40ac4431bcbc1925f17f02a293b876bd2d4ecf236315be6359d1daa6a940a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240720_pzh6.xml"
