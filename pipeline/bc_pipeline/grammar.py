@@ -150,6 +150,17 @@ _CAUSEPHRASE = {
 }
 _DEST_ALT = r"(?:second|third|home)"
 
+#: The error-cause phrase, as ONE fragment shared by every row that accepts
+#: it. StatCrew writes three spellings -- "an error by F", "a throwing error
+#: by F", "a fielding error by F" -- plus a bare "the error" back-reference.
+#: Before issue #40 the "advanced to D on ..." rows accepted all three while
+#: the "scored on ..." rows accepted only the plain one, so 78 lines across
+#: 72 games failed on a variant their sibling row already handled. A single
+#: fragment is what keeps the two from drifting apart again.
+_ERROR_BY = (
+    r"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)|the error)"
+)
+
 # Any run of plain spaces/tabs/carriage-returns/newlines, for the MATCHING
 # path only (see _normalize_ws).
 _WS_RUN_RE = re.compile(r"[ \t\r\n]+")
@@ -953,7 +964,7 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest1>{_DEST_ALT}), "
-            rf"scored on an error by (?P<f>[a-z0-9]+)"
+            rf"scored on {_ERROR_BY}"
             rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("advance", "error"),
@@ -979,8 +990,7 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on "
-            rf"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)"
-            rf"|the error)"
+            rf"{_ERROR_BY}"
             rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("error",),
@@ -1022,9 +1032,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) scored on "
-            r"(?:an error by (?P<f>[a-z0-9]+)|the error)"
-            r"(?:, (?P<unearned>(?:team )?unearned))?$"
+            rf"^(?P<name>.+?) scored on {_ERROR_BY}"
+            rf"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("error",),
         _b_scored_on_error,
@@ -1424,7 +1433,7 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     ),
     (
         re.compile(
-            rf"^scored on (?:an error by (?P<f>[a-z0-9]+)|the error){_UNEARNED_TAIL}$"
+            rf"^scored on {_ERROR_BY}{_UNEARNED_TAIL}$"
         ),
         _c_scored_on_error,
     ),
@@ -1435,8 +1444,7 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     (
         re.compile(
             rf"^advanced to (?P<dest>{_DEST_ALT}) on "
-            rf"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)"
-            rf"|the error){_UNEARNED_TAIL}$"
+            rf"{_ERROR_BY}{_UNEARNED_TAIL}$"
         ),
         _c_advance_on_error,
     ),
@@ -1590,6 +1598,25 @@ def _match_clause_chain(clause: str) -> Optional[List[RunnerMovement]]:
     return None
 
 
+#: Clauses that are RECOGNISED but assert no state change, so they produce no
+#: RunnerMovement at all rather than a made-up one (issue #40):
+#:
+#:   "X did not advance"        -- StatCrew spelling out that a runner held.
+#:   "X Dropped foul ball, E5"  -- a foul pop-up dropped for an error. The
+#:                                 plate appearance is still live; no runner
+#:                                 moves and no out is made.
+#:
+#: Emitting nothing is the honest record for both. Neither loses information:
+#: the verbatim line is still the event's narrative, and the charged error
+#: (E5) is not a fact anything derives from the play-by-play -- team errors
+#: come from the inning-summary oracle (parse.py's `"E": cg.summary.errors`),
+#: never from these lines.
+_NO_MOVEMENT_RE = re.compile(
+    r"^(?P<name>.+?) (?:did not advance"
+    r"|[Dd]ropped foul ball, E\d)$"
+)
+
+
 def _match_runner_clauses(
     clauses: List[str], raw_line: str
 ) -> Union[List[RunnerMovement], GrammarMiss]:
@@ -1606,6 +1633,8 @@ def _match_runner_clauses(
     for clause in clauses:
         clause = clause.strip()
         if not clause:
+            continue
+        if _NO_MOVEMENT_RE.fullmatch(clause):
             continue
         # issue #40, in strict precedence order:
         #   1. a whole-clause RUNNER_RULES match whose name looks like a name;
@@ -1805,7 +1834,16 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
                     f"match any runner rule: {runner_only.reason}"
                 ),
             )
-        if not runner_only:
+        if not runner_only and not all(
+            _NO_MOVEMENT_RE.fullmatch(part.rstrip(".").strip())
+            for part in parts
+            if part.strip()
+        ):
+            # Genuinely nothing matched. A line whose every clause IS a
+            # recognized no-movement clause ("X Dropped foul ball, E5.")
+            # falls through instead, as a runner_event asserting nothing --
+            # recognized-but-empty is a different fact from unrecognized,
+            # and only the latter belongs in unparsed[] (issue #40).
             return GrammarMiss(raw=raw_line, reason="empty clause body")
         return ClauseGroup(
             kind="runner_event",
