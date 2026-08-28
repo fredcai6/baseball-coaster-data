@@ -43,6 +43,27 @@ ADMISSIBILITY -- both must hold:
      failure this file exists to avoid. Per-line entries pinned to a hash,
      each carrying its own arithmetic, cannot fire on anything but the exact
      lines a human checked.
+
+     A SECOND POPULATION is admitted on the same reasoning: 53 entries
+     across 10 games where the play-by-play calls one lineup slot by a name
+     that exists nowhere else in the source. `K. Johnson` bats four times
+     for a club whose boxscore, roster links, pitching table and box notes
+     contain no Johnson at all, while `Austin Bates` holds a batting row
+     with plate appearances and not one play attributed to him. Four of the
+     ten are corroborated by a box note naming the boxscore player for a
+     play the narrative gives the phantom -- a Sac, a GIDP, a 2B, an RBI.
+     One game's phantom surname is the literal string `null`.
+
+     The rule that suggests itself is "bind an unresolvable name to the
+     lone batting row that has plate appearances and no events." Measured,
+     that antecedent holds on 22 of 2,968 team-sides and only 10 of them
+     are this defect; the other 12 are ordinary misattribution, where
+     binding would move plate appearances onto the wrong man. 45% is not a
+     rule. Tightening it -- also require an unresolvable name on that side
+     whose line count equals the row's implied plate appearances -- reaches
+     10 for 10, but that antecedent fires ONLY where the answer is unknown,
+     so there is no held-out population to score it against at all. An
+     unscorable rule is the thing this file exists to refuse.
   2. Other evidence IN THE SAME GAME forces the correction: the batting
      order, the boxscore line, the linescore, an inning summary. The
      `evidence` field must name it, in enough detail that a reader can

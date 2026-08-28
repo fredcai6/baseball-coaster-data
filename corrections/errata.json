@@ -2,21 +2,6 @@
   "schema_version": "1.0.0",
   "errata": [
     {
-      "erratum_id": "20240524_j5eu-1",
-      "game_id": "20240524_j5eu",
-      "location": {
-        "inning": 2,
-        "half": "bottom",
-        "line_index": 0
-      },
-      "raw_sha256": "0fdeb54ef4f763257e7fb40ec50cc40a4bae2feabd59cd540dc06e3283b0cb87",
-      "raw_excerpt": "M. Castillo lined out to 1b. (1 out)",
-      "replace": "M. Castillo",
-      "with": "R. Gonzalez",
-      "class": "misidentified_batter",
-      "evidence": "The scorer typed M. Castillo on two consecutive lines: bottom 2nd reads 'M. Castillo lined out to 1b.' then 'M. Castillo grounded out to 2b.' A batter cannot bat twice in a row, and this is the only back-to-back same-batter pair in all 1,484 games. The lineup cycle forces which line is wrong. Counting plate appearances for the home side: the bottom 1st is Backstrom, Washington, Lynch, Morris, Rojas Jr (order positions 1-5); the bottom 2nd holds positions 6-8; the bottom 3rd is Major, Backstrom, Washington, Lynch, Morris, Rojas Jr, Gonzalez (positions 9-15). The cycle checks at two independent points -- position 10 is Backstrom, equal to position 1, and position 14 is Rojas Jr, equal to position 5 -- so position 15 being Gonzalez forces position 6 to be Gonzalez too. Position 6 is this line. Corroborated by the boxscore, which gives Roberto Gonzalez one MORE plate appearance than the events credit him and Marcos Castillo exactly one FEWER, and by the following two lines already reading Castillo (position 7) and Fernandez (position 8) in order."
-    },
-    {
       "erratum_id": "20240523_5giq-1",
       "game_id": "20240523_5giq",
       "location": {
@@ -62,6 +47,21 @@
       "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Landen Barns. The last plate appearance was \"N. Ultsch grounded out to p.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240524_j5eu-1",
+      "game_id": "20240524_j5eu",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "0fdeb54ef4f763257e7fb40ec50cc40a4bae2feabd59cd540dc06e3283b0cb87",
+      "raw_excerpt": "M. Castillo lined out to 1b. (1 out)",
+      "replace": "M. Castillo",
+      "with": "R. Gonzalez",
+      "class": "misidentified_batter",
+      "evidence": "The scorer typed M. Castillo on two consecutive lines: bottom 2nd reads 'M. Castillo lined out to 1b.' then 'M. Castillo grounded out to 2b.' A batter cannot bat twice in a row, and this is the only back-to-back same-batter pair in all 1,484 games. The lineup cycle forces which line is wrong. Counting plate appearances for the home side: the bottom 1st is Backstrom, Washington, Lynch, Morris, Rojas Jr (order positions 1-5); the bottom 2nd holds positions 6-8; the bottom 3rd is Major, Backstrom, Washington, Lynch, Morris, Rojas Jr, Gonzalez (positions 9-15). The cycle checks at two independent points -- position 10 is Backstrom, equal to position 1, and position 14 is Rojas Jr, equal to position 5 -- so position 15 being Gonzalez forces position 6 to be Gonzalez too. Position 6 is this line. Corroborated by the boxscore, which gives Roberto Gonzalez one MORE plate appearance than the events credit him and Marcos Castillo exactly one FEWER, and by the following two lines already reading Castillo (position 7) and Fernandez (position 8) in order."
+    },
+    {
       "erratum_id": "20240526_0rv7-1",
       "game_id": "20240526_0rv7",
       "location": {
@@ -90,6 +90,96 @@
       "with": "3 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Alec Sanchez, Cameron Thompson, Mike Rosario, Roberto Pena. The last plate appearance was \"C. Gordon struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240619_gssr-1",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 1,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "b3a942eca022e6f7415531fd23260a5b79d1ea477a26788709cbaaab291bd42a",
+      "raw_excerpt": "N. Ianotone grounded out to ss. (3 out)",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
+    },
+    {
+      "erratum_id": "20240619_gssr-2",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "5ddc38c3d1a7c148f8b0f2822898c45698172073adc4d589f50240a019edc4d2",
+      "raw_excerpt": "N. Ianotone singled to left center.",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
+    },
+    {
+      "erratum_id": "20240619_gssr-3",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "921a3450959159f7e2d9523a744fa3ec158872adc7fa24a0c93f62064f7dd7a7",
+      "raw_excerpt": "B. Barrera doubled down the lf line, RBI; N. Ianotone scored.",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
+    },
+    {
+      "erratum_id": "20240619_gssr-4",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "0b1a4d7e53444495165c83b05108584962118ecb12bf3e229c052f4c2e53d821",
+      "raw_excerpt": "N. Ianotone grounded into double play 2b to ss to 1b; J. Jablonski out on the play. (2 out)",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
+    },
+    {
+      "erratum_id": "20240619_gssr-5",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 7
+      },
+      "raw_sha256": "db272537adf18db855f3bd947ea7cb6acd07ecaf469a68a3d9a0b90e071fe2b3",
+      "raw_excerpt": "N. Ianotone struck out swinging. (2 out)",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
+    },
+    {
+      "erratum_id": "20240619_gssr-6",
+      "game_id": "20240619_gssr",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "59f917265c7b3dd4372978871c0a90e6d22985e1363a28d27535a4a0e86569f6",
+      "raw_excerpt": "K. Johnson pinch hit for N. Ianotone.",
+      "replace": "N. Ianotone",
+      "with": "N. Iannantone",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. Ianotone' on 6 lines. The surname 'Ianotone' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Nick Iannantone, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'N. Ianotone' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's GIDP note names Nick Iannantone, and the only grounded-into-double-play line on that side is this batter's (top 5th)."
     },
     {
       "erratum_id": "20240625_3h5e-1",
@@ -152,6 +242,291 @@
       "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Dario Gomez, Euro Diaz, Evan Scavotto, Garrett Kueber, Reece Yeargain. The last plate appearance was \"R. Yeargain singled to right center, 2 RBI; G. Kueber advanced to third, out at home rf to\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240713_jska-1",
+      "game_id": "20240713_jska",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "5a0b69766ec4654b311a48498140e673e4ab5e851fe0eb98001598d8d9ec4d4c",
+      "raw_excerpt": "K. Johnson grounded out to ss. (1 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 4 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's Sac note names Austin Bates and its RBI note names him once; the only sacrifice-with-RBI line on that side is this batter's (top 5th, 'out at first 1b to 2b, SAC, RBI')."
+    },
+    {
+      "erratum_id": "20240713_jska-2",
+      "game_id": "20240713_jska",
+      "location": {
+        "inning": 3,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "f46e40c0d301065f89e00fe6ee08a612b7f2a59329fc360db5a4193712ea7337",
+      "raw_excerpt": "K. Johnson grounded out to p. (3 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 4 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's Sac note names Austin Bates and its RBI note names him once; the only sacrifice-with-RBI line on that side is this batter's (top 5th, 'out at first 1b to 2b, SAC, RBI')."
+    },
+    {
+      "erratum_id": "20240713_jska-3",
+      "game_id": "20240713_jska",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "ac403a3b36dc8a86b90939dc7c8ac5514e89eb55f5bf2daf33119ff096c19450",
+      "raw_excerpt": "K. Johnson out at first 1b to 2b, SAC, RBI; J. Huntzinge scored.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 4 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's Sac note names Austin Bates and its RBI note names him once; the only sacrifice-with-RBI line on that side is this batter's (top 5th, 'out at first 1b to 2b, SAC, RBI')."
+    },
+    {
+      "erratum_id": "20240713_jska-4",
+      "game_id": "20240713_jska",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "c663c692ea5edf63ae8d93b99d3f5198e3122eb7f2af9e4deacb8958386ed38b",
+      "raw_excerpt": "K. Johnson struck out looking. (1 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 4 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's Sac note names Austin Bates and its RBI note names him once; the only sacrifice-with-RBI line on that side is this batter's (top 5th, 'out at first 1b to 2b, SAC, RBI')."
+    },
+    {
+      "erratum_id": "20240714_db7s-1",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 3,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "c663c692ea5edf63ae8d93b99d3f5198e3122eb7f2af9e4deacb8958386ed38b",
+      "raw_excerpt": "K. Johnson struck out looking. (1 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-2",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "01e28344042fa8f4701668bac5296c6a868d23fcbd78d8980d98a40847a11623",
+      "raw_excerpt": "K. Johnson reached first on a throwing error by p; N. Gore advanced to second.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-3",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "207f2b1cfa127d8a45f9e6939c4b94c4d7aa22df92c88eb78e28d2c9c82830d9",
+      "raw_excerpt": "A. Sczepkows walked; K. Johnson advanced to second; N. Gore advanced to third.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-4",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "47ce2cbcd20b5f4e6cbc93e8b10033af591c0d8333f84681ad0c3f6e8e605d56",
+      "raw_excerpt": "N. Block infield fly to ss; A. Sczepkows advanced to second; K. Johnson advanced to third; N. Gore scored on an error by ss, unearned.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-5",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 6
+      },
+      "raw_sha256": "edd8da1718307ee2f830c4fccc58d72c090560e34c21e5de4c6f5ec7d4c37db2",
+      "raw_excerpt": "T. Penner doubled down the lf line, 2 RBI; A. Sczepkows scored, unearned; K. Johnson scored, unearned.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-6",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "ce753587c6e28bdb670e8b0338071502412f49843c12bb0c2f2266eed16345b1",
+      "raw_excerpt": "K. Johnson grounded out to p; F. Guilamo advanced to second; C. Kirtley advanced to third. (2 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-7",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "cb739ac8dcdf0adf215c9358e321962546c71b2de64939c5ba81e016b1e2ccf7",
+      "raw_excerpt": "K. Johnson walked.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-8",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "aea7647de1b6629415e39a211ed62d0db8f0f3f4049d56f5f0e6dc3d60e64305",
+      "raw_excerpt": "A. Sczepkows singled through the left side; K. Johnson advanced to second.",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240714_db7s-9",
+      "game_id": "20240714_db7s",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "aadc8bb7044b4a5fcbbc3b2697503092e41ca66b6b6b04b9793ad9c124e445ba",
+      "raw_excerpt": "N. Block grounded out to 3b; A. Sczepkows advanced to second; K. Johnson advanced to third. (2 out)",
+      "replace": "K. Johnson",
+      "with": "A. Bates",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'K. Johnson' on 9 lines. The surname 'Johnson' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Austin Bates, AB=3 BB=1, against 0 events; every other row on that side reconciles. The 4 lines where 'K. Johnson' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-1",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "1d43e453251b248930f3a883d28831e889df797ea869f585bc4bae23430bcd5c",
+      "raw_excerpt": "M. Sykes singled up the middle.",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-2",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "cf50078f60770612814c367eae83013268b998eb2eee851f476aa3cdc331bd36",
+      "raw_excerpt": "T. Davis reached on a fielder's choice; M. Sykes out at second ss to 2b. (2 out)",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-3",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "85a0588e95293eb4d560a264f82c2303c8068ee3454a84b37d0edfa4ec2bdfba",
+      "raw_excerpt": "M. Sykes flied out to cf. (2 out)",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-4",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 7,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "ec1448db35d18aa22e1a43f3616ab95df0808635477f7dc38c06494ab059c7f8",
+      "raw_excerpt": "M. Sykes struck out swinging. (1 out)",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-5",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "bcf3eb221b57135f4a4e3593e22d7abcea6332241481bfb463a4c460a970e211",
+      "raw_excerpt": "M. Sykes reached on a fielder's choice; S. Wilmer out at second 3b to 2b. (1 out)",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240715_xts1-6",
+      "game_id": "20240715_xts1",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "69511da0f58f07d8fb26ff77d9d0baa1b29f38906c5a2256e83d9bab9a7632ba",
+      "raw_excerpt": "B. Carson singled to center field; M. Sykes advanced to third.",
+      "replace": "M. Sykes",
+      "with": "W. Tucker",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
       "erratum_id": "20240724_o3th-1",
       "game_id": "20240724_o3th",
       "location": {
@@ -195,6 +570,66 @@
       "with": "1 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Alejandro Figueredo, Angel Mendoza, Braylin Marine, Kirkland Banks, Tanner Smith. The last plate appearance was \"B. Marine doubled, 2 RBI; A. Mendoza advanced to third, out at home lf to ss to c; K. Bank\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240806_slxk-1",
+      "game_id": "20240806_slxk",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "ccbef237706e4434c1229f251f9c3bc27d2709b493071cb1d6826f9acb43df2d",
+      "raw_excerpt": "R. McCarthy grounded out to c. (2 out)",
+      "replace": "R. McCarthy",
+      "with": "G. Tonkel",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'R. McCarthy' on 4 lines. The surname 'McCarthy' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Gavin Tonkel, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'R. McCarthy' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240806_slxk-2",
+      "game_id": "20240806_slxk",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "33c6f960075aa086001510bfba9ae34e4d69e2ec13042b28ed08f6122daa3ca2",
+      "raw_excerpt": "R. McCarthy struck out swinging. (1 out)",
+      "replace": "R. McCarthy",
+      "with": "G. Tonkel",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'R. McCarthy' on 4 lines. The surname 'McCarthy' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Gavin Tonkel, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'R. McCarthy' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240806_slxk-3",
+      "game_id": "20240806_slxk",
+      "location": {
+        "inning": 5,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "11d7616027ae711852ba3726b1accc966c7ae76fd061e1b97e09a671b9872f2c",
+      "raw_excerpt": "R. McCarthy flied out to lf. (3 out)",
+      "replace": "R. McCarthy",
+      "with": "G. Tonkel",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'R. McCarthy' on 4 lines. The surname 'McCarthy' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Gavin Tonkel, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'R. McCarthy' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240806_slxk-4",
+      "game_id": "20240806_slxk",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "7c2e23a5f364f118c03299255ef9cf3c4df6058fa474699b9e23929598e924ea",
+      "raw_excerpt": "R. McCarthy popped up to 3b. (1 out)",
+      "replace": "R. McCarthy",
+      "with": "G. Tonkel",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'R. McCarthy' on 4 lines. The surname 'McCarthy' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Gavin Tonkel, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'R. McCarthy' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
     },
     {
       "erratum_id": "20240822_sh30-1",
@@ -242,6 +677,51 @@
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Alex Adams, Austin Chouinard, Dane Tofteland, Stephen Wilmer. The last plate appearance was \"G. Gonzalez lined out to rf.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20250527_p7d7-1",
+      "game_id": "20250527_p7d7",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "2b13c4499b800d9ed7eb784584fcefe8734b7c2295ddedb9a40df70aa6ad064a",
+      "raw_excerpt": "M. Guillen struck out swinging. (2 out)",
+      "replace": "M. Guillen",
+      "with": "M. Perez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Guillen' on 3 lines. The surname 'Guillen' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Maikol Perez, AB=2 BB=0, against 0 events; every other row on that side reconciles. The 2 lines where 'M. Guillen' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The play-by-play line 'K. Oyama pinch hit for M. Guillen' pins the slot: Kenneth Oyama's boxscore row follows Maikol Perez's, and Oyama's plate appearances all reconcile."
+    },
+    {
+      "erratum_id": "20250527_p7d7-2",
+      "game_id": "20250527_p7d7",
+      "location": {
+        "inning": 3,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "31524c651fe1354a5e22357709f03fa4700401a919163dce39dd88e04990e684",
+      "raw_excerpt": "M. Guillen struck out swinging; C. Lane stole second. (2 out)",
+      "replace": "M. Guillen",
+      "with": "M. Perez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Guillen' on 3 lines. The surname 'Guillen' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Maikol Perez, AB=2 BB=0, against 0 events; every other row on that side reconciles. The 2 lines where 'M. Guillen' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The play-by-play line 'K. Oyama pinch hit for M. Guillen' pins the slot: Kenneth Oyama's boxscore row follows Maikol Perez's, and Oyama's plate appearances all reconcile."
+    },
+    {
+      "erratum_id": "20250527_p7d7-3",
+      "game_id": "20250527_p7d7",
+      "location": {
+        "inning": 5,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "be89ca874d141f2946562e7f7e163f9c34693013114f9e38797179ec250796aa",
+      "raw_excerpt": "K. Oyama pinch hit for M. Guillen.",
+      "replace": "M. Guillen",
+      "with": "M. Perez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'M. Guillen' on 3 lines. The surname 'Guillen' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Maikol Perez, AB=2 BB=0, against 0 events; every other row on that side reconciles. The 2 lines where 'M. Guillen' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The play-by-play line 'K. Oyama pinch hit for M. Guillen' pins the slot: Kenneth Oyama's boxscore row follows Maikol Perez's, and Oyama's plate appearances all reconcile."
+    },
+    {
       "erratum_id": "20250530_07p6-1",
       "game_id": "20250530_07p6",
       "location": {
@@ -255,6 +735,66 @@
       "with": "1 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Manny Jackson, Matt Fabian. The last plate appearance was \"M. Fabian reached on a fielder's choice; Man. Jackson out at second ss to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250603_wnqq-1",
+      "game_id": "20250603_wnqq",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "675e9db14b47f524109dc24e8c1e6ac6637ee43bc0f5e596849b40722e1f8e5a",
+      "raw_excerpt": "D. Leonard flied out to lf. (3 out)",
+      "replace": "D. Leonard",
+      "with": "F. Romano",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'D. Leonard' on 4 lines. The surname 'Leonard' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Frederick Romano, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'D. Leonard' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250603_wnqq-2",
+      "game_id": "20250603_wnqq",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "64529de33a55d364b2e44f69dc8824b862bee77651cbb4a1d4b851b20714a1ee",
+      "raw_excerpt": "D. Leonard struck out swinging. (1 out)",
+      "replace": "D. Leonard",
+      "with": "F. Romano",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'D. Leonard' on 4 lines. The surname 'Leonard' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Frederick Romano, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'D. Leonard' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250603_wnqq-3",
+      "game_id": "20250603_wnqq",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "98fb4157547cb6c9942f056c85b1adf04d80386571cc0a2d703c11d616bfdade",
+      "raw_excerpt": "D. Leonard struck out swinging. (2 out)",
+      "replace": "D. Leonard",
+      "with": "F. Romano",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'D. Leonard' on 4 lines. The surname 'Leonard' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Frederick Romano, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'D. Leonard' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250603_wnqq-4",
+      "game_id": "20250603_wnqq",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "4b3e7774384719021ca17ffda12d38e84cf55879d4edb19747e2123a34b66d7e",
+      "raw_excerpt": "D. Leonard struck out looking. (1 out)",
+      "replace": "D. Leonard",
+      "with": "F. Romano",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'D. Leonard' on 4 lines. The surname 'Leonard' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Frederick Romano, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'D. Leonard' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
     },
     {
       "erratum_id": "20250617_gitd-1",
@@ -272,6 +812,96 @@
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Cam Bufford, Darryl Buggs, Esai Santos, Lou Helmig, Tremayne Cobb Jr.. The last plate appearance was \"C. Bufford singled to second base; D. Buggs advanced to second; Cobb, Jr advanced to third\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20250624_19gz-1",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 3,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "6572c62a1251b987a8fef7d11ffcb42c8b53215db2720ec3a30b197652941937",
+      "raw_excerpt": "N. null struck out swinging. (1 out)",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
+      "erratum_id": "20250624_19gz-2",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "f13010e89f6e3761604cd2c4ee1eccbbae9c5b928e5ffff3a3643fc5777e0a9e",
+      "raw_excerpt": "N. null struck out swinging. (3 out)",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
+      "erratum_id": "20250624_19gz-5",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "c5335486aa121894719363aff383fd205a38d9a410c4fbc6a4f8c50cb89740fe",
+      "raw_excerpt": "N. null to c for T. Cruz.",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
+      "erratum_id": "20250624_19gz-3",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "2afc9ead89c923250cea665961e10d08cab482fb13806825715b9089d72358f2",
+      "raw_excerpt": "N. null doubled to left field.",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
+      "erratum_id": "20250624_19gz-4",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "b893fb8d3cc4e2876c00cb16ef39790f4b6188bf041bfdeaaf1dd4f049e94430",
+      "raw_excerpt": "T. Cruz pinch ran for N. null.",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
+      "erratum_id": "20250624_19gz-6",
+      "game_id": "20250624_19gz",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "f43ccbfac142a53d31d3bb28d79ce2c2413cfefe857720057a479b61f96b11e8",
+      "raw_excerpt": "N. null struck out looking. (3 out)",
+      "replace": "N. null",
+      "with": "J. Hernandez",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'N. null' on 6 lines. The surname 'null' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Jedier Hernandez, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 5 lines where 'N. null' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The surname is literally the string 'null' -- the source emitted an empty name field. The boxscore's 2B note names Jedier Hernandez and nobody else, and the only double on that side not already attributed is this batter's (top 8th)."
+    },
+    {
       "erratum_id": "20250626_uit4-1",
       "game_id": "20250626_uit4",
       "location": {
@@ -285,6 +915,171 @@
       "with": "0 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"J. Lynch grounded out to 1b unassisted.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250628_s12l-1",
+      "game_id": "20250628_s12l",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "d9c71551cb360d249f4d105896b316061e919357294ed994784609e285c2768b",
+      "raw_excerpt": "L. Barry struck out swinging. (2 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 5 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's RBI note names Kishon Frett once, and the only RBI line on that side not already attributed is this batter's (top 4th, 'singled, RBI')."
+    },
+    {
+      "erratum_id": "20250628_s12l-2",
+      "game_id": "20250628_s12l",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "aebc95040686b04402ee773cf94279b205fc66e24db6e4046526ad175e1f136a",
+      "raw_excerpt": "L. Barry singled, RBI; K. Willman advanced to second; M. Rosario scored.",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 5 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's RBI note names Kishon Frett once, and the only RBI line on that side not already attributed is this batter's (top 4th, 'singled, RBI')."
+    },
+    {
+      "erratum_id": "20250628_s12l-3",
+      "game_id": "20250628_s12l",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "9fe8f519288968bc5442831a42c1d5d62cace94dd27a2e7690308fe0fe3d3e4b",
+      "raw_excerpt": "N. Klemp reached on a fielder's choice; L. Barry out at second ss to 2b. (3 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'L. Barry' on 5 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's RBI note names Kishon Frett once, and the only RBI line on that side not already attributed is this batter's (top 4th, 'singled, RBI')."
+    },
+    {
+      "erratum_id": "20250628_s12l-4",
+      "game_id": "20250628_s12l",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "e624757aaa56b5f2258642ab9ce8c85da856e210d4557467eac0069c733f5d5c",
+      "raw_excerpt": "L. Barry grounded out to ss. (2 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 5 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's RBI note names Kishon Frett once, and the only RBI line on that side not already attributed is this batter's (top 4th, 'singled, RBI')."
+    },
+    {
+      "erratum_id": "20250628_s12l-5",
+      "game_id": "20250628_s12l",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "eecf2c83afbf794ee441edf2d57a6beed642f9227415f892341039366b12756b",
+      "raw_excerpt": "L. Barry grounded out to 2b. (1 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 5 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this. The boxscore's RBI note names Kishon Frett once, and the only RBI line on that side not already attributed is this batter's (top 4th, 'singled, RBI')."
+    },
+    {
+      "erratum_id": "20250629_84bk-1",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "af186097c9886663ca826b847bb3fbb22e7703c5ba9d0a2fafe1e05313eb9341",
+      "raw_excerpt": "L. Barry flied out to rf. (2 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250629_84bk-2",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "f94426b2fffd618248b78849955256d2f0af0f5bbaf36e60de36922f60d71769",
+      "raw_excerpt": "L. Barry singled to right field.",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250629_84bk-3",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "ac4b4d5b539e9a2afa8b84b016c87851add2182fa813a3bd0e547b6c64747722",
+      "raw_excerpt": "T. Smith walked; L. Barry advanced to second.",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250629_84bk-4",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "f988ccf9e66cd799c22600c697e8deed87352463ad3c5c25c835996654927737",
+      "raw_excerpt": "A. Sanchez doubled to left field, RBI; T. Smith advanced to third; L. Barry scored.",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_runner",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250629_84bk-5",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "54f48de13a4019e7c7d15070d67599cb1dd6802446512fc0ddd4c0caf8773a0e",
+      "raw_excerpt": "L. Barry struck out looking. (3 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250629_84bk-6",
+      "game_id": "20250629_84bk",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "e2895f8e9803b42273571979aee9a901c81326846e519a112df1267e6479f948",
+      "raw_excerpt": "L. Barry struck out swinging. (1 out)",
+      "replace": "L. Barry",
+      "with": "K. Frett",
+      "class": "misidentified_batter",
+      "evidence": "The play-by-play names 'L. Barry' on 6 lines. The surname 'Barry' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Kishon Frett, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'L. Barry' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
     },
     {
       "erratum_id": "20250701_wedt-1",
