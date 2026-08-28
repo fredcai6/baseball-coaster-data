@@ -16,9 +16,6 @@
     "20240530_co0j": {
       "syn:away:1": "person:e576132b0dfe2166"
     },
-    "20240530_ufps": {
-      "syn:home:1": null
-    },
     "20240531_2lvn": {
       "syn:away:1": "person:647eeb53605482f2"
     },
@@ -96,9 +93,6 @@
       "syn:away:1": "person:a7a8bca431c5d22a",
       "syn:home:1": "person:6b3a57ce2acef4a9"
     },
-    "20240816_14zu": {
-      "syn:home:1": null
-    },
     "20250521_a4ms": {
       "syn:away:1": "person:39c45f0955785c8d"
     },
@@ -151,9 +145,6 @@
     "20250724_s49a": {
       "syn:away:1": "person:1a284c7847fe084f"
     },
-    "20250725_06j0": {
-      "syn:home:1": null
-    },
     "20250729_8x53": {
       "syn:away:1": "person:b48b045f51e14514"
     },
@@ -175,9 +166,6 @@
     },
     "20250808_m26o": {
       "syn:away:1": "person:6346e1c31b8161c7"
-    },
-    "20250813_d95t": {
-      "syn:away:1": null
     },
     "20250813_sc6i": {
       "syn:home:1": null
@@ -242,9 +230,6 @@
       "syn:home:7": "1gsdank0spyehi3r",
       "syn:home:8": "1wpqlf03z4oqgcsg",
       "syn:home:9": "3mj42b73jjt574d7"
-    },
-    "20260712_76fp": {
-      "syn:away:1": null
     },
     "20260712_ju14": {
       "syn:away:1": "12hc9hakd4jk7rtj",
@@ -540,7 +525,6 @@
     },
     "20260715_kytk": {
       "syn:away:1": "xtti55f7ey0u6ih4",
-      "syn:away:10": null,
       "syn:away:2": "22a3n47fewfps9xx",
       "syn:away:3": "opextmjcn8h6x8jj",
       "syn:away:4": "est4rkrt8d814jy2",
@@ -2595,7 +2579,6 @@
       "syn:away:3": "760qtmpnnbladwd1",
       "syn:away:4": "person:5a5c3a80e8195944",
       "syn:away:5": "u8z6xhtakkbtpgzz",
-      "syn:away:6": null,
       "syn:home:1": "pockxe9pfd6nua32",
       "syn:home:10": "gr7culcay54as84s",
       "syn:home:11": "u83q216ly8jgh7ob",
@@ -3533,7 +3516,6 @@
       "syn:away:6": "person:29a9136f88c3c7cb",
       "syn:away:7": "person:1833fabd8883ce29",
       "syn:home:1": "wx89ivvo25f8w7hw",
-      "syn:home:10": null,
       "syn:home:2": "v6ip0u29ptrrqfob",
       "syn:home:3": "ompu2i3k9wnukvob",
       "syn:home:4": "rfb5k9ztocuuy6r7",
@@ -4761,64 +4743,64 @@
   "by_season": {
     "2024": {
       "persons": 637,
-      "player_records": 14021,
+      "player_records": 14019,
       "synthetic_linked": 37,
-      "synthetic_records": 39,
-      "synthetic_unlinked": 2
+      "synthetic_records": 37,
+      "synthetic_unlinked": 0
     },
     "2025": {
       "persons": 638,
-      "player_records": 13727,
+      "player_records": 13725,
       "synthetic_linked": 29,
-      "synthetic_records": 35,
-      "synthetic_unlinked": 6
+      "synthetic_records": 33,
+      "synthetic_unlinked": 4
     },
     "2026": {
       "persons": 680,
-      "player_records": 13943,
+      "player_records": 13939,
       "synthetic_linked": 4111,
-      "synthetic_records": 4115,
-      "synthetic_unlinked": 4
+      "synthetic_records": 4111,
+      "synthetic_unlinked": 0
     }
   },
   "league": {
-    "groups": 1961,
+    "groups": 1954,
     "groups_by_reason": {
       "minted": 168,
       "multi_real_id": 4,
-      "non_person_name": 7,
+      "non_person_name": 0,
       "real_anchor": 1781,
       "same_game_conflict": 1
     },
     "persons": 1955,
     "synthetic_linked": 4177,
-    "synthetic_records": 4189,
+    "synthetic_records": 4181,
     "synthetic_records_by_reason": {
       "minted": 835,
       "multi_real_id": 0,
-      "non_person_name": 8,
+      "non_person_name": 0,
       "real_anchor": 3342,
       "same_game_conflict": 4
     },
-    "synthetic_unlinked": 12
+    "synthetic_unlinked": 4
   },
   "meta": {
     "games": 1484,
-    "generated_at": "2026-08-27T21:50:39Z",
+    "generated_at": "2026-08-28T01:20:26Z",
     "not_attempted": {
       "cross_season": {
-        "names_in_more_than_one_season": 295,
+        "names_in_more_than_one_season": 294,
         "note": "Gap 1, not attempted. PrestoSports reissues every player id AND every team id each season, so no id-based signal survives a season boundary and team continuity is unavailable as a corroborating signal. person_id is WITHIN-SEASON only."
       },
       "cross_team_within_season": {
-        "names_on_more_than_one_team": 134,
+        "names_on_more_than_one_team": 131,
         "note": "A person who changed teams mid-season gets one person_id per team. Not linked here: the key is (season, team_id, name), and no evidence in the identity table separates a mid-season move from two different people with the same name on two rosters."
       }
     },
     "person_map_version": "1.0.0",
-    "player_records": 41691,
+    "player_records": 41683,
     "scope": "WITHIN-SEASON identity, keyed on (season, team_id, name). A real player_id is its own person_id; only synthetic syn:<side>:<n> ids are resolved here, because those are per-GAME positional and are reused by different people across games.",
-    "synthetic_records": 4189
+    "synthetic_records": 4181
   },
   "persons": {
     "00dw6jcghuysga5e": {
@@ -191090,36 +191072,6 @@
   },
   "unlinked": [
     {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2024,
-      "synthetic_ids": [
-        "syn:home:1"
-      ],
-      "team_id": "iqwph3d7xajzy4uz"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2024,
-      "synthetic_ids": [
-        "syn:home:1"
-      ],
-      "team_id": "jecryyfq7srh87br"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2025,
-      "synthetic_ids": [
-        "syn:home:1"
-      ],
-      "team_id": "9fugocpa5h6ockn6"
-    },
-    {
       "name": "R. Velazquez",
       "real_ids": [],
       "reason": "same_game_conflict",
@@ -191130,47 +191082,6 @@
         "syn:home:4"
       ],
       "team_id": "ftxbf1wj156q30wd"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2025,
-      "synthetic_ids": [
-        "syn:away:1"
-      ],
-      "team_id": "zgzmksngghvq54yy"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2026,
-      "synthetic_ids": [
-        "syn:away:1",
-        "syn:away:6"
-      ],
-      "team_id": "fs5kcreudvyx5quq"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2026,
-      "synthetic_ids": [
-        "syn:home:10"
-      ],
-      "team_id": "p36jpi9icfitpai5"
-    },
-    {
-      "name": "/",
-      "real_ids": [],
-      "reason": "non_person_name",
-      "season": 2026,
-      "synthetic_ids": [
-        "syn:away:10"
-      ],
-      "team_id": "tlqlpupbujjreauc"
     }
   ]
 }
