@@ -7703,19 +7703,30 @@
       "half": "bottom",
       "inning": 9,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 6 Runs, 2 Hits, 3 Errors, 4 LOB",
+      "narrative": "Inning Summary: 6 Runs, 2 Hits, 3 Errors, 3 LOB",
       "scoring_play": false,
       "seq": 132,
       "summary": {
         "E": 3,
         "H": 2,
-        "LOB": 4,
+        "LOB": 3,
         "R": 6
       }
     }
   ],
   "game_id": "20260522_60np",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260522_60np-1 (inflated_inning_summary_lob): read as 'Inning Summary: 6 Runs , 2 Hits , 3 Errors , 3 LOB'. The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Austin Folds, Brandon Nigh, Caden Matlon, Ethan Underwood, Jeremiah Begora, Joseph Kalafut, Logan Meyer, Parker Depasquale. The last plate appearance was \"Austin Folds grounded out to 1b unassisted (1-1 KB).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 16
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            6 Runs\n                                                                    ,             \t\t\t                            2 Hits\n                                                                    ,             \t\t\t                            3 Errors\n                                                                    ,             \t\t\t                            4 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7936,15 +7947,13 @@
     "fetched_at": "2026-07-12T14:50:15Z",
     "parse": {
       "events_count": 133,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 9 bottom folded LOB 3 != inning_summary LOB 4"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:24Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:58:41Z",
+    "parser_version": "0.20.0",
     "source_sha256": "d1dd1f2406a2aed3b65e66c5be0bd0c8a4b7da6c1a5fbd7fe0975013d20b8308",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260522_60np.xml"
   },

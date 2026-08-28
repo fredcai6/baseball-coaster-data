@@ -6502,19 +6502,29 @@
       "half": "top",
       "inning": 9,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
+      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
       "seq": 118,
       "summary": {
         "E": 0,
         "H": 0,
-        "LOB": 1,
+        "LOB": 0,
         "R": 0
       }
     }
   ],
   "game_id": "20260726_u5ja",
   "inferred": [
+    {
+      "asserted": "erratum 20260726_u5ja-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 0 Hits , 0 Errors , 0 LOB'. The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Michael Soper lined out to 2b (0-0).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 10
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            0 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            1 LOB",
+      "rule": "erratum"
+    },
     {
       "asserted": "incoming pitcher ke9yuelgylxbczyt read from the boxscore pitching order as the successor to syn:away:11",
       "location": {
@@ -6781,15 +6791,13 @@
     "fetched_at": "2026-08-27T14:47:58Z",
     "parse": {
       "events_count": 119,
-      "inferred_count": 1,
-      "replayable": false,
+      "inferred_count": 2,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 9 top folded LOB 0 != inning_summary LOB 1"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:40Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:58:56Z",
+    "parser_version": "0.20.0",
     "source_sha256": "d1c4ba552d69e1e4c3151dac6ce17f8985329ff794a43f970e7c6da71bd4c3b3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260726_u5ja.xml"
   },

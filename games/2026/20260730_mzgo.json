@@ -7103,19 +7103,30 @@
       "half": "bottom",
       "inning": 9,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
+      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
       "seq": 128,
       "summary": {
         "E": 0,
         "H": 0,
-        "LOB": 2,
+        "LOB": 1,
         "R": 0
       }
     }
   ],
   "game_id": "20260730_mzgo",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260730_mzgo-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB'. The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Xavier Casserilla. The last plate appearance was \"Zack Stewart struck out looking (0-2 KFK).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 11
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            0 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            2 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7350,15 +7361,13 @@
     "fetched_at": "2026-08-27T14:51:18Z",
     "parse": {
       "events_count": 129,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 9 bottom folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:40Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:58:57Z",
+    "parser_version": "0.20.0",
     "source_sha256": "2744bbe681cad116cdead8f6969322041a9d4608648cdd263a19ddddbf8d6e0b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260730_mzgo.xml"
   },

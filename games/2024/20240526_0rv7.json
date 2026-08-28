@@ -6278,19 +6278,29 @@
       "half": "bottom",
       "inning": 9,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 3 LOB",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
       "seq": 121,
       "summary": {
         "E": 1,
         "H": 1,
-        "LOB": 3,
+        "LOB": 2,
         "R": 0
       }
     }
   ],
   "game_id": "20240526_0rv7",
   "inferred": [
+    {
+      "asserted": "erratum 20240526_0rv7-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 1 Hits , 1 Errors , 2 LOB'. The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chad Castillo, Gavin Tonkel, JD McLaughlin, Trevor Sheehan. The last plate appearance was \"J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 10
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            1 Hits\n                                                                    ,             \t\t\t                            1 Errors\n                                                                    ,             \t\t\t                            3 LOB",
+      "rule": "erratum"
+    },
     {
       "asserted": "line says the out was at second but its own chain 'ss to 1b' ends at the first baseman, who cannot record one there; the out is the batter's at first, and no runner is retired",
       "location": {
@@ -6567,15 +6577,13 @@
     "fetched_at": "2026-07-12T17:47:04Z",
     "parse": {
       "events_count": 122,
-      "inferred_count": 2,
-      "replayable": false,
+      "inferred_count": 3,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:40Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:57:58Z",
+    "parser_version": "0.20.0",
     "source_sha256": "fedf1987ea93e0d0a9d8c5bff28bf0fb7545bcc38864aa04a0b5892c9a77f5ae",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240526_0rv7.xml"
   },

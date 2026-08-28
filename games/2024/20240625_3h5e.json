@@ -1623,13 +1623,13 @@
       "half": "bottom",
       "inning": 2,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 2 LOB",
+      "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
       "seq": 21,
       "summary": {
         "E": 0,
         "H": 1,
-        "LOB": 2,
+        "LOB": 1,
         "R": 1
       }
     },
@@ -7023,7 +7023,18 @@
     }
   ],
   "game_id": "20240625_3h5e",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240625_3h5e-1 (inflated_inning_summary_lob): read as 'Inning Summary: 1 Runs , 1 Hits , 0 Errors , 1 LOB'. The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Cameron Thompson. The last plate appearance was \"K. Willman struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 2,
+        "line_index": 6
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            1 Runs\n                                                                    ,             \t\t\t                            1 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            2 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7251,15 +7262,13 @@
     "fetched_at": "2026-07-12T18:21:39Z",
     "parse": {
       "events_count": 128,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 2 bottom folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:47Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:58:05Z",
+    "parser_version": "0.20.0",
     "source_sha256": "68a0938653be836c83ca01e513f17c7b4338e0184aa64262de061bf3d8e3462e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240625_3h5e.xml"
   },

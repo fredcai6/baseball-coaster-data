@@ -4910,19 +4910,30 @@
       "half": "bottom",
       "inning": 7,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 4 LOB",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
       "seq": 89,
       "summary": {
         "E": 0,
         "H": 1,
-        "LOB": 4,
+        "LOB": 3,
         "R": 0
       }
     }
   ],
   "game_id": "20260603_g8ln",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260603_g8ln-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 1 Hits , 0 Errors , 3 LOB'. The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Aidan Redahan, Anthony Manisero, Antonio Barranca. The last plate appearance was \"Tommy Specht flied out to cf (1-0 B).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 7,
+        "line_index": 10
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            1 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            4 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -5104,15 +5115,13 @@
     "fetched_at": "2026-07-12T15:04:07Z",
     "parse": {
       "events_count": 90,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 7 bottom folded LOB 3 != inning_summary LOB 4"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:27Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-28T20:58:44Z",
+    "parser_version": "0.20.0",
     "source_sha256": "e8761b286bf60e48dbb212fd9b7e0b76655fba43f95a28d4ceb5da29fa1f970e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260603_g8ln.xml"
   },
