@@ -2791,6 +2791,44 @@
         "base_out_state": "010|0",
         "bases_after": [
           false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 0,
+        "outs_before": 0,
+        "runs_on_play": 0
+      },
+      "batting_team": "wq5td5flfeeumd82",
+      "fielding_team": "iqwph3d7xajzy4uz",
+      "half": "top",
+      "inning": 4,
+      "kind": "runner_event",
+      "narrative": "J. Lynch Failed pickoff attempt.",
+      "runners": [
+        {
+          "cause": "pickoff",
+          "from": 2,
+          "out": false,
+          "player_id": "pqj1tua56mz1jf4s",
+          "scored": false,
+          "to": 2
+        }
+      ],
+      "scoring_play": false,
+      "seq": 46
+    },
+    {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "010|0",
+        "bases_after": [
+          false,
           false,
           false
         ],
@@ -2802,44 +2840,6 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
-        "runs_on_play": 0
-      },
-      "batting_team": "wq5td5flfeeumd82",
-      "fielding_team": "iqwph3d7xajzy4uz",
-      "half": "top",
-      "inning": 4,
-      "kind": "runner_event",
-      "narrative": "J. Lynch picked off.",
-      "runners": [
-        {
-          "cause": "pickoff",
-          "from": 2,
-          "out": true,
-          "player_id": "pqj1tua56mz1jf4s",
-          "scored": false,
-          "to": -1
-        }
-      ],
-      "scoring_play": false,
-      "seq": 46
-    },
-    {
-      "_derived": {
-        "away_score_before": 4,
-        "base_out_state": "000|1",
-        "bases_after": [
-          false,
-          false,
-          false
-        ],
-        "bases_before": [
-          false,
-          false,
-          false
-        ],
-        "home_score_before": 3,
-        "outs_after": 2,
-        "outs_before": 1,
         "runs_on_play": 0
       },
       "batting_team": "wq5td5flfeeumd82",
@@ -2864,7 +2864,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "000|2",
+        "base_out_state": "000|1",
         "bases_after": [
           false,
           false,
@@ -2876,8 +2876,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 3,
-        "outs_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2924,7 +2924,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "000|3",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
@@ -2936,8 +2936,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 3,
-        "outs_before": 3,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2982,7 +2982,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|3",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
@@ -2994,8 +2994,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 4,
-        "outs_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -6100,7 +6100,18 @@
     }
   ],
   "game_id": "20240606_fk5k",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240606_fk5k-1 (malformed_line): read as 'J. Lynch Failed pickoff attempt.'. The source reports this pickoff TWICE. This bare line carries no out-tag; the very next line reads 'J. Lynch out at second p to ss, picked off. (1 out)' and describes the same physical play. Scanning all 1,484 games for a bare 'X picked off.' line finds 179, of which 177 carry the out-tag on that same line -- this is the only one whose tag instead sits on a separate following line, and the only place the two-line shape occurs at all. Parsed as written, both lines record an out and inning 4 top totals 4. Errata can only rewrite a line, not delete one, so the duplicate is neutralised with the source's OWN no-op phrasing for a pickoff throw that retires nobody ('X Failed pickoff attempt.', 845 occurrences corpus-wide). The pickoff itself is still recorded, by the following line, which is where the out-tag is.",
+      "location": {
+        "half": "top",
+        "inning": 4,
+        "line_index": 2
+      },
+      "raw": "J. Lynch picked off.",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6279,17 +6290,13 @@
     "fetched_at": "2026-07-12T17:59:40Z",
     "parse": {
       "events_count": 116,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 4 top totals 4 outs (expected 3, no walk-off/unbatted/called-game exception applies)",
-        "[illegal_transitions] illegal_transition: seq 47 runner pqj1tua56mz1jf4s advances from base 2 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 50 outs_after 4 exceeds 3 in inning 4 top"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T22:01:38Z",
-    "parser_version": "0.23.0",
+    "parsed_at": "2026-08-28T22:08:32Z",
+    "parser_version": "0.24.0",
     "source_sha256": "620b833d15bded6f6b7fe77f513fa8cc0ec322d78d23da5c81d24f65c2cfee1a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240606_fk5k.xml"
   },
