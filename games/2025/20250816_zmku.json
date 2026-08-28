@@ -691,8 +691,8 @@
         "away_score_before": 0,
         "base_out_state": "111|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -719,11 +719,11 @@
       "kind": "plate_appearance",
       "narrative": "K. Liniak reached on a fielder's choice to third base, advanced to second on an error by 3b, RBI; J. Millan advanced to third; J. Mabry out at third 3b unassisted; T. Clarkson scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
-          "advanced to second on an error by 3b",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -742,7 +742,7 @@
           "out": false,
           "player_id": "9m10xvuvf3o8hg1f",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -777,15 +777,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|2",
+        "base_out_state": "011|2",
         "bases_after": [
           true,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 0,
@@ -834,7 +834,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "9m10xvuvf3o8hg1f",
           "scored": false,
@@ -1661,11 +1661,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Millan reached on a fielder's choice to first base; J. Lynch out at second 1b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1789,11 +1789,11 @@
       "kind": "plate_appearance",
       "narrative": "G. Howell reached on a fielder's choice to third base; J. Millan out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4627,11 +4627,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Garner reached on a fielder's choice to shortstop; K. Levari out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5660,6 +5660,7 @@
     }
   ],
   "game_id": "20250816_zmku",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5873,12 +5874,13 @@
     "fetched_at": "2026-07-12T17:30:40Z",
     "parse": {
       "events_count": 107,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:38Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:47Z",
+    "parser_version": "0.8.0",
     "source_sha256": "3a9b12fbbf05b5a451b14d8c2650f06928a56cf2cde8154a31d33654ac8f3305",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250816_zmku.xml"
   },
@@ -6261,7 +6263,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

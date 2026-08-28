@@ -744,22 +744,47 @@
         "home_score_before": 0,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 1,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "B. Blackford",
+        "player_id": "qr7n0l6f209t85wn",
+        "resolved": true
+      },
       "batting_team": "yypnc9frxmnyc9sf",
+      "count": null,
       "fielding_team": "2qaeqxdby1itnbm2",
       "half": "bottom",
       "inning": 1,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "B. Blackford out at first 1b to p, RBI; B. Lada advanced to third; B. Marine scored.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "n6p5gnu612vcqup4",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "qr7n0l6f209t85wn",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -775,7 +800,7 @@
           "from": 3,
           "out": false,
           "player_id": "citq438tac72jzkh",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -1982,7 +2007,7 @@
         "home_score_before": 1,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 1
       },
       "batter": {
@@ -3069,7 +3094,7 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4536,6 +4561,7 @@
     }
   ],
   "game_id": "20240709_fgxq",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -4693,15 +4719,13 @@
     "fetched_at": "2026-07-12T18:37:16Z",
     "parse": {
       "events_count": 85,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player qr7n0l6f209t85wn events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 7 runner qr7n0l6f209t85wn advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:06Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:15Z",
+    "parser_version": "0.8.0",
     "source_sha256": "5ee2709a424716e1e9389ac6f35fbacff00bec341c0e18b7b64ac07039f28e4e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240709_fgxq.xml"
   },
@@ -5019,7 +5043,7 @@
       "team_id": "yypnc9frxmnyc9sf"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

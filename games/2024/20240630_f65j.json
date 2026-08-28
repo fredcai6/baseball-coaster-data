@@ -1970,7 +1970,9 @@
       "kind": "plate_appearance",
       "narrative": "Serratos, Jr singled to pitcher, bunt.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [
           "bunt"
@@ -2470,11 +2472,11 @@
       "kind": "plate_appearance",
       "narrative": "M. Moralez reached on a fielder's choice to shortstop; B. Ryan out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4018,11 +4020,11 @@
       "kind": "plate_appearance",
       "narrative": "X. Washingto reached on a fielder's choice to shortstop; K. Schroedle out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5538,7 +5540,7 @@
         "base_out_state": "010|2",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -5560,7 +5562,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "en3s39qfbmkhybft",
           "scored": false,
@@ -5573,15 +5575,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "011|2",
+        "base_out_state": "001|2",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 14,
@@ -6354,8 +6356,8 @@
         "away_score_before": 6,
         "base_out_state": "101|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -6382,12 +6384,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Knight reached on a fielder's choice to third base, advanced to second; J. Kline advanced to third; M. Moralez out at home 3b to c to ss to c.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base",
-          "advanced to second"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6404,7 +6405,7 @@
           "out": false,
           "player_id": "0w78rn1gzg0fi660",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -6446,15 +6447,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 14,
@@ -6519,6 +6520,7 @@
     }
   ],
   "game_id": "20240630_f65j",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6725,6 +6727,7 @@
     "fetched_at": "2026-07-12T18:27:39Z",
     "parse": {
       "events_count": 119,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 8,
       "warnings": [
@@ -6738,17 +6741,15 @@
         "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 2 top folded LOB 2 != inning_summary LOB 1",
         "[lob] lob: inning 4 top folded LOB 0 != inning_summary LOB 2",
-        "[lob] lob: inning 7 bottom folded LOB 2 != inning_summary LOB 1",
         "[lob] lob: inning 8 top folded LOB 0 != inning_summary LOB 1",
         "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1",
         "[pa_counts] pa_counts: player rqmfp43xtsbpfjbf events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)",
         "[pa_counts] pa_counts: player kgffa368lrq9k6fz events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player jpxoxi97zen1oer1 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 97 runner en3s39qfbmkhybft advances from base 1 which was not occupied at event start"
+        "[pa_counts] pa_counts: player jpxoxi97zen1oer1 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:04Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:13Z",
+    "parser_version": "0.8.0",
     "source_sha256": "7665639f26cfe987250f161dbbef01dcba07abcfb9fe9928ee5dae170bcdb4e0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240630_f65j.xml"
   },
@@ -7131,7 +7132,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

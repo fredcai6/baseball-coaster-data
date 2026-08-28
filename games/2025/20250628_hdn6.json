@@ -1419,7 +1419,9 @@
       "kind": "plate_appearance",
       "narrative": "Q. Landis singled to pitcher, advanced to second on a throwing error by p, advanced to third; T. McKenzie scored; A. Abbatine scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6445,7 +6447,9 @@
       "kind": "plate_appearance",
       "narrative": "A. Abbatine singled to pitcher, RBI; B. Roberts advanced to second; M. Fabian advanced to third; E. Sleight scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [
           "RBI"
@@ -7607,7 +7611,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -7661,7 +7665,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "9q1k717lk7j464id",
           "rbi": true,
@@ -7675,16 +7679,16 @@
     {
       "_derived": {
         "away_score_before": 15,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 18,
         "outs_after": 2,
@@ -7735,16 +7739,16 @@
     {
       "_derived": {
         "away_score_before": 15,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 18,
         "outs_after": 2,
@@ -7790,16 +7794,16 @@
     {
       "_derived": {
         "away_score_before": 15,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 18,
         "outs_after": 2,
@@ -7865,7 +7869,7 @@
     {
       "_derived": {
         "away_score_before": 15,
-        "base_out_state": "111|2",
+        "base_out_state": "110|2",
         "bases_after": [
           false,
           true,
@@ -7874,7 +7878,7 @@
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 18,
         "outs_after": 2,
@@ -8358,6 +8362,7 @@
     }
   ],
   "game_id": "20250628_hdn6",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8585,14 +8590,13 @@
     "fetched_at": "2026-07-12T16:33:57Z",
     "parse": {
       "events_count": 145,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 128 runner 9q1k717lk7j464id advances from base 2 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:26Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:35Z",
+    "parser_version": "0.8.0",
     "source_sha256": "7daca3d7d5d7055b7e649c93c801860cbe5934b22905a4617e8ba3581fcdab27",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250628_hdn6.xml"
   },
@@ -9012,7 +9016,7 @@
       "team_id": "zv9gibz3bbrsxdk3"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

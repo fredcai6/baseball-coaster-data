@@ -1231,7 +1231,7 @@
           false
         ],
         "home_score_before": 2,
-        "outs_after": 2,
+        "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
@@ -1251,10 +1251,8 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "out at second ss to 2b"
-        ],
-        "outs_recorded": 0,
+        "modifiers": [],
+        "outs_recorded": 1,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -1271,6 +1269,14 @@
           "player_id": "glrhrgv4qegkywkb",
           "scored": false,
           "to": 1
+        },
+        {
+          "cause": "force_out",
+          "from": 1,
+          "out": true,
+          "player_id": "4cm1cybv1u10t4q2",
+          "scored": false,
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -6826,6 +6832,18 @@
     }
   ],
   "game_id": "20240813_msh4",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to 4cm1cybv1u10t4q2, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "bottom",
+        "inning": 1,
+        "line_index": 6
+      },
+      "raw": "K. Willman reached on a fielder's choice, out at second ss to 2b.\n                                                                                                                                \t\t\t\t\t(3 out)",
+      "rule": "unattributed_force_out"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7018,14 +7036,13 @@
     "fetched_at": "2026-07-12T19:18:12Z",
     "parse": {
       "events_count": 123,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 1 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:14Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:23Z",
+    "parser_version": "0.8.0",
     "source_sha256": "70fec90bd40e1dbebedef3d02b3fc665140f2844e06f5afa031e11aeda92a58e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240813_msh4.xml"
   },
@@ -7395,7 +7412,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

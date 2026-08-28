@@ -1598,11 +1598,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Shaver reached on a fielder's choice to third base; Allen, Jr advanced to second; P. Mills out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5869,6 +5869,92 @@
         "base_out_state": "111|1",
         "bases_after": [
           true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 6,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "T. Smith",
+        "player_id": "3vg4tjj6lny5kazm",
+        "resolved": true
+      },
+      "batting_team": "mw5jz3z05tswxa8m",
+      "count": null,
+      "fielding_team": "9efpyrbbyneh3vac",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "T. Smith reached on a fielder's choice to pitcher; C. Gordon advanced to second; N. Klemp advanced to third; M. Rosario scored on a throwing error by p, unearned.",
+      "outcome": {
+        "fielders": [
+          "p"
+        ],
+        "location": "pitcher",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "qwsf5lgb2eg50igo",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "3vg4tjj6lny5kazm",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "gj6w3ztw7zlm4y7g",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "i2n256ipvurz082x",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "error",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "dys9nwsovxppppru",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 103
+    },
+    {
+      "_derived": {
+        "away_score_before": 8,
+        "base_out_state": "111|1",
+        "bases_after": [
+          true,
           false,
           true
         ],
@@ -5896,10 +5982,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Perez reached on a fielder's choice to shortstop, RBI; T. Smith out at second ss to 2b; C. Gordon advanced to third; N. Klemp scored, unearned.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -5922,7 +6009,7 @@
         },
         {
           "cause": "force_out",
-          "from": 2,
+          "from": 1,
           "out": true,
           "player_id": "3vg4tjj6lny5kazm",
           "scored": false,
@@ -5930,7 +6017,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "gj6w3ztw7zlm4y7g",
           "scored": false,
@@ -5939,7 +6026,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "i2n256ipvurz082x",
           "rbi": true,
@@ -5948,11 +6035,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "101|2",
         "bases_after": [
           false,
@@ -5986,11 +6073,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "011|2",
         "bases_after": [
           false,
@@ -6046,7 +6133,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "batting_team": "mw5jz3z05tswxa8m",
@@ -6056,7 +6143,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 1,
         "H": 2,
@@ -6066,7 +6153,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6122,11 +6209,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -6180,11 +6267,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "100|1",
         "bases_after": [
           false,
@@ -6246,11 +6333,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "010|2",
         "bases_after": [
           false,
@@ -6304,7 +6391,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "9efpyrbbyneh3vac",
@@ -6314,7 +6401,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6330,9 +6417,9 @@
       "kind": "substitution",
       "narrative": "R. Tachibana to p for B. Medoro.",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "substitution": {
-        "after_event_seq": 111,
+        "after_event_seq": 112,
         "kind": "pitching",
         "player_in": "2aabsj31t2ffrggj",
         "player_out": "qwsf5lgb2eg50igo",
@@ -6341,7 +6428,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6399,11 +6486,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -6459,11 +6546,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -6519,7 +6606,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "batting_team": "mw5jz3z05tswxa8m",
@@ -6529,7 +6616,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6545,9 +6632,9 @@
       "kind": "substitution",
       "narrative": "A. Sabouri to p for M. Timmins.",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "substitution": {
-        "after_event_seq": 116,
+        "after_event_seq": 117,
         "kind": "pitching",
         "player_in": "256j63mgeotlic6q",
         "player_out": "r7r66mcy437pfsys",
@@ -6556,7 +6643,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6612,11 +6699,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -6670,11 +6757,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -6728,7 +6815,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "9efpyrbbyneh3vac",
@@ -6738,7 +6825,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6748,6 +6835,7 @@
     }
   ],
   "game_id": "20250524_6i4a",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6842,7 +6930,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 111,
+          "after_event_seq": 112,
           "kind": "pitching",
           "player_in": "2aabsj31t2ffrggj",
           "player_out": "qwsf5lgb2eg50igo",
@@ -6912,7 +7000,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 116,
+          "after_event_seq": 117,
           "kind": "pitching",
           "player_in": "256j63mgeotlic6q",
           "player_out": "r7r66mcy437pfsys",
@@ -6925,19 +7013,19 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:56:01Z",
     "parse": {
-      "events_count": 122,
+      "events_count": 123,
+      "inferred_count": 0,
       "replayable": false,
-      "unparsed_count": 2,
+      "unparsed_count": 1,
       "warnings": [
         "[linescore] linescore: away inning 5 computed 2 != oracle 4",
-        "[linescore] linescore: away inning 8 computed 1 != oracle 2",
-        "[linescore] linescore: computed away final R 8 != oracle total 11",
+        "[linescore] linescore: computed away final R 9 != oracle total 11",
         "[lob] lob: inning 5 top folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player 3vg4tjj6lny5kazm events PA 3 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
+        "[pa_counts] pa_counts: player 3vg4tjj6lny5kazm events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:18Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:27Z",
+    "parser_version": "0.8.0",
     "source_sha256": "2ab53fa0f3e65cd98e4d95a43775f1a1b3cf58f23c580e834496a0ab775fdc4c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250524_6i4a.xml"
   },
@@ -7294,7 +7382,7 @@
       "team_id": "mw5jz3z05tswxa8m"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7322,16 +7410,7 @@
         "line_index": 7
       },
       "raw": "T. Smith reached first on a muffed throw by 1b, assist by 3b, advanced to second; C. Gordon scored, unearned; N. Klemp scored, unearned.",
-      "reason": "runner clause name did not resolve uniquely"
-    },
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 4
-      },
-      "raw": "T. Smith reached on a fielder's choice to pitcher; C. Gordon advanced to second; N. Klemp advanced to third; M. Rosario scored on a throwing error by p, unearned.",
-      "reason": "runner clause not recognized: 'M. Rosario scored on a throwing error by p, unearned'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'T. Smith reached first on a muffed throw by 1b, assist by 3b, advanced to second'"
     }
   ]
 }

@@ -3571,22 +3571,48 @@
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 3,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "K. Putnam",
+        "player_id": "hwskb8dtc3qd177z",
+        "resolved": true
+      },
       "batting_team": "wq5td5flfeeumd82",
+      "count": null,
       "fielding_team": "3ward2o2o9m0w2dj",
       "half": "top",
       "inning": 6,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "K. Putnam out at first 1b to 2b, SAC, RBI; Rojas, Jr advanced to third; Serratos, Jr scored, unearned.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "krbdkrmm9zwy6mr4",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "hwskb8dtc3qd177z",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -3602,7 +3628,7 @@
           "from": 3,
           "out": false,
           "player_id": "en3s39qfbmkhybft",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -4659,7 +4685,7 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -5897,6 +5923,7 @@
     }
   ],
   "game_id": "20240709_9vmk",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6082,12 +6109,13 @@
     "fetched_at": "2026-07-12T18:38:24Z",
     "parse": {
       "events_count": 108,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:06Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:15Z",
+    "parser_version": "0.8.0",
     "source_sha256": "9e3daf9909d8c0cd1729abe6cc42757872284c95979e42468cf3170a775bd17e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240709_9vmk.xml"
   },
@@ -6444,7 +6472,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

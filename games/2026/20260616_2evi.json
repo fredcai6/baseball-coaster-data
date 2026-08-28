@@ -1099,7 +1099,9 @@
       "kind": "plate_appearance",
       "narrative": "Edrick Felix singled to pitcher, RBI (2-1 BKB); Logan Beard advanced to second; Carson Garner advanced to third; Joe McLaughlin scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [
           "RBI"
@@ -4626,11 +4628,11 @@
       "kind": "plate_appearance",
       "narrative": "Logan Beard reached on a fielder's choice to shortstop (1-0 B); Jake Millan out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6936,6 +6938,7 @@
     }
   ],
   "game_id": "20260616_2evi",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7114,12 +7117,13 @@
     "fetched_at": "2026-07-12T15:18:00Z",
     "parse": {
       "events_count": 119,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:47Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:55Z",
+    "parser_version": "0.8.0",
     "source_sha256": "fc83613786c2a591625a3ef8bff68f238a8d85a415a416eda822cd3b163882c1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260616_2evi.xml"
   },
@@ -7457,7 +7461,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

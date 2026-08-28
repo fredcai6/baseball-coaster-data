@@ -2537,8 +2537,8 @@
         "away_score_before": 1,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -2567,9 +2567,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on a throwing error by 2b"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2586,7 +2584,7 @@
           "out": false,
           "player_id": "vviwxn1drm7cwlyk",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -2603,15 +2601,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 4,
@@ -2662,7 +2660,7 @@
         {
           "cause": "error",
           "earned": false,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "vviwxn1drm7cwlyk",
           "rbi": false,
@@ -5871,6 +5869,7 @@
     }
   ],
   "game_id": "20240703_m0xh",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6049,12 +6048,13 @@
     "fetched_at": "2026-07-12T18:30:56Z",
     "parse": {
       "events_count": 105,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:05Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:14Z",
+    "parser_version": "0.8.0",
     "source_sha256": "59007265016a7cbdc51b14180787817883cda66b6b4750e74c69394574119c0a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240703_m0xh.xml"
   },
@@ -6411,7 +6411,7 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

@@ -1504,11 +1504,11 @@
       "kind": "plate_appearance",
       "narrative": "K. Ashworth reached on a fielder's choice to first base; A. Mendoza out at second 1b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3935,10 +3935,11 @@
       "kind": "plate_appearance",
       "narrative": "X. Casserill reached on a fielder's choice to shortstop, RBI; J. O'Dowd out at second ss to 2b; B. Knight advanced to third; C. Bowen scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -4176,11 +4177,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Mabry reached on a fielder's choice to catcher; T. Clarkson out at third c to 3b to ss to p to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to catcher"
+        "fielders": [
+          "c"
         ],
+        "location": "catcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5468,11 +5469,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Mabry reached on a fielder's choice to shortstop; T. Clarkson out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5998,6 +5999,7 @@
     }
   ],
   "game_id": "20250817_4d0u",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6197,12 +6199,13 @@
     "fetched_at": "2026-07-12T17:31:36Z",
     "parse": {
       "events_count": 111,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:38Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:47Z",
+    "parser_version": "0.8.0",
     "source_sha256": "47f9910cd7bee430b5f9fd27c1f1214b1c89000599b0aab24de5bdef276d9a08",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250817_4d0u.xml"
   },
@@ -6585,7 +6588,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

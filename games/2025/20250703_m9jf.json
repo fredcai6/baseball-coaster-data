@@ -4736,22 +4736,47 @@
         "home_score_before": 9,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "J. O'Dowd",
+        "player_id": "qotgjv4pigiosj7u",
+        "resolved": true
+      },
       "batting_team": "9efpyrbbyneh3vac",
+      "count": null,
       "fielding_team": "0twkgtzg9upvsarx",
       "half": "top",
       "inning": 6,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "J. O'Dowd out at first 1b to p, RBI; P. Mills advanced to third; C. Bowen scored.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "5ojsn6k4q7xsg7pk",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "qotgjv4pigiosj7u",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -4767,7 +4792,7 @@
           "from": 3,
           "out": false,
           "player_id": "7izb6w2jllnrplie",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -5853,7 +5878,7 @@
         "home_score_before": 9,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -6803,6 +6828,7 @@
     }
   ],
   "game_id": "20250703_m9jf",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7044,15 +7070,13 @@
     "fetched_at": "2026-07-12T16:40:07Z",
     "parse": {
       "events_count": 125,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player qotgjv4pigiosj7u events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 78 runner qotgjv4pigiosj7u advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:27Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:36Z",
+    "parser_version": "0.8.0",
     "source_sha256": "d8fd659779c78fc47e7a877d323c143991ed1a036fcf8ba952f5b32dc8b32289",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250703_m9jf.xml"
   },
@@ -7500,7 +7524,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

@@ -5683,10 +5683,11 @@
       "kind": "plate_appearance",
       "narrative": "P. Mills reached on a fielder's choice to second base, RBI; Z. Denton out at second 2b to ss; C. Bowen scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -7002,6 +7003,7 @@
     }
   ],
   "game_id": "20250608_hnsx",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7187,12 +7189,13 @@
     "fetched_at": "2026-07-12T16:12:36Z",
     "parse": {
       "events_count": 126,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:22Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:31Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f9b72a9120f104cf7acd36c47ae3c3ba5722e8568b98b9afe0664ac632b93739",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250608_hnsx.xml"
   },
@@ -7562,7 +7565,7 @@
       "team_id": "ftxbf1wj156q30wd"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

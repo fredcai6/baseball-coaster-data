@@ -5124,7 +5124,7 @@
         "base_out_state": "011|0",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -5182,7 +5182,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "mdwjkaxf4vrzor5w",
           "scored": false,
@@ -5205,15 +5205,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "011|1",
+        "base_out_state": "001|1",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 14,
@@ -5278,15 +5278,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "010|2",
+        "base_out_state": "000|2",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
           false,
-          true,
+          false,
           false
         ],
         "home_score_before": 15,
@@ -7854,6 +7854,7 @@
     }
   ],
   "game_id": "20260703_6t19",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8088,15 +8089,13 @@
     "fetched_at": "2026-07-12T15:38:54Z",
     "parse": {
       "events_count": 138,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 0",
-        "[illegal_transitions] illegal_transition: seq 84 runner mdwjkaxf4vrzor5w advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:51Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:59Z",
+    "parser_version": "0.8.0",
     "source_sha256": "12283d02ccdc6525ba950fbf7b2e43111b638ac6dd1f8ecde505302e672d1557",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260703_6t19.xml"
   },
@@ -8469,7 +8468,7 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

@@ -6791,6 +6791,23 @@
       }
     },
     {
+      "batting_team": "9fugocpa5h6ockn6",
+      "fielding_team": "mw5jz3z05tswxa8m",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "/ for J. Hernandez.",
+      "scoring_play": false,
+      "seq": 121,
+      "substitution": {
+        "after_event_seq": 120,
+        "kind": "pitching",
+        "player_in": "3vg4tjj6lny5kazm",
+        "player_out": "m7t5yknk5x6nt6ik",
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 14,
         "base_out_state": "000|0",
@@ -6834,7 +6851,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "m7t5yknk5x6nt6ik",
+        "player_id": "3vg4tjj6lny5kazm",
         "resolved": true
       },
       "pitches": null,
@@ -6849,7 +6866,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 121
+      "seq": 122
     },
     {
       "_derived": {
@@ -6894,7 +6911,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "m7t5yknk5x6nt6ik",
+        "player_id": "3vg4tjj6lny5kazm",
         "resolved": true
       },
       "pitches": null,
@@ -6909,7 +6926,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "_derived": {
@@ -6954,7 +6971,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "m7t5yknk5x6nt6ik",
+        "player_id": "3vg4tjj6lny5kazm",
         "resolved": true
       },
       "pitches": null,
@@ -6969,7 +6986,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 123
+      "seq": 124
     },
     {
       "_derived": {
@@ -7014,7 +7031,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "m7t5yknk5x6nt6ik",
+        "player_id": "3vg4tjj6lny5kazm",
         "resolved": true
       },
       "pitches": null,
@@ -7029,7 +7046,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 124
+      "seq": 125
     },
     {
       "batting_team": "9fugocpa5h6ockn6",
@@ -7039,7 +7056,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 125,
+      "seq": 126,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7103,7 +7120,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 126
+      "seq": 127
     },
     {
       "_derived": {
@@ -7164,7 +7181,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7224,7 +7241,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7296,7 +7313,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 129
+      "seq": 130
     },
     {
       "_derived": {
@@ -7364,7 +7381,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 130
+      "seq": 131
     },
     {
       "_derived": {
@@ -7424,7 +7441,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 131
+      "seq": 132
     },
     {
       "batting_team": "mw5jz3z05tswxa8m",
@@ -7434,7 +7451,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 132,
+      "seq": 133,
       "summary": {
         "E": 0,
         "H": 2,
@@ -7444,6 +7461,18 @@
     }
   ],
   "game_id": "20250717_8mjs",
+  "inferred": [
+    {
+      "asserted": "incoming pitcher 3vg4tjj6lny5kazm read from the boxscore pitching order as the successor to m7t5yknk5x6nt6ik",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "/  for J. Hernandez.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7627,6 +7656,13 @@
           "player_in": "kriqcbrfzfr25mz8",
           "player_out": null,
           "slot": null
+        },
+        {
+          "after_event_seq": 120,
+          "kind": "pitching",
+          "player_in": "3vg4tjj6lny5kazm",
+          "player_out": "m7t5yknk5x6nt6ik",
+          "slot": null
         }
       ]
     }
@@ -7635,13 +7671,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:55:56Z",
     "parse": {
-      "events_count": 133,
+      "events_count": 134,
+      "inferred_count": 1,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:31Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:39Z",
+    "parser_version": "0.8.0",
     "source_sha256": "a5475b68b958aceea037a78a182d1332baecd39de98f405f6fcff09625997f08",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250717_8mjs.xml"
   },
@@ -8011,7 +8048,7 @@
       "team_id": "mw5jz3z05tswxa8m"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -8031,15 +8068,5 @@
       "team_id": "mw5jz3z05tswxa8m"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "/  for J. Hernandez.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for J. Hernandez'"
-    }
-  ]
+  "unparsed": []
 }

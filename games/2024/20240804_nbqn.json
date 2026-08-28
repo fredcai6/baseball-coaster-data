@@ -1151,7 +1151,7 @@
         "base_out_state": "101|0",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -1160,7 +1160,7 @@
           true
         ],
         "home_score_before": 0,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 1,
         "runs_on_play": 1
@@ -1181,10 +1181,9 @@
         "fielders": [],
         "location": null,
         "modifiers": [
-          "out at second p to 1b",
           "RBI"
         ],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -1205,10 +1204,10 @@
         {
           "cause": "advance",
           "from": 1,
-          "out": false,
+          "out": true,
           "player_id": "zibfbv60c76ytzg9",
           "scored": false,
-          "to": 2
+          "to": -1
         },
         {
           "cause": "advance",
@@ -1227,7 +1226,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "110|0",
+        "base_out_state": "100|1",
         "bases_after": [
           true,
           false,
@@ -1235,12 +1234,12 @@
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
         "home_score_before": 0,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -1293,7 +1292,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|0",
+        "base_out_state": "101|1",
         "bases_after": [
           true,
           false,
@@ -1305,8 +1304,8 @@
           true
         ],
         "home_score_before": 0,
-        "outs_after": 1,
-        "outs_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -1351,7 +1350,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|1",
+        "base_out_state": "101|2",
         "bases_after": [
           true,
           false,
@@ -1363,8 +1362,8 @@
           true
         ],
         "home_score_before": 0,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -6236,6 +6235,95 @@
       "seq": 115
     },
     {
+      "_derived": {
+        "away_score_before": 6,
+        "base_out_state": "111|2",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 3,
+        "outs_after": 3,
+        "outs_before": 2,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "B. Marine",
+        "player_id": "citq438tac72jzkh",
+        "resolved": true
+      },
+      "batting_team": "yypnc9frxmnyc9sf",
+      "count": null,
+      "fielding_team": "2qaeqxdby1itnbm2",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "B. Marine doubled, 2 RBI; A. Mendoza advanced to third, out at home lf to ss to c; K. Banks scored, unearned; T. Smith T. Smith, unearned.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [
+          "2 RBI",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "double"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "x9kaembdhw73sr4i",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "citq438tac72jzkh",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": true,
+          "player_id": "p6spzyk0kapyej3t",
+          "scored": false,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "l9qirmp8jaiyoy3y",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "tj7i1g4g1oxwyhxi",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 116
+    },
+    {
       "batting_team": "yypnc9frxmnyc9sf",
       "fielding_team": "2qaeqxdby1itnbm2",
       "half": "top",
@@ -6243,7 +6331,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 1,
         "H": 3,
@@ -6259,9 +6347,9 @@
       "kind": "substitution",
       "narrative": "A. Chouinard pinch hit for D. Lopez.",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "substitution": {
-        "after_event_seq": 116,
+        "after_event_seq": 117,
         "kind": "offensive",
         "player_in": "7m761rlu9tjhichv",
         "player_out": "t2mv4v7ymy3pbazx",
@@ -6276,9 +6364,9 @@
       "kind": "substitution",
       "narrative": "C. Langrell to p for T. Buckner.",
       "scoring_play": false,
-      "seq": 118,
+      "seq": 119,
       "substitution": {
-        "after_event_seq": 117,
+        "after_event_seq": 118,
         "kind": "pitching",
         "player_in": "ckgd1rkttqbe9lej",
         "player_out": "aevnvvgw1biu2wfj",
@@ -6287,7 +6375,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 6,
+        "away_score_before": 8,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6341,11 +6429,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
-        "away_score_before": 6,
+        "away_score_before": 8,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -6399,11 +6487,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "_derived": {
-        "away_score_before": 6,
+        "away_score_before": 8,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -6457,11 +6545,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 121
+      "seq": 122
     },
     {
       "_derived": {
-        "away_score_before": 6,
+        "away_score_before": 8,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6517,7 +6605,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "batting_team": "2qaeqxdby1itnbm2",
@@ -6527,7 +6615,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 123,
+      "seq": 124,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6537,6 +6625,28 @@
     }
   ],
   "game_id": "20240804_nbqn",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to zibfbv60c76ytzg9, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "top",
+        "inning": 2,
+        "line_index": 2
+      },
+      "raw": "T. Smith reached on a fielder's choice, out at second p to 1b, RBI; A. Figueredo advanced to second; J. Gonzalez scored.",
+      "rule": "unattributed_force_out"
+    },
+    {
+      "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 9
+      },
+      "raw": "B. Marine doubled, 2 RBI; A. Mendoza advanced to third, out at home lf to ss to c; K. Banks scored, unearned; T. Smith T. Smith, unearned.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6645,7 +6755,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 116,
+          "after_event_seq": 117,
           "kind": "offensive",
           "player_in": "7m761rlu9tjhichv",
           "player_out": "t2mv4v7ymy3pbazx",
@@ -6736,7 +6846,7 @@
           "slot": 5
         },
         {
-          "after_event_seq": 117,
+          "after_event_seq": 118,
           "kind": "pitching",
           "player_in": "ckgd1rkttqbe9lej",
           "player_out": "aevnvvgw1biu2wfj",
@@ -6749,21 +6859,18 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:08:24Z",
     "parse": {
-      "events_count": 124,
+      "events_count": 125,
+      "inferred_count": 2,
       "replayable": false,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": [
-        "[linescore] linescore: away inning 9 computed 1 != oracle 3",
-        "[linescore] linescore: computed away final R 6 != oracle total 8",
-        "[outs_per_half] outs_per_half: inning 2 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 3 bottom folded LOB 1 != inning_summary LOB 0",
-        "[lob] lob: inning 9 top folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player citq438tac72jzkh events PA 5 != box-implied PA 6 (AB=6 BB=0 HBP=0 SAC=0 INT=0)"
+        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 2",
+        "[illegal_transitions] illegal_transition: seq 14 runner zibfbv60c76ytzg9 advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:13Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:21Z",
+    "parser_version": "0.8.0",
     "source_sha256": "40cf57f6f95b81e00e23157ddf678052b60fc10bd961e253e902f2da363a152e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240804_nbqn.xml"
   },
@@ -7172,7 +7279,7 @@
       "team_id": "yypnc9frxmnyc9sf"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -7192,15 +7299,5 @@
       "team_id": "2qaeqxdby1itnbm2"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 9
-      },
-      "raw": "B. Marine doubled, 2 RBI; A. Mendoza advanced to third, out at home lf to ss to c; K. Banks scored, unearned; T. Smith T. Smith, unearned.",
-      "reason": "runner clause not recognized: 'T. Smith T. Smith, unearned'"
-    }
-  ]
+  "unparsed": []
 }

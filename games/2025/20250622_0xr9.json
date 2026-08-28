@@ -3166,8 +3166,8 @@
         "away_score_before": 4,
         "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3194,12 +3194,12 @@
       "kind": "plate_appearance",
       "narrative": "E. Corona reached on a fielder's choice to third base, RBI, advanced to second; A. Albert out at third 3b to 2b; J. Nicol scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
-          "RBI",
-          "advanced to second"
+          "RBI"
         ],
         "outs_recorded": 1,
         "type": "fielders_choice"
@@ -3217,7 +3217,7 @@
           "out": false,
           "player_id": "22kpuc1vjfkyf0at",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -3244,15 +3244,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -3269,7 +3269,7 @@
       "runners": [
         {
           "cause": "wild_pitch",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "22kpuc1vjfkyf0at",
           "scored": false,
@@ -3568,6 +3568,66 @@
         "base_out_state": "100|0",
         "bases_after": [
           true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 3,
+        "outs_after": 1,
+        "outs_before": 0,
+        "pa_number_of_batter": 3,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "J. Santini",
+        "player_id": "6pepnwlmp3ma7k4o",
+        "resolved": true
+      },
+      "batting_team": "0twkgtzg9upvsarx",
+      "count": null,
+      "fielding_team": "9fugocpa5h6ockn6",
+      "half": "top",
+      "inning": 5,
+      "kind": "plate_appearance",
+      "narrative": "J. Santini struck out swinging, bunt.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "strikeout_swinging"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "8uz6vbulv44cj63t",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "6pepnwlmp3ma7k4o",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 61
+    },
+    {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
           true,
           false
         ],
@@ -3577,8 +3637,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
@@ -3626,12 +3686,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 61
+      "seq": 62
     },
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "110|0",
+        "base_out_state": "110|1",
         "bases_after": [
           true,
           true,
@@ -3643,8 +3703,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
@@ -3686,12 +3746,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 62
+      "seq": 63
     },
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "110|1",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -3703,8 +3763,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
@@ -3760,12 +3820,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 63
+      "seq": 64
     },
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "111|1",
+        "base_out_state": "111|2",
         "bases_after": [
           true,
           true,
@@ -3777,8 +3837,8 @@
           true
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
@@ -3848,12 +3908,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 64
+      "seq": 65
     },
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "111|1",
+        "base_out_state": "111|2",
         "bases_after": [
           false,
           true,
@@ -3865,8 +3925,8 @@
           true
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 2
       },
@@ -3939,12 +3999,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 65
+      "seq": 66
     },
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "011|1",
+        "base_out_state": "011|2",
         "bases_after": [
           true,
           true,
@@ -3956,8 +4016,8 @@
           true
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -3997,12 +4057,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 66
+      "seq": 67
     },
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "111|1",
+        "base_out_state": "111|2",
         "bases_after": [
           true,
           true,
@@ -4014,8 +4074,8 @@
           true
         ],
         "home_score_before": 3,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
@@ -4083,12 +4143,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 67
+      "seq": 68
     },
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "111|1",
+        "base_out_state": "111|2",
         "bases_after": [
           true,
           true,
@@ -4100,8 +4160,8 @@
           true
         ],
         "home_score_before": 3,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -4143,7 +4203,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 68
+      "seq": 69
     },
     {
       "batting_team": "0twkgtzg9upvsarx",
@@ -4153,7 +4213,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 4 Runs, 3 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 69,
+      "seq": 70,
       "summary": {
         "E": 0,
         "H": 3,
@@ -4169,9 +4229,9 @@
       "kind": "substitution",
       "narrative": "C. Gannaway to p for T. Roca.",
       "scoring_play": false,
-      "seq": 70,
+      "seq": 71,
       "substitution": {
-        "after_event_seq": 69,
+        "after_event_seq": 70,
         "kind": "pitching",
         "player_in": "32d7at9bq8od3t1g",
         "player_out": "yw9ao73kvz3llvck",
@@ -4234,7 +4294,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 71
+      "seq": 72
     },
     {
       "batting_team": "9fugocpa5h6ockn6",
@@ -4244,9 +4304,9 @@
       "kind": "substitution",
       "narrative": "A. Fritz pinch ran for F. Podkul.",
       "scoring_play": false,
-      "seq": 72,
+      "seq": 73,
       "substitution": {
-        "after_event_seq": 71,
+        "after_event_seq": 72,
         "kind": "offensive",
         "player_in": "n289txt8u8mtht6m",
         "player_out": "cye57l2764k8k7u1",
@@ -4309,7 +4369,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 73
+      "seq": 74
     },
     {
       "_derived": {
@@ -4377,7 +4437,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 74
+      "seq": 75
     },
     {
       "_derived": {
@@ -4412,11 +4472,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Nicol reached on a fielder's choice to pitcher; K. Putnam out at second p to 2b to ss; A. Fritz advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4453,7 +4513,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 75
+      "seq": 76
     },
     {
       "_derived": {
@@ -4519,7 +4579,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 76
+      "seq": 77
     },
     {
       "_derived": {
@@ -4577,7 +4637,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 77
+      "seq": 78
     },
     {
       "batting_team": "9fugocpa5h6ockn6",
@@ -4587,7 +4647,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 78,
+      "seq": 79,
       "summary": {
         "E": 0,
         "H": 1,
@@ -4597,6 +4657,7 @@
     }
   ],
   "game_id": "20250622_0xr9",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -4671,7 +4732,7 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 69,
+          "after_event_seq": 70,
           "kind": "pitching",
           "player_in": "32d7at9bq8od3t1g",
           "player_out": "yw9ao73kvz3llvck",
@@ -4741,7 +4802,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 71,
+          "after_event_seq": 72,
           "kind": "offensive",
           "player_in": "n289txt8u8mtht6m",
           "player_out": "cye57l2764k8k7u1",
@@ -4754,16 +4815,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:27:15Z",
     "parse": {
-      "events_count": 79,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 5 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player 6pepnwlmp3ma7k4o events PA 2 != box-implied PA 3 (AB=2 BB=1 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 80,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:25Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:33Z",
+    "parser_version": "0.8.0",
     "source_sha256": "ece20df6789431388e821db9638149dc8353c3bce744f17cafc01d83401f92bd",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250622_0xr9.xml"
   },
@@ -5081,7 +5140,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -5101,15 +5160,5 @@
       "team_id": "9fugocpa5h6ockn6"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 5,
-        "line_index": 2
-      },
-      "raw": "J. Santini struck out swinging, bunt.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'J. Santini struck out swinging, bunt'"
-    }
-  ]
+  "unparsed": []
 }

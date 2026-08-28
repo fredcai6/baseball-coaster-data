@@ -3741,7 +3741,9 @@
       "kind": "plate_appearance",
       "narrative": "K. Ashworth singled to pitcher (2-1 BFB); D. Collins advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5707,11 +5709,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Steele reached on a fielder's choice to first base (1-2 KFB); C. Hornung out at second 1b to ss; D. Ratfield advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6383,6 +6385,7 @@
     }
   ],
   "game_id": "20260603_kqzu",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6561,12 +6564,13 @@
     "fetched_at": "2026-07-12T15:03:12Z",
     "parse": {
       "events_count": 110,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:52Z",
+    "parser_version": "0.8.0",
     "source_sha256": "e4db42894ec2077eacf7bb2b320d068881d69cf7ec93aad57f4a27137758e339",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260603_kqzu.xml"
   },
@@ -6915,7 +6919,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

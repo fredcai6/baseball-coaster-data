@@ -1303,11 +1303,11 @@
       "kind": "plate_appearance",
       "narrative": "Rojas, Jr reached on a fielder's choice to first base; J. Lynch advanced to third; H. Yanez out at home 1b to c.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5880,6 +5880,7 @@
     }
   ],
   "game_id": "20240629_7k4v",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6037,6 +6038,7 @@
     "fetched_at": "2026-07-12T18:26:58Z",
     "parse": {
       "events_count": 106,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 5,
       "warnings": [
@@ -6048,8 +6050,8 @@
         "[lob] lob: inning 2 top folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:04Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:13Z",
+    "parser_version": "0.8.0",
     "source_sha256": "2dbbef0549d61b90eb720a4ba3ed29de038d35e097f6c84e9b5e159e592e289d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240629_7k4v.xml"
   },
@@ -6367,7 +6369,7 @@
       "team_id": "jecryyfq7srh87br"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

@@ -59,7 +59,7 @@ def _run_promoted_line():
         text=pbp["text"],
         is_strong=pbp["is_strong"],
     )
-    events, unparsed, _subs = parse_mod.build_events([line], player_table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], player_table)
     return fx, events, unparsed
 
 

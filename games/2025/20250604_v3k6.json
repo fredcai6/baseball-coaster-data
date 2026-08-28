@@ -2427,22 +2427,47 @@
         "home_score_before": 0,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 2,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "Myro IV",
+        "player_id": "0eizxt7jyojivt05",
+        "resolved": true
+      },
       "batting_team": "0twkgtzg9upvsarx",
+      "count": null,
       "fielding_team": "zv9gibz3bbrsxdk3",
       "half": "bottom",
       "inning": 3,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "Myro IV out at first 3b to 2b, RBI; N. Marcello advanced to third; T. Darden scored, team unearned.",
+      "outcome": {
+        "fielders": [
+          "3b",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "35vn5zad00caep5d",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "0eizxt7jyojivt05",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -2458,7 +2483,7 @@
           "from": 3,
           "out": false,
           "player_id": "nu266budl9xp0y6n",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -4006,7 +4031,7 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 1
       },
       "batter": {
@@ -5336,7 +5361,7 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
       "batter": {
@@ -6496,6 +6521,7 @@
     }
   ],
   "game_id": "20250604_v3k6",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6688,15 +6714,13 @@
     "fetched_at": "2026-07-12T16:07:28Z",
     "parse": {
       "events_count": 119,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player 0eizxt7jyojivt05 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 36 runner 0eizxt7jyojivt05 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:21Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:30Z",
+    "parser_version": "0.8.0",
     "source_sha256": "00657b89a979604a23a450742789d275d4712b8949ae2ff0ab9d371120b3e6df",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250604_v3k6.xml"
   },
@@ -7066,7 +7090,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

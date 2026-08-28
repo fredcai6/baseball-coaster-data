@@ -5642,7 +5642,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -5696,7 +5696,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "y8u9v7hzcs1wetsc",
           "rbi": true,
@@ -5710,16 +5710,16 @@
     {
       "_derived": {
         "away_score_before": 12,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 7,
         "outs_after": 2,
@@ -5768,16 +5768,16 @@
     {
       "_derived": {
         "away_score_before": 12,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 7,
         "outs_after": 2,
@@ -5834,7 +5834,7 @@
     {
       "_derived": {
         "away_score_before": 12,
-        "base_out_state": "111|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           false,
@@ -5843,7 +5843,7 @@
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 7,
         "outs_after": 2,
@@ -6813,6 +6813,7 @@
     }
   ],
   "game_id": "20250805_fp02",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7012,14 +7013,13 @@
     "fetched_at": "2026-07-12T17:17:16Z",
     "parse": {
       "events_count": 124,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 99 runner y8u9v7hzcs1wetsc advances from base 2 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:35Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:44Z",
+    "parser_version": "0.8.0",
     "source_sha256": "513a604f5093a80adec0832ece0280726329ec86b07e8f108d64389791601f68",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250805_fp02.xml"
   },
@@ -7402,7 +7402,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

@@ -64,7 +64,7 @@ def _line(inning, half, idx, text, strong=False):
 def test_batter_own_movement_is_synthesized_as_a_from_zero_runner():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One singled to left field (1-0 B).")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     assert len(events) == 1
     runners = events[0]["runners"]
@@ -82,7 +82,7 @@ def test_batter_own_movement_is_synthesized_as_a_from_zero_runner():
 def test_strikeout_batter_runner_is_from_zero_to_negative_one_out():
     table = _make_table()
     lines = [_line(1, "top", 0, "Beta Two struck out swinging (0-2 KKK).")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     r = events[0]["runners"][0]
     assert r == {
@@ -110,7 +110,7 @@ def test_runner_from_tracks_the_base_they_reached_in_a_prior_event():
             "Beta Two singled to right field (1-0 B); Alpha One advanced to second.",
         ),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     second_event_runners = {r["player_id"]: r for r in events[1]["runners"]}
     alpha = second_event_runners["a1"]
@@ -137,7 +137,7 @@ def test_two_runners_shifting_bases_on_the_same_line_both_read_the_pre_line_stat
         ),
         _line(1, "top", 2, "Alpha One stole third; Beta Two stole second."),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     runners = {r["player_id"]: r for r in events[2]["runners"]}
     assert runners["a1"] == {
@@ -188,7 +188,7 @@ def test_base_occupancy_resets_at_the_start_of_each_half():
         _line(1, "top", 1, "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB"),
         _line(1, "bottom", 0, "Delta Four Failed pickoff attempt."),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     pickoff = events[2]
     assert pickoff["kind"] == "runner_event"
@@ -218,7 +218,7 @@ def test_rbi_and_earned_are_asserted_on_the_scoring_runner_only():
             "Gamma Three singled to center field, RBI (1-0 B); Beta Two advanced to second; Alpha One scored.",
         ),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     runners = {r["player_id"]: r for r in events[2]["runners"]}
     scorer = runners["a1"]
@@ -263,7 +263,7 @@ def test_same_runner_two_clauses_one_event_chains_from_previous_to():
             "Gamma Three doubled to center field, RBI (1-0 B); Alpha One scored.",
         ),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
 
     # seq50 analogue: Alpha's two same-event clauses collapse to ONE net-path
@@ -315,7 +315,7 @@ def test_runner_from_is_always_a_base_the_runner_currently_occupies():
             "Gamma Three doubled to center field, RBI (1-0 B); Alpha One scored.",
         ),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
 
     occ: dict = {}  # base -> pid, folded from the asserted primitives alone
@@ -357,7 +357,7 @@ def test_runner_from_is_always_a_base_the_runner_currently_occupies():
 def test_grammar_miss_routes_to_unparsed_with_location():
     table = _make_table()
     lines = [_line(2, "bottom", 3, "This is not a recognized PBP sentence at all")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert events == []
     assert len(unparsed) == 1
     assert unparsed[0]["raw"] == "This is not a recognized PBP sentence at all"
@@ -377,7 +377,7 @@ def test_grammar_miss_routes_to_unparsed_with_location():
 def test_e2e_bare_double_no_location():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One doubled.")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "double"
@@ -407,7 +407,7 @@ def test_e2e_home_run_multi_rbi_tags_every_scoring_runner():
             "Beta Two homered to left field, 2 RBI; Alpha One scored.",
         ),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[1]
     assert ev["outcome"]["type"] == "home_run"
@@ -433,7 +433,7 @@ def test_e2e_walked_rbi_tags_the_forced_in_runner_not_the_walker():
         ),
         _line(1, "top", 2, "Gamma Three walked, RBI; Alpha One scored."),
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[2]
     assert ev["outcome"]["type"] == "walk"
@@ -452,7 +452,7 @@ def test_e2e_walked_rbi_tags_the_forced_in_runner_not_the_walker():
 def test_e2e_popped_out_to_bunt():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One popped out to c, bunt.")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "popout"
@@ -473,7 +473,7 @@ def test_e2e_bare_out_at_first_chain():
             "Alpha One out at first 1b to p; Beta Two advanced to second.",
         )
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "groundout"
@@ -495,7 +495,7 @@ def test_e2e_reached_first_on_a_fielding_error():
             "Beta Two advanced to second.",
         )
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "reached_on_error"
@@ -518,7 +518,7 @@ def test_e2e_lined_into_double_play():
             "Alpha One lined into double play ss to c; Beta Two out on the play.",
         )
     ]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "lineout"
@@ -536,7 +536,7 @@ def test_e2e_lined_into_double_play():
 def test_e2e_foul_out_infield():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One fouled out to 1b.")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "foul_out"
@@ -553,7 +553,7 @@ def test_e2e_foul_out_infield():
 def test_e2e_foul_out_outfield():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One fouled out to rf.")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "foul_out"
@@ -570,7 +570,7 @@ def test_e2e_foul_out_outfield():
 def test_e2e_strikeout_bare():
     table = _make_table()
     lines = [_line(1, "top", 0, "Alpha One struck out.")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert unparsed == []
     ev = events[0]
     assert ev["outcome"]["type"] == "strikeout"
@@ -607,7 +607,7 @@ def test_ambiguous_batter_name_routes_to_unparsed_never_guessed():
     )
     table = identity.PlayerTable(home=home, away=away)
     lines = [_line(1, "top", 0, "A. One singled to left field (1-0 B).")]
-    events, unparsed, _subs = build_events(lines, table)
+    events, unparsed, _subs, _inferred = build_events(lines, table)
     assert events == []
     assert len(unparsed) == 1
     assert "did not resolve" in unparsed[0]["reason"]

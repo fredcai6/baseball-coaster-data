@@ -3168,11 +3168,11 @@
       "kind": "plate_appearance",
       "narrative": "Michael Soper reached on a fielder's choice to third base (2-2 KBKFFB); Cameron Bowen out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4444,11 +4444,11 @@
       "kind": "plate_appearance",
       "narrative": "Ty Dooley reached on a fielder's choice to shortstop (1-1 BF); Wesley Mitchell out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6555,7 +6555,9 @@
       "kind": "plate_appearance",
       "narrative": "Ty Dooley singled to pitcher (0-2 FKF).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6616,11 +6618,11 @@
       "kind": "plate_appearance",
       "narrative": "Jonathan Gonzalez Perez reached on a fielder's choice to second base (2-1 BFB); Ty Dooley out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7723,6 +7725,7 @@
     }
   ],
   "game_id": "20260526_6rg5",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7922,12 +7925,13 @@
     "fetched_at": "2026-07-12T14:54:01Z",
     "parse": {
       "events_count": 132,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:42Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:50Z",
+    "parser_version": "0.8.0",
     "source_sha256": "634c477ab354b00d845e336c829946a33d24a2b0d4aa754e1f77cda79e05ce7a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260526_6rg5.xml"
   },
@@ -8287,7 +8291,7 @@
       "team_id": "gwwjqo5s6nki4x8c"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

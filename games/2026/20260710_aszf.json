@@ -8150,6 +8150,7 @@
     }
   ],
   "game_id": "20260710_aszf",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8356,14 +8357,15 @@
     "fetched_at": "2026-07-12T15:46:31Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
         "[pa_counts] pa_counts: player aiqzwlp2f5yyasgu events PA 5 != box-implied PA 6 (AB=5 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:53Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:01Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f0c931b67b7a99bef72db6e608f8cdce9f18e61ab0e85a28cb94548dead0f35a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260710_aszf.xml"
   },
@@ -8756,7 +8758,7 @@
       "team_id": "m4b3oa5lpozm3a58"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -8784,7 +8786,7 @@
         "line_index": 0
       },
       "raw": "William Bermudez struck out looking, reached first on an error by c (0-2 FFFK).",
-      "reason": "batter name did not resolve uniquely: 'William Bermudez struck out looking,'"
+      "reason": "primary verb not recognized: 'William Bermudez struck out looking, reached first on an error by c'"
     }
   ]
 }

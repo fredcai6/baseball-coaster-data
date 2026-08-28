@@ -7088,6 +7088,7 @@
     }
   ],
   "game_id": "20260814_cmx7",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7336,6 +7337,7 @@
     "fetched_at": "2026-08-27T15:10:12Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -7347,8 +7349,8 @@
         "[illegal_transitions] illegal_transition: seq 94 runner syn:home:1 advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-27T23:10:02Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:09Z",
+    "parser_version": "0.8.0",
     "source_sha256": "fa7c9560674c4e1e4501af3a36fe65ea62e31f815ff883593bbb737d919f9d65",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260814_cmx7.xml"
   },
@@ -7769,7 +7771,7 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7797,7 +7799,7 @@
         "line_index": 6
       },
       "raw": "Cooper Hext struck out, reached first on an error by 1b (1-2 BKF); Zeb Roos scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'Cooper Hext struck out,'"
+      "reason": "primary verb not recognized: 'Cooper Hext struck out, reached first on an error by 1b'"
     }
   ]
 }

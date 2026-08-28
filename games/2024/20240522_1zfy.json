@@ -3644,7 +3644,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -3698,7 +3698,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "ak1ol9xk8uqfh9p7",
           "rbi": true,
@@ -3712,16 +3712,16 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 9,
         "outs_after": 1,
@@ -3750,16 +3750,16 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 9,
         "outs_after": 2,
@@ -3808,16 +3808,16 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 9,
         "outs_after": 3,
@@ -6122,6 +6122,7 @@
     }
   ],
   "game_id": "20240522_1zfy",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6286,15 +6287,13 @@
     "fetched_at": "2026-07-12T17:42:37Z",
     "parse": {
       "events_count": 108,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 5 bottom folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 59 runner ak1ol9xk8uqfh9p7 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:08:55Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:04Z",
+    "parser_version": "0.8.0",
     "source_sha256": "c8008053e9bd259c5c783f7ef618fabfab8e356a6be612cb53c2ec6d8c29dfd3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240522_1zfy.xml"
   },
@@ -6625,7 +6624,7 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

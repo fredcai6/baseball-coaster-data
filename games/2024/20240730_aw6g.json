@@ -5850,11 +5850,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Ryan reached on a fielder's choice to third base; T. Lomack advanced to second, advanced to third on an error by 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -6176,6 +6176,7 @@
     }
   ],
   "game_id": "20240730_aw6g",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6340,12 +6341,13 @@
     "fetched_at": "2026-07-12T19:02:10Z",
     "parse": {
       "events_count": 113,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:11Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:20Z",
+    "parser_version": "0.8.0",
     "source_sha256": "09d76816a7175b3de4ef4ef760f4bc09ad98aae42405a4d43ab474498c510c89",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240730_aw6g.xml"
   },
@@ -6676,7 +6678,7 @@
       "team_id": "jecryyfq7srh87br"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

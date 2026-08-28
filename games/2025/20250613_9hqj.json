@@ -2747,11 +2747,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Shelnut reached on a fielder's choice to shortstop; Z. Denton out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5347,10 +5347,11 @@
       "kind": "plate_appearance",
       "narrative": "Allen, Jr reached on a fielder's choice to shortstop, RBI; J. O'Dowd out at second ss to 2b; T. Shelnut scored, unearned.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -6904,6 +6905,7 @@
     }
   ],
   "game_id": "20250613_9hqj",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7145,6 +7147,7 @@
     "fetched_at": "2026-07-12T16:17:03Z",
     "parse": {
       "events_count": 128,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 2,
       "warnings": [
@@ -7154,8 +7157,8 @@
         "[illegal_transitions] illegal_transition: seq 92 runner qotgjv4pigiosj7u advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:23Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:31Z",
+    "parser_version": "0.8.0",
     "source_sha256": "c2e12d4ec0e7f431bf2fb21cd30d81521556c426f84b629fe0b1b31e7168e089",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250613_9hqj.xml"
   },
@@ -7590,7 +7593,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7618,7 +7621,7 @@
         "line_index": 3
       },
       "raw": "S. Linscott reached first on a muffed throw by 1b, assist by 2b; C. Booth advanced to second; T. Garcia advanced to third.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'S. Linscott reached first on a muffed throw by 1b, assist by 2b'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'S. Linscott reached first on a muffed throw by 1b'"
     },
     {
       "location": {
@@ -7627,7 +7630,7 @@
         "line_index": 3
       },
       "raw": "J. O'Dowd singled to first base; T. Shelnut advanced to second, advanced to third on a muffed throw by p, assist by 1b.",
-      "reason": "runner clause not recognized: 'T. Shelnut advanced to second, advanced to third on a muffed throw by p, assist by 1b'"
+      "reason": "runner clause not recognized: 'T. Shelnut advanced to second, advanced to third on a muffed throw by p'"
     }
   ]
 }

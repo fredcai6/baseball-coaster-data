@@ -2000,11 +2000,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Mata reached on a fielder's choice to shortstop (1-1 KB); M. Bardowell out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2276,11 +2276,11 @@
       "kind": "plate_appearance",
       "narrative": "D. Ratfield reached on a fielder's choice to shortstop (1-0 B); K. Ashworth out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2523,11 +2523,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Young reached on a fielder's choice to first base (0-1 K); J. Pappas advanced to second; J. Jablonski out at third 1b to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5234,7 +5234,7 @@
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -5244,6 +5244,82 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "B. Rosengard",
+        "player_id": "syn:away:5",
+        "resolved": true
+      },
+      "batting_team": "maotayco79j2g2lx",
+      "count": {
+        "balls": 3,
+        "strikes": 1
+      },
+      "fielding_team": "na6t5g8htwf89dsc",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "B. Rosengard lined out to rf, SAC, RBI (3-1 BBFB); E. Corona scored.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "apfq5hhwwrkaw01j",
+        "resolved": true
+      },
+      "pitches": "BBFB",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:away:5",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "syn:away:2",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 89
+    },
+    {
+      "_derived": {
+        "away_score_before": 10,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -5290,7 +5366,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 89
+      "seq": 90
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -5300,7 +5376,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 90,
+      "seq": 91,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5316,9 +5392,9 @@
       "kind": "substitution",
       "narrative": "R. Faulks to p for N. Hemmerling.",
       "scoring_play": false,
-      "seq": 91,
+      "seq": 92,
       "substitution": {
-        "after_event_seq": 90,
+        "after_event_seq": 91,
         "kind": "pitching",
         "player_in": "urxa9mmchubhb8h6",
         "player_out": "xueox9c2qcm21puo",
@@ -5327,7 +5403,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5384,11 +5460,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 92
+      "seq": 93
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -5445,11 +5521,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -5508,11 +5584,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 94
+      "seq": 95
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -5571,7 +5647,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -5581,7 +5657,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 96,
+      "seq": 97,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5591,7 +5667,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5650,11 +5726,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -5713,11 +5789,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -5776,11 +5852,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "010|2",
         "bases_after": [
           false,
@@ -5841,7 +5917,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -5851,7 +5927,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5861,7 +5937,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5920,11 +5996,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -5983,11 +6059,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -6044,11 +6120,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 9,
+        "away_score_before": 10,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6105,7 +6181,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -6115,7 +6191,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6125,6 +6201,7 @@
     }
   ],
   "game_id": "20260807_0t4e",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6205,7 +6282,7 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 90,
+          "after_event_seq": 91,
           "kind": "pitching",
           "player_in": "urxa9mmchubhb8h6",
           "player_out": "xueox9c2qcm21puo",
@@ -6281,18 +6358,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:01:40Z",
     "parse": {
-      "events_count": 107,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 8 computed 0 != oracle 1",
-        "[linescore] linescore: computed away final R 9 != oracle total 10",
-        "[outs_per_half] outs_per_half: inning 8 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 8 top folded LOB 2 != inning_summary LOB 1"
-      ]
+      "events_count": 108,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:00Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:08Z",
+    "parser_version": "0.8.0",
     "source_sha256": "13d2a4f35b22a1f65d4258ef2b70ea7a85d9226b2be04549ecc1b5a25b584b39",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260807_0t4e.xml"
   },
@@ -6606,7 +6679,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6626,15 +6699,5 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 3
-      },
-      "raw": "B. Rosengard lined out to rf, SAC, RBI (3-1 BBFB); E. Corona scored.",
-      "reason": "primary verb not recognized: 'B. Rosengard lined out to rf, SAC, RBI'"
-    }
-  ]
+  "unparsed": []
 }

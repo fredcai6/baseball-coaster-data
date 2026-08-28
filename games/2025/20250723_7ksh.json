@@ -3305,8 +3305,8 @@
         "away_score_before": 3,
         "base_out_state": "110|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3335,9 +3335,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on an error by 2b"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3354,7 +3352,7 @@
           "out": false,
           "player_id": "3lh7rsmeoi2aw47t",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -3381,15 +3379,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -3865,7 +3863,9 @@
       "kind": "plate_appearance",
       "narrative": "T. McKenzie singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6368,6 +6368,7 @@
     }
   ],
   "game_id": "20250723_7ksh",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6560,12 +6561,13 @@
     "fetched_at": "2026-07-12T17:02:50Z",
     "parse": {
       "events_count": 121,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:32Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:40Z",
+    "parser_version": "0.8.0",
     "source_sha256": "9d9fcd93bbfa361311fefb3c0b9cb8f1e75ae47a620aa175a5f5232b3177b394",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250723_7ksh.xml"
   },
@@ -6935,7 +6937,7 @@
       "team_id": "ftxbf1wj156q30wd"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

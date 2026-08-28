@@ -1540,10 +1540,11 @@
       "kind": "plate_appearance",
       "narrative": "B. O'Saben reached on a fielder's choice to second base, RBI; J. Daly out at second 2b to 1b; M. Dinesen scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -2897,7 +2898,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2954,7 +2955,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "uy12pt249g1owsts",
           "rbi": true,
@@ -2968,16 +2969,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "001|1",
+        "base_out_state": "000|1",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 1,
@@ -3043,16 +3044,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -3111,16 +3112,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -3169,16 +3170,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "111|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -3247,16 +3248,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "111|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 9,
         "outs_after": 2,
@@ -3328,16 +3329,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 11,
         "outs_after": 3,
@@ -3358,11 +3359,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Daly reached on a fielder's choice to second base; M. Dinesen out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7315,6 +7316,7 @@
     }
   ],
   "game_id": "20240614_1sis",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7549,16 +7551,15 @@
     "fetched_at": "2026-07-12T18:09:21Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
-        "[lob] lob: inning 3 bottom folded LOB 2 != inning_summary LOB 1",
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 43 runner uy12pt249g1owsts advances from base 1 which was not occupied at event start"
+        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:01Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:09Z",
+    "parser_version": "0.8.0",
     "source_sha256": "b5f49c0379034173471d66bce0ef147fbba86656261b7adeeda815cf48021848",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240614_1sis.xml"
   },
@@ -7954,7 +7955,7 @@
       "team_id": "4hgc4se23g09mrqm"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

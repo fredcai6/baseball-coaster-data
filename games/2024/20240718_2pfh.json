@@ -1846,12 +1846,11 @@
       "kind": "plate_appearance",
       "narrative": "N. Marcelo reached on a fielder's choice to shortstop, out at second 1b to 2b; M. O'Hara out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop",
-          "out at second 1b to 2b"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1876,7 +1875,7 @@
           "out": true,
           "player_id": "gjq34ef6wze0r6ua",
           "scored": false,
-          "to": 2
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -5246,11 +5245,11 @@
       "kind": "plate_appearance",
       "narrative": "X. Washingto reached on a fielder's choice to second base; Rojas, Jr out at second 2b unassisted; R. Major advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6009,6 +6008,18 @@
     }
   ],
   "game_id": "20240718_2pfh",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to gjq34ef6wze0r6ua, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "top",
+        "inning": 3,
+        "line_index": 3
+      },
+      "raw": "N. Marcelo reached on a fielder's choice to shortstop, out at second 1b to 2b; M. O'Hara out at second ss to 2b.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
+      "rule": "unattributed_force_out"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6159,6 +6170,7 @@
     "fetched_at": "2026-07-12T18:49:05Z",
     "parse": {
       "events_count": 109,
+      "inferred_count": 1,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
@@ -6166,8 +6178,8 @@
         "[lob] lob: inning 3 top folded LOB 1 != inning_summary LOB 0"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:08Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:17Z",
+    "parser_version": "0.8.0",
     "source_sha256": "68ef0e952d042c563408c75aef2218e1976529023d342e29f26c9cdd42e21511",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240718_2pfh.xml"
   },
@@ -6472,7 +6484,7 @@
       "team_id": "zws0fa37bt7u3101"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

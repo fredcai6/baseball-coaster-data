@@ -2844,8 +2844,8 @@
         "away_score_before": 1,
         "base_out_state": "011|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -2877,9 +2877,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2896,7 +2894,7 @@
           "out": false,
           "player_id": "syn:away:1",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -2921,15 +2919,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -2997,15 +2995,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -6840,6 +6838,7 @@
     }
   ],
   "game_id": "20260714_4y9d",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7046,12 +7045,13 @@
     "fetched_at": "2026-08-27T14:26:21Z",
     "parse": {
       "events_count": 118,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:54Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:02Z",
+    "parser_version": "0.8.0",
     "source_sha256": "6d71d9c977399dd5302ed43094e563102d8604893f5cfdff654175f6698eb434",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260714_4y9d.xml"
   },
@@ -7435,7 +7435,7 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

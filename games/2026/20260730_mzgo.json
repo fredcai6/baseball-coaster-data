@@ -4389,7 +4389,9 @@
       "kind": "plate_appearance",
       "narrative": "Maddox Miesse singled to pitcher (1-1 KB); William Ponce advanced to second; Anthony Swenda advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5931,7 +5933,7 @@
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
@@ -5941,6 +5943,82 @@
         "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Ethan Ott",
+        "player_id": "syn:away:6",
+        "resolved": true
+      },
+      "batting_team": "yaop56c5591myre0",
+      "count": {
+        "balls": 1,
+        "strikes": 0
+      },
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Ethan Ott lined out to cf, sacrifice fly, RBI (1-0 B); Antonio Barranca scored.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [
+          "sacrifice fly",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "q6z9m8o366x502gy",
+        "resolved": true
+      },
+      "pitches": "B",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:away:6",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "syn:away:3",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 100
+    },
+    {
+      "_derived": {
+        "away_score_before": 15,
+        "base_out_state": "110|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          false
+        ],
+        "home_score_before": 2,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
@@ -5985,25 +6063,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "_derived": {
-        "away_score_before": 14,
-        "base_out_state": "111|1",
+        "away_score_before": 15,
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 2,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
@@ -6048,7 +6126,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -6058,7 +6136,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6074,9 +6152,9 @@
       "kind": "substitution",
       "narrative": "Kyle Schmack pinch hit for Andrew Gauna.",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "substitution": {
-        "after_event_seq": 102,
+        "after_event_seq": 103,
         "kind": "offensive",
         "player_in": "syn:away:4",
         "player_out": "syn:away:5",
@@ -6091,9 +6169,9 @@
       "kind": "substitution",
       "narrative": "Kyle Schmack to lf.",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 105,
       "substitution": {
-        "after_event_seq": 103,
+        "after_event_seq": 104,
         "kind": "defensive",
         "player_in": "syn:away:4",
         "player_out": null,
@@ -6102,7 +6180,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6159,11 +6237,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -6220,11 +6298,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -6283,7 +6361,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -6293,7 +6371,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 108,
+      "seq": 109,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6303,7 +6381,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -6360,11 +6438,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "100|0",
         "bases_after": [
           true,
@@ -6423,11 +6501,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -6494,11 +6572,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "110|1",
         "bases_after": [
           true,
@@ -6557,7 +6635,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -6567,9 +6645,9 @@
       "kind": "substitution",
       "narrative": "Andrew Gauna pinch hit for Kyle Schmack.",
       "scoring_play": false,
-      "seq": 113,
+      "seq": 114,
       "substitution": {
-        "after_event_seq": 112,
+        "after_event_seq": 113,
         "kind": "offensive",
         "player_in": "syn:away:5",
         "player_out": "syn:away:4",
@@ -6578,7 +6656,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "110|2",
         "bases_after": [
           true,
@@ -6637,7 +6715,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -6647,7 +6725,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6663,9 +6741,9 @@
       "kind": "substitution",
       "narrative": "Carter Kelsey to p for Sam Lavin.",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "substitution": {
-        "after_event_seq": 115,
+        "after_event_seq": 116,
         "kind": "pitching",
         "player_in": "syn:away:9",
         "player_out": "rvkbb2vboby1l0t3",
@@ -6674,7 +6752,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6733,11 +6811,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -6794,11 +6872,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -6855,11 +6933,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
-        "away_score_before": 14,
+        "away_score_before": 15,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6916,7 +6994,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -6926,9 +7004,9 @@
       "kind": "substitution",
       "narrative": "Antonio Barranca to dh.",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "substitution": {
-        "after_event_seq": 120,
+        "after_event_seq": 121,
         "kind": "offensive",
         "player_in": "syn:away:3",
         "player_out": null,
@@ -6943,9 +7021,9 @@
       "kind": "substitution",
       "narrative": "Andrew Gauna to lf for Kyle Schmack.",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "substitution": {
-        "after_event_seq": 121,
+        "after_event_seq": 122,
         "kind": "defensive",
         "player_in": "syn:away:5",
         "player_out": "syn:away:4",
@@ -6960,9 +7038,9 @@
       "kind": "substitution",
       "narrative": "Ethan Ott to cf.",
       "scoring_play": false,
-      "seq": 123,
+      "seq": 124,
       "substitution": {
-        "after_event_seq": 122,
+        "after_event_seq": 123,
         "kind": "defensive",
         "player_in": "syn:away:6",
         "player_out": null,
@@ -6977,9 +7055,9 @@
       "kind": "substitution",
       "narrative": "Anthony Manisero to 2b.",
       "scoring_play": false,
-      "seq": 124,
+      "seq": 125,
       "substitution": {
-        "after_event_seq": 123,
+        "after_event_seq": 124,
         "kind": "defensive",
         "player_in": "syn:away:1",
         "player_out": null,
@@ -6994,9 +7072,9 @@
       "kind": "substitution",
       "narrative": "Ethan Ott to 1b.",
       "scoring_play": false,
-      "seq": 125,
+      "seq": 126,
       "substitution": {
-        "after_event_seq": 124,
+        "after_event_seq": 125,
         "kind": "defensive",
         "player_in": "syn:away:6",
         "player_out": null,
@@ -7011,9 +7089,9 @@
       "kind": "substitution",
       "narrative": "Anthony Manisero to cf.",
       "scoring_play": false,
-      "seq": 126,
+      "seq": 127,
       "substitution": {
-        "after_event_seq": 125,
+        "after_event_seq": 126,
         "kind": "defensive",
         "player_in": "syn:away:1",
         "player_out": null,
@@ -7028,7 +7106,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 127,
+      "seq": 128,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7038,6 +7116,7 @@
     }
   ],
   "game_id": "20260730_mzgo",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7195,70 +7274,70 @@
           "slot": 4
         },
         {
-          "after_event_seq": 102,
+          "after_event_seq": 103,
           "kind": "offensive",
           "player_in": "syn:away:4",
           "player_out": "syn:away:5",
           "slot": 4
         },
         {
-          "after_event_seq": 103,
+          "after_event_seq": 104,
           "kind": "defensive",
           "player_in": "syn:away:4",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 112,
+          "after_event_seq": 113,
           "kind": "offensive",
           "player_in": "syn:away:5",
           "player_out": "syn:away:4",
           "slot": 4
         },
         {
-          "after_event_seq": 115,
+          "after_event_seq": 116,
           "kind": "pitching",
           "player_in": "syn:away:9",
           "player_out": "rvkbb2vboby1l0t3",
           "slot": null
         },
         {
-          "after_event_seq": 120,
+          "after_event_seq": 121,
           "kind": "offensive",
           "player_in": "syn:away:3",
           "player_out": null,
           "slot": null
         },
         {
-          "after_event_seq": 121,
+          "after_event_seq": 122,
           "kind": "defensive",
           "player_in": "syn:away:5",
           "player_out": "syn:away:4",
           "slot": null
         },
         {
-          "after_event_seq": 122,
-          "kind": "defensive",
-          "player_in": "syn:away:6",
-          "player_out": null,
-          "slot": null
-        },
-        {
           "after_event_seq": 123,
           "kind": "defensive",
-          "player_in": "syn:away:1",
+          "player_in": "syn:away:6",
           "player_out": null,
           "slot": null
         },
         {
           "after_event_seq": 124,
           "kind": "defensive",
-          "player_in": "syn:away:6",
+          "player_in": "syn:away:1",
           "player_out": null,
           "slot": null
         },
         {
           "after_event_seq": 125,
+          "kind": "defensive",
+          "player_in": "syn:away:6",
+          "player_out": null,
+          "slot": null
+        },
+        {
+          "after_event_seq": 126,
           "kind": "defensive",
           "player_in": "syn:away:1",
           "player_out": null,
@@ -7271,19 +7350,16 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:51:18Z",
     "parse": {
-      "events_count": 128,
+      "events_count": 129,
+      "inferred_count": 0,
       "replayable": false,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": [
-        "[linescore] linescore: away inning 8 computed 0 != oracle 1",
-        "[linescore] linescore: computed away final R 14 != oracle total 15",
-        "[outs_per_half] outs_per_half: inning 8 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 8 top folded LOB 3 != inning_summary LOB 2",
         "[lob] lob: inning 9 bottom folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:58Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:06Z",
+    "parser_version": "0.8.0",
     "source_sha256": "2744bbe681cad116cdead8f6969322041a9d4608648cdd263a19ddddbf8d6e0b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260730_mzgo.xml"
   },
@@ -7623,7 +7699,7 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7643,15 +7719,5 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 6
-      },
-      "raw": "Ethan Ott lined out to cf, sacrifice fly, RBI (1-0 B); Antonio Barranca scored.",
-      "reason": "primary verb not recognized: 'Ethan Ott lined out to cf, sacrifice fly, RBI'"
-    }
-  ]
+  "unparsed": []
 }

@@ -1834,11 +1834,11 @@
       "kind": "plate_appearance",
       "narrative": "L. Fennelly reached on a fielder's choice to third base; F. Podkul out at second 3b to 2b; R. Holgate advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4608,10 +4608,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Thompson reached on a fielder's choice to pitcher, bunt; P. Merino advanced to second; T. Viola out at third p to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "p"
+        ],
+        "location": "pitcher",
         "modifiers": [
-          "to pitcher",
           "bunt"
         ],
         "outs_recorded": 1,
@@ -4840,11 +4841,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Hughes reached on a fielder's choice to shortstop; N. Klemp out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7101,6 +7102,7 @@
     }
   ],
   "game_id": "20240716_gbyr",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7307,12 +7309,13 @@
     "fetched_at": "2026-07-12T18:46:33Z",
     "parse": {
       "events_count": 129,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:08Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:17Z",
+    "parser_version": "0.8.0",
     "source_sha256": "9b581ebaab03722d76688bedd76fc29d9f1e67c4e57d57cc825d118dd50d1873",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240716_gbyr.xml"
   },
@@ -7695,7 +7698,7 @@
       "team_id": "zws0fa37bt7u3101"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

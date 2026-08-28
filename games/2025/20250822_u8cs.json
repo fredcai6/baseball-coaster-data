@@ -7115,6 +7115,7 @@
     }
   ],
   "game_id": "20250822_u8cs",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7335,6 +7336,7 @@
     "fetched_at": "2026-07-12T17:36:48Z",
     "parse": {
       "events_count": 129,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 2,
       "warnings": [
@@ -7342,8 +7344,8 @@
         "[pa_counts] pa_counts: player ilcav8vpdvj31w26 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:39Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:48Z",
+    "parser_version": "0.8.0",
     "source_sha256": "b56f1ea2d9396e5c7ba6f267aea91da8cff83d180cfc621de75d0517f24af66d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250822_u8cs.xml"
   },
@@ -7739,7 +7741,7 @@
       "team_id": "zv9gibz3bbrsxdk3"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7767,7 +7769,7 @@
         "line_index": 2
       },
       "raw": "Sargent, Jr struck out swinging, reached first on an error by c.",
-      "reason": "batter name did not resolve uniquely: 'Sargent, Jr struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'Sargent, Jr struck out swinging, reached first on an error by c'"
     },
     {
       "location": {

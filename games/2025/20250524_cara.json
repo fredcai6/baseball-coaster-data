@@ -3640,7 +3640,9 @@
       "kind": "plate_appearance",
       "narrative": "T. Garcia singled to pitcher, RBI; G. Kueber scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [
           "RBI"
@@ -3761,7 +3763,7 @@
         "base_out_state": "010|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -3816,7 +3818,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "kj52okpii7s3iadf",
           "rbi": true,
@@ -3830,7 +3832,7 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "110|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           true,
@@ -3838,7 +3840,7 @@
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
         "home_score_before": 3,
@@ -5822,6 +5824,7 @@
     }
   ],
   "game_id": "20250524_cara",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6047,6 +6050,7 @@
     "fetched_at": "2026-07-12T15:55:22Z",
     "parse": {
       "events_count": 108,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 9,
       "warnings": [
@@ -6061,12 +6065,11 @@
         "[outs_per_half] outs_per_half: inning 6 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[outs_per_half] outs_per_half: inning 7 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 5 bottom folded LOB 2 != inning_summary LOB 1",
-        "[lob] lob: inning 6 bottom folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 61 runner kj52okpii7s3iadf advances from base 1 which was not occupied at event start"
+        "[lob] lob: inning 6 bottom folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:19Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:27Z",
+    "parser_version": "0.8.0",
     "source_sha256": "6d3ea186e2cfd994d3a6539e335de1d8667f00fabddb83ceedc2d49da0a0d104",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250524_cara.xml"
   },
@@ -6475,7 +6478,7 @@
       "team_id": "ftxbf1wj156q30wd"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

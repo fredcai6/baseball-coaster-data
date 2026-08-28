@@ -638,11 +638,11 @@
       "kind": "plate_appearance",
       "narrative": "D. Hubbard reached on a fielder's choice to pitcher; P. Harden out at third p to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1092,7 +1092,9 @@
       "kind": "plate_appearance",
       "narrative": "T. Halsema singled to pitcher; T. Lozano advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -1488,11 +1490,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Daly reached on a fielder's choice to third base; G. Tonkel out at second 3b to 2b; B. Fitzgeral advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6861,6 +6863,7 @@
     }
   ],
   "game_id": "20240523_bldd",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7088,14 +7091,15 @@
     "fetched_at": "2026-07-12T17:44:00Z",
     "parse": {
       "events_count": 128,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-08-27T23:08:55Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:04Z",
+    "parser_version": "0.8.0",
     "source_sha256": "bcb2c993511c02c710d963537ba1cd4fcdfa9c1d6e4053b02aeeea46f839e63c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240523_bldd.xml"
   },
@@ -7504,7 +7508,7 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

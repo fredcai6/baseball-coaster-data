@@ -2310,11 +2310,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Vradenburg reached on a fielder's choice to second base (0-0); K. Ashworth out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4176,10 +4176,11 @@
       "kind": "plate_appearance",
       "narrative": "JD McLaughlin reached on a fielder's choice to shortstop, RBI (2-0 BB); C. Garner out at second ss to 2b; B. Vradenburg scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -5755,11 +5756,11 @@
       "kind": "plate_appearance",
       "narrative": "K. Frett reached on a fielder's choice to pitcher (1-2 FFB); J. Johnson out at second p to 2b; J. Chavez advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6126,11 +6127,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Luetzow reached on a fielder's choice to pitcher (2-2 BKFB); J. Steele out at second p to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -8100,6 +8101,7 @@
     }
   ],
   "game_id": "20260628_a8xn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8390,12 +8392,13 @@
     "fetched_at": "2026-07-12T15:33:16Z",
     "parse": {
       "events_count": 152,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:50Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:58Z",
+    "parser_version": "0.8.0",
     "source_sha256": "995d88ab31fe72423270f98b2f05657ab42da5720f6766cdf5b9991794bc9d4a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260628_a8xn.xml"
   },
@@ -8871,7 +8874,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

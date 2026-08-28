@@ -5934,22 +5934,48 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "E. Good",
+        "player_id": "xdhkwpclbg5n78n1",
+        "resolved": true
+      },
       "batting_team": "56cu2zsze70qcfrx",
+      "count": null,
       "fielding_team": "4hgc4se23g09mrqm",
       "half": "bottom",
       "inning": 9,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "E. Good out at first p to 2b, SAC, bunt; P. Howard advanced to second; C. Jordan advanced to third.",
+      "outcome": {
+        "fielders": [
+          "p",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "x41lkemkkye4unth",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "xdhkwpclbg5n78n1",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -6163,6 +6189,7 @@
     }
   ],
   "game_id": "20240821_vpi7",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6404,14 +6431,15 @@
     "fetched_at": "2026-07-12T19:28:08Z",
     "parse": {
       "events_count": 121,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:16Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:25Z",
+    "parser_version": "0.8.0",
     "source_sha256": "c2eab546707379e3552601c024f115a12f107e957804ac06767e590433e844ad",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240821_vpi7.xml"
   },
@@ -6820,7 +6848,7 @@
       "team_id": "4hgc4se23g09mrqm"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

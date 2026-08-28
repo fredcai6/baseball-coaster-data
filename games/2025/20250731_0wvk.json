@@ -4065,11 +4065,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kline reached on a fielder's choice to third base; C. Muniz advanced to second; T. Shelnut out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4874,11 +4874,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Shelnut reached on a fielder's choice to shortstop; J. McHenry advanced to second.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -5118,6 +5118,7 @@
     }
   ],
   "game_id": "20250731_0wvk",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5278,12 +5279,13 @@
     "fetched_at": "2026-07-12T17:12:05Z",
     "parse": {
       "events_count": 89,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:34Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:42Z",
+    "parser_version": "0.8.0",
     "source_sha256": "487aa57dd2bf17208cb3e15d04d214f4cbf7ba20f5b1cb151ddb75333d90724e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250731_0wvk.xml"
   },
@@ -5614,7 +5616,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

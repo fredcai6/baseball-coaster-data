@@ -1138,22 +1138,47 @@
         "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 1,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "S. Rivas",
+        "player_id": "30tedsov09lhqmne",
+        "resolved": true
+      },
       "batting_team": "2qaeqxdby1itnbm2",
+      "count": null,
       "fielding_team": "3ward2o2o9m0w2dj",
       "half": "bottom",
       "inning": 1,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "S. Rivas out at first 1b to p, RBI; E. Yake scored, unearned.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "hvau3eijkazr2whb",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "30tedsov09lhqmne",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -1161,7 +1186,7 @@
           "from": 3,
           "out": false,
           "player_id": "cy881qvm4h7s285g",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -2560,7 +2585,7 @@
         "home_score_before": 2,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -4488,7 +4513,7 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -5766,7 +5791,7 @@
         "home_score_before": 4,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6881,7 +6906,7 @@
         "home_score_before": 7,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -8302,6 +8327,7 @@
     }
   ],
   "game_id": "20240530_ctfw",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8522,16 +8548,15 @@
     "fetched_at": "2026-07-12T17:51:36Z",
     "parse": {
       "events_count": 156,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
-        "[lob] lob: inning 3 top folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player 30tedsov09lhqmne events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 12 runner 30tedsov09lhqmne advances from base 1 which was not occupied at event start"
+        "[lob] lob: inning 3 top folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:08:57Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:06Z",
+    "parser_version": "0.8.0",
     "source_sha256": "7cacf2eac7dd899a86b3b72f54c9a1cd3f6baf1c5488dfc6279f63870b42ad2b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240530_ctfw.xml"
   },
@@ -8940,7 +8965,7 @@
       "team_id": "3ward2o2o9m0w2dj"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

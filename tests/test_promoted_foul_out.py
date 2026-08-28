@@ -53,7 +53,7 @@ def _run_case(case: dict):
         text=pbp["text"],
         is_strong=pbp["is_strong"],
     )
-    events, unparsed, _subs = parse_mod.build_events([line], player_table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], player_table)
     return events, unparsed
 
 

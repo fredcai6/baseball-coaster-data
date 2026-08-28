@@ -1854,7 +1854,9 @@
       "kind": "plate_appearance",
       "narrative": "Ryan Skjonsby singled to pitcher (1-2 KKFB); Anthony Swenda advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -3824,7 +3826,9 @@
       "kind": "plate_appearance",
       "narrative": "Zack Blaszak singled to pitcher (0-0); Vincent Temesvary advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5961,11 +5965,11 @@
       "kind": "plate_appearance",
       "narrative": "Vincent Temesvary reached on a fielder's choice to shortstop (2-1 BBK); Ryan Skjonsby out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6786,11 +6790,11 @@
       "kind": "plate_appearance",
       "narrative": "Tyler Ganus reached on a fielder's choice to shortstop (1-2 SFFFB); Carmine Lane out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7170,10 +7174,11 @@
       "kind": "plate_appearance",
       "narrative": "Ryan Skjonsby reached on a fielder's choice to pitcher, RBI (0-1 K); Anthony Manisero scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "p"
+        ],
+        "location": "pitcher",
         "modifiers": [
-          "to pitcher",
           "RBI"
         ],
         "outs_recorded": 0,
@@ -8294,11 +8299,11 @@
       "kind": "plate_appearance",
       "narrative": "Ryan Skjonsby reached on a fielder's choice to shortstop (0-1 K); Ethan Ott out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -8550,6 +8555,7 @@
     }
   ],
   "game_id": "20260626_qgh4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8784,12 +8790,13 @@
     "fetched_at": "2026-07-12T15:30:11Z",
     "parse": {
       "events_count": 151,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:49Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:58Z",
+    "parser_version": "0.8.0",
     "source_sha256": "0b01947cdddddce85a2279d8088a6966ec7708ce12810479d210b35f0f4d6325",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260626_qgh4.xml"
   },
@@ -9184,7 +9191,7 @@
       "team_id": "qqpt4ybnm28oyy1e"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

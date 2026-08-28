@@ -6180,7 +6180,7 @@
       "substitution": {
         "after_event_seq": 104,
         "kind": "pitching",
-        "player_in": "syn:home:10",
+        "player_in": "f75cvfkdrtbyc313",
         "player_out": "widh2653g4rul3u2",
         "slot": null
       }
@@ -7052,6 +7052,18 @@
     }
   ],
   "game_id": "20260812_2gih",
+  "inferred": [
+    {
+      "asserted": "incoming pitcher f75cvfkdrtbyc313 read from the boxscore pitching order as the successor to widh2653g4rul3u2",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "/ to p for Ty Yukumoto.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7183,7 +7195,7 @@
         {
           "after_event_seq": 104,
           "kind": "pitching",
-          "player_in": "syn:home:10",
+          "player_in": "f75cvfkdrtbyc313",
           "player_out": "widh2653g4rul3u2",
           "slot": null
         },
@@ -7265,12 +7277,13 @@
     "fetched_at": "2026-08-27T15:06:37Z",
     "parse": {
       "events_count": 123,
+      "inferred_count": 1,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:09Z",
+    "parser_version": "0.8.0",
     "source_sha256": "104b976028891d6da33689f3ea28b9ca3f66575693261cbc06b157f09b45fa9f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260812_2gih.xml"
   },
@@ -7520,17 +7533,6 @@
       ],
       "team_id": "p36jpi9icfitpai5"
     },
-    "syn:home:10": {
-      "bats_side": null,
-      "box_listed": false,
-      "career_id": null,
-      "last_name": "/",
-      "name": "/",
-      "person_id": null,
-      "player_id": "syn:home:10",
-      "positions": [],
-      "team_id": "p36jpi9icfitpai5"
-    },
     "syn:home:2": {
       "bats_side": null,
       "box_listed": true,
@@ -7654,7 +7656,7 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

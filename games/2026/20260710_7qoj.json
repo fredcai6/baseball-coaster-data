@@ -4917,11 +4917,11 @@
       "kind": "plate_appearance",
       "narrative": "Anthony Swenda reached on a fielder's choice to shortstop (1-1 BK); Ethan Ott out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6026,11 +6026,11 @@
       "kind": "plate_appearance",
       "narrative": "Antonio Barranca reached on a fielder's choice to third base (0-1 S); Anthony Swenda advanced to second; Kyle Schmack out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6559,10 +6559,11 @@
       "kind": "plate_appearance",
       "narrative": "Ubaldo Romo reached on a fielder's choice to third base, RBI (1-2 BSS); Jordan Harrison-Dudley out at second 3b to 2b; Spence Coffman advanced to third; Braylon Bishop scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -7307,6 +7308,7 @@
     }
   ],
   "game_id": "20260710_7qoj",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7499,14 +7501,15 @@
     "fetched_at": "2026-07-12T15:46:17Z",
     "parse": {
       "events_count": 125,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 2 bottom folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:53Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:01Z",
+    "parser_version": "0.8.0",
     "source_sha256": "87933a87c01fceb478aec0a6ecec2e7d3b866a13fe469cf185b7deae283a3c1f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260710_7qoj.xml"
   },
@@ -7835,7 +7838,7 @@
       "team_id": "fs5kcreudvyx5quq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

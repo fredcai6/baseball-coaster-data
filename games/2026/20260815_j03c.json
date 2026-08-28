@@ -1740,11 +1740,11 @@
       "kind": "plate_appearance",
       "narrative": "Nin Burns II reached on a fielder's choice to third base (1-2 BFK); John McHenry advanced to second; Michael Soper advanced to third; Adam Cootway out at home 3b to c.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1827,10 +1827,11 @@
       "kind": "plate_appearance",
       "narrative": "Cameron Bowen reached on a fielder's choice to third base, RBI (0-0); Nin Burns II out at second 3b to 2b; John McHenry advanced to third; Michael Soper scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -2196,11 +2197,11 @@
       "kind": "plate_appearance",
       "narrative": "Justin Johnson Jr. reached on a fielder's choice to third base (0-0); Charlie Muniz out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3451,11 +3452,11 @@
       "kind": "plate_appearance",
       "narrative": "Casey Murray reached on a fielder's choice to third base (1-2 BFS); Gabriel Roessler out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4737,7 +4738,7 @@
         "away_score_before": 3,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -4747,8 +4748,80 @@
           false
         ],
         "home_score_before": 7,
-        "outs_after": 1,
+        "outs_after": 2,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Charlie Muniz",
+        "player_id": "syn:home:4",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 2,
+        "strikes": 1
+      },
+      "fielding_team": "na6t5g8htwf89dsc",
+      "half": "bottom",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "Charlie Muniz fouled into double play rf to ss (2-1 BBF); Jacob Gutierrez out on the play.",
+      "outcome": {
+        "fielders": [
+          "rf",
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "foul_out"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:11",
+        "resolved": true
+      },
+      "pitches": "BBF",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:home:4",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 1,
+          "out": true,
+          "player_id": "syn:home:3",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 77
+    },
+    {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 7,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -4791,7 +4864,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 77
+      "seq": 78
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -4801,7 +4874,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 78,
+      "seq": 79,
       "summary": {
         "E": 0,
         "H": 1,
@@ -4817,9 +4890,9 @@
       "kind": "substitution",
       "narrative": "Hayden Mullins to p for David Hankins.",
       "scoring_play": false,
-      "seq": 79,
+      "seq": 80,
       "substitution": {
-        "after_event_seq": 78,
+        "after_event_seq": 79,
         "kind": "pitching",
         "player_in": "syn:home:9",
         "player_out": "syn:home:8",
@@ -4887,7 +4960,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 80
+      "seq": 81
     },
     {
       "_derived": {
@@ -4950,7 +5023,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 81
+      "seq": 82
     },
     {
       "_derived": {
@@ -5011,7 +5084,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 82
+      "seq": 83
     },
     {
       "_derived": {
@@ -5074,7 +5147,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 83
+      "seq": 84
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -5084,7 +5157,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 84,
+      "seq": 85,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5100,9 +5173,9 @@
       "kind": "substitution",
       "narrative": "Connor Housley to p for Lance Wade.",
       "scoring_play": false,
-      "seq": 85,
+      "seq": 86,
       "substitution": {
-        "after_event_seq": 84,
+        "after_event_seq": 85,
         "kind": "pitching",
         "player_in": "syn:away:12",
         "player_out": "syn:away:11",
@@ -5170,7 +5243,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "_derived": {
@@ -5231,7 +5304,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 87
+      "seq": 88
     },
     {
       "_derived": {
@@ -5292,7 +5365,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -5302,7 +5375,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 89,
+      "seq": 90,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5369,7 +5442,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 91
     },
     {
       "_derived": {
@@ -5438,7 +5511,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 91
+      "seq": 92
     },
     {
       "_derived": {
@@ -5517,7 +5590,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 92
+      "seq": 93
     },
     {
       "_derived": {
@@ -5578,7 +5651,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
@@ -5641,7 +5714,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 94
+      "seq": 95
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -5651,7 +5724,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 95,
+      "seq": 96,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5667,9 +5740,9 @@
       "kind": "substitution",
       "narrative": "Alex Bustamante to p for Connor Housley.",
       "scoring_play": false,
-      "seq": 96,
+      "seq": 97,
       "substitution": {
-        "after_event_seq": 95,
+        "after_event_seq": 96,
         "kind": "pitching",
         "player_in": "syn:away:13",
         "player_out": "syn:away:12",
@@ -5737,7 +5810,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
@@ -5812,7 +5885,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
@@ -5873,7 +5946,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
@@ -5934,7 +6007,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "_derived": {
@@ -5953,7 +6026,7 @@
         "home_score_before": 8,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -5997,7 +6070,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6007,7 +6080,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6023,9 +6096,9 @@
       "kind": "substitution",
       "narrative": "Lucas Hartman to p for Hayden Mullins.",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "substitution": {
-        "after_event_seq": 102,
+        "after_event_seq": 103,
         "kind": "pitching",
         "player_in": "syn:home:10",
         "player_out": "syn:home:9",
@@ -6091,7 +6164,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -6152,7 +6225,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -6190,11 +6263,11 @@
       "kind": "plate_appearance",
       "narrative": "Brock Vradenburg reached on a fielder's choice to shortstop (2-2 BKSB); Donovan Ratfield out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6223,7 +6296,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "_derived": {
@@ -6261,7 +6334,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "_derived": {
@@ -6336,7 +6409,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
@@ -6405,7 +6478,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
@@ -6466,7 +6539,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -6476,7 +6549,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6486,6 +6559,7 @@
     }
   ],
   "game_id": "20260815_j03c",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6580,14 +6654,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 84,
+          "after_event_seq": 85,
           "kind": "pitching",
           "player_in": "syn:away:12",
           "player_out": "syn:away:11",
           "slot": null
         },
         {
-          "after_event_seq": 95,
+          "after_event_seq": 96,
           "kind": "pitching",
           "player_in": "syn:away:13",
           "player_out": "syn:away:12",
@@ -6643,14 +6717,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 78,
+          "after_event_seq": 79,
           "kind": "pitching",
           "player_in": "syn:home:9",
           "player_out": "syn:home:8",
           "slot": null
         },
         {
-          "after_event_seq": 102,
+          "after_event_seq": 103,
           "kind": "pitching",
           "player_in": "syn:home:10",
           "player_out": "syn:home:9",
@@ -6663,17 +6737,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:10:58Z",
     "parse": {
-      "events_count": 112,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 6 bottom totals 1 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 0",
-        "[pa_counts] pa_counts: player syn:home:4 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 113,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:02Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:10Z",
+    "parser_version": "0.8.0",
     "source_sha256": "8f9307d284fb77a0d852bef79cfc74906bf82f10bd17b2ab78416449b96be7c0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260815_j03c.xml"
   },
@@ -7020,7 +7091,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7040,15 +7111,5 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 6,
-        "line_index": 1
-      },
-      "raw": "Charlie Muniz fouled into double play rf to ss (2-1 BBF); Jacob Gutierrez out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "primary verb not recognized: 'Charlie Muniz fouled into double play rf to ss'"
-    }
-  ]
+  "unparsed": []
 }

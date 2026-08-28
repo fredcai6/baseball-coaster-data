@@ -1041,8 +1041,8 @@
         "away_score_before": 0,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -1071,9 +1071,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on an error by ss"
-        ],
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -1090,7 +1088,7 @@
           "out": false,
           "player_id": "4orhvl3m18tpom6d",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -1107,15 +1105,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "101|0",
+        "base_out_state": "011|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 0,
@@ -1180,15 +1178,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -1240,15 +1238,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -1298,15 +1296,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -6240,6 +6238,7 @@
     }
   ],
   "game_id": "20250520_yrgi",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6404,14 +6403,13 @@
     "fetched_at": "2026-07-12T15:50:05Z",
     "parse": {
       "events_count": 111,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 2 bottom folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:18Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:26Z",
+    "parser_version": "0.8.0",
     "source_sha256": "208248bd706bbe86677739425c918407197df41105ad89ec99ff16608bd51369",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250520_yrgi.xml"
   },
@@ -6742,7 +6740,7 @@
       "team_id": "ftxbf1wj156q30wd"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

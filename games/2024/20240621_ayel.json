@@ -5808,10 +5808,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Sanchez reached on a fielder's choice to second base, RBI; R. Pena out at second 2b to ss; M. Rosario advanced to third; C. Gordon scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -6675,6 +6676,7 @@
     }
   ],
   "game_id": "20240621_ayel",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6895,12 +6897,13 @@
     "fetched_at": "2026-07-12T18:16:35Z",
     "parse": {
       "events_count": 123,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:02Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:11Z",
+    "parser_version": "0.8.0",
     "source_sha256": "1859eb3230f20e85e3ecaba679b944014df4df889f4be40f3d0a30e1b8f0cde0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240621_ayel.xml"
   },
@@ -7309,7 +7312,7 @@
       "team_id": "iqwph3d7xajzy4uz"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

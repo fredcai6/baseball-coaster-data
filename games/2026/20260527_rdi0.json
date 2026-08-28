@@ -1419,11 +1419,11 @@
       "kind": "plate_appearance",
       "narrative": "Robert Estrada reached on a fielder's choice to first base (1-2 BKK); Caleb Royer out at second 1b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3809,11 +3809,11 @@
       "kind": "plate_appearance",
       "narrative": "Cameron Bowen reached on a fielder's choice to shortstop (1-2 KBS); A.J. Shaver out at third ss to 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4056,10 +4056,11 @@
       "kind": "plate_appearance",
       "narrative": "Charlie Muniz reached on a fielder's choice to third base, RBI (1-0 B); Adam Cootway advanced to second; Michael Soper out at third 3b unassisted; Cameron Bowen scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -7533,6 +7534,7 @@
     }
   ],
   "game_id": "20260527_rdi0",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7725,12 +7727,13 @@
     "fetched_at": "2026-07-12T14:55:38Z",
     "parse": {
       "events_count": 130,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:42Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:50Z",
+    "parser_version": "0.8.0",
     "source_sha256": "0de9253f8e2f0d5bd02b0f4a69442862545a4034344a775953a3abb963ee4ee9",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260527_rdi0.xml"
   },
@@ -8090,7 +8093,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

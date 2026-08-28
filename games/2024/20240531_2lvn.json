@@ -2838,11 +2838,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Daly reached on a fielder's choice to second base; F. Guilamo out at second 2b to ss; T. Sheehan advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4253,7 +4253,9 @@
       "kind": "plate_appearance",
       "narrative": "A. Atwood singled to pitcher; B. Fitzgeral advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5611,11 +5613,11 @@
       "kind": "plate_appearance",
       "narrative": "M. Dinesen reached on a fielder's choice to second base; C. Castillo out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7053,6 +7055,7 @@
     }
   ],
   "game_id": "20240531_2lvn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7294,12 +7297,13 @@
     "fetched_at": "2026-07-12T17:53:22Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:08:57Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:06Z",
+    "parser_version": "0.8.0",
     "source_sha256": "2f71c372af9974fa0b68456cccdf59f7e6d906da626ed7c0829723dedb603a81",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240531_2lvn.xml"
   },
@@ -7706,7 +7710,7 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

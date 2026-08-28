@@ -2293,7 +2293,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "muc7w25ah9ircf2c",
           "rbi": true,
@@ -2813,7 +2813,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "0j22pzr1sgageec8",
           "rbi": true,
@@ -6808,6 +6808,7 @@
     }
   ],
   "game_id": "20250726_yf75",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7014,15 +7015,13 @@
     "fetched_at": "2026-07-12T17:06:25Z",
     "parse": {
       "events_count": 123,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 32 runner muc7w25ah9ircf2c advances from base 1 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 39 runner 0j22pzr1sgageec8 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:33Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:42Z",
+    "parser_version": "0.8.0",
     "source_sha256": "2c2bb081c23bd91fa0c6b3725ec6348d06ca66f35267719d4e0e5d33d93cfb16",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250726_yf75.xml"
   },
@@ -7418,7 +7417,7 @@
       "team_id": "ik8nryg1d30j5748"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

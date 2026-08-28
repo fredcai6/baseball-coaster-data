@@ -2908,7 +2908,7 @@
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2965,7 +2965,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "syn:away:1",
           "rbi": true,
@@ -2979,7 +2979,7 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           false,
@@ -2988,7 +2988,7 @@
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 1,
         "outs_after": 2,
@@ -7814,6 +7814,7 @@
     }
   ],
   "game_id": "20260818_i8eu",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8034,14 +8035,13 @@
     "fetched_at": "2026-08-27T15:13:32Z",
     "parse": {
       "events_count": 138,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 43 runner syn:away:1 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:03Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:10Z",
+    "parser_version": "0.8.0",
     "source_sha256": "8616d98b4ba0601fb238e1453ef5c5d0d1de91840ded768da8343112a06c5e09",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260818_i8eu.xml"
   },
@@ -8425,7 +8425,7 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

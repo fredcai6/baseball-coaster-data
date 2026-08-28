@@ -803,11 +803,11 @@
       "kind": "plate_appearance",
       "narrative": "Donovan Ratfield reached on a fielder's choice to shortstop (0-1 K); Tommy Rover out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1213,7 +1213,9 @@
       "kind": "plate_appearance",
       "narrative": "Cam Magee singled to pitcher (3-2 KBBKBF); Joe McLaughlin advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7694,6 +7696,7 @@
     }
   ],
   "game_id": "20260610_z0ie",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7921,12 +7924,13 @@
     "fetched_at": "2026-07-12T15:11:24Z",
     "parse": {
       "events_count": 135,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:46Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:54Z",
+    "parser_version": "0.8.0",
     "source_sha256": "0ce76d40a9c814d49a2bec3b32bfa366c7b51fbce7e2ec209719b60b0f5c7169",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260610_z0ie.xml"
   },
@@ -8323,7 +8327,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

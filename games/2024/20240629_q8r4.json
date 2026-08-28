@@ -2295,7 +2295,9 @@
       "kind": "plate_appearance",
       "narrative": "D. Henderson singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -4669,8 +4671,8 @@
         "away_score_before": 11,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -4699,9 +4701,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on a throwing error by 2b"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4718,7 +4718,7 @@
           "out": false,
           "player_id": "v6sxe7pnta3rw7m9",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -4735,15 +4735,15 @@
     {
       "_derived": {
         "away_score_before": 11,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -6430,6 +6430,7 @@
     }
   ],
   "game_id": "20240629_q8r4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6643,12 +6644,13 @@
     "fetched_at": "2026-07-12T18:26:44Z",
     "parse": {
       "events_count": 118,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:04Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:13Z",
+    "parser_version": "0.8.0",
     "source_sha256": "b82bce0f067ef67f2c46021ffdd42e8580484ae2120183f1cce5906de67a8635",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240629_q8r4.xml"
   },
@@ -7044,7 +7046,7 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

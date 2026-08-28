@@ -958,11 +958,11 @@
       "kind": "plate_appearance",
       "narrative": "Jacob Steele reached on a fielder's choice to second base (1-2 FKB); Jake Millan out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1465,11 +1465,11 @@
       "kind": "plate_appearance",
       "narrative": "Tommy Specht reached on a fielder's choice to second base (0-2 SS); Kyle Schmack out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5156,10 +5156,11 @@
       "kind": "plate_appearance",
       "narrative": "Jacob Steele reached on a fielder's choice to third base, RBI (2-1 BFB); Jake Millan advanced to second; Carson Garner out at third 3b unassisted; Carson Hornung scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -7110,6 +7111,7 @@
     }
   ],
   "game_id": "20260519_dpzk",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7281,12 +7283,13 @@
     "fetched_at": "2026-07-12T04:51:53Z",
     "parse": {
       "events_count": 119,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:40Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:48Z",
+    "parser_version": "0.8.0",
     "source_sha256": "fae6942d3aa9c41fb3ad05e82330d62f233ad7cd7e2455d9395f40a42de54a04",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260519_dpzk.xml"
   },
@@ -7622,7 +7625,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

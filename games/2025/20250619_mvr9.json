@@ -5939,7 +5939,9 @@
       "kind": "plate_appearance",
       "narrative": "S. Linscott singled to pitcher; C. Booth advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7189,6 +7191,7 @@
     }
   ],
   "game_id": "20250619_mvr9",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7416,6 +7419,7 @@
     "fetched_at": "2026-07-12T16:23:37Z",
     "parse": {
       "events_count": 129,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -7425,8 +7429,8 @@
         "[illegal_transitions] illegal_transition: seq 79 runner s53r79a1t4qginye advances from base 3 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:24Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:33Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f0ec2e1dff110ab393262bd2522610be67dc5cda35f876d5d36bad18d04cd9a1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250619_mvr9.xml"
   },
@@ -7835,7 +7839,7 @@
       "team_id": "rssm3ae3o1c57tro"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -7863,7 +7867,7 @@
         "line_index": 8
       },
       "raw": "K. Ewell struck out swinging, reached first on an error by c, advanced to second; E. Scavotto scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'K. Ewell struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'K. Ewell struck out swinging, reached first on an error by c, advanced to second'"
     }
   ]
 }

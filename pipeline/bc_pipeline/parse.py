@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import hashlib
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.7.0"
-SCHEMA_VERSION = "1.9.0"
+PARSER_VERSION = "0.8.0"
+SCHEMA_VERSION = "1.10.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -129,6 +129,10 @@ _LOCATION_FIELDERS: Dict[str, Tuple[str, ...]] = {
     "second base": ("2b",),
     "first base": ("1b",),
     "shortstop": ("ss",),
+    # Spelled-out battery positions, as a fielder's choice names
+    # them ("reached on a fielder's choice to pitcher").
+    "pitcher": ("p",),
+    "catcher": ("c",),
 }
 #: A down-the-line hit location names the position it went past, so the
 #: fielder falls out of the location itself. Matches the ONE normalized
@@ -207,8 +211,10 @@ def _resolve_substitution_pair(
 
 
 def build_events(
-    lines: List[PbpLine], player_table: identity.PlayerTable
-) -> Tuple[List[dict], List[dict], Dict[str, List[dict]]]:
+    lines: List[PbpLine],
+    player_table: identity.PlayerTable,
+    box_pitching_order: Optional[Dict[str, List[str]]] = None,
+) -> Tuple[List[dict], List[dict], Dict[str, List[dict]], List[dict]]:
     """PURE: fold ordered ``PbpLine``s + the identity player table into the
     schema's ``events[]`` spine, an ``unparsed[]`` list, and a per-team-id
     substitutions list (for ``lineups[team].substitutions``).
@@ -221,6 +227,14 @@ def build_events(
     """
     home_id = player_table.home.team_id
     away_id = player_table.away.team_id
+    #: The boxscore Pitchers table, in appearance order, per team -- the
+    #: evidence the blank-incoming-pitcher rule reads. Distinct from
+    #: `pitching_pool` below: that is "every roster row past the ninth
+    #: batter", which OMITS a reliever who never took a plate appearance and
+    #: therefore has no batting row at all. On the 58 blank-substitution
+    #: lines the missing man is very often exactly the reliever being
+    #: inferred, so the pool cannot stand in for the real order here.
+    box_pitching_order = box_pitching_order or {}
 
     # Batting order = the first 9 rows of each team's Batters table (dict
     # insertion order == document row order, per identity.py); every row
@@ -237,6 +251,12 @@ def build_events(
 
     events: List[dict] = []
     unparsed: List[dict] = []
+    #: Facts this parse ASSERTS that the source line does not state, each with
+    #: the rule that concluded it. Every entry is a place the corpus's own
+    #: text was defective and a measured rule filled the hole; nothing here is
+    #: silent, and a consumer that wants only what the source said can drop
+    #: every event these entries name (issue #40).
+    inferred: List[dict] = []
     subs_by_team: Dict[str, List[dict]] = {home_id: [], away_id: []}
 
     base_occ: Dict[int, str] = {}
@@ -268,6 +288,30 @@ def build_events(
                 "reason": reason,
             }
         )
+
+    def _inferred(line: PbpLine, rule: str, statement: str) -> None:
+        inferred.append(
+            {
+                "location": {
+                    "inning": line.inning,
+                    "half": line.half,
+                    "line_index": line.line_index,
+                },
+                "raw": line.text,
+                "rule": rule,
+                "asserted": statement,
+            }
+        )
+
+    def _note_inferred_runners(line: PbpLine, cg) -> None:
+        """Surface every runner movement the grammar tagged as inferred.
+
+        Called only once the line has become a real event -- a line that ends
+        up in unparsed[] asserts nothing, so it has nothing to disclose.
+        """
+        for rm in cg.runners:
+            if rm.inferred:
+                _inferred(line, "doubled_name_scored", rm.inferred)
 
     _pbp_declared_ids: Dict[Tuple[str, str], str] = {}
 
@@ -460,6 +504,68 @@ def build_events(
             seq += 1
             continue
 
+        if (
+            cg.kind == "substitution"
+            and cg.substitution is not None
+            and cg.substitution.player_in is None
+        ):
+            # Issue #40, Family B: "/  for R. Bost." -- StatCrew wrote the
+            # line with the incoming pitcher's name simply missing. The
+            # outgoing name is intact, and the boxscore's Pitchers table is
+            # ordered by appearance, so the reliever is the pitcher listed
+            # directly after him.
+            #
+            # Measured, not assumed: run this same rule against the 8,991
+            # substitutions in the corpus that DO name both players and it
+            # predicts the named reliever in 8,917 of them (99.18%).
+            #
+            # It fires only when FORCED -- the outgoing name must resolve
+            # uniquely AND there must be exactly one successor in the order.
+            # When it does not (the outgoing pitcher is last in the order, or
+            # his name does not resolve), the line stays in unparsed[]. That
+            # refusal is the point: 7 of the corpus's 58 such lines are not
+            # determinable and are not guessed at.
+            out_full = cg.substitution.player_out
+            out_pid, out_ok = player_table.resolve(
+                _last_name_token(out_full), fielding_side, out_full
+            )
+            order = box_pitching_order.get(fielding_team_id) or []
+            successor = None
+            if out_ok and out_pid in order:
+                idx = order.index(out_pid)
+                if idx + 1 < len(order):
+                    successor = order[idx + 1]
+            if successor is None:
+                _unparsed(
+                    line,
+                    "substitution names no incoming player and the boxscore "
+                    "pitching order does not force one: "
+                    f"out={out_full!r}",
+                )
+                continue
+            _inferred(
+                line,
+                "blank_incoming_pitcher",
+                f"incoming pitcher {successor} read from the boxscore "
+                f"pitching order as the successor to {out_pid}",
+            )
+            forced_sub_pids = (successor, out_pid)
+            team = (
+                player_table.home
+                if fielding_team_id == player_table.home.team_id
+                else player_table.away
+            )
+            entry = team.players.get(successor)
+            cg = replace(
+                cg,
+                substitution=replace(
+                    cg.substitution,
+                    player_in=(entry.name if entry is not None else successor),
+                ),
+            )
+        else:
+            forced_sub_pids = None
+
         if cg.kind == "substitution":
             # A "pitching" substitution changes the FIELDING side's pitcher
             # (the mound belongs to the side not currently batting). An
@@ -556,6 +662,17 @@ def build_events(
                         else:
                             out_pid, out_ok = a_out_pid, True
                             in_pid, in_ok = declared, True
+
+            if forced_sub_pids is not None:
+                # The blank-incoming-pitcher branch above already established
+                # both ends -- the successor by boxscore order, the outgoing
+                # player by a unique name resolution. Bypass the name-based
+                # pair resolution rather than round-tripping the successor
+                # back through his own name, which would re-introduce exactly
+                # the same-surname ambiguity the pid already settles.
+                side, team_id = fielding_side, fielding_team_id
+                in_pid, in_ok = forced_sub_pids[0], True
+                out_pid, out_ok = forced_sub_pids[1], True
 
             if not out_ok or not in_ok:
                 if primary_full and fallback_full:
@@ -656,6 +773,7 @@ def build_events(
             if not ok:
                 _unparsed(line, "runner clause name did not resolve uniquely")
                 continue
+            _note_inferred_runners(line, cg)
             events.append(
                 {
                     "seq": seq,
@@ -711,16 +829,85 @@ def build_events(
             _unparsed(line, "runner clause name did not resolve uniquely")
             continue
 
-        # Apply the batter's own base-occupancy update (runner clauses
-        # already updated themselves inside _resolve_runner).
-        if not out_flag and to_base not in (-1, 4):
-            base_occ[to_base] = batter_pid
+        # Issue #40: an out this line RECORDS but never attributes -- "X
+        # reached on a fielder's choice, out at second ss to 2b". Until now a
+        # `.*` tail swept that clause into `modifiers` and the out simply
+        # vanished from the record (14 corpus lines).
+        #
+        # The runner is not named, but on a fielder's choice he is forced: an
+        # out at second retires the runner who was on first, at third the one
+        # on second, at home the one on third. Read from the base occupancy
+        # as it stood BEFORE this line (line_snapshot), the same source every
+        # runner clause's `from` reads.
+        #
+        # When that base was empty the play is not a force and the line does
+        # not say who was out, so nothing is asserted -- the out is dropped
+        # exactly as before, but LOUDLY, as a parse warning rather than
+        # silently. Never a guess.
+        if p.forced_out_at is not None:
+            out_base = _DEST_BASE[p.forced_out_at]
+            forced_pid = line_snapshot.get(out_base - 1)
+            if forced_pid is None:
+                _unparsed(
+                    line,
+                    "line records an out at "
+                    f"{p.forced_out_at} but names no runner, and base "
+                    f"{out_base - 1} was empty at the start of the play so "
+                    "the force does not identify one",
+                )
+                continue
+            runner_records.append(
+                {
+                    "player_id": forced_pid,
+                    "from": out_base - 1,
+                    "to": -1,
+                    "cause": "force_out",
+                    "out": True,
+                    "scored": False,
+                }
+            )
+            base_occ.pop(out_base - 1, None)
+            _inferred(
+                line,
+                "unattributed_force_out",
+                f"out at {p.forced_out_at} attributed to {forced_pid}, the "
+                f"runner occupying base {out_base - 1} before the play; the "
+                "line records the out but names no runner",
+            )
 
         runner_records = _merge_same_runner(runner_records)
+
+        # Apply the batter's own base-occupancy update (runner clauses
+        # already updated themselves inside _resolve_runner).
+        #
+        # Read from the MERGED record, not from the primary verb's own
+        # destination: when the batter carries a chained self-advance
+        # ("reached on a fielder's choice, advanced to second on the throw")
+        # the merge is what knows he finished on second, while the primary
+        # verb alone says first. Setting occupancy from the primary put him
+        # back on a base he had already left, and the next line's clause for
+        # him then read the stale base -- surfacing as an illegal_transition
+        # two events later, nowhere near its cause (issue #40).
+        batter_final = next(
+            (
+                r
+                for r in runner_records
+                if r["player_id"] == batter_pid and r["from"] == 0
+            ),
+            None,
+        )
+        if batter_final is not None and not batter_final["out"]:
+            final_base = batter_final["to"]
+            for b, pid in list(base_occ.items()):
+                if pid == batter_pid and b != final_base:
+                    base_occ.pop(b, None)
+            if final_base not in (-1, 4):
+                base_occ[final_base] = batter_pid
         outs_recorded = (1 if out_flag else 0) + sum(
             1 for r in runner_records[1:] if r["out"]
         )
 
+        _note_inferred_runners(line, cg)
         events.append(
             {
                 "seq": seq,
@@ -759,7 +946,7 @@ def build_events(
         )
         seq += 1
 
-    return events, unparsed, subs_by_team
+    return events, unparsed, subs_by_team, inferred
 
 
 # ---------------------------------------------------------------------------
@@ -1140,13 +1327,22 @@ def parse_game(
 
     player_table = identity.build_player_table(root, id_overrides=id_overrides)
     lines = _iter_halves(root)
-    events, unparsed, subs_by_team = build_events(lines, player_table)
-
+    # The boxscore is parsed BEFORE the events because build_events needs the
+    # Pitchers table's appearance order (issue #40's blank-incoming-pitcher
+    # rule). Neither box parser reads events, so the reorder is inert.
     linescore = _parse_linescore(root, player_table)
     box = {
         "batting": _parse_box_batting(root, player_table),
         "pitching": _parse_box_pitching(root, player_table),
     }
+    events, unparsed, subs_by_team, inferred = build_events(
+        lines,
+        player_table,
+        box_pitching_order={
+            team_id: [row["player_id"] for row in rows]
+            for team_id, rows in box["pitching"].items()
+        },
+    )
     lineups = _build_lineups(player_table, subs_by_team)
     players = _players_table(player_table, person_ids, career_ids)
 
@@ -1183,6 +1379,7 @@ def parse_game(
         "lineups": lineups,
         "events": events,
         "unparsed": unparsed,
+        "inferred": inferred,
         "meta": {
             "parser_version": PARSER_VERSION,
             "source_url": source_url,
@@ -1193,6 +1390,7 @@ def parse_game(
             "parse": {
                 "events_count": len(events),
                 "unparsed_count": len(unparsed),
+                "inferred_count": len(inferred),
                 "replayable": False,
                 "warnings": [],
             },

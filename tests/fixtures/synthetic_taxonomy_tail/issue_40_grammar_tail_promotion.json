@@ -1,0 +1,845 @@
+{
+  "description": "SYNTHETIC. Issue #40 grammar-tail promotion: one case per newly-covered narrative shape, plus the two source-defect inference rules and the unattributed force-out attribution. Hand-authored player table, real build_events output captured from a fresh run (never hand-typed). Not a real game; never place under games/**.",
+  "cases": {
+    "lineout_sacrifice_fly_rbi": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith lined out to rf, sacrifice fly, RBI."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith lined out to rf, sacrifice fly, RBI.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "lineout",
+              "modifiers": [
+                "sacrifice fly",
+                "RBI"
+              ],
+              "fielders": [
+                "rf"
+              ],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "out_at_first_chain_modifiers": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith out at first 1b to 2b, SAC, bunt."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith out at first 1b to 2b, SAC, bunt.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "groundout",
+              "modifiers": [
+                "SAC",
+                "bunt"
+              ],
+              "fielders": [
+                "1b",
+                "2b"
+              ],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "popped_up_bunt": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith popped up to 3b, bunt."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith popped up to 3b, bunt.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "popout",
+              "modifiers": [
+                "bunt"
+              ],
+              "fielders": [
+                "3b"
+              ],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "lineout_with_location": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith lined out to cf to left center."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith lined out to cf to left center.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "lineout",
+              "modifiers": [],
+              "fielders": [
+                "cf"
+              ],
+              "outs_recorded": 1,
+              "location": "left center"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "strikeout_on_appeal": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith struck out swinging, on appeal."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith struck out swinging, on appeal.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "strikeout_swinging",
+              "modifiers": [
+                "on appeal"
+              ],
+              "fielders": [],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "runner_out_on_double_play": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith singled to left field; Robin Vega out on double play 2b to ss."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith singled to left field; Robin Vega out on double play 2b to ss.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [],
+              "fielders": [
+                "lf"
+              ],
+              "outs_recorded": 1,
+              "location": "left field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              },
+              {
+                "player_id": "syn:away:2",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "scored_on_throwing_error_variant": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Robin Vega singled to left field.",
+          "Pat Smith singled to right field; Robin Vega advanced to third, scored on a throwing error by cf, unearned."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Robin Vega singled to left field.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:2",
+              "name_raw": "Robin Vega",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [],
+              "fielders": [
+                "lf"
+              ],
+              "outs_recorded": 0,
+              "location": "left field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:2",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith singled to right field; Robin Vega advanced to third, scored on a throwing error by cf, unearned.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [],
+              "fielders": [
+                "rf"
+              ],
+              "outs_recorded": 0,
+              "location": "right field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              },
+              {
+                "player_id": "syn:away:2",
+                "from": 1,
+                "to": 4,
+                "cause": "advance",
+                "out": false,
+                "scored": true,
+                "earned": false,
+                "rbi": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "did_not_advance_is_recognised_no_movement": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Robin Vega singled to left field.",
+          "Pat Smith flied out to rf; Robin Vega did not advance."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Robin Vega singled to left field.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:2",
+              "name_raw": "Robin Vega",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [],
+              "fielders": [
+                "lf"
+              ],
+              "outs_recorded": 0,
+              "location": "left field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:2",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith flied out to rf; Robin Vega did not advance.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "flyout",
+              "modifiers": [],
+              "fielders": [
+                "rf"
+              ],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": -1,
+                "cause": "putout",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "dropped_foul_ball_is_recognised_no_movement": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Pat Smith Dropped foul ball, E3."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "runner_event",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith Dropped foul ball, E3.",
+            "scoring_play": false,
+            "runners": []
+          }
+        ],
+        "unparsed": [],
+        "inferred": []
+      }
+    },
+    "fielders_choice_forced_out_attributed": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Robin Vega singled to left field.",
+          "Pat Smith reached on a fielder's choice, out at second ss to 2b."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Robin Vega singled to left field.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:2",
+              "name_raw": "Robin Vega",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [],
+              "fielders": [
+                "lf"
+              ],
+              "outs_recorded": 0,
+              "location": "left field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:2",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith reached on a fielder's choice, out at second ss to 2b.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "fielders_choice",
+              "modifiers": [],
+              "fielders": [],
+              "outs_recorded": 1,
+              "location": null
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": 1,
+                "cause": "fielders_choice",
+                "out": false,
+                "scored": false
+              },
+              {
+                "player_id": "syn:away:2",
+                "from": 1,
+                "to": -1,
+                "cause": "force_out",
+                "out": true,
+                "scored": false
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": [
+          {
+            "location": {
+              "inning": 1,
+              "half": "top",
+              "line_index": 1
+            },
+            "raw": "Pat Smith reached on a fielder's choice, out at second ss to 2b.",
+            "rule": "unattributed_force_out",
+            "asserted": "out at second attributed to syn:away:2, the runner occupying base 1 before the play; the line records the out but names no runner"
+          }
+        ]
+      }
+    },
+    "doubled_name_read_as_scored": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "Robin Vega tripled to right field.",
+          "Pat Smith singled to center field, RBI; Robin Vega Robin Vega."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Robin Vega tripled to right field.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:2",
+              "name_raw": "Robin Vega",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "triple",
+              "modifiers": [],
+              "fielders": [
+                "rf"
+              ],
+              "outs_recorded": 0,
+              "location": "right field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:2",
+                "from": 0,
+                "to": 3,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "inning": 1,
+            "half": "top",
+            "kind": "plate_appearance",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "Pat Smith singled to center field, RBI; Robin Vega Robin Vega.",
+            "scoring_play": false,
+            "batter": {
+              "player_id": "syn:away:1",
+              "name_raw": "Pat Smith",
+              "resolved": true
+            },
+            "pitcher": {
+              "player_id": "syn:home:10",
+              "name_raw": null,
+              "resolved": true
+            },
+            "outcome": {
+              "type": "single",
+              "modifiers": [
+                "RBI"
+              ],
+              "fielders": [
+                "cf"
+              ],
+              "outs_recorded": 0,
+              "location": "center field"
+            },
+            "count": null,
+            "pitches": null,
+            "runners": [
+              {
+                "player_id": "syn:away:1",
+                "from": 0,
+                "to": 1,
+                "cause": "batted_ball",
+                "out": false,
+                "scored": false
+              },
+              {
+                "player_id": "syn:away:2",
+                "from": 3,
+                "to": 4,
+                "cause": "advance",
+                "out": false,
+                "scored": true,
+                "earned": true,
+                "rbi": true
+              }
+            ]
+          }
+        ],
+        "unparsed": [],
+        "inferred": [
+          {
+            "location": {
+              "inning": 1,
+              "half": "top",
+              "line_index": 1
+            },
+            "raw": "Pat Smith singled to center field, RBI; Robin Vega Robin Vega.",
+            "rule": "doubled_name_scored",
+            "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)"
+          }
+        ]
+      }
+    },
+    "blank_incoming_pitcher_filled_from_box_order": {
+      "synthetic_input": {
+        "pbp_lines": [
+          "/  for Ira Vance."
+        ]
+      },
+      "build_events_output": {
+        "events": [
+          {
+            "seq": 0,
+            "inning": 1,
+            "half": "top",
+            "kind": "substitution",
+            "batting_team": "syn:team:away",
+            "fielding_team": "syn:team:home",
+            "narrative": "/ for Ira Vance.",
+            "scoring_play": false,
+            "substitution": {
+              "slot": null,
+              "player_out": "syn:home:10",
+              "player_in": "syn:home:11",
+              "kind": "pitching",
+              "after_event_seq": 0
+            }
+          }
+        ],
+        "unparsed": [],
+        "inferred": [
+          {
+            "location": {
+              "inning": 1,
+              "half": "top",
+              "line_index": 0
+            },
+            "raw": "/  for Ira Vance.",
+            "rule": "blank_incoming_pitcher",
+            "asserted": "incoming pitcher syn:home:11 read from the boxscore pitching order as the successor to syn:home:10"
+          }
+        ]
+      }
+    }
+  }
+}

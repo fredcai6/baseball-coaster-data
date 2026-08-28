@@ -1377,7 +1377,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -1399,7 +1399,7 @@
         {
           "cause": "wild_pitch",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "fmsc2vh4bj22enfc",
           "rbi": false,
@@ -1413,16 +1413,16 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 3,
@@ -6051,6 +6051,7 @@
     }
   ],
   "game_id": "20250614_fgih",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6215,15 +6216,13 @@
     "fetched_at": "2026-07-12T16:19:18Z",
     "parse": {
       "events_count": 113,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 2 bottom folded LOB 1 != inning_summary LOB 0",
-        "[illegal_transitions] illegal_transition: seq 19 runner fmsc2vh4bj22enfc advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:23Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:32Z",
+    "parser_version": "0.8.0",
     "source_sha256": "b8e2ce8b64f85a9ef1e600e58d2fa7912b0c12135a64111af98318c89b169919",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250614_fgih.xml"
   },
@@ -6554,7 +6553,7 @@
       "team_id": "0f7i5wcuhuv2tipc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

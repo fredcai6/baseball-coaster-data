@@ -1177,7 +1177,7 @@
         "base_out_state": "101|1",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -1186,7 +1186,7 @@
           true
         ],
         "home_score_before": 1,
-        "outs_after": 1,
+        "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 1,
         "runs_on_play": 1
@@ -1207,10 +1207,9 @@
         "fielders": [],
         "location": null,
         "modifiers": [
-          "out at second 3b to 1b",
           "RBI"
         ],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -1231,10 +1230,10 @@
         {
           "cause": "advance",
           "from": 1,
-          "out": false,
+          "out": true,
           "player_id": "30tedsov09lhqmne",
           "scored": false,
-          "to": 2
+          "to": -1
         },
         {
           "cause": "advance",
@@ -1253,7 +1252,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "110|1",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
@@ -1261,12 +1260,12 @@
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
         "home_score_before": 2,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 1,
         "runs_on_play": 1
       },
@@ -1323,7 +1322,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|1",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
@@ -1335,8 +1334,8 @@
           false
         ],
         "home_score_before": 3,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -6847,6 +6846,18 @@
     }
   ],
   "game_id": "20240823_ktxt",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to 30tedsov09lhqmne, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "bottom",
+        "inning": 1,
+        "line_index": 5
+      },
+      "raw": "K. Byrne reached on a fielder's choice, out at second 3b to 1b, RBI; S. Rivas advanced to second; J. Day scored.",
+      "rule": "unattributed_force_out"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7060,14 +7071,15 @@
     "fetched_at": "2026-07-12T19:30:57Z",
     "parse": {
       "events_count": 125,
+      "inferred_count": 1,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
-        "[outs_per_half] outs_per_half: inning 1 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
+        "[illegal_transitions] illegal_transition: seq 13 runner 30tedsov09lhqmne advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:17Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:26Z",
+    "parser_version": "0.8.0",
     "source_sha256": "3f6fb7f830ee85e9681a2e68155274b919eebcf4fd039600d287d5cc07a31b4b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240823_ktxt.xml"
   },
@@ -7476,7 +7488,7 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

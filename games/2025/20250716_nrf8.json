@@ -4216,12 +4216,103 @@
         "away_score_before": 3,
         "base_out_state": "111|2",
         "bases_after": [
-          true,
+          false,
           true,
           true
         ],
         "bases_before": [
           true,
+          true,
+          true
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "G. Kueber",
+        "player_id": "fzfduce250h6dagk",
+        "resolved": true
+      },
+      "batting_team": "ybsjgrorwgm7zp91",
+      "count": null,
+      "fielding_team": "9efpyrbbyneh3vac",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "G. Kueber singled down the rf line, advanced to second on a throwing error by rf, 2 RBI; D. Tofteland advanced to third; T. Dooley scored; C. Booth C. Booth.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": "down the rf line",
+        "modifiers": [
+          "2 RBI",
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "n9872nmjxa5yrvdo",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "fzfduce250h6dagk",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "jkhyj03ouuq9t3je",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "npyuuhwuub8olldk",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "kj52okpii7s3iadf",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 72
+    },
+    {
+      "_derived": {
+        "away_score_before": 5,
+        "base_out_state": "011|2",
+        "bases_after": [
+          false,
+          true,
+          true
+        ],
+        "bases_before": [
+          false,
           true,
           true
         ],
@@ -4269,7 +4360,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 72
+      "seq": 73
     },
     {
       "batting_team": "ybsjgrorwgm7zp91",
@@ -4279,7 +4370,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 73,
+      "seq": 74,
       "summary": {
         "E": 1,
         "H": 3,
@@ -4295,9 +4386,9 @@
       "kind": "substitution",
       "narrative": "H. Bryan to p for N. Powers.",
       "scoring_play": false,
-      "seq": 74,
+      "seq": 75,
       "substitution": {
-        "after_event_seq": 73,
+        "after_event_seq": 74,
         "kind": "pitching",
         "player_in": "u5obcvsxszazzd7q",
         "player_out": "mcj0qwnje8g2h3du",
@@ -4306,7 +4397,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4362,11 +4453,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 75
+      "seq": 76
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4422,11 +4513,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 76
+      "seq": 77
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -4482,7 +4573,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 77
+      "seq": 78
     },
     {
       "batting_team": "9efpyrbbyneh3vac",
@@ -4492,7 +4583,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 78,
+      "seq": 79,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4502,6 +4593,18 @@
     }
   ],
   "game_id": "20250716_nrf8",
+  "inferred": [
+    {
+      "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
+      "location": {
+        "half": "top",
+        "inning": 7,
+        "line_index": 7
+      },
+      "raw": "G. Kueber singled down the rf line, advanced to second on a throwing error by rf, 2 RBI; D. Tofteland advanced to third; T. Dooley scored; C. Booth C. Booth.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -4627,7 +4730,7 @@
       ],
       "substitutions": [
         {
-          "after_event_seq": 73,
+          "after_event_seq": 74,
           "kind": "pitching",
           "player_in": "u5obcvsxszazzd7q",
           "player_out": "mcj0qwnje8g2h3du",
@@ -4640,18 +4743,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:53:29Z",
     "parse": {
-      "events_count": 79,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 7 computed 1 != oracle 3",
-        "[linescore] linescore: computed away final R 3 != oracle total 5",
-        "[lob] lob: inning 7 top folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player fzfduce250h6dagk events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 80,
+      "inferred_count": 1,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:31Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:39Z",
+    "parser_version": "0.8.0",
     "source_sha256": "36d1aa3b187e69d1bef45da2879a6b74558fd5858c39f8d2d48499039b5d2543",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250716_nrf8.xml"
   },
@@ -4943,7 +5042,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -4963,15 +5062,5 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 7
-      },
-      "raw": "G. Kueber singled down the rf line, advanced to second on a throwing error by rf, 2 RBI; D. Tofteland advanced to third; T. Dooley scored; C. Booth C. Booth.",
-      "reason": "runner clause not recognized: 'C. Booth C. Booth'"
-    }
-  ]
+  "unparsed": []
 }

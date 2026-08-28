@@ -985,7 +985,9 @@
       "kind": "plate_appearance",
       "narrative": "J. Kline singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -1329,11 +1331,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Wright reached on a fielder's choice to shortstop; B. Knight out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6258,6 +6260,7 @@
     }
   ],
   "game_id": "20250712_ufl2",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6443,12 +6446,13 @@
     "fetched_at": "2026-07-12T16:50:21Z",
     "parse": {
       "events_count": 113,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:30Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:38Z",
+    "parser_version": "0.8.0",
     "source_sha256": "3d51079e6ac1f177ba71ebc48e301c0d0ea553a1832ac91a9c42e6d346bc8cb6",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250712_ufl2.xml"
   },
@@ -6818,7 +6822,7 @@
       "team_id": "93ghf5gj458jgt7g"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

@@ -2144,11 +2144,11 @@
       "kind": "plate_appearance",
       "narrative": "Aidan Redahan reached on a fielder's choice to second base (0-0); Vincent Temesvary out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4599,8 +4599,8 @@
         "away_score_before": 3,
         "base_out_state": "110|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -4609,8 +4609,91 @@
           false
         ],
         "home_score_before": 1,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Jacob Steele",
+        "player_id": "g2gfwgjmgw0wumz0",
+        "resolved": true
+      },
+      "batting_team": "na6t5g8htwf89dsc",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "yaop56c5591myre0",
+      "half": "top",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Jacob Steele out at first 1b to 2b, SAC, bunt (1-1 BK); Jake Millan advanced to second; Carson Garner advanced to third.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "anqz0wl6onpyqda5",
+        "resolved": true
+      },
+      "pitches": "BK",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "g2gfwgjmgw0wumz0",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "iru12spt2m5gmc5n",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "1l4hph86mlaafm85",
+          "scored": false,
+          "to": 3
+        }
+      ],
+      "scoring_play": false,
+      "seq": 80
+    },
+    {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "011|1",
+        "bases_after": [
+          true,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
+        ],
+        "home_score_before": 1,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
@@ -4657,7 +4740,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "iru12spt2m5gmc5n",
           "scored": false,
@@ -4666,7 +4749,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "1l4hph86mlaafm85",
           "rbi": false,
@@ -4675,7 +4758,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 80
+      "seq": 81
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -4685,9 +4768,9 @@
       "kind": "substitution",
       "narrative": "Andrew Collins pinch ran for Donovan Ratfield.",
       "scoring_play": false,
-      "seq": 81,
+      "seq": 82,
       "substitution": {
-        "after_event_seq": 80,
+        "after_event_seq": 81,
         "kind": "offensive",
         "player_in": "a4x9809wbva3u0yi",
         "player_out": "pb4j4o4tl4zsiriu",
@@ -4697,7 +4780,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "101|0",
+        "base_out_state": "101|1",
         "bases_after": [
           false,
           false,
@@ -4709,8 +4792,8 @@
           true
         ],
         "home_score_before": 1,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "runs_on_play": 1
       },
       "batting_team": "na6t5g8htwf89dsc",
@@ -4740,12 +4823,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 82
+      "seq": 83
     },
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "001|0",
+        "base_out_state": "001|1",
         "bases_after": [
           true,
           false,
@@ -4757,8 +4840,8 @@
           true
         ],
         "home_score_before": 1,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
@@ -4801,12 +4884,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 83
+      "seq": 84
     },
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "101|0",
+        "base_out_state": "101|1",
         "bases_after": [
           false,
           true,
@@ -4818,8 +4901,8 @@
           true
         ],
         "home_score_before": 1,
-        "outs_after": 1,
-        "outs_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 4,
         "runs_on_play": 1
       },
@@ -4885,12 +4968,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 84
+      "seq": 85
     },
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "010|1",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           false,
@@ -4902,8 +4985,8 @@
           false
         ],
         "home_score_before": 1,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "runs_on_play": 0
       },
       "batting_team": "na6t5g8htwf89dsc",
@@ -4923,12 +5006,12 @@
         }
       ],
       "scoring_play": false,
-      "seq": 85
+      "seq": 86
     },
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "001|1",
+        "base_out_state": "001|2",
         "bases_after": [
           false,
           false,
@@ -4940,8 +5023,8 @@
           true
         ],
         "home_score_before": 1,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -4984,7 +5067,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -4994,7 +5077,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 1 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 87,
+      "seq": 88,
       "summary": {
         "E": 1,
         "H": 1,
@@ -5010,9 +5093,9 @@
       "kind": "substitution",
       "narrative": "Donovan Ratfield to c for Andrew Collins.",
       "scoring_play": false,
-      "seq": 88,
+      "seq": 89,
       "substitution": {
-        "after_event_seq": 87,
+        "after_event_seq": 88,
         "kind": "defensive",
         "player_in": "pb4j4o4tl4zsiriu",
         "player_out": "a4x9809wbva3u0yi",
@@ -5078,7 +5161,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 89
+      "seq": 90
     },
     {
       "_derived": {
@@ -5149,7 +5232,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 90
+      "seq": 91
     },
     {
       "_derived": {
@@ -5222,7 +5305,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 91
+      "seq": 92
     },
     {
       "_derived": {
@@ -5283,7 +5366,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 92
+      "seq": 93
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -5293,7 +5376,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 93,
+      "seq": 94,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5309,9 +5392,9 @@
       "kind": "substitution",
       "narrative": "Ryan Cullinane to p for Kevin Worek.",
       "scoring_play": false,
-      "seq": 94,
+      "seq": 95,
       "substitution": {
-        "after_event_seq": 93,
+        "after_event_seq": 94,
         "kind": "pitching",
         "player_in": "sqkglfqam7mposcw",
         "player_out": "anqz0wl6onpyqda5",
@@ -5379,7 +5462,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "_derived": {
@@ -5417,7 +5500,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 96
+      "seq": 97
     },
     {
       "_derived": {
@@ -5478,7 +5561,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 97
+      "seq": 98
     },
     {
       "_derived": {
@@ -5539,7 +5622,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
@@ -5600,7 +5683,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
@@ -5619,7 +5702,7 @@
         "home_score_before": 1,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 1
       },
       "batter": {
@@ -5683,7 +5766,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 100
+      "seq": 101
     },
     {
       "_derived": {
@@ -5766,7 +5849,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 101
+      "seq": 102
     },
     {
       "_derived": {
@@ -5804,11 +5887,11 @@
       "kind": "plate_appearance",
       "narrative": "Tommy Rover reached on a fielder's choice to second base (1-2 FBS); Donovan Ratfield out at second 2b unassisted; Jacob Steele advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5845,7 +5928,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "batting_team": "na6t5g8htwf89dsc",
@@ -5855,7 +5938,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "summary": {
         "E": 1,
         "H": 2,
@@ -5871,9 +5954,9 @@
       "kind": "substitution",
       "narrative": "Jack Maruskin to p for Jacob Hasty.",
       "scoring_play": false,
-      "seq": 104,
+      "seq": 105,
       "substitution": {
-        "after_event_seq": 103,
+        "after_event_seq": 104,
         "kind": "pitching",
         "player_in": "iohaj5ddzeilt0kf",
         "player_out": "mx2ygysh02m8cjdi",
@@ -5939,7 +6022,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -5977,11 +6060,11 @@
       "kind": "plate_appearance",
       "narrative": "Tommy Specht reached on a fielder's choice to first base (3-2 BKBBK); Kyle Schmack out at second 1b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6010,7 +6093,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "_derived": {
@@ -6071,7 +6154,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "_derived": {
@@ -6109,11 +6192,11 @@
       "kind": "plate_appearance",
       "narrative": "Ethan Ott reached on a fielder's choice to second base (0-1 S); Tommy Specht out at second 2b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6142,7 +6225,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -6152,7 +6235,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 109,
+      "seq": 110,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6162,6 +6245,7 @@
     }
   ],
   "game_id": "20260521_sv1u",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6249,21 +6333,21 @@
           "slot": null
         },
         {
-          "after_event_seq": 80,
+          "after_event_seq": 81,
           "kind": "offensive",
           "player_in": "a4x9809wbva3u0yi",
           "player_out": "pb4j4o4tl4zsiriu",
           "slot": 7
         },
         {
-          "after_event_seq": 87,
+          "after_event_seq": 88,
           "kind": "defensive",
           "player_in": "pb4j4o4tl4zsiriu",
           "player_out": "a4x9809wbva3u0yi",
           "slot": 7
         },
         {
-          "after_event_seq": 103,
+          "after_event_seq": 104,
           "kind": "pitching",
           "player_in": "iohaj5ddzeilt0kf",
           "player_out": "mx2ygysh02m8cjdi",
@@ -6319,7 +6403,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 93,
+          "after_event_seq": 94,
           "kind": "pitching",
           "player_in": "sqkglfqam7mposcw",
           "player_out": "anqz0wl6onpyqda5",
@@ -6332,15 +6416,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T14:33:30Z",
     "parse": {
-      "events_count": 110,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 8 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
-      ]
+      "events_count": 111,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:41Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:49Z",
+    "parser_version": "0.8.0",
     "source_sha256": "56331565a4d397cc422cbe28c8f8d024f0c5c98a2df150d38d261d4af175262b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260521_sv1u.xml"
   },
@@ -6667,7 +6750,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6687,15 +6770,5 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 8,
-        "line_index": 2
-      },
-      "raw": "Jacob Steele out at first 1b to 2b, SAC, bunt (1-1 BK); Jake Millan advanced to second; Carson Garner advanced to third.\n                                                                                                                                                                                                                                        \t\t\t\t\t(1 out)",
-      "reason": "primary verb not recognized: 'Jacob Steele out at first 1b to 2b, SAC, bunt'"
-    }
-  ]
+  "unparsed": []
 }

@@ -4748,11 +4748,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Swenda reached on a fielder's choice to third base; K. Schmack out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5283,6 +5283,7 @@
     }
   ],
   "game_id": "20250722_3clg",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5432,12 +5433,13 @@
     "fetched_at": "2026-07-12T17:00:45Z",
     "parse": {
       "events_count": 98,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:32Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:40Z",
+    "parser_version": "0.8.0",
     "source_sha256": "ee602243f13ed8f410e9c27f65b6f6420fa244c52a9d1df1279e9322e33a3c31",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250722_3clg.xml"
   },
@@ -5742,7 +5744,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

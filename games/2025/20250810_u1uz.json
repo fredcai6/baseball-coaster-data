@@ -1399,8 +1399,8 @@
         "away_score_before": 2,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -1429,9 +1429,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second"
-        ],
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -1448,7 +1446,7 @@
           "out": false,
           "player_id": "ctm99vma4pub5ygl",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "error",
@@ -1465,15 +1463,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|0",
+        "base_out_state": "011|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -1525,15 +1523,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
           false,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -1586,7 +1584,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "ctm99vma4pub5ygl",
           "rbi": true,
@@ -6016,6 +6014,7 @@
     }
   ],
   "game_id": "20250810_u1uz",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6187,12 +6186,13 @@
     "fetched_at": "2026-07-12T17:24:24Z",
     "parse": {
       "events_count": 106,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:37Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:45Z",
+    "parser_version": "0.8.0",
     "source_sha256": "03631d1bcd87b83bd7eb78e53ce0e14e1382a8067c86802046433ed8e517f630",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250810_u1uz.xml"
   },
@@ -6523,7 +6523,7 @@
       "team_id": "0f7i5wcuhuv2tipc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

@@ -898,7 +898,9 @@
       "kind": "plate_appearance",
       "narrative": "B. Knight singled to pitcher, RBI; E. Manzo advanced to second; P. Mills advanced to third; C. Muniz scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [
           "RBI"
@@ -4482,8 +4484,8 @@
         "away_score_before": 7,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -4512,9 +4514,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on an error by 2b"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4531,7 +4531,7 @@
           "out": false,
           "player_id": "bzgt5e2myj16pqlq",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -4548,15 +4548,15 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -4606,15 +4606,15 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -5813,6 +5813,7 @@
     }
   ],
   "game_id": "20250807_752j",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6012,12 +6013,13 @@
     "fetched_at": "2026-07-12T17:19:42Z",
     "parse": {
       "events_count": 106,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:36Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:44Z",
+    "parser_version": "0.8.0",
     "source_sha256": "4233881a33109a60b94947ebdefb5828c9b34e9362310d4a0a004c63417a360a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250807_752j.xml"
   },
@@ -6400,7 +6402,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

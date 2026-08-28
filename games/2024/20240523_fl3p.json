@@ -1841,11 +1841,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Ryan reached on a fielder's choice to first base; T. Lomack out at second 1b to ss; B. Evans advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3070,11 +3070,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Rooks reached on a fielder's choice to shortstop; B. Ryan out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3278,11 +3278,11 @@
       "kind": "plate_appearance",
       "narrative": "R. Major reached on a fielder's choice to third base; J. Melendez advanced to second; R. Gonzalez out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4671,7 +4671,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -4725,7 +4725,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "kgffa368lrq9k6fz",
           "rbi": true,
@@ -4739,16 +4739,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 2,
@@ -4797,16 +4797,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 2,
@@ -4835,16 +4835,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 2,
@@ -4907,16 +4907,16 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 2,
@@ -4982,16 +4982,16 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 2,
@@ -5040,16 +5040,16 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 6,
         "outs_after": 3,
@@ -7287,9 +7287,9 @@
         "away_score_before": 11,
         "base_out_state": "101|1",
         "bases_after": [
-          true,
           false,
-          true
+          true,
+          false
         ],
         "bases_before": [
           true,
@@ -7299,6 +7299,87 @@
         "home_score_before": 8,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "P. Mills",
+        "player_id": "bf9qwaxkqwdg2125",
+        "resolved": true
+      },
+      "batting_team": "jecryyfq7srh87br",
+      "count": null,
+      "fielding_team": "wq5td5flfeeumd82",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "P. Mills lined out to cf, sacrifice fly, RBI; M. Moralez advanced to second on a throwing error by cf; J. Rooks scored.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [
+          "sacrifice fly",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "eupo52qdphok2d0r",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "bf9qwaxkqwdg2125",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "error",
+          "from": 1,
+          "out": false,
+          "player_id": "j13ba2p2b2l09404",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "l4hhv2hkq5nc9mp5",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 129
+    },
+    {
+      "_derived": {
+        "away_score_before": 12,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 8,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
@@ -7338,7 +7419,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 129
+      "seq": 130
     },
     {
       "batting_team": "jecryyfq7srh87br",
@@ -7348,7 +7429,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 0 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 130,
+      "seq": 131,
       "summary": {
         "E": 1,
         "H": 0,
@@ -7364,9 +7445,9 @@
       "kind": "substitution",
       "narrative": "T. Jackson to p for J. Haab.",
       "scoring_play": false,
-      "seq": 131,
+      "seq": 132,
       "substitution": {
-        "after_event_seq": 130,
+        "after_event_seq": 131,
         "kind": "pitching",
         "player_in": "shmgk7u5prgpdcgm",
         "player_out": "m5br8a089vhtv4lb",
@@ -7375,7 +7456,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 11,
+        "away_score_before": 12,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -7431,11 +7512,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 132
+      "seq": 133
     },
     {
       "_derived": {
-        "away_score_before": 11,
+        "away_score_before": 12,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -7491,11 +7572,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 133
+      "seq": 134
     },
     {
       "_derived": {
-        "away_score_before": 11,
+        "away_score_before": 12,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -7551,7 +7632,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 135
     },
     {
       "batting_team": "wq5td5flfeeumd82",
@@ -7561,7 +7642,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 135,
+      "seq": 136,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7571,6 +7652,7 @@
     }
   ],
   "game_id": "20240523_fl3p",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7679,7 +7761,7 @@
           "slot": 4
         },
         {
-          "after_event_seq": 130,
+          "after_event_seq": 131,
           "kind": "pitching",
           "player_in": "shmgk7u5prgpdcgm",
           "player_out": "m5br8a089vhtv4lb",
@@ -7755,20 +7837,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T17:43:31Z",
     "parse": {
-      "events_count": 136,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 0 != oracle 1",
-        "[linescore] linescore: computed away final R 11 != oracle total 12",
-        "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 6 top folded LOB 2 != inning_summary LOB 1",
-        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 78 runner kgffa368lrq9k6fz advances from base 1 which was not occupied at event start"
-      ]
+      "events_count": 137,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:08:56Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:04Z",
+    "parser_version": "0.8.0",
     "source_sha256": "6d862f148825df7594a2376120fed0f794662bb685d786c7bacaf70faf55d70e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240523_fl3p.xml"
   },
@@ -8125,7 +8201,7 @@
       "team_id": "jecryyfq7srh87br"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -8145,15 +8221,5 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 5
-      },
-      "raw": "P. Mills lined out to cf, sacrifice fly, RBI; M. Moralez advanced to second on a throwing error by cf; J. Rooks scored.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'P. Mills lined out to cf, sacrifice fly, RBI'"
-    }
-  ]
+  "unparsed": []
 }

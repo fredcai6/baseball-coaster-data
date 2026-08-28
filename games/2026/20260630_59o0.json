@@ -1455,11 +1455,11 @@
       "kind": "plate_appearance",
       "narrative": "Demias Jimerson reached on a fielder's choice to third base (1-2 FFB); Charlie Muniz out at second 3b to 2b; Cameron Bowen advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3259,7 +3259,9 @@
       "kind": "plate_appearance",
       "narrative": "Justin Trimble singled to catcher (2-2 BSSBF).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "c"
+        ],
         "location": "catcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5321,6 +5323,7 @@
     }
   ],
   "game_id": "20260630_59o0",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5488,12 +5491,13 @@
     "fetched_at": "2026-07-12T15:33:54Z",
     "parse": {
       "events_count": 91,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:50Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:58Z",
+    "parser_version": "0.8.0",
     "source_sha256": "e6410e4ecd4357c52c34bab1859458c3ff67ec1eff6e58d3659908c0e6477e63",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260630_59o0.xml"
   },
@@ -5822,7 +5826,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

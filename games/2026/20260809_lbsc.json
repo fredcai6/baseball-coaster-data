@@ -2352,7 +2352,7 @@
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2410,7 +2410,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "0y61reek2k11wgjw",
           "rbi": true,
@@ -2424,16 +2424,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 1,
@@ -2499,16 +2499,16 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 1,
@@ -2591,16 +2591,16 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 2,
@@ -2654,16 +2654,16 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 3,
@@ -3034,11 +3034,11 @@
       "kind": "plate_appearance",
       "narrative": "Justin Johnson Jr. reached on a fielder's choice to third base (0-0); Charlie Muniz out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5008,11 +5008,11 @@
       "kind": "plate_appearance",
       "narrative": "Adam Cootway reached on a fielder's choice to second base (2-0 BB); Justin Johnson Jr. out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -8043,6 +8043,7 @@
     }
   ],
   "game_id": "20260809_lbsc",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8235,15 +8236,13 @@
     "fetched_at": "2026-08-27T15:03:41Z",
     "parse": {
       "events_count": 134,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 3 top folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 33 runner 0y61reek2k11wgjw advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:08Z",
+    "parser_version": "0.8.0",
     "source_sha256": "bccba48ba59d9728dfa7edd9b132da4dec3cf7f5e607bbcf8c357d5a3b7a494b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260809_lbsc.xml"
   },
@@ -8603,7 +8602,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

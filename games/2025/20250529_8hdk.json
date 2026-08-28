@@ -1927,11 +1927,11 @@
       "kind": "plate_appearance",
       "narrative": "D. Leonard reached on a fielder's choice to shortstop; C. Hall out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3173,11 +3173,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kalafut reached on a fielder's choice to shortstop; M. Jung-Gold out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3843,22 +3843,48 @@
         "home_score_before": 5,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "J. Lee",
+        "player_id": "9mjy8dvawhf7k0g5",
+        "resolved": true
+      },
       "batting_team": "0twkgtzg9upvsarx",
+      "count": null,
       "fielding_team": "9fugocpa5h6ockn6",
       "half": "top",
       "inning": 5,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "J. Lee out at first p to 2b, SAC, bunt; E. Underwood advanced to second; J. Santini advanced to third.",
+      "outcome": {
+        "fielders": [
+          "p",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "02pssa4yjl71hmfb",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "9mjy8dvawhf7k0g5",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -5442,7 +5468,7 @@
         "home_score_before": 9,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6569,11 +6595,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Specht reached on a fielder's choice to second base; R. Kuntz out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6654,7 +6680,7 @@
         "home_score_before": 9,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -7654,6 +7680,7 @@
     }
   ],
   "game_id": "20250529_8hdk",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7874,6 +7901,7 @@
     "fetched_at": "2026-07-12T16:00:26Z",
     "parse": {
       "events_count": 136,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -7882,8 +7910,8 @@
         "[pa_counts] pa_counts: player 6pepnwlmp3ma7k4o events PA 5 != box-implied PA 6 (AB=4 BB=1 HBP=1 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:19Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:28Z",
+    "parser_version": "0.8.0",
     "source_sha256": "b04b937c651e2ab2a432b428f45470fefcfe18dda7cf923869acda0f07f2c2d1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250529_8hdk.xml"
   },
@@ -8292,7 +8320,7 @@
       "team_id": "0twkgtzg9upvsarx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -8320,7 +8348,7 @@
         "line_index": 5
       },
       "raw": "J. Santini struck out swinging, reached first on a fielding error by 1b, assist by c; M. Jung-Gold advanced to second; Myro IV scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'J. Santini struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'J. Santini struck out swinging, reached first on a fielding error by 1b'"
     }
   ]
 }

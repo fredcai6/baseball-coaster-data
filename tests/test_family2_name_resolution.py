@@ -62,7 +62,7 @@ def _run_promoted_comma_suffix_line():
         text=pbp["text"],
         is_strong=pbp["is_strong"],
     )
-    events, unparsed, _subs = parse_mod.build_events([line], player_table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], player_table)
     return fx, events, unparsed
 
 
@@ -121,7 +121,7 @@ def test_truncated_substitution_name_resolves_real_corpus_shape():
         text="C. Richardso to p for L. Short.",
         is_strong=False,
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert unparsed == []
     assert events[0]["substitution"]["player_in"] == "a8k7z5bbeuii76ei"
     assert events[0]["substitution"]["player_out"] == "y93tig5ow0mslgob"
@@ -144,7 +144,7 @@ def test_truncated_runner_event_name_resolves_real_corpus_shape():
     line = parse_mod.PbpLine(
         inning=1, half="bottom", line_index=0, text="J. McLaughli stole second.", is_strong=False
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert unparsed == []
     assert events[0]["runners"][0]["player_id"] == "lxy5m1w6pu28csl0"
 
@@ -170,7 +170,7 @@ def test_truncated_hyphenated_surname_resolves_real_corpus_shape():
         text="T. Clark-Chi advanced to second on a wild pitch.",
         is_strong=False,
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert unparsed == []
     assert events[0]["runners"][0]["player_id"] == "dizcmqk3f9odli2s"
 
@@ -214,7 +214,7 @@ def test_first_initial_disambiguates_real_corpus_batter_collision():
     line = parse_mod.PbpLine(
         inning=6, half="top", line_index=0, text="A. Davis walked.", is_strong=False,
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert unparsed == []
     assert events[0]["batter"]["player_id"] == "hrvm30esk9hi64t6"
 
@@ -251,7 +251,7 @@ def test_same_initial_surname_collision_stays_honestly_unresolved():
     line = parse_mod.PbpLine(
         inning=2, half="top", line_index=0, text="M. Jackson flied out to lf.", is_strong=False,
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert events == []
     assert len(unparsed) == 1
     assert unparsed[0]["reason"] == "batter name did not resolve uniquely: 'M. Jackson'"
@@ -265,7 +265,7 @@ def test_full_first_name_disambiguates_even_with_collision_present():
     line = parse_mod.PbpLine(
         inning=1, half="top", line_index=0, text="Marquis Jackson walked.", is_strong=False,
     )
-    events, unparsed, _subs = parse_mod.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], table)
     assert unparsed == []
     assert events[0]["batter"]["player_id"] == "05eihvbf9wvx0ikn"
 
@@ -318,7 +318,7 @@ def _run_promoted_first_initial_line():
         text=pbp["text"],
         is_strong=pbp["is_strong"],
     )
-    events, unparsed, _subs = parse_mod.build_events([line], player_table)
+    events, unparsed, _subs, _inferred = parse_mod.build_events([line], player_table)
     return fx, events, unparsed
 
 

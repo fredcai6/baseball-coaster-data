@@ -1909,8 +1909,8 @@
         "away_score_before": 5,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -1940,12 +1940,11 @@
       "kind": "plate_appearance",
       "narrative": "Antonio Barranca reached on a fielder's choice to third base, advanced to second on a throwing error by 2b (1-2 FKB); Ethan Ott out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base",
-          "advanced to second on a throwing error by 2b"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1962,7 +1961,7 @@
           "out": false,
           "player_id": "syn:home:3",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -1979,15 +1978,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -2040,7 +2039,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "syn:home:3",
           "rbi": true,
@@ -6919,6 +6918,7 @@
     }
   ],
   "game_id": "20260715_alg1",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7097,12 +7097,13 @@
     "fetched_at": "2026-08-27T14:27:00Z",
     "parse": {
       "events_count": 120,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:54Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:02Z",
+    "parser_version": "0.8.0",
     "source_sha256": "7562eb67fa170b2a74437f8c8ae41abc8032c9be8351b87b8dd0060beb8218a2",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260715_alg1.xml"
   },
@@ -7449,7 +7450,7 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

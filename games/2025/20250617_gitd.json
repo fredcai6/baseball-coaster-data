@@ -5992,10 +5992,11 @@
       "kind": "plate_appearance",
       "narrative": "D. Buggs reached on a fielder's choice to center field, RBI; Cobb, Jr advanced to second; L. Helmig out at third cf to 3b; E. Santos scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "cf"
+        ],
+        "location": "center field",
         "modifiers": [
-          "to center field",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -6254,6 +6255,7 @@
     }
   ],
   "game_id": "20250617_gitd",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6460,12 +6462,13 @@
     "fetched_at": "2026-07-12T16:21:46Z",
     "parse": {
       "events_count": 115,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:24Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:32Z",
+    "parser_version": "0.8.0",
     "source_sha256": "384a5a4cd06917333a4b05cd151781d6363b85d80802406810803617637e4874",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250617_gitd.xml"
   },
@@ -6861,7 +6864,7 @@
       "team_id": "zgzmksngghvq54yy"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

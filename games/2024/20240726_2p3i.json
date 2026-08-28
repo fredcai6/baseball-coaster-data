@@ -4103,22 +4103,48 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "L. Barns",
+        "player_id": "o05hhky2z0v1iwda",
+        "resolved": true
+      },
       "batting_team": "56cu2zsze70qcfrx",
+      "count": null,
       "fielding_team": "wfkag0okico94mfx",
       "half": "top",
       "inning": 8,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "L. Barns out at first p to 2b, SAC, bunt; T. Fontenot advanced to second; P. Howard advanced to third.",
+      "outcome": {
+        "fielders": [
+          "p",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "9dyy2wtipddph35a",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "o05hhky2z0v1iwda",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -4576,13 +4602,83 @@
         "away_score_before": 1,
         "base_out_state": "010|0",
         "bases_after": [
-          false,
           true,
+          false,
           false
         ],
         "bases_before": [
           false,
           true,
+          false
+        ],
+        "home_score_before": 4,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "R. Gil",
+        "player_id": "chqmwn5urdqxkeya",
+        "resolved": true
+      },
+      "batting_team": "56cu2zsze70qcfrx",
+      "count": null,
+      "fielding_team": "wfkag0okico94mfx",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "R. Gil singled to shortstop; J. Cone advanced to third, scored on a throwing error by ss.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "z4pola979v5tt8la",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "chqmwn5urdqxkeya",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "b1n6czvuhgej6n6t",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 85
+    },
+    {
+      "_derived": {
+        "away_score_before": 2,
+        "base_out_state": "100|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
           false
         ],
         "home_score_before": 4,
@@ -4631,7 +4727,7 @@
         },
         {
           "cause": "putout",
-          "from": 0,
+          "from": 1,
           "out": true,
           "player_id": "chqmwn5urdqxkeya",
           "scored": false,
@@ -4639,20 +4735,20 @@
         }
       ],
       "scoring_play": false,
-      "seq": 85
+      "seq": 86
     },
     {
       "_derived": {
-        "away_score_before": 1,
-        "base_out_state": "010|2",
+        "away_score_before": 2,
+        "base_out_state": "000|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
           false,
-          true,
+          false,
           false
         ],
         "home_score_before": 4,
@@ -4700,7 +4796,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "batting_team": "56cu2zsze70qcfrx",
@@ -4710,9 +4806,9 @@
       "kind": "substitution",
       "narrative": "C. Steele pinch ran for C. Sargent.",
       "scoring_play": false,
-      "seq": 87,
+      "seq": 88,
       "substitution": {
-        "after_event_seq": 86,
+        "after_event_seq": 87,
         "kind": "offensive",
         "player_in": "eq89p3afqc3lxnjt",
         "player_out": "oewxebl8ucyi9t6u",
@@ -4721,16 +4817,16 @@
     },
     {
       "_derived": {
-        "away_score_before": 1,
-        "base_out_state": "110|2",
+        "away_score_before": 2,
+        "base_out_state": "100|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
         "home_score_before": 4,
@@ -4779,7 +4875,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "batting_team": "56cu2zsze70qcfrx",
@@ -4789,7 +4885,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 89,
+      "seq": 90,
       "summary": {
         "E": 1,
         "H": 3,
@@ -4799,6 +4895,7 @@
     }
   ],
   "game_id": "20240726_2p3i",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -4886,7 +4983,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 86,
+          "after_event_seq": 87,
           "kind": "offensive",
           "player_in": "eq89p3afqc3lxnjt",
           "player_out": "oewxebl8ucyi9t6u",
@@ -4955,18 +5052,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:57:12Z",
     "parse": {
-      "events_count": 90,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 0 != oracle 1",
-        "[linescore] linescore: computed away final R 1 != oracle total 2",
-        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player chqmwn5urdqxkeya events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 91,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:10Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:19Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f3e4d6f410c8c3f66249bee735df0852430ce5c655f87d3517bdbe1bbda99f24",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240726_2p3i.xml"
   },
@@ -5284,7 +5377,7 @@
       "team_id": "56cu2zsze70qcfrx"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -5304,15 +5397,5 @@
       "team_id": "wfkag0okico94mfx"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "R. Gil singled to shortstop; J. Cone advanced to third, scored on a throwing error by ss.",
-      "reason": "runner clause not recognized: 'J. Cone advanced to third, scored on a throwing error by ss'"
-    }
-  ]
+  "unparsed": []
 }

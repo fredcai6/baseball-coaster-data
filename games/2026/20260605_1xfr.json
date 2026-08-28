@@ -2379,8 +2379,8 @@
         "away_score_before": 1,
         "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -2410,12 +2410,11 @@
       "kind": "plate_appearance",
       "narrative": "D. Ratfield reached on a fielder's choice to pitcher, advanced to second (1-2 KSB); J. Millan out at third p to 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher",
-          "advanced to second"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2432,7 +2431,7 @@
           "out": false,
           "player_id": "pb4j4o4tl4zsiriu",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -2449,15 +2448,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 4,
@@ -7087,6 +7086,7 @@
     }
   ],
   "game_id": "20260605_1xfr",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7307,14 +7307,15 @@
     "fetched_at": "2026-07-12T15:06:09Z",
     "parse": {
       "events_count": 128,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:53Z",
+    "parser_version": "0.8.0",
     "source_sha256": "05cdfbca647e22be1c1f1f746b31a8e7e98ef6e54ad507bafa353a05bedd4ce7",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260605_1xfr.xml"
   },
@@ -7676,7 +7677,7 @@
       "team_id": "na6t5g8htwf89dsc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

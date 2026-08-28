@@ -5867,13 +5867,53 @@
         "base_out_state": "111|2",
         "bases_after": [
           true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 1
+      },
+      "batting_team": "4hgc4se23g09mrqm",
+      "fielding_team": "z7y9gph0l9ltq3lq",
+      "half": "top",
+      "inning": 9,
+      "kind": "runner_event",
+      "narrative": "T. Rogers scored, on a wild pitch.",
+      "runners": [
+        {
+          "cause": "wild_pitch",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "e70l07jap433trbp",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 104
+    },
+    {
+      "_derived": {
+        "away_score_before": 11,
+        "base_out_state": "110|2",
+        "bases_after": [
+          true,
           false,
           true
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 4,
         "outs_after": 2,
@@ -5897,11 +5937,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 10,
+        "away_score_before": 11,
         "base_out_state": "101|2",
         "bases_after": [
           false,
@@ -5935,11 +5975,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
-        "away_score_before": 10,
+        "away_score_before": 11,
         "base_out_state": "011|2",
         "bases_after": [
           true,
@@ -6018,11 +6058,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 106
+      "seq": 107
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6076,7 +6116,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 108
     },
     {
       "batting_team": "4hgc4se23g09mrqm",
@@ -6086,7 +6126,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 6 Runs, 4 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 108,
+      "seq": 109,
       "summary": {
         "E": 0,
         "H": 4,
@@ -6102,9 +6142,9 @@
       "kind": "substitution",
       "narrative": "D. Crowley to p for S. Ordorica.",
       "scoring_play": false,
-      "seq": 109,
+      "seq": 110,
       "substitution": {
-        "after_event_seq": 108,
+        "after_event_seq": 109,
         "kind": "pitching",
         "player_in": "w6l1imwauso622tx",
         "player_out": "syn:away:1",
@@ -6113,7 +6153,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6169,11 +6209,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -6229,11 +6269,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -6287,11 +6327,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6355,11 +6395,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
-        "away_score_before": 12,
+        "away_score_before": 13,
         "base_out_state": "110|2",
         "bases_after": [
           true,
@@ -6413,7 +6453,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -6423,7 +6463,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6433,6 +6473,7 @@
     }
   ],
   "game_id": "20240615_4x1b",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6520,7 +6561,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 108,
+          "after_event_seq": 109,
           "kind": "pitching",
           "player_in": "w6l1imwauso622tx",
           "player_out": "syn:away:1",
@@ -6589,16 +6630,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:10:54Z",
     "parse": {
-      "events_count": 116,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 5 != oracle 6",
-        "[linescore] linescore: computed away final R 12 != oracle total 13"
-      ]
+      "events_count": 117,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:01Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:10Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f75459a6d9cd09a8a829fb41b2f29bcf7461c80aeb173c8b6f9cf16095cdbf01",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240615_4x1b.xml"
   },
@@ -6927,7 +6966,7 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -6947,15 +6986,5 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 9
-      },
-      "raw": "T. Rogers scored, on a wild pitch.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'T. Rogers scored, on a wild pitch'"
-    }
-  ]
+  "unparsed": []
 }

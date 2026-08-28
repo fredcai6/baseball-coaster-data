@@ -208,7 +208,7 @@ def _build_events_for_line(text: str):
 
 
 def test_count_tail_optional_line_no_longer_crashes_build_events():
-    events, unparsed, _subs = _build_events_for_line(
+    events, unparsed, _subs, _inferred = _build_events_for_line(
         "Kyle Schmack singled up the middle."
     )
     assert unparsed == []
@@ -217,7 +217,7 @@ def test_count_tail_optional_line_no_longer_crashes_build_events():
 
 
 def test_count_tail_optional_line_emits_count_none_and_pitches_none():
-    events, _unparsed, _subs = _build_events_for_line(
+    events, _unparsed, _subs, _inferred = _build_events_for_line(
         "Kyle Schmack singled up the middle."
     )
     assert events[0]["count"] is None
@@ -330,7 +330,7 @@ def test_pinch_run_substitution_resolves_against_batting_side_not_fielding_side(
         text="Sam Runner pinch ran for Pat Smith.",
         is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], player_table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], player_table)
     assert unparsed == []
     assert len(events) == 1
     sub = events[0]["substitution"]
@@ -340,7 +340,7 @@ def test_pinch_run_substitution_resolves_against_batting_side_not_fielding_side(
 
 
 def test_dh_slot_bare_line_no_longer_crashes_build_events():
-    events, unparsed, _subs = _build_events_for_dh_slot_bare_line(
+    events, unparsed, _subs, _inferred = _build_events_for_dh_slot_bare_line(
         "Cole Robinson to dh."
     )
     assert unparsed == []
@@ -349,7 +349,7 @@ def test_dh_slot_bare_line_no_longer_crashes_build_events():
 
 
 def test_dh_slot_bare_line_emits_player_out_none_and_offensive_kind():
-    events, _unparsed, _subs = _build_events_for_dh_slot_bare_line(
+    events, _unparsed, _subs, _inferred = _build_events_for_dh_slot_bare_line(
         "Cole Robinson to dh."
     )
     sub = events[0]["substitution"]
@@ -360,7 +360,7 @@ def test_dh_slot_bare_line_emits_player_out_none_and_offensive_kind():
 
 def test_dh_slot_bare_event_is_schema_valid():
     fixture = load_fixture("game_20260709_h94w_top1.json")
-    events, _unparsed, _subs = _build_events_for_dh_slot_bare_line(
+    events, _unparsed, _subs, _inferred = _build_events_for_dh_slot_bare_line(
         "Cole Robinson to dh."
     )
     game = dict(fixture)
@@ -412,7 +412,7 @@ def test_e2e_pitching_sub_resolves_fielding_side():
         inning=1, half="top", line_index=0,
         text="Isaiah Williams to p for Chase Martinez.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     sub = events[0]["substitution"]
     assert sub["kind"] == "pitching"
@@ -435,7 +435,7 @@ def test_e2e_two_name_defensive_position_sub_resolves_fielding_side():
     line = parse.PbpLine(
         inning=1, half="top", line_index=0, text="B. Lada to ss for B. Marine.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     sub = events[0]["substitution"]
     assert sub["kind"] == "defensive"
@@ -454,7 +454,7 @@ def test_e2e_bare_position_move_resolves_fielding_side_player_out_none():
         home_players={"h1": _entry2("h1", "D. Sackett", "Sackett", "syn:team:home", ["3b"])},
     )
     line = parse.PbpLine(inning=1, half="top", line_index=0, text="D. Sackett to 3b.", is_strong=False)
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     sub = events[0]["substitution"]
     assert sub["kind"] == "defensive"
@@ -478,7 +478,7 @@ def test_e2e_pinch_hit_resolves_batting_side():
     line = parse.PbpLine(
         inning=1, half="top", line_index=0, text="S. Wilmer pinch hit for B. Hancock.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     sub = events[0]["substitution"]
     assert sub["kind"] == "offensive"
@@ -523,7 +523,7 @@ def test_e2e_two_name_dh_sub_issue_32_resolves_batting_side_when_convention_hold
     line = parse.PbpLine(
         inning=1, half="top", line_index=0, text="P. DePasqual to dh for J. Impedugli.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     sub = events[0]["substitution"]
     assert sub["kind"] == "offensive"
@@ -558,7 +558,7 @@ def test_e2e_two_name_dh_sub_resolves_via_fielding_side_fallback():
     line = parse.PbpLine(
         inning=9, half="bottom", line_index=0, text="J. McLaughli to dh for A. Sczepkows.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert unparsed == []
     assert len(events) == 1
     sub = events[0]["substitution"]
@@ -594,7 +594,7 @@ def test_e2e_dh_sub_ambiguous_on_both_sides_stays_unparsed_never_guesses():
     line = parse.PbpLine(
         inning=1, half="top", line_index=0, text="J. Smith to dh for T. Jones.", is_strong=False,
     )
-    events, unparsed, _subs = parse.build_events([line], table)
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert events == []
     assert len(unparsed) == 1
     assert "cross-side ambiguity" in unparsed[0]["reason"]
@@ -604,7 +604,7 @@ def test_count_tail_optional_event_is_schema_valid():
     # Embed the count-less event into the frozen hand fixture (which supplies
     # every other required top-level field) and validate the whole file.
     fixture = load_fixture("game_20260709_h94w_top1.json")
-    events, _unparsed, _subs = _build_events_for_line(
+    events, _unparsed, _subs, _inferred = _build_events_for_line(
         "Kyle Schmack singled up the middle."
     )
     game = dict(fixture)

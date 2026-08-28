@@ -914,11 +914,11 @@
       "kind": "plate_appearance",
       "narrative": "L. Beard reached on a fielder's choice to shortstop; J. Mabry out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6620,6 +6620,7 @@
     }
   ],
   "game_id": "20250726_hsaw",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6840,12 +6841,13 @@
     "fetched_at": "2026-07-12T17:06:52Z",
     "parse": {
       "events_count": 121,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:33Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:42Z",
+    "parser_version": "0.8.0",
     "source_sha256": "1eac92fceb6b510282862df5531eec3b4095577af0367816182851090e61a409",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250726_hsaw.xml"
   },
@@ -7215,7 +7217,7 @@
       "team_id": "mw5jz3z05tswxa8m"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

@@ -2816,11 +2816,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Hanson reached on a fielder's choice to third base; T. Shelnut out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3207,11 +3207,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kline reached on a fielder's choice to pitcher; J. O'Dowd out at second p to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4613,11 +4613,11 @@
       "kind": "plate_appearance",
       "narrative": "K. Liniak reached on a fielder's choice to third base; T. Clarkson out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7305,6 +7305,7 @@
     }
   ],
   "game_id": "20250711_qb3d",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7511,14 +7512,15 @@
     "fetched_at": "2026-07-12T16:48:46Z",
     "parse": {
       "events_count": 132,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 2 bottom folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:29Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:38Z",
+    "parser_version": "0.8.0",
     "source_sha256": "dedec171d0e0d87fd4af068b15c88192581fcb0da2496f9db52e56771c9fdc6d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250711_qb3d.xml"
   },
@@ -7927,7 +7929,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

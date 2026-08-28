@@ -2326,11 +2326,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Specht reached on a fielder's choice to second base; A. Fritz out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3099,7 +3099,9 @@
       "kind": "plate_appearance",
       "narrative": "A. Fritz singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -4059,11 +4061,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Watkins reached on a fielder's choice to third base; K. Schmack out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5985,6 +5987,7 @@
     }
   ],
   "game_id": "20250810_56bb",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6149,12 +6152,13 @@
     "fetched_at": "2026-07-12T17:23:15Z",
     "parse": {
       "events_count": 106,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:37Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:45Z",
+    "parser_version": "0.8.0",
     "source_sha256": "3f91c07de6bb79d78680388cd4f03805586d4e49cc9702bebb2494bc7af4ce4a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250810_56bb.xml"
   },
@@ -6485,7 +6489,7 @@
       "team_id": "ik8nryg1d30j5748"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

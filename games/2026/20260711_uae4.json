@@ -2370,7 +2370,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2392,7 +2392,7 @@
         {
           "cause": "wild_pitch",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "uujsp0ot0j7oa9x2",
           "rbi": false,
@@ -2406,16 +2406,16 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "001|1",
+        "base_out_state": "000|1",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 1,
         "outs_after": 1,
@@ -2467,16 +2467,16 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 1,
         "outs_after": 1,
@@ -2505,7 +2505,7 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
           false,
@@ -2514,7 +2514,7 @@
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 1,
         "outs_after": 1,
@@ -7505,6 +7505,7 @@
     }
   ],
   "game_id": "20260711_uae4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7669,14 +7670,13 @@
     "fetched_at": "2026-07-12T15:48:35Z",
     "parse": {
       "events_count": 129,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 33 runner uujsp0ot0j7oa9x2 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:53Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:01Z",
+    "parser_version": "0.8.0",
     "source_sha256": "ea83c471033001a04bebc28d58df5c6d172c67d744baec1dc48a9953ad21cf97",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260711_uae4.xml"
   },
@@ -8001,7 +8001,7 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

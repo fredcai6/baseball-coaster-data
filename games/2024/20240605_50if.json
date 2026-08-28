@@ -2543,22 +2543,47 @@
         "home_score_before": 0,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "T. Halsema",
+        "player_id": "2gxnmkva0on099vc",
+        "resolved": true
+      },
       "batting_team": "3ward2o2o9m0w2dj",
+      "count": null,
       "fielding_team": "yypnc9frxmnyc9sf",
       "half": "bottom",
       "inning": 4,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "T. Halsema out at first ss to 2b, RBI; P. Harden scored.",
+      "outcome": {
+        "fielders": [
+          "ss",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "uzt2ow2fdbzmwixl",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "2gxnmkva0on099vc",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -2566,7 +2591,7 @@
           "from": 3,
           "out": false,
           "player_id": "az4ih8utwyknljrz",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -3716,7 +3741,7 @@
         "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4934,7 +4959,7 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 2
       },
       "batter": {
@@ -5275,6 +5300,7 @@
     }
   ],
   "game_id": "20240605_50if",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5467,15 +5493,13 @@
     "fetched_at": "2026-07-12T17:58:48Z",
     "parse": {
       "events_count": 101,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player 2gxnmkva0on099vc events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 41 runner 2gxnmkva0on099vc advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:08:59Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:07Z",
+    "parser_version": "0.8.0",
     "source_sha256": "9b98c722e2be8b097159570439dae09f8c0b0a338391e2c8d5b823a786a81d60",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240605_50if.xml"
   },
@@ -5832,7 +5856,7 @@
       "team_id": "3ward2o2o9m0w2dj"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

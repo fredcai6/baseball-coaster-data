@@ -6272,7 +6272,7 @@
         "base_out_state": "011|0",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -6283,6 +6283,89 @@
         "home_score_before": 5,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Jacob Lojewski",
+        "player_id": "mak22par5gx0o8c5",
+        "resolved": true
+      },
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "count": {
+        "balls": 1,
+        "strikes": 2
+      },
+      "fielding_team": "toa4e66upwknb2r7",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Jacob Lojewski popped up to rf, RBI (1-2 KKB); Byungyong Choi advanced to third; Osiris Johnson scored.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "jio35ieyvqz4cmfa",
+        "resolved": true
+      },
+      "pitches": "KKB",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "mak22par5gx0o8c5",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "n9brn6j69ico1954",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "dhom60hfa5q8nmnw",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 113
+    },
+    {
+      "_derived": {
+        "away_score_before": 6,
+        "base_out_state": "001|1",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
+        ],
+        "home_score_before": 6,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -6325,25 +6408,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "011|1",
+        "base_out_state": "001|2",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
-        "home_score_before": 5,
-        "outs_after": 2,
-        "outs_before": 1,
+        "home_score_before": 6,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -6386,7 +6469,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -6396,7 +6479,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 4 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "summary": {
         "E": 0,
         "H": 3,
@@ -6406,6 +6489,7 @@
     }
   ],
   "game_id": "20260606_e656",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6590,19 +6674,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:07:47Z",
     "parse": {
-      "events_count": 116,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 9 computed 3 != oracle 4",
-        "[linescore] linescore: computed home final R 5 != oracle total 6",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player mak22par5gx0o8c5 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 117,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:53Z",
+    "parser_version": "0.8.0",
     "source_sha256": "3b0510e0310829bde78a48b61a078346cdc372695a4dcb1a681d1f02dbee16d8",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260606_e656.xml"
   },
@@ -6953,7 +7032,7 @@
       "team_id": "ndn2a2djbgbd0lh4"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6973,15 +7052,5 @@
       "team_id": "ndn2a2djbgbd0lh4"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 10
-      },
-      "raw": "Jacob Lojewski popped up to rf, RBI (1-2 KKB); Byungyong Choi advanced to third; Osiris Johnson scored.",
-      "reason": "primary verb not recognized: 'Jacob Lojewski popped up to rf, RBI'"
-    }
-  ]
+  "unparsed": []
 }

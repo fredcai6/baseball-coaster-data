@@ -762,11 +762,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Jordan reached on a fielder's choice to third base; D. Brutcher advanced to second; C. Sargent out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6532,11 +6532,11 @@
       "kind": "plate_appearance",
       "narrative": "W. Spear reached on a fielder's choice to shortstop; Serratos, Jr out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6585,6 +6585,7 @@
     }
   ],
   "game_id": "20240807_1a0w",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6756,12 +6757,13 @@
     "fetched_at": "2026-07-12T19:11:33Z",
     "parse": {
       "events_count": 120,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:13Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:22Z",
+    "parser_version": "0.8.0",
     "source_sha256": "9e886c161c83219e05a075b3b8e0d72557e0f46b632337f78ef6bb2254ddc3fa",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240807_1a0w.xml"
   },
@@ -7105,7 +7107,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

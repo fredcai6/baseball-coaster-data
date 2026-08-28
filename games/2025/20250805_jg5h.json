@@ -1054,7 +1054,9 @@
       "kind": "plate_appearance",
       "narrative": "Q. Landis singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5859,6 +5861,7 @@
     }
   ],
   "game_id": "20250805_jg5h",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6060,6 +6063,7 @@
     "fetched_at": "2026-07-12T17:16:36Z",
     "parse": {
       "events_count": 110,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6068,8 +6072,8 @@
         "[pa_counts] pa_counts: player izzcunrxsob3uzsl events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:35Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:44Z",
+    "parser_version": "0.8.0",
     "source_sha256": "90c9a7e79cba067c88cb537573c7d53e1c83dcbe99ccdb1db5520cc8036fc594",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250805_jg5h.xml"
   },
@@ -6439,7 +6443,7 @@
       "team_id": "ftxbf1wj156q30wd"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",
@@ -6467,7 +6471,7 @@
         "line_index": 7
       },
       "raw": "C. Bagnieski struck out swinging, reached first on an error by p; C. Jordan advanced to third; S. Greico scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'C. Bagnieski struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'C. Bagnieski struck out swinging, reached first on an error by p'"
     }
   ]
 }

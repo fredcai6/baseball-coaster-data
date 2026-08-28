@@ -8181,6 +8181,7 @@
     }
   ],
   "game_id": "20260610_y0b3",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8366,6 +8367,7 @@
     "fetched_at": "2026-07-12T15:11:38Z",
     "parse": {
       "events_count": 138,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 2,
       "warnings": [
@@ -8376,8 +8378,8 @@
         "[pa_counts] pa_counts: player mqdcsnthll43eapk events PA 5 != box-implied PA 6 (AB=5 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:45Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:54Z",
+    "parser_version": "0.8.0",
     "source_sha256": "eb09f3d86f2f25b3b0dff4860c57623b755b1264974fdfdf2fcc944639869f13",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260610_y0b3.xml"
   },
@@ -8737,7 +8739,7 @@
       "team_id": "p36jpi9icfitpai5"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -8774,7 +8776,7 @@
         "line_index": 3
       },
       "raw": "William Bermudez hit by pitch, grounded out to 2b unassisted (2-2 FFBH); Jeremy Piatkiewicz advanced to second.\n                                                                                                                                                                                    \t\t\t\t\t(2 out)",
-      "reason": "batter name did not resolve uniquely: 'William Bermudez hit by pitch,'"
+      "reason": "primary verb not recognized: 'William Bermudez hit by pitch, grounded out to 2b unassisted'"
     }
   ]
 }

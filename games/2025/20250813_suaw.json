@@ -890,11 +890,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Hanson reached on a fielder's choice to second base; J. O'Dowd out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1292,11 +1292,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Bowen reached on a fielder's choice to shortstop; X. Casserill out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6131,6 +6131,7 @@
     }
   ],
   "game_id": "20250813_suaw",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6323,12 +6324,13 @@
     "fetched_at": "2026-07-12T17:26:22Z",
     "parse": {
       "events_count": 112,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:37Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:46Z",
+    "parser_version": "0.8.0",
     "source_sha256": "e94433837b97157e4f93fff9425aa30c7ac3699de84f3df051c8121fa588faac",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250813_suaw.xml"
   },
@@ -6698,7 +6700,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

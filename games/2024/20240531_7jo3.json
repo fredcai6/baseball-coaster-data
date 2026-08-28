@@ -4253,11 +4253,11 @@
       "kind": "plate_appearance",
       "narrative": "B. Ryan reached on a fielder's choice to second base; T. Lomack out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5998,6 +5998,7 @@
     }
   ],
   "game_id": "20240531_7jo3",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6197,12 +6198,13 @@
     "fetched_at": "2026-07-12T17:53:07Z",
     "parse": {
       "events_count": 109,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:08:57Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:06Z",
+    "parser_version": "0.8.0",
     "source_sha256": "f361868b9d892873a2711d8642fc7c7d7d37f8d294346092408b719f9900798a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240531_7jo3.xml"
   },
@@ -6572,7 +6574,7 @@
       "team_id": "zws0fa37bt7u3101"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
