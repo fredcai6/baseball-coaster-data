@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.16.0"
+PARSER_VERSION = "0.17.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -240,6 +240,7 @@ def build_events(
     lines: List[PbpLine],
     player_table: identity.PlayerTable,
     box_pitching_order: Optional[Dict[str, List[str]]] = None,
+    box_batting: Optional[Dict[str, List[dict]]] = None,
 ) -> Tuple[List[dict], List[dict], Dict[str, List[dict]], List[dict]]:
     """PURE: fold ordered ``PbpLine``s + the identity player table into the
     schema's ``events[]`` spine, an ``unparsed[]`` list, and a per-team-id
@@ -1155,6 +1156,57 @@ def build_events(
         )
         seq += 1
 
+    # PASS 2. `slot_occupant` is seeded above from `list(players)[:9]` -- the
+    # same naive slice `_reconstruct_starting_order` measures at 44.3%, and
+    # it drives every `substitution.slot`. It has to be seeded BEFORE the fold
+    # loop, while the corrected order needs `events`, so the correction can
+    # only happen afterwards: recompute the order, then re-walk ONLY the
+    # substitution chronology.
+    #
+    # Nothing else moves. Batter and runner resolution never read
+    # `slot_occupant` -- its only readers are the seed above and the
+    # substitution branch -- so pass 2 cannot disturb `events`. Measured over
+    # the whole corpus: 0 replay-verdict changes, 0 unparsed-count changes,
+    # events[] byte-identical apart from `substitution.slot`.
+    if box_batting is not None:
+        for team in (player_table.home, player_table.away):
+            subs = subs_by_team.get(team.team_id, [])
+            fixed = _reconstruct_starting_order(
+                box_batting.get(team.team_id, []), subs, events, team.team_id
+            )
+            if fixed is None:
+                fixed = list(team.players.keys())[:9]
+            occupant = {i + 1: pid for i, pid in enumerate(fixed)}
+            for sub in subs:
+                out_pid, in_pid = sub.get("player_out"), sub.get("player_in")
+                slot = None
+                if out_pid is not None:
+                    slot = next(
+                        (s for s, pid in occupant.items() if pid == out_pid), None
+                    )
+                if slot is not None:
+                    # A player cannot hold two batting slots at once. When
+                    # `player_in` already occupies a DIFFERENT one, this line
+                    # realigns someone already in the lineup rather than
+                    # changing it, and transferring would overwrite his real
+                    # slot.
+                    #
+                    # The guard and the seed MUST land together. Measured on
+                    # an oracle that needs no narrative -- a player recorded
+                    # entering two different slots in one game, which is
+                    # impossible -- the corrected seed ALONE makes things
+                    # worse (57 -> 67), because the two defects were
+                    # partially masking each other. Together: 57 -> 25, over
+                    # 45 -> 21 team-games, while slot coverage RISES from
+                    # 3,615 to 4,016 substitutions.
+                    if any(
+                        s != slot and pid == in_pid for s, pid in occupant.items()
+                    ):
+                        slot = None
+                    else:
+                        occupant[slot] = in_pid
+                sub["slot"] = slot
+
     return events, unparsed, subs_by_team, inferred
 
 
@@ -1641,6 +1693,7 @@ def parse_game(
             team_id: [row["player_id"] for row in rows]
             for team_id, rows in box["pitching"].items()
         },
+        box_batting=box["batting"],
     )
     # Disclose every applied correction alongside the parser's own
     # inferences, under the same contract: a consumer that wants only what
