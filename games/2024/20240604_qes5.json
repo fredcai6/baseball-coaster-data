@@ -2500,8 +2500,8 @@
         "away_score_before": 3,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -2533,8 +2533,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -2552,7 +2551,7 @@
           "out": false,
           "player_id": "iokg5r2hhkb0jv4j",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "error",
@@ -2569,15 +2568,15 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -2641,15 +2640,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -2699,7 +2698,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -2707,7 +2706,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 1,
@@ -2760,7 +2759,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "iokg5r2hhkb0jv4j",
           "scored": false,
@@ -6613,19 +6612,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T17:57:10Z",
     "parse": {
       "events_count": 114,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 40 runner iokg5r2hhkb0jv4j advances from base 3 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:07Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:37Z",
+    "parser_version": "0.10.0",
     "source_sha256": "07cf90928bee54fdf99933c7735485897ac5036ef2d2341f8957a3570fd033a8",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240604_qes5.xml"
   },

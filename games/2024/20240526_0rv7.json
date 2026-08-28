@@ -6129,7 +6129,7 @@
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
@@ -6140,7 +6140,7 @@
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 5,
-        "runs_on_play": 0
+        "runs_on_play": 1
       },
       "batter": {
         "name_raw": "J. McLaughli",
@@ -6190,11 +6190,13 @@
         },
         {
           "cause": "error",
+          "earned": false,
           "from": 2,
           "out": false,
           "player_id": "ssr0sznmljasuib4",
-          "scored": false,
-          "to": 3
+          "rbi": true,
+          "scored": true,
+          "to": 4
         }
       ],
       "scoring_play": false,
@@ -6218,7 +6220,18 @@
     }
   ],
   "game_id": "20240526_0rv7",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "source line re-emits the runner's own name as a bare token on a clause that records no run; read as 'scored' (linescore oracle reconciles 4/4 in the affected innings, and the same defect standalone measured 54/54)",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 9
+      },
+      "raw": "J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced to third on an error by 3b, T. Sheehan, unearned.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6474,22 +6487,20 @@
     "fetched_at": "2026-07-12T17:47:04Z",
     "parse": {
       "events_count": 121,
-      "inferred_count": 0,
+      "inferred_count": 1,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
         "[linescore] linescore: away inning 4 computed 0 != oracle 1",
-        "[linescore] linescore: home inning 9 computed 0 != oracle 1",
         "[linescore] linescore: computed away final R 4 != oracle total 5",
-        "[linescore] linescore: computed home final R 5 != oracle total 6",
         "[outs_per_half] outs_per_half: inning 4 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
         "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 0",
+        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3",
         "[pa_counts] pa_counts: player 2gxnmkva0on099vc events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-28T02:55:29Z",
-    "parser_version": "0.9.0",
+    "parsed_at": "2026-08-28T14:16:35Z",
+    "parser_version": "0.10.0",
     "source_sha256": "fedf1987ea93e0d0a9d8c5bff28bf0fb7545bcc38864aa04a0b5892c9a77f5ae",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240526_0rv7.xml"
   },

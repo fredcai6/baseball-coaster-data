@@ -4452,7 +4452,7 @@
         "away_score_before": 4,
         "base_out_state": "000|2",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -4462,7 +4462,7 @@
           false
         ],
         "home_score_before": 10,
-        "outs_after": 2,
+        "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
@@ -4485,10 +4485,9 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "out at second c to ss"
+          "error"
         ],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "reached_on_error"
       },
       "pitcher": {
@@ -4501,10 +4500,10 @@
         {
           "cause": "error",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "tj7i1g4g1oxwyhxi",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -6251,20 +6250,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T18:25:37Z",
     "parse": {
       "events_count": 111,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 6 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 6 top folded LOB 1 != inning_summary LOB 0"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:13Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:42Z",
+    "parser_version": "0.10.0",
     "source_sha256": "a7eb368d3862d3747002931b409f1737a3bbbe8290ca86f2bc3d106d8fde47ea",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240628_wrax.xml"
   },

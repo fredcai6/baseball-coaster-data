@@ -2209,8 +2209,8 @@
         "away_score_before": 2,
         "base_out_state": "101|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -2246,7 +2246,6 @@
         "location": null,
         "modifiers": [
           "error",
-          "advanced to second",
           "RBI"
         ],
         "outs_recorded": 0,
@@ -2265,7 +2264,7 @@
           "out": false,
           "player_id": "dhom60hfa5q8nmnw",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -2309,15 +2308,15 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
           true,
-          false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 4,
@@ -2370,15 +2369,15 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "101|1",
+        "base_out_state": "111|1",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           true
         ],
         "home_score_before": 4,
@@ -2446,7 +2445,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           false,
@@ -2454,7 +2453,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 4,
@@ -2471,7 +2470,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "dhom60hfa5q8nmnw",
           "scored": false,
@@ -5071,8 +5070,8 @@
         "away_score_before": 8,
         "base_out_state": "000|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -5107,8 +5106,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5126,7 +5124,7 @@
           "out": false,
           "player_id": "n7whb4o7sz53n79h",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -5135,15 +5133,15 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 5,
@@ -5196,7 +5194,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "n7whb4o7sz53n79h",
           "rbi": true,
@@ -9325,20 +9323,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T15:37:46Z",
     "parse": {
       "events_count": 161,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 2 top folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 33 runner dhom60hfa5q8nmnw advances from base 3 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:59Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:26Z",
+    "parser_version": "0.10.0",
     "source_sha256": "f9a146aa242278e30187fcf375d56aed5bd8099afe0f85000ab8f5eb68fde287",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260702_wkgh.xml"
   },

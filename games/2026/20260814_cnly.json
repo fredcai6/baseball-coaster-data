@@ -5933,8 +5933,8 @@
         "away_score_before": 2,
         "base_out_state": "111|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -5967,11 +5967,9 @@
         "fielders": [
           "cf"
         ],
-        "location": null,
+        "location": "left center",
         "modifiers": [
-          "error",
-          "to left center",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5989,7 +5987,7 @@
           "out": false,
           "player_id": "5w7du1822fw3aj3e",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -6028,15 +6026,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 5,
@@ -6106,15 +6104,15 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 5,
@@ -6771,19 +6769,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-08-27T15:10:25Z",
     "parse": {
       "events_count": 123,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:32:09Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:36Z",
+    "parser_version": "0.10.0",
     "source_sha256": "745229a053511f262a97fab17419826ac50acfa7a7154f0c4ad9a1a3c917e9c2",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260814_cnly.xml"
   },

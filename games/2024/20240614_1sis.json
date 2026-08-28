@@ -3595,8 +3595,8 @@
         "away_score_before": 2,
         "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3629,8 +3629,7 @@
         "location": null,
         "modifiers": [
           "error",
-          "RBI",
-          "advanced to second"
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -3648,7 +3647,7 @@
           "out": false,
           "player_id": "e70l07jap433trbp",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -3667,15 +3666,15 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 11,
@@ -3725,15 +3724,15 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 11,
@@ -7547,19 +7546,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T18:09:21Z",
     "parse": {
       "events_count": 133,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:09Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:39Z",
+    "parser_version": "0.10.0",
     "source_sha256": "b5f49c0379034173471d66bce0ef147fbba86656261b7adeeda815cf48021848",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240614_1sis.xml"
   },

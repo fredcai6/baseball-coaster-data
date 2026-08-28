@@ -950,9 +950,9 @@
         "away_score_before": 0,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
@@ -987,7 +987,6 @@
         "location": null,
         "modifiers": [
           "error",
-          "advanced to third",
           "RBI"
         ],
         "outs_recorded": 0,
@@ -1006,7 +1005,7 @@
           "out": false,
           "player_id": "syn:home:1",
           "scored": false,
-          "to": 1
+          "to": 3
         },
         {
           "cause": "advance",
@@ -1025,16 +1024,16 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|0",
+        "base_out_state": "001|0",
         "bases_after": [
           false,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "home_score_before": 1,
         "outs_after": 1,
@@ -1088,7 +1087,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "syn:home:1",
           "rbi": true,
@@ -5016,8 +5015,8 @@
         "away_score_before": 0,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -5052,8 +5051,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5071,7 +5069,7 @@
           "out": false,
           "player_id": "syn:away:3",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -5088,15 +5086,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 9,
@@ -5151,15 +5149,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "101|2",
+        "base_out_state": "011|2",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 9,
@@ -7825,7 +7823,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-08-27T14:41:40Z",
     "parse": {
       "events_count": 132,
@@ -7834,8 +7832,8 @@
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:32:04Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:31Z",
+    "parser_version": "0.10.0",
     "source_sha256": "00a50c9cb8f42e1570fea853bbfd86e78a2dabdb2c6660d7baffe299f0ccefd6",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260721_hiod.xml"
   },

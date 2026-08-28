@@ -2237,7 +2237,7 @@
         "away_score_before": 0,
         "base_out_state": "000|0",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -2247,7 +2247,7 @@
           false
         ],
         "home_score_before": 5,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
@@ -2270,10 +2270,9 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "out at second 2b to ss"
+          "error"
         ],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "reached_on_error"
       },
       "pitcher": {
@@ -2286,10 +2285,10 @@
         {
           "cause": "error",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "0cd7pfsbqrrvnpoj",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -2298,20 +2297,20 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|0",
+        "base_out_state": "000|1",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
         "bases_before": [
-          true,
+          false,
           false,
           false
         ],
         "home_score_before": 5,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2356,20 +2355,20 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "110|0",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
           true,
           false
         ],
         "bases_before": [
-          true,
+          false,
           true,
           false
         ],
         "home_score_before": 5,
-        "outs_after": 0,
-        "outs_before": 0,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2418,7 +2417,7 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "110|0",
+        "base_out_state": "110|1",
         "bases_after": [
           true,
           true,
@@ -2430,8 +2429,8 @@
           false
         ],
         "home_score_before": 5,
-        "outs_after": 1,
-        "outs_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2478,7 +2477,7 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "110|1",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -2490,8 +2489,8 @@
           false
         ],
         "home_score_before": 5,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2552,7 +2551,7 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "111|1",
+        "base_out_state": "111|2",
         "bases_after": [
           false,
           true,
@@ -2564,8 +2563,8 @@
           true
         ],
         "home_score_before": 5,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "runs_on_play": 1
       },
       "batting_team": "3ward2o2o9m0w2dj",
@@ -2608,7 +2607,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "011|1",
+        "base_out_state": "011|2",
         "bases_after": [
           false,
           true,
@@ -2620,8 +2619,8 @@
           true
         ],
         "home_score_before": 5,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 2,
         "runs_on_play": 2
       },
@@ -2689,7 +2688,7 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "010|1",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           false,
@@ -2701,8 +2700,8 @@
           false
         ],
         "home_score_before": 5,
-        "outs_after": 1,
-        "outs_before": 1,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
@@ -2759,7 +2758,7 @@
     {
       "_derived": {
         "away_score_before": 3,
-        "base_out_state": "101|1",
+        "base_out_state": "101|2",
         "bases_after": [
           true,
           false,
@@ -2771,8 +2770,8 @@
           true
         ],
         "home_score_before": 5,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
@@ -7866,19 +7865,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T17:54:13Z",
     "parse": {
       "events_count": 138,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 4 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:06Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:36Z",
+    "parser_version": "0.10.0",
     "source_sha256": "b006bb125cc85f8280ce117c4ad169f8d115a4912ff307d1504dec8fbe4cd926",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240601_2vxu.xml"
   },

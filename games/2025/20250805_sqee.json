@@ -2612,8 +2612,8 @@
         "away_score_before": 0,
         "base_out_state": "000|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -2645,8 +2645,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -2664,7 +2663,7 @@
           "out": false,
           "player_id": "cfetr828oix8pp6g",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -2673,15 +2672,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -2733,15 +2732,15 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -2791,7 +2790,7 @@
     {
       "_derived": {
         "away_score_before": 0,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -2799,7 +2798,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -2852,7 +2851,7 @@
         },
         {
           "cause": "force_out",
-          "from": 3,
+          "from": 2,
           "out": true,
           "player_id": "cfetr828oix8pp6g",
           "scored": false,
@@ -5868,19 +5867,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T17:17:43Z",
     "parse": {
       "events_count": 106,
       "inferred_count": 1,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 47 runner cfetr828oix8pp6g advances from base 3 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:44Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:11Z",
+    "parser_version": "0.10.0",
     "source_sha256": "f2e1bf297c7777f030d3c9d16a14e23be9109a075b8dd7e236124441c54020a3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250805_sqee.xml"
   },

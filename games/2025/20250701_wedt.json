@@ -2891,8 +2891,8 @@
         "away_score_before": 7,
         "base_out_state": "001|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -2925,8 +2925,7 @@
         "location": null,
         "modifiers": [
           "error",
-          "RBI",
-          "advanced to second"
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -2944,7 +2943,7 @@
           "out": false,
           "player_id": "2rlq2219lcuet2nz",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -2963,15 +2962,15 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -3021,15 +3020,15 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -3079,7 +3078,7 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "100|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -3087,7 +3086,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -3140,7 +3139,7 @@
         },
         {
           "cause": "force_out",
-          "from": 3,
+          "from": 2,
           "out": true,
           "player_id": "2rlq2219lcuet2nz",
           "scored": false,
@@ -7654,7 +7653,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T16:36:44Z",
     "parse": {
       "events_count": 135,
@@ -7662,12 +7661,11 @@
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
-        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3",
-        "[illegal_transitions] illegal_transition: seq 49 runner 2rlq2219lcuet2nz advances from base 3 which was not occupied at event start"
+        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-08-28T01:31:36Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:04Z",
+    "parser_version": "0.10.0",
     "source_sha256": "73f8fd04a220f2eeef01424511294de59eafb0909565149637b41a7a6256df83",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250701_wedt.xml"
   },

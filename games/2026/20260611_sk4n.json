@@ -5314,8 +5314,8 @@
         "away_score_before": 4,
         "base_out_state": "000|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -5350,8 +5350,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5369,7 +5368,7 @@
           "out": false,
           "player_id": "xagqrwvpyqhr7ts3",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -5395,15 +5394,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 4,
@@ -5456,7 +5455,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|1",
+        "base_out_state": "110|1",
         "bases_after": [
           true,
           false,
@@ -5464,7 +5463,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 4,
@@ -5514,7 +5513,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "dhvnhdw9dainrtid",
           "scored": false,
@@ -6726,19 +6725,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T15:12:48Z",
     "parse": {
       "events_count": 115,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 91 runner dhvnhdw9dainrtid advances from base 3 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:54Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:21Z",
+    "parser_version": "0.10.0",
     "source_sha256": "6bc9e9bf13808ee104e9b70cf72a41692b4b12fb0d98d9cb9a0ffa9aebfa0445",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260611_sk4n.xml"
   },

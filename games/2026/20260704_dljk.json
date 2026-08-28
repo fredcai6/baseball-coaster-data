@@ -5633,8 +5633,8 @@
         "away_score_before": 11,
         "base_out_state": "000|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -5669,8 +5669,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second on the throw"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5688,7 +5687,7 @@
           "out": false,
           "player_id": "ddjme7698xcerfyv",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -5697,15 +5696,15 @@
     {
       "_derived": {
         "away_score_before": 11,
-        "base_out_state": "100|0",
+        "base_out_state": "010|0",
         "bases_after": [
           false,
           true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 8,
@@ -5756,7 +5755,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "ddjme7698xcerfyv",
           "scored": false,
@@ -6382,8 +6381,8 @@
         "away_score_before": 11,
         "base_out_state": "110|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -6419,8 +6418,8 @@
         "location": null,
         "modifiers": [
           "error",
-          "advanced to second",
-          "2 RBI"
+          "2 RBI",
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -6438,7 +6437,7 @@
           "out": false,
           "player_id": "quxk0ram2ev0tb3h",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -6446,7 +6445,7 @@
           "from": 1,
           "out": false,
           "player_id": "3865oyuz5l2pj51r",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         },
@@ -6456,7 +6455,7 @@
           "from": 2,
           "out": false,
           "player_id": "upb8ab0qzbu5hz2y",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -6467,15 +6466,15 @@
     {
       "_derived": {
         "away_score_before": 13,
-        "base_out_state": "100|0",
+        "base_out_state": "010|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 12,
@@ -6528,15 +6527,15 @@
     {
       "_derived": {
         "away_score_before": 13,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 12,
@@ -6589,7 +6588,7 @@
     {
       "_derived": {
         "away_score_before": 13,
-        "base_out_state": "100|1",
+        "base_out_state": "110|1",
         "bases_after": [
           false,
           true,
@@ -6597,7 +6596,7 @@
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 12,
@@ -6622,7 +6621,7 @@
         },
         {
           "cause": "stolen_base",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "quxk0ram2ev0tb3h",
           "scored": false,
@@ -8382,14 +8381,12 @@
     "parse": {
       "events_count": 142,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 110 runner quxk0ram2ev0tb3h advances from base 3 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T02:56:20Z",
-    "parser_version": "0.9.0",
+    "parsed_at": "2026-08-28T14:17:27Z",
+    "parser_version": "0.10.0",
     "source_sha256": "91e32192018d5e591c281ae2dc073c3c6436195cbdab91c5617749a89b5237c3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260704_dljk.xml"
   },
