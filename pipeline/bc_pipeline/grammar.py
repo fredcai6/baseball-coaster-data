@@ -205,7 +205,17 @@ def _split_chain(chain: str) -> List[str]:
 _UNEARNED_TAIL = r"(?:, (?P<unearned>(?:team )?unearned))?"
 
 
-_HIT_MOD_TOKEN = r"\d+ RBI|RBI|bunt|SAC|ground-rule|unearned"
+#: Closed alternation of every modifier token the corpus writes in a
+#: comma-separated verb tail. Widened at issue #40 from a census of the
+#: tails appearing after OUT-type verbs on unparsed lines: "sacrifice fly"
+#: (22 lines), "inside the park" (7), "on appeal" (5), "team unearned" (1).
+#: Still closed literals, never a `.*` catch-all, so an unlisted tail keeps
+#: failing loud. "team unearned" precedes "unearned" so the longer token
+#: wins, for the same reason "\d+ RBI" precedes "RBI".
+_HIT_MOD_TOKEN = (
+    r"\d+ RBI|RBI|bunt|SAC|ground-rule|team unearned|unearned"
+    r"|sacrifice fly|inside the park|on appeal"
+)
 _HIT_MOD_TAIL = rf"(?P<mods>(?:, (?:{_HIT_MOD_TOKEN}))*)"
 
 
@@ -248,7 +258,7 @@ def _x_sacrifice(m: re.Match):
 
 
 def _x_grounded_into_double_play(m: re.Match):
-    return (m.group("name"), _split_chain(m.group("chain")), None, [])
+    return _x_into_double_play(m)
 
 
 def _x_into_double_play(m: re.Match):
@@ -257,7 +267,8 @@ def _x_into_double_play(m: re.Match):
 
 
 def _x_groundout_chain(m: re.Match):
-    return (m.group("name"), _split_chain(m.group("chain")), None, [])
+    mods = _hit_modifiers_from_tail(m.groupdict().get("mods"))
+    return (m.group("name"), _split_chain(m.group("chain")), None, mods)
 
 
 def _x_groundout_single(m: re.Match):
@@ -288,11 +299,11 @@ def _x_foul_out(m: re.Match):
 
 
 def _x_lineout(m: re.Match):
-    return (m.group("name"), [m.group("f")], None, [])
+    return (m.group("name"), [m.group("f")], None, _hit_modifiers_from_tail(m.group("mods")))
 
 
 def _x_popout(m: re.Match):
-    return (m.group("name"), [m.group("f")], None, [])
+    return (m.group("name"), [m.group("f")], None, _hit_modifiers_from_tail(m.group("mods")))
 
 
 def _x_popout_out_to(m: re.Match):
@@ -419,11 +430,11 @@ def _x_hit_by_pitch(m: re.Match):
 
 
 def _x_strikeout_swinging(m: re.Match):
-    return (m.group("name"), [], None, [])
+    return (m.group("name"), [], None, _hit_modifiers_from_tail(m.groupdict().get("mods")))
 
 
 def _x_strikeout_looking(m: re.Match):
-    return (m.group("name"), [], None, [])
+    return (m.group("name"), [], None, _hit_modifiers_from_tail(m.groupdict().get("mods")))
 
 
 def _x_strikeout(m: re.Match):
@@ -453,17 +464,21 @@ PRIMARY_RULES: List[PrimaryRule] = [
         # would swallow "NAME struck out swinging," whole as if it were a
         # player name, misfiling a strikeout as a groundout.
         re.compile(
-            r"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
-            r"(?P<name>.+?) out at first "
-            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)$"
+            rf"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
+            rf"(?P<name>.+?) out at first "
+            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*){_HIT_MOD_TAIL}$"
         ),
         "groundout",
         _x_groundout_chain,
     ),
     (
         re.compile(
+            # Chain quantifier is `*` (not `+`) with an optional
+            # " unassisted" suffix, matching the flied/lined-into-double-play
+            # rows below: the corpus writes "grounded into double play 2b
+            # unassisted" and a bare single fielder too (issue #40).
             r"^(?P<name>.+?) grounded into double play "
-            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)+)$"
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
         ),
         "grounded_into_double_play",
         _x_grounded_into_double_play,
@@ -493,9 +508,20 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_into_double_play,
     ),
     (
+        # Same treatment as the flied/lined rows directly above: the verb
+        # names the batted ball, so it maps to the EXISTING popout type
+        # rather than a new popped_into_double_play one (issue #40).
         re.compile(
-            r"^(?P<name>.+?) grounded out "
-            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)+)$"
+            r"^(?P<name>.+?) popped into double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?P<unassisted> unassisted)?$"
+        ),
+        "popout",
+        _x_into_double_play,
+    ),
+    (
+        re.compile(
+            rf"^(?P<name>.+?) grounded out "
+            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)+){_HIT_MOD_TAIL}$"
         ),
         "groundout",
         _x_groundout_chain,
@@ -523,12 +549,16 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_foul_out,
     ),
     (
-        re.compile(r"^(?P<name>.+?) lined out to (?P<f>[a-z0-9]+)$"),
+        # The modifier tail is ZERO-or-more, so the bare "NAME lined out to F"
+        # form matches exactly as before -- this row is purely additive
+        # (issue #40; 51 unparsed lines carried ", RBI" / ", sacrifice fly,
+        # RBI" / ", SAC, RBI" tails this row had no way to accept).
+        re.compile(rf"^(?P<name>.+?) lined out to (?P<f>[a-z0-9]+){_HIT_MOD_TAIL}$"),
         "lineout",
         _x_lineout,
     ),
     (
-        re.compile(r"^(?P<name>.+?) popped up to (?P<f>[a-z0-9]+)$"),
+        re.compile(rf"^(?P<name>.+?) popped up to (?P<f>[a-z0-9]+){_HIT_MOD_TAIL}$"),
         "popout",
         _x_popout,
     ),
@@ -633,12 +663,12 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_hit_by_pitch,
     ),
     (
-        re.compile(r"^(?P<name>.+?) struck out swinging$"),
+        re.compile(rf"^(?P<name>.+?) struck out swinging{_HIT_MOD_TAIL}$"),
         "strikeout_swinging",
         _x_strikeout_swinging,
     ),
     (
-        re.compile(r"^(?P<name>.+?) struck out looking$"),
+        re.compile(rf"^(?P<name>.+?) struck out looking{_HIT_MOD_TAIL}$"),
         "strikeout_looking",
         _x_strikeout_looking,
     ),
@@ -829,6 +859,37 @@ def _b_caught_stealing(m: re.Match):
     )
 
 
+def _b_caught_stealing_chain(m: re.Match):
+    """"X caught stealing c to ss, double play" -- the corpus's OTHER caught
+    stealing phrasing: a fielding chain instead of a destination base, with
+    an optional ", double play" tail when the strikeout ahead of it made the
+    second out. The base the runner was thrown out at is not written, so
+    `destination` stays None rather than being guessed (issue #40)."""
+    return RunnerMovement(
+        name_token=m.group("name"),
+        cause="caught_stealing",
+        destination=None,
+        out=True,
+        scored=False,
+    )
+
+
+def _b_out_on_double_play(m: re.Match):
+    """"X out on double play 2b to ss" -- a RUNNER retired as the second out
+    of a double play, always written as its own semicolon clause after the
+    batter's. Distinct from the primary-clause "grounded into double play"
+    row, which describes the BATTER's batted ball; this one is the runner
+    and carries only the fielding chain, so it belongs in RUNNER_RULES
+    beside "out on the play" (issue #40)."""
+    return RunnerMovement(
+        name_token=m.group("name"),
+        cause="putout",
+        destination=None,
+        out=True,
+        scored=False,
+    )
+
+
 def _b_out_on_the_play(m: re.Match):
     return RunnerMovement(
         name_token=m.group("name"),
@@ -985,6 +1046,22 @@ RUNNER_RULES: List[RunnerRule] = [
         re.compile(rf"^(?P<name>.+?) caught stealing (?P<dest>{_DEST_ALT})$"),
         ("caught_stealing",),
         _b_caught_stealing,
+    ),
+    (
+        re.compile(
+            rf"^(?P<name>.+?) caught stealing "
+            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)(?:, double play)?$"
+        ),
+        ("caught_stealing",),
+        _b_caught_stealing_chain,
+    ),
+    (
+        re.compile(
+            r"^(?P<name>.+?) out on double play "
+            r"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)$"
+        ),
+        ("putout",),
+        _b_out_on_double_play,
     ),
     (
         re.compile(r"^(?P<name>.+?) out on the play(?:, interference)?$"),
