@@ -260,6 +260,41 @@ def _pa_counts_case(outcome_type, ab, bb):
     return replay.check_pa_counts(game, oracle).warnings
 
 
+# --- a box row with NO events is the case this check exists to see (#33) ---
+#
+# The `pid not in events_pa` skip used to be unconditional, so a batter whose
+# EVERY plate appearance was misattributed dropped out of `events_pa` and
+# produced no warning -- the check was blind in exactly its own direction.
+# The skip now applies only when the box row implies no plate appearance
+# either (a defensive replacement or a pinch runner who never batted).
+
+
+def _pa_counts_no_events(ab, bb):
+    """A box row for a batter with ZERO events. Returns the check's warnings."""
+    oracle = {"box": {"batting": {"t1": [{"player_id": "syn:home:9", "AB": ab, "BB": bb}]}}}
+    return replay.check_pa_counts({"events": []}, oracle).warnings
+
+
+def test_box_row_with_at_bats_and_no_events_is_a_failure():
+    # 20250521_a4ms: the box gives Noel Soto AB=1 and his name never appears
+    # in any narrative line. A game whose events cannot reproduce its own box
+    # does not replay, however well-formed the file is.
+    assert _pa_counts_no_events(ab=1, bb=0) != []
+    assert _pa_counts_no_events(ab=3, bb=1) != []
+
+
+def test_box_row_with_a_walk_and_no_events_is_a_failure():
+    # BB alone is a plate appearance too -- 20260529_l6ze's Tyler Collins is
+    # AB=0 BB=1, so keying the skip on AB alone would still miss him.
+    assert _pa_counts_no_events(ab=0, bb=1) != []
+
+
+def test_box_row_implying_no_plate_appearance_is_still_skipped():
+    # The legitimate case the skip exists for: a defensive replacement or a
+    # pinch runner who never came to the plate. Nothing to reconcile.
+    assert _pa_counts_no_events(ab=0, bb=0) == []
+
+
 def test_catchers_interference_is_a_pa_but_not_an_at_bat():
     """AB=0, BB=0 and one interference PA must reconcile."""
     assert _pa_counts_case("reached_on_interference", ab=0, bb=0) == []

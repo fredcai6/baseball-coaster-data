@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.2.0"
+REPLAYER_VERSION = "0.3.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -638,8 +638,31 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
     for team_id, lines in oracle["box"]["batting"].items():
         for line in lines:
             pid = line["player_id"]
-            if pid not in events_pa:
-                continue  # box row with no PBP plate appearance in this game slice
+            if pid not in events_pa and (line["AB"] + line["BB"]) == 0:
+                # A box row that implies no plate appearance EITHER -- a
+                # defensive replacement or a pinch runner who never batted.
+                # There is nothing to reconcile, so skip it.
+                #
+                # This skip used to be unconditional, which made the check
+                # blind in exactly the direction it exists to see. A batter
+                # whose EVERY plate appearance was misattributed ends with
+                # zero events, drops out of `events_pa`, and was skipped --
+                # so the worst case this oracle can catch produced no warning
+                # at all, while the batter who absorbed his PAs was often
+                # caught by the same amount in the other direction. A guard
+                # whose fallback is silence is not a guard.
+                #
+                # Counted over the corpus at the time of the change: 25 games
+                # carry a box row with AB+BB > 0 and zero plate appearances
+                # in the events. In 8 of them the missing PAs are exactly
+                # conserved by a surplus on another batter -- misattribution,
+                # recoverable. In the rest the plate appearances are absent
+                # from the narrative altogether (the M. Jackson games, where
+                # they sit in unparsed[], and 20250521_a4ms, whose box gives
+                # Noel Soto AB=1 while his name never appears in any line).
+                # Both are real: a game whose events cannot reproduce its own
+                # box does not replay, however well-formed the file is.
+                continue
             expected = (
                 line["AB"]
                 + line["BB"]
@@ -647,7 +670,7 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
                 + sac.get(pid, 0)
                 + interference.get(pid, 0)
             )
-            actual = events_pa[pid]
+            actual = events_pa.get(pid, 0)
             if actual != expected:
                 warnings.append(
                     f"pa_counts: player {pid} events PA {actual} != box-implied "
