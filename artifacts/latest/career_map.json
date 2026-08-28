@@ -1304,7 +1304,6 @@
     "person:3207de3dc53364ec": "career:edaa8257f56da5b1",
     "person:3710cc9a74e37d5d": "career:3bb7888718ecc8a7",
     "person:37f8b0543c880978": "career:d6d1e079482ae766",
-    "person:392893c7a4bfa415": "career:3422e49200c91612",
     "person:39c45f0955785c8d": "career:3c059dbc5d94a9f4",
     "person:3b0bf189b812b5d4": "career:19fcab3d5ebd338d",
     "person:3cb1216a9e81cf81": "career:ae7b3089b8840fdb",
@@ -1358,7 +1357,6 @@
     "person:828f3e52cd07ccaf": "career:cca30315dd70ba81",
     "person:832130583d9ce634": "career:119a585acad097f9",
     "person:839e6f8ddd972173": "career:8dc36dd80ee1d8e9",
-    "person:83ac013a7d216f0b": "career:3ceb19ae088b7b2d",
     "person:8433200ed1d85774": "career:0adb9deb581132e2",
     "person:8536de290b513d55": "career:050a26faa13c32c5",
     "person:870f8ed926d72f5b": "career:889a90c682563ecb",
@@ -1959,7 +1957,7 @@
   "by_season": {
     "2024": {
       "in_a_multi_season_career": 98,
-      "persons": 637
+      "persons": 635
     },
     "2025": {
       "in_a_multi_season_career": 159,
@@ -9592,25 +9590,6 @@
         2026
       ]
     },
-    "career:3422e49200c91612": {
-      "aliases": [
-        "C. Drew"
-      ],
-      "career_id": "career:3422e49200c91612",
-      "franchises": [
-        "franchise:77c71ea258687edf"
-      ],
-      "name": "C. Drew",
-      "person_ids": [
-        [
-          2024,
-          "person:392893c7a4bfa415"
-        ]
-      ],
-      "seasons": [
-        2024
-      ]
-    },
     "career:344434f00776cf02": {
       "aliases": [
         "Nolan Pender"
@@ -10892,25 +10871,6 @@
       ],
       "seasons": [
         2025
-      ]
-    },
-    "career:3ceb19ae088b7b2d": {
-      "aliases": [
-        "N. Daniels"
-      ],
-      "career_id": "career:3ceb19ae088b7b2d",
-      "franchises": [
-        "franchise:77c71ea258687edf"
-      ],
-      "name": "N. Daniels",
-      "person_ids": [
-        [
-          2024,
-          "person:83ac013a7d216f0b"
-        ]
-      ],
-      "seasons": [
-        2024
       ]
     },
     "career:3cf779cd4c61a344": {
@@ -33455,13 +33415,13 @@
     },
     "career:e749e9728856c2ca": {
       "aliases": [
-        "H. Casey"
+        "N. Daniels"
       ],
       "career_id": "career:e749e9728856c2ca",
       "franchises": [
         "franchise:77c71ea258687edf"
       ],
-      "name": "H. Casey",
+      "name": "N. Daniels",
       "person_ids": [
         [
           2024,
@@ -36698,15 +36658,15 @@
     }
   },
   "league": {
-    "careers": 1782,
+    "careers": 1780,
     "careers_by_season_span": {
-      "1": 1622,
+      "1": 1620,
       "2": 147,
       "3": 13
     },
     "links": 173,
     "multi_season_careers": 160,
-    "persons": 1955,
+    "persons": 1953,
     "refused_by_reason": {
       "ambiguous_within_season": 55,
       "franchise_changed": 98
@@ -36760,15 +36720,15 @@
         "proven_same_name_different_people": 3
       },
       "signal_strength": {
-        "different_name_pairs_null": 839861,
+        "different_name_pairs_null": 838585,
         "franchise_continuity": {
-          "fires_on_null": 0.0705,
+          "fires_on_null": 0.0704,
           "fires_on_same_name": 0.5169,
-          "likelihood_ratio": 7.33,
+          "likelihood_ratio": 7.34,
           "used": true
         },
         "position_overlap": {
-          "fires_on_null": 0.447,
+          "fires_on_null": 0.4476,
           "fires_on_same_name": 0.961,
           "likelihood_ratio": 2.15,
           "note": "NOT used. It fires on a large share of the null -- people who are definitively not each other -- so it barely separates the cases it is meant to decide. Kept here as a measured negative so the choice stays visible and will change if the data ever changes.",
@@ -36778,7 +36738,7 @@
       }
     },
     "games": 1484,
-    "generated_at": "2026-08-28T01:32:28Z",
+    "generated_at": "2026-08-28T02:57:21Z",
     "not_attempted": {
       "franchise_changed": {
         "note": "A player who changed clubs between seasons is NOT linked. This is the honest cost of the rule: it is exactly the shape of every proven-different pair above, and nothing else in the data separates the two cases. Enumerated in `unlinked` so the population stays visible and countable."
@@ -36787,7 +36747,7 @@
         "note": "person_map deliberately does not merge a player across teams WITHIN a season (a measured error floor: of the same-season same-name cross-franchise cases, some are proven to be two people). That ambiguity is inherited here as `ambiguous_within_season` rather than papered over."
       }
     },
-    "persons": 1955,
+    "persons": 1953,
     "scope": "CROSS-SEASON player identity, one level above person_id. Two persons in consecutive seasons are linked iff their display names are exactly equal, that name resolves to exactly one person in EACH season, and they share a franchise. Careers are the connected components."
   },
   "unlinked": [
