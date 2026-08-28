@@ -10,6 +10,7 @@ bad-sequence fixture proving it fails ONLY that check (isolation).
 """
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -561,3 +562,57 @@ def test_contradicting_chain_leaves_the_named_runner_safe():
     # The line names Daly advancing SAFELY; nothing here may mark him out.
     assert cg.primary.forced_out_chain == "p to 1b"
     assert [(r.name_token, r.out) for r in cg.runners] == [("J. Daly", False)]
+
+
+# ---------------------------------------------------------------------------
+# Called-game exception: a game's LAST half being a short TOP half is the
+# shape of play stopping mid-half, not of a lost out -- but only once the
+# game is official.
+# ---------------------------------------------------------------------------
+
+
+def _relabel_inning(data: dict, inning: int) -> dict:
+    """The bad_outs_per_half fixture, moved wholesale to another inning.
+
+    Its top half is two outs long, which is exactly the called-game shape;
+    what separates a stoppage from a missing out is how far the game got.
+    """
+    game = copy.deepcopy(data["game"])
+    for event in game["events"]:
+        event["inning"] = inning
+    oracle = copy.deepcopy(data["oracle"])
+    for side in ("away", "home"):
+        arr = oracle["linescore"]["innings"][side]
+        oracle["linescore"]["innings"][side] = [0] * (inning - 1) + arr
+    return {"game": game, "oracle": oracle}
+
+
+def test_short_final_top_half_is_excused_once_the_game_is_official():
+    data = _relabel_inning(_load_synth("bad_outs_per_half.json"), 7)
+    result = replay.check_outs_per_half(data["game"], data["oracle"])
+    assert result.ok, result.warnings
+
+
+def test_short_final_top_half_before_the_fifth_is_still_a_failure():
+    for inning in (1, 4):
+        data = _relabel_inning(_load_synth("bad_outs_per_half.json"), inning)
+        result = replay.check_outs_per_half(data["game"], data["oracle"])
+        assert not result.ok, (
+            f"inning {inning} is too early for a game to be called; a short "
+            "half there is a missing out and must still be reported"
+        )
+
+
+def test_short_final_BOTTOM_half_is_not_excused_by_the_called_game_rule():
+    """The bottom-half case belongs to the walk-off exception, which carries
+    a score test. Position alone must not excuse it."""
+    data = _relabel_inning(_load_synth("bad_outs_per_half.json"), 7)
+    for event in data["game"]["events"]:
+        event["half"] = "bottom"
+    # The fixture's half moves to the home side, so the home linescore entry
+    # has to move with it -- left null it would be excused as UNBATTED and
+    # the test would pass without exercising anything.
+    data["oracle"]["linescore"]["innings"]["home"][6] = 1
+    data["oracle"]["linescore"]["innings"]["away"][6] = None
+    result = replay.check_outs_per_half(data["game"], data["oracle"])
+    assert not result.ok, result.warnings

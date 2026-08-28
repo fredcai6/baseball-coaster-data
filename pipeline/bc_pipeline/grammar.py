@@ -337,7 +337,11 @@ def _x_into_double_play(m: re.Match):
 
 
 def _x_groundout_chain(m: re.Match):
-    mods = _hit_modifiers_from_tail(m.groupdict().get("mods"))
+    # `unassisted` is optional here because this extractor is shared by two
+    # rules and only one of them captures the group -- the same shape
+    # `_x_into_double_play` above already uses for `mods`.
+    mods = ["unassisted"] if m.groupdict().get("unassisted") else []
+    mods += _hit_modifiers_from_tail(m.groupdict().get("mods"))
     return (m.group("name"), _split_chain(m.group("chain")), None, mods)
 
 
@@ -563,7 +567,8 @@ PRIMARY_RULES: List[PrimaryRule] = [
         re.compile(
             rf"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
             rf"(?P<name>.+?) out at first "
-            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*){_HIT_MOD_TAIL}$"
+            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)"
+            rf"(?P<unassisted> unassisted)?{_HIT_MOD_TAIL}$"
         ),
         "groundout",
         _x_groundout_chain,
@@ -923,12 +928,20 @@ def _b_advance_on_error(m: re.Match):
 
 
 def _b_advance_on_fielders_choice(m: re.Match):
+    # `scored` was hardcoded False while `destination` was free to be "home".
+    # No corpus line had ever reached here with dest="home" -- the only one
+    # that says it carries an `, unearned` tail the rule did not accept, so
+    # the whole line went to unparsed[] and the contradiction never fired.
+    # Widening the tail without fixing this would have started silently
+    # dropping a run.
+    dest = m.group("dest")
     return RunnerMovement(
         name_token=m.group("name"),
         cause="fielders_choice",
-        destination=m.group("dest"),
+        destination=dest,
         out=False,
-        scored=False,
+        scored=dest == "home",
+        unearned=bool(m.groupdict().get("unearned")),
     )
 
 
@@ -1183,7 +1196,8 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"fielder's choice(?: to (?P<fc_fielder>[a-z][a-z ]*?))?$"
+            rf"fielder's choice(?: to (?P<fc_fielder>[a-z][a-z ]*?))?"
+            rf"{_UNEARNED_TAIL}$"
         ),
         ("fielders_choice",),
         _b_advance_on_fielders_choice,

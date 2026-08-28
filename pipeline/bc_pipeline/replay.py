@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.4.0"
+REPLAYER_VERSION = "0.5.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -382,6 +382,19 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
     #: linescore-table padding rather than a played half.
     last_played_inning = max((inn for inn, _half in groups), default=0)
 
+    #: True when the game's final half is a TOP half, so the home side never
+    #: came to bat in `last_played_inning`. Some pages publish a 0 for that
+    #: unplayed bottom half rather than leaving it blank, which the trailing-
+    #: padding rule above cannot reach because the inning IS the last played
+    #: one. Same shape and the same five games as `check_outs_per_half`'s
+    #: called-game exception; kept to `o_val == 0` so a non-zero expectation
+    #: is still always reported.
+    ended_in_a_top_half = (
+        bool(groups)
+        and max(groups, key=_half_order)[1] == "top"
+        and max(groups, key=_half_order)[0] >= 5
+    )
+
     oracle_innings = oracle["linescore"]["innings"]
     for side in ("away", "home"):
         oi = oracle_innings[side]
@@ -409,6 +422,13 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
                     # corpus this silences 189 warnings and keeps 4 (issue
                     # #40).
                     if o_val == 0 and (i + 1) > last_played_inning:
+                        continue
+                    if (
+                        o_val == 0
+                        and side == "home"
+                        and (i + 1) == last_played_inning
+                        and ended_in_a_top_half
+                    ):
                         continue
                     warnings.append(
                         f"linescore: {side} inning {i + 1} has no folded events but "
@@ -492,11 +512,37 @@ def check_outs_per_half(game: dict, oracle: dict) -> CheckResult:
             and (last_d["home_score_before"] + last_d["runs_on_play"])
             > oracle["linescore"]["totals"]["away"]["R"]
         )
-        if unbatted or walkoff:
+        # Called-game exception: the game's LAST half is a TOP half that
+        # never reached three outs. A game that reaches a normal conclusion
+        # cannot end that way -- either the visitors finish their half, or
+        # the home team bats after them -- so the shape is itself the
+        # evidence that play stopped mid-half (rain, a run rule, a curfew).
+        #
+        # Deliberately NOT "the last half is short": that reads on 75 of
+        # 1,484 games and would excuse the bottom-9th of every walk-off on
+        # position alone, which is the walk-off exception's job and which
+        # already carries a score test. Requiring a TOP half narrows it to
+        # exactly 5 games corpus-wide (20240528_6w90, 20250605_ujjf,
+        # 20250812_xe7a, 20260620_hbib, 20260812_sbyz), each a blowout or a
+        # weather stoppage -- one reads "Rainy" in its own weather field.
+        #
+        # What this costs: an out genuinely LOST by the parser from the away
+        # side's final half of an already-curtailed game stops being caught
+        # here. It is still caught by `pa_counts` (the boxscore row keeps
+        # the plate appearance) and by `lob`/`linescore` if any runner or
+        # run went with it, and `replayable` requires all five to pass.
+        # `inning >= 5` is the official-game rule, not a tuned threshold: a
+        # contest called before the visitors have batted five times is not a
+        # game at all, so a short top half that early is a missing out, not a
+        # stoppage. All five real instances sit at innings 6, 7, 7, 6 and 9.
+        called_game = (
+            is_last_half and half == "top" and total_outs < 3 and inning >= 5
+        )
+        if unbatted or walkoff or called_game:
             continue
         warnings.append(
             f"outs_per_half: inning {inning} {half} totals {total_outs} outs "
-            "(expected 3, no walk-off/unbatted exception applies)"
+            "(expected 3, no walk-off/unbatted/called-game exception applies)"
         )
 
     return CheckResult(ok=not warnings, warnings=warnings)
