@@ -161,6 +161,12 @@ _CAUSEPHRASE = {
     "wild pitch": "wild_pitch",
     "passed ball": "passed_ball",
     "balk": "balk",
+    # An illegal pitch advances runners the way a balk does, but the schema's
+    # cause enum has no token for it and "balk" is a DIFFERENT ruling. Mapped
+    # to the generic "advance" rather than asserting a balk the source did
+    # not call: the base-state change is recorded exactly, and no ruling is
+    # invented. The verbatim narrative keeps the distinction either way.
+    "illegal pitch": "advance",
 }
 _DEST_ALT = r"(?:second|third|home)"
 
@@ -172,7 +178,22 @@ _DEST_ALT = r"(?:second|third|home)"
 #: 72 games failed on a variant their sibling row already handled. A single
 #: fragment is what keeps the two from drifting apart again.
 _ERROR_BY = (
-    r"(?:an? (?:throwing |fielding )?error by (?P<f>[a-z0-9]+)|the error)"
+    # "a muffed throw by 1b" is the scorer's other spelling for an error
+    # charged to a fielder, and unearned-run bookkeeping treats it
+    # identically. The spellings are alternated INSIDE the "... by <f>" shape
+    # so they share one fielder group -- a second capture name would have to
+    # be read by every builder that reads this fragment, which is how the
+    # spelling lists diverged in the first place.
+    r"(?:(?:an? (?:throwing |fielding )?error|a muffed throw) by (?P<f>[a-z0-9]+)"
+    r"|the error)"
+    # ", assist by c" -- the fielder who threw to the one who erred. Part of
+    # the error PHRASE, so it belongs in this shared fragment rather than on
+    # any single row: the corpus writes it after "reached first on a fielding
+    # error by 1b" AND after "advanced to second on an error by 2b", and a
+    # row-local copy would accept it on whichever row happened to be edited
+    # and reject its sibling. That divergence is this file's recurring bug
+    # (see the handoff's "one list in two places").
+    r"(?:, assist by (?P<assist>[a-z0-9]+))?"
 )
 
 # Any run of plain spaces/tabs/carriage-returns/newlines, for the MATCHING
@@ -239,7 +260,7 @@ _UNEARNED_TAIL = r"(?:, (?P<unearned>(?:team )?unearned))?"
 #: wins, for the same reason "\d+ RBI" precedes "RBI".
 _HIT_MOD_TOKEN = (
     r"\d+ RBI|RBI|bunt|SAC|ground-rule|team unearned|unearned"
-    r"|sacrifice fly|inside the park|on appeal|obstruction"
+    r"|sacrifice fly|inside the park|on appeal|obstruction|interference"
 )
 _HIT_MOD_TAIL = rf"(?P<mods>(?:, (?:{_HIT_MOD_TOKEN}))*)"
 
@@ -673,7 +694,12 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_batter_interference,
     ),
     (
-        re.compile(r"^(?P<name>.+?) infield fly to (?P<f>[a-z0-9]+)$"),
+        # `_OUT_LOC_SUFFIX` for parity with every other out verb: the corpus
+        # writes "infield fly to 3b down the lf line" exactly as it writes
+        # "popped up to 3b down the 3b line", and this row alone rejected it.
+        re.compile(
+            rf"^(?P<name>.+?) infield fly to (?P<f>[a-z0-9]+){_OUT_LOC_SUFFIX}$"
+        ),
         "infield_fly",
         _x_infield_fly,
     ),
@@ -691,15 +717,18 @@ PRIMARY_RULES: List[PrimaryRule] = [
         _x_fielders_choice,
     ),
     (
-        # "an error" (bare) / "a fielding error" / "a throwing error", with
-        # "first" itself optional (the "reached on a fielding error by X"
-        # no-first wording, if it occurs) -- wording alternation only; the
-        # tail-capture behavior (unrestricted, feeding `_modifiers_from_tail`
-        # exactly as before) is UNCHANGED from the pre-existing row.
+        # "first" is optional (the "reached on a fielding error by X"
+        # no-first wording); the tail capture is unrestricted, feeding
+        # `_modifiers_from_tail` exactly as before.
+        #
+        # The error spelling comes from `_ERROR_BY`. This row used to carry
+        # its own inline "(?:an error|a fielding error|a throwing error)"
+        # list -- a THIRD copy of a list that already existed twice -- so
+        # "reached first on a muffed throw by 1b" failed here while the
+        # sibling runner rows that do use the shared fragment accepted it.
         re.compile(
-            r"^(?P<name>.+?) reached (?:first )?on "
-            r"(?:an error|a fielding error|a throwing error) by "
-            r"(?P<f>[a-z0-9]+)(?P<tail>.*)$"
+            rf"^(?P<name>.+?) reached (?:first )?on "
+            rf"{_ERROR_BY}(?P<tail>.*)$"
         ),
         "reached_on_error",
         _x_reached_on_error,
@@ -1089,7 +1118,7 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest1>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk), "
+            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch), "
             rf"advanced to (?P<dest2>{_DEST_ALT})$"
         ),
         ("wild_pitch", "passed_ball", "balk", "advance"),
@@ -1098,7 +1127,7 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk)$"
+            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_advance_on_causephrase,
@@ -1133,14 +1162,17 @@ RUNNER_RULES: List[RunnerRule] = [
         _b_scored_on_throw,
     ),
     (
-        re.compile(rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT})$"),
+        # `_UNEARNED_TAIL` mirrors this row's CONTINUATION_RULES twin (and
+        # every `scored` row): "A. Shaver advanced to third, unearned" is a
+        # whole runner clause, not a continuation, so it is matched here.
+        re.compile(rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}){_UNEARNED_TAIL}$"),
         ("advance",),
         _b_advance_plain,
     ),
     (
         re.compile(
             r"^(?P<name>.+?) scored on a "
-            r"(?P<causephrase>wild pitch|passed ball|balk)"
+            r"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)"
             r"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
@@ -1182,7 +1214,7 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) scored, on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk){_UNEARNED_TAIL}$"
+            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch){_UNEARNED_TAIL}$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_scored_on_causephrase,
@@ -1594,6 +1626,76 @@ def _c_failed_pickoff(m: "re.Match", name_token: str) -> RunnerMovement:
     )
 
 
+def _c_reached_on_error(m: "re.Match", name_token: str) -> RunnerMovement:
+    """Dropped third strike, batter SAFE: "struck out swinging, reached first
+    on an error by c".
+
+    Sibling of the `reached first on a (wild pitch|passed ball|balk)` row
+    below -- the same play, differing only in whether the scorer charged an
+    error. That row existed and this one did not, so the error spelling was
+    unparsed while the passed-ball spelling parsed (17 corpus lines).
+
+    The batter is NOT out: the strikeout is credited to the pitcher, but the
+    play records no out. `_merge_same_runner` takes this clause's `out=False`
+    as the batter's net disposition, and `outs_recorded` is summed from the
+    merged records, so the event correctly adds zero outs."""
+    return RunnerMovement(
+        name_token=name_token,
+        cause="error",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+        unearned=bool(m.groupdict().get("unearned")),
+    )
+
+
+def _c_reached_on_fielders_choice(m: "re.Match", name_token: str) -> RunnerMovement:
+    """"..., reached on a fielder's choice" with no destination named -- a
+    batter reaching can only be reaching FIRST, which is why the corpus omits
+    it (the sibling runner row spells its destination out because a RUNNER
+    could be advancing to any base)."""
+    return RunnerMovement(
+        name_token=name_token,
+        cause="fielders_choice",
+        destination="first",
+        out=False,
+        scored=False,
+    )
+
+
+def _c_retired_after_strikeout(m: "re.Match", name_token: str) -> RunnerMovement:
+    """Dropped third strike, batter RETIRED: "struck out swinging, grounded
+    out to c unassisted" -- strike three gets away and the catcher throws him
+    out (18 corpus lines, the largest single unparsed shape left).
+
+    Exactly ONE out is recorded, not two. The batter already carries the
+    strikeout's own `out=True` at record 0; this clause merges into that same
+    record rather than appending a second one, and `outs_recorded` sums the
+    MERGED records. Emitting this as a separate runner entry would have
+    double-counted the out and broken `outs_per_half` on every one of these
+    lines."""
+    return RunnerMovement(
+        name_token=name_token,
+        cause="putout",
+        destination=None,
+        out=True,
+        scored=False,
+    )
+
+
+def _c_stole_continuation(m: "re.Match", name_token: str) -> RunnerMovement:
+    """"advanced to second, stole third" -- a steal chained onto an earlier
+    movement by the same runner. Mirrors the standalone `_b_stole` row's
+    cause exactly, so the two spellings of one event agree."""
+    return RunnerMovement(
+        name_token=name_token,
+        cause="stolen_base",
+        destination=m.group("dest"),
+        out=False,
+        scored=False,
+    )
+
+
 CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     (
         re.compile(r"^[Ff]ailed pickoff attempt$"),
@@ -1626,7 +1728,7 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     (
         re.compile(
             rf"^advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk)$"
+            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
         ),
         _c_advance_on_causephrase,
     ),
@@ -1644,9 +1746,47 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         # REACHING first, so this row needs its own alternation.
         re.compile(
             r"^reached (?P<dest>first|second|third|home) on a "
-            r"(?P<causephrase>wild pitch|passed ball|balk)$"
+            r"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
         ),
         _c_advance_on_causephrase,
+    ),
+    (
+        # Dropped third strike, batter safe on an ERROR rather than on the
+        # ball merely getting away -- the sibling of the row directly above.
+        # Same `first|second|third|home` alternation and for the same reason:
+        # `_DEST_ALT` omits "first" because a runner cannot advance to it,
+        # but a batter reaching on a dropped third strike does exactly that.
+        re.compile(
+            rf"^reached (?P<dest>first|second|third|home) on "
+            rf"{_ERROR_BY}{_UNEARNED_TAIL}$"
+        ),
+        _c_reached_on_error,
+    ),
+    (
+        re.compile(r"^reached on a fielder's choice$"),
+        _c_reached_on_fielders_choice,
+    ),
+    (
+        # "struck out, out on double play c to ss" -- strike three plus a
+        # runner retired on the throw. This clause retires the BATTER, who is
+        # already out on the strikeout, so it merges into his existing record
+        # and adds nothing; the second out belongs to the runner named in the
+        # line's own following clause. The trailing "c to ss" throw chain is
+        # deliberately not captured, exactly as the `out at <base>` row above
+        # treats its own chain.
+        re.compile(r"^out on double play\b.*$"),
+        _c_retired_after_strikeout,
+    ),
+    (
+        # Dropped third strike, batter RETIRED at the plate: "..., grounded
+        # out to c unassisted". The out verb is spelled with the full
+        # out-verb alternation rather than just "grounded" so a sibling
+        # spelling cannot fail on a shape its neighbour accepts.
+        re.compile(
+            r"^(?:grounded|flied|lined|popped|fouled) out to "
+            r"(?P<f>[a-z0-9]+)(?: unassisted)?$"
+        ),
+        _c_retired_after_strikeout,
     ),
     (
         # "advanced to second on the throw" -- the batter/runner takes an
@@ -1666,8 +1806,19 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         _c_scored_on_throw,
     ),
     (
-        re.compile(rf"^advanced to (?P<dest>{_DEST_ALT})$"),
+        # `_UNEARNED_TAIL` for parity with the `scored` row above: the corpus
+        # writes ", unearned" after a plain advance too ("advanced to third,
+        # unearned"), and without it the token was left dangling and the whole
+        # chain failed. Nothing reads the flag on a non-scoring advance -- the
+        # schema records `earned` only on a run -- so this accepts the token
+        # rather than asserting anything new from it.
+        re.compile(rf"^advanced to (?P<dest>{_DEST_ALT}){_UNEARNED_TAIL}$"),
         _c_advance_plain,
+    ),
+    (
+        # "..., stole third" continuing a runner who already moved this play.
+        re.compile(rf"^stole (?P<dest>{_DEST_ALT})$"),
+        _c_stole_continuation,
     ),
 ]
 
@@ -1807,9 +1958,63 @@ def _match_clause_chain(clause: str) -> Optional[List[RunnerMovement]]:
 #: the verb's own chain group), and a trailing ", did not advance" is the
 #: same held-runner statement _NO_MOVEMENT_RE recognises standalone. Applied
 #: repeatedly so a clause can carry both (issue #40).
+#: "interference"/"obstruction" join the list: both name why an award was
+#: made, not a base-state change, and the runner's own movement clause
+#: already carries where he ended up.
+#:
+#: Anchored with a LOOKAHEAD at a comma-or-end rather than at end-of-string,
+#: so a no-state token is stripped wherever it appears. It has to be: the
+#: corpus writes "advanced to third, scored, interference, unearned", and an
+#: end-only strip left "interference" sitting between "scored" and its own
+#: "unearned" -- the pair no longer matched the `scored, unearned` row, the
+#: bare `scored` row won instead, and the run was recorded EARNED on a line
+#: that says unearned. Stripping mid-clause keeps the two halves adjacent.
 _NO_STATE_TAIL_RE = re.compile(
-    r",\s*(?:assist by [a-z0-9]+|did not advance)$"
+    r",\s*(?:assist by [a-z0-9]+|did not advance|interference|obstruction"
+    # ", caught stealing" trailing a MOVEMENT clause annotates the play; it
+    # does not retire the runner here. StatCrew writes the out on its own
+    # following line -- "C. Hanson advanced to second on an error by 2b,
+    # assist by p, caught stealing." is followed by "C. Hanson out at third c
+    # to ss, caught stealing." Recording an out on both put four outs in an
+    # inning. The `out on the play, caught stealing` row already treats the
+    # same suffix as adding nothing; this keeps the two readings agreed.
+    r"|caught stealing)"
+    r"(?=,|$)"
 )
+
+
+def _strip_repeated_subject(clause: str) -> str:
+    """Drop a clause's own subject name when the template re-emits it as a
+    bare token: "T. Sheehan advanced to third on an error by 3b, T. Sheehan,
+    unearned" -> "... by 3b, unearned".
+
+    This is the same StatCrew name-doubling defect `_b_source_defect_scored`
+    handles standalone, in its other position. There the doubled name IS the
+    whole clause, so the verb was lost and 1.10.0 recovered what it must have
+    meant (measured: the linescore oracle reconciles 54/54 when it is counted
+    as a run). Here the verb is present and the clause already says where the
+    runner went, so the repeated name adds nothing -- and this function
+    therefore asserts nothing. It removes a redundant token; it does not
+    decide the runner scored.
+
+    That restraint is checkable rather than merely cautious: if the token did
+    mean "and scored", these runners are left stranded, and the replay
+    linescore/LOB checks fail on exactly these games. Silence here would be
+    caught, not hidden.
+
+    The subject is read as the text before the clause's first verb token, and
+    only removed where it appears as a WHOLE comma-delimited fragment, so a
+    surname occurring inside another clause is untouched. A subject that
+    already contains a comma ("Cobb, Jr") is left alone rather than risk
+    splitting a real name suffix.
+    """
+    verb = _NAME_VERB_RE.search(clause)
+    if verb is None or verb.start() == 0:
+        return clause
+    subject = clause[: verb.start()].strip()
+    if not subject or "," in subject:
+        return clause
+    return re.sub(rf",\s*{re.escape(subject)}(?=,|$)", "", clause)
 
 
 def _strip_no_state_tails(clause: str) -> str:
@@ -1846,6 +2051,7 @@ def _match_runner_clauses(
         if _NO_MOVEMENT_RE.fullmatch(clause):
             continue
         clause = _strip_no_state_tails(clause)
+        clause = _strip_repeated_subject(clause)
         # issue #40, in strict precedence order:
         #   1. a whole-clause RUNNER_RULES match whose name looks like a name;
         #   2. a lead clause plus name-elided continuations.
@@ -1933,10 +2139,23 @@ def _match_primary_chain(rest: str):
         name, fielders, location, modifiers, _fo = _widen(head[0])
         outcome_type = head[1]
         tail_parts = list(parts[k:])
-        # Trailing modifier tokens belong to the PRIMARY, not to a movement.
-        trailing_mods: List[str] = []
-        while tail_parts and _MODIFIER_ONLY_RE.fullmatch(tail_parts[-1]):
-            trailing_mods.insert(0, tail_parts.pop())
+        # Modifier tokens belong to the PRIMARY, not to a movement -- and
+        # they are lifted out from ANYWHERE in the chain, not just off the
+        # end. The corpus interleaves them: "singled to shortstop, advanced
+        # to second on a throwing error by 1b, RBI, advanced to third". An
+        # end-only pop left "RBI" sitting in the middle of the movement
+        # chain, where no continuation row matches it, so the whole line
+        # failed on a token the primary tail already knew how to read.
+        #
+        # This can only ever ADD parses: a chain carrying a mid-chain
+        # modifier returns None today, so no line that parses now takes this
+        # path. Relative order is preserved for `_expand_rbi_modifiers`.
+        trailing_mods: List[str] = [
+            part for part in tail_parts if _MODIFIER_ONLY_RE.fullmatch(part)
+        ]
+        tail_parts = [
+            part for part in tail_parts if not _MODIFIER_ONLY_RE.fullmatch(part)
+        ]
         if not tail_parts:
             # Nothing but modifiers followed -- that is a plain hit-tail the
             # existing _HIT_MOD_TAIL should have taken. Decline rather than
@@ -1955,6 +2174,10 @@ def _match_primary_chain(rest: str):
         mods = list(modifiers) + _expand_rbi_modifiers(trailing_mods)
         return (name, fielders, location, mods), outcome_type, movements
     return None
+
+
+#: See `parse_clause_group` for what this removes and why it is safe.
+_SPLICED_FOUL_BALL_RE = re.compile(r"\s*Dropped foul ball, E\d+,?\s*(?=[^\s.])")
 
 
 def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
@@ -1978,6 +2201,24 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     # downstream always comes from the caller's original line, never from
     # this normalized working copy.
     stripped = _normalize_ws(body)
+    # A "Dropped foul ball, E<n>" event StatCrew spliced INTO a plate
+    # appearance's line instead of emitting it on its own:
+    #
+    #   "Enzo Apodaca Dropped foul ball, E2, homered to right field (2-2 ...)"
+    #   "Wesley Mitchell walkedDropped foul ball, E3 (3-2 BKBBFFB)."
+    #   "A. Fernandez Dropped foul ball, E3struck out swinging. (2 out)"
+    #
+    # -- note the two with no separator at all. The standalone spelling is
+    # already recognised as asserting nothing (`_NO_MOVEMENT_RE`): the plate
+    # appearance is still live, no runner moves, no out is made, and the
+    # charged error is not a fact anything derives from the play-by-play
+    # (team errors come from the inning-summary oracle). Removing the spliced
+    # copy therefore loses nothing and lets the real outcome be read.
+    #
+    # The lookahead is what keeps the STANDALONE line intact: there the
+    # fragment is followed only by the closing period, so nothing is
+    # stripped and `_NO_MOVEMENT_RE` still sees the line it expects.
+    stripped = _normalize_ws(_SPLICED_FOUL_BALL_RE.sub(" ", stripped))
 
     for regex, _label, builder in STANDALONE_RULES:
         sm = regex.fullmatch(stripped)
