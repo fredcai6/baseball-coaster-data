@@ -7119,6 +7119,93 @@
       "seq": 126
     },
     {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "111|0",
+        "bases_after": [
+          true,
+          true,
+          true
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 9,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Paul Winland",
+        "player_id": "4wq5cjcl7qx8k41p",
+        "resolved": true
+      },
+      "batting_team": "gnd7gosh9l5fc5us",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "toa4e66upwknb2r7",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Paul Winland reached on a fielder's choice (1-1 SB); Noah Blythe advanced to second; Jeter Ybarra advanced to third; Jaden Collura scored on an error by 1b, Jaden Collura, unearned.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "jio35ieyvqz4cmfa",
+        "resolved": true
+      },
+      "pitches": "SB",
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "4wq5cjcl7qx8k41p",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "5w7du1822fw3aj3e",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "c5at8f2oieorql60",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "error",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "g3ot5lbmuf5s94ce",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 127
+    },
+    {
       "batting_team": "gnd7gosh9l5fc5us",
       "fielding_team": "toa4e66upwknb2r7",
       "half": "bottom",
@@ -7126,7 +7213,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 2 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 127,
+      "seq": 128,
       "summary": {
         "E": 2,
         "H": 2,
@@ -7367,22 +7454,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T15:47:14Z",
     "parse": {
-      "events_count": 128,
+      "events_count": 129,
       "inferred_count": 0,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 9 computed 1 != oracle 2",
-        "[linescore] linescore: computed home final R 9 != oracle total 10",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 0 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player 4wq5cjcl7qx8k41p events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
-      ]
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:32:01Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T02:56:21Z",
+    "parser_version": "0.9.0",
     "source_sha256": "1c293a58da6a380575c2c74f4e5833b1e016f14e9b25c8f1b3f55bfabb228f93",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260710_487b.xml"
   },
@@ -7810,15 +7892,5 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 7
-      },
-      "raw": "Paul Winland reached on a fielder's choice (1-1 SB); Noah Blythe advanced to second; Jeter Ybarra advanced to third; Jaden Collura scored on an error by 1b, Jaden Collura, unearned.",
-      "reason": "runner clause not recognized: 'Jaden Collura scored on an error by 1b, Jaden Collura, unearned'"
-    }
-  ]
+  "unparsed": []
 }

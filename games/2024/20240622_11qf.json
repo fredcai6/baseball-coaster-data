@@ -6051,11 +6051,28 @@
       "half": "top",
       "inning": 9,
       "kind": "substitution",
-      "narrative": "T. Buckner to p for C. Repetti.",
+      "narrative": "T. Smith to rf.",
       "scoring_play": false,
       "seq": 110,
       "substitution": {
         "after_event_seq": 109,
+        "kind": "defensive",
+        "player_in": "tj7i1g4g1oxwyhxi",
+        "player_out": null,
+        "slot": null
+      }
+    },
+    {
+      "batting_team": "3ward2o2o9m0w2dj",
+      "fielding_team": "yypnc9frxmnyc9sf",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "T. Buckner to p for C. Repetti.",
+      "scoring_play": false,
+      "seq": 111,
+      "substitution": {
+        "after_event_seq": 110,
         "kind": "pitching",
         "player_in": "aevnvvgw1biu2wfj",
         "player_out": "c6erpe53l5kznizw",
@@ -6120,7 +6137,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
@@ -6181,7 +6198,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
@@ -6239,7 +6256,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
@@ -6311,7 +6328,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
@@ -6371,7 +6388,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "batting_team": "3ward2o2o9m0w2dj",
@@ -6381,7 +6398,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 0,
         "H": 2,
@@ -6397,9 +6414,9 @@
       "kind": "substitution",
       "narrative": "C. David to p for C. Richardso.",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "substitution": {
-        "after_event_seq": 116,
+        "after_event_seq": 117,
         "kind": "pitching",
         "player_in": "rnip55032k74edbk",
         "player_out": "8957qg9z0hhaa8ek",
@@ -6462,7 +6479,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6520,7 +6537,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
@@ -6580,7 +6597,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "yypnc9frxmnyc9sf",
@@ -6590,7 +6607,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6702,7 +6719,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 116,
+          "after_event_seq": 117,
           "kind": "pitching",
           "player_in": "rnip55032k74edbk",
           "player_out": "8957qg9z0hhaa8ek",
@@ -6780,6 +6797,13 @@
         },
         {
           "after_event_seq": 109,
+          "kind": "defensive",
+          "player_in": "tj7i1g4g1oxwyhxi",
+          "player_out": null,
+          "slot": null
+        },
+        {
+          "after_event_seq": 110,
           "kind": "pitching",
           "player_in": "aevnvvgw1biu2wfj",
           "player_out": "c6erpe53l5kznizw",
@@ -6789,17 +6813,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T18:17:46Z",
     "parse": {
-      "events_count": 122,
+      "events_count": 123,
       "inferred_count": 0,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:11Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T02:55:35Z",
+    "parser_version": "0.9.0",
     "source_sha256": "04ff9751a86d14bd8dcb35817d2a9d43629f3b194fb8c9bc8e8201645b9c2c6d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240622_11qf.xml"
   },
@@ -7202,15 +7226,5 @@
       "team_id": "yypnc9frxmnyc9sf"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 0
-      },
-      "raw": "T. Smith to rf.",
-      "reason": "substitution names resolved uniquely on BOTH the home and away side (genuine cross-side ambiguity): out=None in='T. Smith'"
-    }
-  ]
+  "unparsed": []
 }
