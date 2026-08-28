@@ -5819,6 +5819,7 @@
     }
   ],
   "game_id": "20240822_oqdf",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6025,6 +6026,7 @@
     "fetched_at": "2026-07-12T19:29:06Z",
     "parse": {
       "events_count": 107,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6032,7 +6034,7 @@
         "[pa_counts] pa_counts: player l9qirmp8jaiyoy3y events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:17Z",
+    "parsed_at": "2026-08-28T01:19:22Z",
     "parser_version": "0.7.0",
     "source_sha256": "c6259d461d984dc4be4cdf3b436cce3044a6899f84995d0c9b8b5a17e0349a1c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240822_oqdf.xml"
@@ -6418,7 +6420,7 @@
         "line_index": 10
       },
       "raw": "K. Banks struck out swinging, grounded out to c unassisted.\n                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "batter name did not resolve uniquely: 'K. Banks struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'K. Banks struck out swinging, grounded out to c unassisted'"
     }
   ]
 }

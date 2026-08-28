@@ -509,11 +509,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Jordan reached on a fielder's choice to third base; J. Cone advanced to second on an error by 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -3112,8 +3112,8 @@
         "away_score_before": 4,
         "base_out_state": "110|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -3140,12 +3140,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kline reached on a fielder's choice to third base, advanced to second on an error by 3b; B. Evans advanced to third; K. Booker out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base",
-          "advanced to second on an error by 3b"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3162,7 +3161,7 @@
           "out": false,
           "player_id": "u7cwgjy128v3l4u1",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -3204,15 +3203,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "101|2",
+        "base_out_state": "011|2",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 7,
@@ -4115,8 +4114,8 @@
         "away_score_before": 6,
         "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -4143,11 +4142,11 @@
       "kind": "plate_appearance",
       "narrative": "K. Booker reached on a fielder's choice to third base, advanced to second, RBI; B. Ryan advanced to third, scored on an error by c, unearned; G. Wurtz scored, unearned.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
-          "advanced to second",
           "RBI"
         ],
         "outs_recorded": 0,
@@ -4166,7 +4165,7 @@
           "out": false,
           "player_id": "v1f1putp8f776blk",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -4195,15 +4194,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 10,
@@ -4253,15 +4252,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 10,
@@ -4311,7 +4310,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "v1f1putp8f776blk",
           "rbi": true,
@@ -5359,6 +5358,7 @@
     }
   ],
   "game_id": "20240814_dpeb",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5582,11 +5582,12 @@
     "fetched_at": "2026-07-12T19:20:16Z",
     "parse": {
       "events_count": 99,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:15Z",
+    "parsed_at": "2026-08-28T01:19:20Z",
     "parser_version": "0.7.0",
     "source_sha256": "be4be4a658d96a1839d3602e7bff79e4a854e0f3d5093e3ea154134c9083e5e0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240814_dpeb.xml"

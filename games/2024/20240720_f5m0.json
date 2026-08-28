@@ -3528,11 +3528,11 @@
       "kind": "plate_appearance",
       "narrative": "M. O'Hara reached on a fielder's choice to second base; M. Jung-Gold out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7251,6 +7251,7 @@
     }
   ],
   "game_id": "20240720_f5m0",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7436,11 +7437,12 @@
     "fetched_at": "2026-07-12T18:51:50Z",
     "parse": {
       "events_count": 127,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:09Z",
+    "parsed_at": "2026-08-28T01:19:14Z",
     "parser_version": "0.7.0",
     "source_sha256": "2423902227d884e1d6be8775b78db489e5f91093c4baf63771c6bc3163231f28",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240720_f5m0.xml"
@@ -7787,7 +7789,7 @@
         "line_index": 0
       },
       "raw": "/  for T. Johnson.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for T. Johnson'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='T. Johnson'"
     }
   ]
 }

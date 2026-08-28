@@ -4473,10 +4473,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kalafut reached on a fielder's choice to third base, RBI; C. Sanford out at second 3b to 2b; N. Klemp scored, unearned.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -5349,11 +5350,11 @@
       "kind": "plate_appearance",
       "narrative": "J. McLaughli reached on a fielder's choice to shortstop; R. Orsak out at second ss to 2b; A. Barranca advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6961,6 +6962,7 @@
     }
   ],
   "game_id": "20240727_k6k3",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7188,11 +7190,12 @@
     "fetched_at": "2026-07-12T18:59:55Z",
     "parse": {
       "events_count": 130,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:11Z",
+    "parsed_at": "2026-08-28T01:19:16Z",
     "parser_version": "0.7.0",
     "source_sha256": "377758330674ab22f4cd93a709f6676049dca0ab9bce0aee1fc4ff5c14c7ecce",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240727_k6k3.xml"
@@ -7630,7 +7633,7 @@
         "line_index": 9
       },
       "raw": "/  for J. Huntzinge.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for J. Huntzinge'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='J. Huntzinge'"
     }
   ]
 }

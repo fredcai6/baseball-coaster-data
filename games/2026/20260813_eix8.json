@@ -573,7 +573,9 @@
       "kind": "plate_appearance",
       "narrative": "Cooper Hext singled to pitcher (0-1 S).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -2672,7 +2674,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2729,7 +2731,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "syn:away:3",
           "rbi": true,
@@ -2743,16 +2745,16 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 3,
         "outs_after": 3,
@@ -5222,7 +5224,9 @@
       "kind": "plate_appearance",
       "narrative": "Devon Dixon singled to pitcher (1-1 SB).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6185,6 +6189,7 @@
     }
   ],
   "game_id": "20260813_eix8",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6370,14 +6375,12 @@
     "fetched_at": "2026-08-27T15:08:42Z",
     "parse": {
       "events_count": 113,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 0",
-        "[illegal_transitions] illegal_transition: seq 42 runner syn:away:3 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
+    "parsed_at": "2026-08-28T01:20:06Z",
     "parser_version": "0.7.0",
     "source_sha256": "d2799afa7d05515c0ff8f010bae898783c17d6523df303801f8c311ce92f13ee",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260813_eix8.xml"

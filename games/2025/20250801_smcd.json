@@ -764,7 +764,7 @@
         "base_out_state": "010|1",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -786,7 +786,7 @@
       "runners": [
         {
           "cause": "stolen_base",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "rh7y8mjx5x58ptri",
           "scored": false,
@@ -799,15 +799,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "011|1",
+        "base_out_state": "001|1",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 0,
@@ -857,15 +857,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "011|2",
+        "base_out_state": "001|2",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 0,
@@ -7938,6 +7938,7 @@
     }
   ],
   "game_id": "20250801_smcd",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8193,14 +8194,12 @@
     "fetched_at": "2026-07-12T17:13:28Z",
     "parse": {
       "events_count": 143,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 1 top folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 4 runner rh7y8mjx5x58ptri advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:34Z",
+    "parsed_at": "2026-08-28T01:19:39Z",
     "parser_version": "0.7.0",
     "source_sha256": "9411d50899a9d0e45c675440dc8fa72f096c89f39eebc35d97e7ccf9d220cb46",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250801_smcd.xml"

@@ -1186,10 +1186,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Fritz reached on a fielder's choice to pitcher, bunt; A. Swenda out at third p to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "p"
+        ],
+        "location": "pitcher",
         "modifiers": [
-          "to pitcher",
           "bunt"
         ],
         "outs_recorded": 1,
@@ -1848,11 +1849,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Specht reached on a fielder's choice to shortstop; T. Cruz out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5231,6 +5232,7 @@
     }
   ],
   "game_id": "20250710_npl7",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5381,11 +5383,12 @@
     "fetched_at": "2026-07-12T16:47:39Z",
     "parse": {
       "events_count": 96,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:29Z",
+    "parsed_at": "2026-08-28T01:19:34Z",
     "parser_version": "0.7.0",
     "source_sha256": "66a9e1f29705b3a85c308946e08987fb3f37ad8e0692bd34142147624b98775d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250710_npl7.xml"

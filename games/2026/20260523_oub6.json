@@ -1794,11 +1794,11 @@
       "kind": "plate_appearance",
       "narrative": "Bodee Wright reached on a fielder's choice to shortstop (0-0); Kyle Micklus out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7434,11 +7434,11 @@
       "kind": "plate_appearance",
       "narrative": "Cameron Bowen reached on a fielder's choice to second base (2-1 BKB); A.J. Shaver out at second 2b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -8046,6 +8046,7 @@
     }
   ],
   "game_id": "20260523_oub6",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8224,11 +8225,12 @@
     "fetched_at": "2026-07-12T14:51:35Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:41Z",
+    "parsed_at": "2026-08-28T01:19:46Z",
     "parser_version": "0.7.0",
     "source_sha256": "7688df1fee9699ce6a50bfb6e53ca6619dc7a6af544477f4f8e4d2f1d448f013",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260523_oub6.xml"
@@ -8580,7 +8582,7 @@
         "line_index": 2
       },
       "raw": "/  for Connor Housley.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Connor Housley'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Connor Housley'"
     }
   ]
 }

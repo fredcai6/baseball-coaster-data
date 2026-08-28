@@ -6168,6 +6168,79 @@
       "seq": 105
     },
     {
+      "_derived": {
+        "away_score_before": 8,
+        "base_out_state": "111|1",
+        "bases_after": [
+          true,
+          true,
+          false
+        ],
+        "bases_before": [
+          true,
+          true,
+          true
+        ],
+        "home_score_before": 6,
+        "outs_after": 3,
+        "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "Logan Meyer",
+        "player_id": "syn:away:4",
+        "resolved": true
+      },
+      "batting_team": "m4b3oa5lpozm3a58",
+      "count": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "fielding_team": "gnd7gosh9l5fc5us",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "Logan Meyer fouled into double play 1b to 1b to c (0-1 K); Ryan Recio out on the play.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "1b",
+          "c"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "foul_out"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:home:11",
+        "resolved": true
+      },
+      "pitches": "K",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:away:4",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 3,
+          "out": true,
+          "player_id": "50qd8xv95tjorx7n",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 106
+    },
+    {
       "batting_team": "m4b3oa5lpozm3a58",
       "fielding_team": "gnd7gosh9l5fc5us",
       "half": "top",
@@ -6175,7 +6248,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 5 Runs, 5 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 5,
@@ -6191,9 +6264,9 @@
       "kind": "substitution",
       "narrative": "Zan Rose to p for Treshon Paschal.",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "substitution": {
-        "after_event_seq": 106,
+        "after_event_seq": 107,
         "kind": "pitching",
         "player_in": "zmmfczj8mhaeyjeo",
         "player_out": "1wvyhyfcary55l2d",
@@ -6208,9 +6281,9 @@
       "kind": "substitution",
       "narrative": "Nick Leehey pinch hit for Conner Smith.",
       "scoring_play": false,
-      "seq": 108,
+      "seq": 109,
       "substitution": {
-        "after_event_seq": 107,
+        "after_event_seq": 108,
         "kind": "offensive",
         "player_in": "ly42v4qy0of9uuxa",
         "player_out": "syn:home:6",
@@ -6276,7 +6349,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
@@ -6339,7 +6412,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "_derived": {
@@ -6400,7 +6473,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
@@ -6478,7 +6551,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
@@ -6541,7 +6614,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6551,7 +6624,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 114,
+      "seq": 115,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6567,9 +6640,9 @@
       "kind": "substitution",
       "narrative": "Nick Leehey to c.",
       "scoring_play": false,
-      "seq": 115,
+      "seq": 116,
       "substitution": {
-        "after_event_seq": 114,
+        "after_event_seq": 115,
         "kind": "defensive",
         "player_in": "ly42v4qy0of9uuxa",
         "player_out": null,
@@ -6584,7 +6657,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6594,6 +6667,7 @@
     }
   ],
   "game_id": "20260725_onox",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6711,14 +6785,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 107,
+          "after_event_seq": 108,
           "kind": "offensive",
           "player_in": "ly42v4qy0of9uuxa",
           "player_out": "syn:home:6",
           "slot": 8
         },
         {
-          "after_event_seq": 114,
+          "after_event_seq": 115,
           "kind": "defensive",
           "player_in": "ly42v4qy0of9uuxa",
           "player_out": null,
@@ -6788,7 +6862,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 106,
+          "after_event_seq": 107,
           "kind": "pitching",
           "player_in": "zmmfczj8mhaeyjeo",
           "player_out": "1wvyhyfcary55l2d",
@@ -6801,16 +6875,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:46:09Z",
     "parse": {
-      "events_count": 117,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 top totals 1 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 9 top folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player syn:away:4 events PA 4 != box-implied PA 5 (AB=4 BB=0 HBP=1 SAC=0 INT=0)"
-      ]
+      "events_count": 118,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:57Z",
+    "parsed_at": "2026-08-28T01:20:01Z",
     "parser_version": "0.7.0",
     "source_sha256": "e10fa3529edd4c36a7632d9f04f317fbe91be27c87071287cf9161903a6ac1b1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260725_onox.xml"
@@ -7213,15 +7284,5 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 12
-      },
-      "raw": "Logan Meyer fouled into double play 1b to 1b to c (0-1 K); Ryan Recio out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "primary verb not recognized: 'Logan Meyer fouled into double play 1b to 1b to c'"
-    }
-  ]
+  "unparsed": []
 }

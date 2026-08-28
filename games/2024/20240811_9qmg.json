@@ -4432,11 +4432,11 @@
       "kind": "plate_appearance",
       "narrative": "P. Howard reached on a fielder's choice to shortstop; C. Jordan out at second ss unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5500,22 +5500,48 @@
         "home_score_before": 5,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "C. Jordan",
+        "player_id": "ox4xjwnk3gw8r7sh",
+        "resolved": true
+      },
       "batting_team": "56cu2zsze70qcfrx",
+      "count": null,
       "fielding_team": "wq5td5flfeeumd82",
       "half": "top",
       "inning": 8,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "C. Jordan out at first c to 2b, SAC, bunt; D. Brutcher advanced to second; N. Ultsch advanced to third.",
+      "outcome": {
+        "fielders": [
+          "c",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "46phbqrkgwegy01q",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "ox4xjwnk3gw8r7sh",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -6237,6 +6263,7 @@
     }
   ],
   "game_id": "20240811_9qmg",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6429,11 +6456,12 @@
     "fetched_at": "2026-07-12T19:16:34Z",
     "parse": {
       "events_count": 120,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:14Z",
+    "parsed_at": "2026-08-28T01:19:19Z",
     "parser_version": "0.7.0",
     "source_sha256": "ef6dd72a9f1b8d282073f7e3f4df3ef19e89c90288e621001f2f02a0d06dea69",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240811_9qmg.xml"

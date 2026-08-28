@@ -583,7 +583,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -635,7 +635,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "o08pyccdbt11eqal",
           "rbi": true,
@@ -649,16 +649,16 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|0",
+        "base_out_state": "100|0",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 0,
@@ -687,7 +687,7 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "011|0",
+        "base_out_state": "010|0",
         "bases_after": [
           false,
           false,
@@ -696,7 +696,7 @@
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 1,
@@ -7271,6 +7271,7 @@
     }
   ],
   "game_id": "20240612_jxdx",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7521,13 +7522,12 @@
     "fetched_at": "2026-07-12T18:06:12Z",
     "parse": {
       "events_count": 141,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 2 runner o08pyccdbt11eqal advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:00Z",
+    "parsed_at": "2026-08-28T01:19:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "899841d81255dab70f1886fcaf36af65d423b2e66f5dd66e0db5118bc2e8b8ba",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240612_jxdx.xml"

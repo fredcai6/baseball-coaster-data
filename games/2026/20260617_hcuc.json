@@ -6954,7 +6954,9 @@
       "kind": "plate_appearance",
       "narrative": "Cooper Vest singled to pitcher (0-0); Derek Laferriere advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7170,7 +7172,9 @@
       "kind": "plate_appearance",
       "narrative": "Emilio Corona singled to pitcher (0-0); Patrick Roche Jr. advanced to second; Cooper Vest advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7900,6 +7904,7 @@
     }
   ],
   "game_id": "20260617_hcuc",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8197,11 +8202,12 @@
     "fetched_at": "2026-07-12T15:19:21Z",
     "parse": {
       "events_count": 141,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:47Z",
+    "parsed_at": "2026-08-28T01:19:52Z",
     "parser_version": "0.7.0",
     "source_sha256": "3c1f19843f71dac59bf3cfd225cb0a8db7e1b0b750392cb597d20d89e8eeb876",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260617_hcuc.xml"
@@ -8625,7 +8631,7 @@
         "line_index": 7
       },
       "raw": "/  for Noah Blythe.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Noah Blythe'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Noah Blythe'"
     }
   ]
 }

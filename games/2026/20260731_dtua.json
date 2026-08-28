@@ -7284,7 +7284,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
@@ -7294,6 +7294,82 @@
         "home_score_before": 21,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 7,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Jacob Lojewski",
+        "player_id": "syn:home:2",
+        "resolved": true
+      },
+      "batting_team": "ndn2a2djbgbd0lh4",
+      "count": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "fielding_team": "toa4e66upwknb2r7",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Jacob Lojewski lined out to cf, SAC, RBI (0-0); Hayden Dunhurst scored.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:4",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:home:2",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "syn:home:9",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 128
+    },
+    {
+      "_derived": {
+        "away_score_before": 1,
+        "base_out_state": "100|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 22,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
@@ -7338,7 +7414,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "batting_team": "ndn2a2djbgbd0lh4",
@@ -7348,7 +7424,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 3 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 129,
+      "seq": 130,
       "summary": {
         "E": 0,
         "H": 3,
@@ -7364,9 +7440,9 @@
       "kind": "substitution",
       "narrative": "Cole Seward to p for Lucas Alaniz.",
       "scoring_play": false,
-      "seq": 130,
+      "seq": 131,
       "substitution": {
-        "after_event_seq": 129,
+        "after_event_seq": 130,
         "kind": "pitching",
         "player_in": "syn:home:13",
         "player_out": "syn:home:12",
@@ -7387,7 +7463,7 @@
           false,
           false
         ],
-        "home_score_before": 21,
+        "home_score_before": 22,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -7434,7 +7510,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 131
+      "seq": 132
     },
     {
       "_derived": {
@@ -7450,7 +7526,7 @@
           false,
           false
         ],
-        "home_score_before": 21,
+        "home_score_before": 22,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 2,
@@ -7497,7 +7573,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 132
+      "seq": 133
     },
     {
       "_derived": {
@@ -7513,7 +7589,7 @@
           false,
           false
         ],
-        "home_score_before": 21,
+        "home_score_before": 22,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -7560,7 +7636,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 133
+      "seq": 134
     },
     {
       "_derived": {
@@ -7576,7 +7652,7 @@
           false,
           false
         ],
-        "home_score_before": 21,
+        "home_score_before": 22,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -7623,7 +7699,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 135
     },
     {
       "batting_team": "toa4e66upwknb2r7",
@@ -7633,7 +7709,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 135,
+      "seq": 136,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7643,6 +7719,7 @@
     }
   ],
   "game_id": "20260731_dtua",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7786,7 +7863,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 129,
+          "after_event_seq": 130,
           "kind": "pitching",
           "player_in": "syn:home:13",
           "player_out": "syn:home:12",
@@ -7911,17 +7988,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:54:12Z",
     "parse": {
-      "events_count": 136,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 8 computed 2 != oracle 3",
-        "[linescore] linescore: computed home final R 21 != oracle total 22",
-        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 8 bottom folded LOB 2 != inning_summary LOB 1"
-      ]
+      "events_count": 137,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:58Z",
+    "parsed_at": "2026-08-28T01:20:02Z",
     "parser_version": "0.7.0",
     "source_sha256": "e9332a7b198b248532d9b906b3d0de453b19d07cdbf935e5a2693fcd97d1dc3b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260731_dtua.xml"
@@ -8363,15 +8436,5 @@
       "team_id": "ndn2a2djbgbd0lh4"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 5
-      },
-      "raw": "Jacob Lojewski lined out to cf, SAC, RBI (0-0); Hayden Dunhurst scored.",
-      "reason": "primary verb not recognized: 'Jacob Lojewski lined out to cf, SAC, RBI'"
-    }
-  ]
+  "unparsed": []
 }

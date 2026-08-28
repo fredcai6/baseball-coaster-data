@@ -4244,6 +4244,7 @@
     }
   ],
   "game_id": "20240712_h6kf",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -4437,6 +4438,7 @@
     "fetched_at": "2026-07-12T18:41:33Z",
     "parse": {
       "events_count": 80,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -4444,7 +4446,7 @@
         "[pa_counts] pa_counts: player ib6ubs2v3mvofln4 events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:07Z",
+    "parsed_at": "2026-08-28T01:19:12Z",
     "parser_version": "0.7.0",
     "source_sha256": "4c6570f2e5c07e1c23ecdbc8bb15a41e3e24ca9cdb3e5c2b5edfdaacac76b735",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240712_h6kf.xml"
@@ -4791,7 +4793,7 @@
         "line_index": 4
       },
       "raw": "A. Epp struck out swinging, grounded out to c unassisted.\n                                                                                                                                \t\t\t\t\t(2 out)",
-      "reason": "batter name did not resolve uniquely: 'A. Epp struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'A. Epp struck out swinging, grounded out to c unassisted'"
     }
   ]
 }

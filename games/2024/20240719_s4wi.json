@@ -2101,11 +2101,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Lynch reached on a fielder's choice to second base; R. Holgate out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2585,11 +2585,11 @@
       "kind": "plate_appearance",
       "narrative": "W. Spear reached on a fielder's choice to shortstop; F. Podkul out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4540,11 +4540,11 @@
       "kind": "plate_appearance",
       "narrative": "P. Merino reached on a fielder's choice to second base; T. Jorgensen out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4608,11 +4608,11 @@
       "kind": "plate_appearance",
       "narrative": "J. Kalafut reached on a fielder's choice to second base; P. Merino out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4933,14 +4933,82 @@
         "away_score_before": 2,
         "base_out_state": "100|0",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           true,
           false,
           false
+        ],
+        "home_score_before": 10,
+        "outs_after": 0,
+        "outs_before": 0,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "M. O'Hara",
+        "player_id": "gjq34ef6wze0r6ua",
+        "resolved": true
+      },
+      "batting_team": "zws0fa37bt7u3101",
+      "count": null,
+      "fielding_team": "wq5td5flfeeumd82",
+      "half": "top",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "M. O'Hara singled, advanced to second on the throw, advanced to third; B. Thompson advanced to third, scored on a throwing error by lf.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "k5rcleqay7vnp21i",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "gjq34ef6wze0r6ua",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 1,
+          "out": false,
+          "player_id": "4bt5kn7d92vcriy6",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 85
+    },
+    {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "001|0",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
         ],
         "home_score_before": 10,
         "outs_after": 1,
@@ -4989,7 +5057,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 4,
+          "from": 3,
           "out": false,
           "player_id": "gjq34ef6wze0r6ua",
           "rbi": true,
@@ -4998,19 +5066,19 @@
         }
       ],
       "scoring_play": true,
-      "seq": 85
+      "seq": 86
     },
     {
       "_derived": {
-        "away_score_before": 3,
-        "base_out_state": "100|1",
+        "away_score_before": 4,
+        "base_out_state": "000|1",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
         "bases_before": [
-          true,
+          false,
           false,
           false
         ],
@@ -5056,19 +5124,19 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "_derived": {
-        "away_score_before": 3,
-        "base_out_state": "100|2",
+        "away_score_before": 4,
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
+          false,
           false,
           false
         ],
@@ -5117,11 +5185,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 87
+      "seq": 88
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -5177,7 +5245,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "batting_team": "zws0fa37bt7u3101",
@@ -5187,7 +5255,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 89,
+      "seq": 90,
       "summary": {
         "E": 1,
         "H": 2,
@@ -5203,9 +5271,9 @@
       "kind": "substitution",
       "narrative": "E. Kowalski to p for M. Peterson.",
       "scoring_play": false,
-      "seq": 90,
+      "seq": 91,
       "substitution": {
-        "after_event_seq": 89,
+        "after_event_seq": 90,
         "kind": "pitching",
         "player_in": "hlgrfh5n0il4jp02",
         "player_out": "irn4y0n83ksn049p",
@@ -5220,9 +5288,9 @@
       "kind": "substitution",
       "narrative": "B. Thompson to 2b.",
       "scoring_play": false,
-      "seq": 91,
+      "seq": 92,
       "substitution": {
-        "after_event_seq": 90,
+        "after_event_seq": 91,
         "kind": "defensive",
         "player_in": "4bt5kn7d92vcriy6",
         "player_out": null,
@@ -5231,7 +5299,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5287,11 +5355,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 92
+      "seq": 93
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -5347,11 +5415,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 93
+      "seq": 94
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|2",
         "bases_after": [
           true,
@@ -5405,11 +5473,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 94
+      "seq": 95
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -5463,7 +5531,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 95
+      "seq": 96
     },
     {
       "batting_team": "wq5td5flfeeumd82",
@@ -5473,7 +5541,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 96,
+      "seq": 97,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5489,9 +5557,9 @@
       "kind": "substitution",
       "narrative": "R. Cloude to p for J. Torrealba.",
       "scoring_play": false,
-      "seq": 97,
+      "seq": 98,
       "substitution": {
-        "after_event_seq": 96,
+        "after_event_seq": 97,
         "kind": "pitching",
         "player_in": "ng8ccszxr8e7olf2",
         "player_out": "k5rcleqay7vnp21i",
@@ -5500,7 +5568,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5554,11 +5622,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 98
+      "seq": 99
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -5614,11 +5682,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 99
+      "seq": 100
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -5674,7 +5742,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 100
+      "seq": 101
     },
     {
       "batting_team": "zws0fa37bt7u3101",
@@ -5684,7 +5752,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5694,7 +5762,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -5750,11 +5818,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -5810,11 +5878,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -5868,11 +5936,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -5926,7 +5994,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "batting_team": "wq5td5flfeeumd82",
@@ -5936,7 +6004,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5952,9 +6020,9 @@
       "kind": "substitution",
       "narrative": "D. Reinoso to p for R. Cloude.",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "substitution": {
-        "after_event_seq": 106,
+        "after_event_seq": 107,
         "kind": "pitching",
         "player_in": "zw6qly6xv4zlnkxp",
         "player_out": "ng8ccszxr8e7olf2",
@@ -5963,7 +6031,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -6017,11 +6085,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "000|1",
         "bases_after": [
           true,
@@ -6036,7 +6104,7 @@
         "home_score_before": 10,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -6075,11 +6143,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -6133,11 +6201,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 4,
         "base_out_state": "100|2",
         "bases_after": [
           true,
@@ -6168,11 +6236,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Viola reached on a fielder's choice to shortstop; M. O'Hara out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6201,7 +6269,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "batting_team": "zws0fa37bt7u3101",
@@ -6211,7 +6279,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6221,6 +6289,7 @@
     }
   ],
   "game_id": "20240719_s4wi",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6308,14 +6377,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 96,
+          "after_event_seq": 97,
           "kind": "pitching",
           "player_in": "ng8ccszxr8e7olf2",
           "player_out": "k5rcleqay7vnp21i",
           "slot": null
         },
         {
-          "after_event_seq": 106,
+          "after_event_seq": 107,
           "kind": "pitching",
           "player_in": "zw6qly6xv4zlnkxp",
           "player_out": "ng8ccszxr8e7olf2",
@@ -6371,14 +6440,14 @@
           "slot": 9
         },
         {
-          "after_event_seq": 89,
+          "after_event_seq": 90,
           "kind": "pitching",
           "player_in": "hlgrfh5n0il4jp02",
           "player_out": "irn4y0n83ksn049p",
           "slot": null
         },
         {
-          "after_event_seq": 90,
+          "after_event_seq": 91,
           "kind": "defensive",
           "player_in": "4bt5kn7d92vcriy6",
           "player_out": null,
@@ -6391,16 +6460,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:50:26Z",
     "parse": {
-      "events_count": 113,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 7 computed 1 != oracle 2",
-        "[linescore] linescore: computed away final R 3 != oracle total 4",
-        "[pa_counts] pa_counts: player gjq34ef6wze0r6ua events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 114,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:09Z",
+    "parsed_at": "2026-08-28T01:19:14Z",
     "parser_version": "0.7.0",
     "source_sha256": "5820446ca24d92926e33a95524d2144fc256b4fa9ea333797667addf7905ff5a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240719_s4wi.xml"
@@ -6752,15 +6818,5 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 7,
-        "line_index": 2
-      },
-      "raw": "M. O'Hara singled, advanced to second on the throw, advanced to third; B. Thompson advanced to third, scored on a throwing error by lf.",
-      "reason": "runner clause not recognized: 'B. Thompson advanced to third, scored on a throwing error by lf'"
-    }
-  ]
+  "unparsed": []
 }

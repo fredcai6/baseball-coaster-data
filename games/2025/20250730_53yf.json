@@ -5687,6 +5687,7 @@
     }
   ],
   "game_id": "20250730_53yf",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5844,6 +5845,7 @@
     "fetched_at": "2026-07-12T17:10:45Z",
     "parse": {
       "events_count": 108,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -5851,7 +5853,7 @@
         "[pa_counts] pa_counts: player lwwp8l2xhq4f6ao2 events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:34Z",
+    "parsed_at": "2026-08-28T01:19:39Z",
     "parser_version": "0.7.0",
     "source_sha256": "c939e932c6cec505c0447f5b83be0d834b9a2a0cea87f641b0eae6a8fce2179b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250730_53yf.xml"
@@ -6198,7 +6200,7 @@
         "line_index": 2
       },
       "raw": "C. Bess struck out swinging, reached first on an error by c.",
-      "reason": "batter name did not resolve uniquely: 'C. Bess struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'C. Bess struck out swinging, reached first on an error by c'"
     }
   ]
 }

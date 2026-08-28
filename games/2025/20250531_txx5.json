@@ -8050,7 +8050,7 @@
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -8058,6 +8058,84 @@
           true
         ],
         "home_score_before": 6,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "J. Shanks",
+        "player_id": "36f9102l99hxycuq",
+        "resolved": true
+      },
+      "batting_team": "ik8nryg1d30j5748",
+      "count": null,
+      "fielding_team": "9efpyrbbyneh3vac",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "J. Shanks doubled; J. Jablonski scored, unearned; A. Mata A. Mata, unearned.",
+      "outcome": {
+        "fielders": [],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "double"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "qoq6toxptqmnasav",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "36f9102l99hxycuq",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "2nvhn20620zfgs9g",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 3,
+          "out": false,
+          "player_id": "zltsj55rk2fieejm",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 137
+    },
+    {
+      "_derived": {
+        "away_score_before": 30,
+        "base_out_state": "010|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 8,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -8106,7 +8184,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 4,
+          "from": 2,
           "out": false,
           "player_id": "36f9102l99hxycuq",
           "rbi": true,
@@ -8115,23 +8193,23 @@
         }
       ],
       "scoring_play": true,
-      "seq": 137
+      "seq": 138
     },
     {
       "_derived": {
         "away_score_before": 30,
-        "base_out_state": "011|2",
+        "base_out_state": "000|2",
         "bases_after": [
           false,
-          true,
-          true
+          false,
+          false
         ],
         "bases_before": [
           false,
-          true,
-          true
+          false,
+          false
         ],
-        "home_score_before": 8,
+        "home_score_before": 10,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -8175,7 +8253,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 138
+      "seq": 139
     },
     {
       "batting_team": "ik8nryg1d30j5748",
@@ -8185,7 +8263,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 5 Runs, 5 Hits, 1 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 139,
+      "seq": 140,
       "summary": {
         "E": 1,
         "H": 5,
@@ -8195,6 +8273,18 @@
     }
   ],
   "game_id": "20250531_txx5",
+  "inferred": [
+    {
+      "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 7
+      },
+      "raw": "J. Shanks doubled; J. Jablonski scored, unearned; A. Mata A. Mata, unearned.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -8365,17 +8455,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:02:55Z",
     "parse": {
-      "events_count": 140,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 9 computed 4 != oracle 6",
-        "[linescore] linescore: computed home final R 8 != oracle total 10",
-        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 0",
-        "[pa_counts] pa_counts: player 36f9102l99hxycuq events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 141,
+      "inferred_count": 1,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:20Z",
+    "parsed_at": "2026-08-28T01:19:25Z",
     "parser_version": "0.7.0",
     "source_sha256": "18a0acef775975adc7f6a5e595941981a9714ab5a82f2dd4cee07cdeb4a67183",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250531_txx5.xml"
@@ -8740,15 +8826,5 @@
       "team_id": "ik8nryg1d30j5748"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 7
-      },
-      "raw": "J. Shanks doubled; J. Jablonski scored, unearned; A. Mata A. Mata, unearned.",
-      "reason": "runner clause not recognized: 'A. Mata A. Mata, unearned'"
-    }
-  ]
+  "unparsed": []
 }

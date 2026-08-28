@@ -5872,8 +5872,8 @@
         "away_score_before": 9,
         "base_out_state": "111|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -5902,9 +5902,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second on an error by c"
-        ],
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5921,7 +5919,7 @@
           "out": false,
           "player_id": "l9qirmp8jaiyoy3y",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -5956,15 +5954,15 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
           true,
-          false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 4,
@@ -6031,20 +6029,110 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "101|1",
+        "base_out_state": "111|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
           true,
-          false,
+          true,
           true
         ],
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "B. Skinner",
+        "player_id": "irjfs84vgwopll4m",
+        "resolved": true
+      },
+      "batting_team": "yypnc9frxmnyc9sf",
+      "count": null,
+      "fielding_team": "3ward2o2o9m0w2dj",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "B. Skinner grounded out p to 2b to 1b, RBI; M. Minzey advanced to second; K. Banks advanced to third; T. Smith scored.",
+      "outcome": {
+        "fielders": [
+          "p",
+          "2b",
+          "1b"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "rnip55032k74edbk",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "irjfs84vgwopll4m",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "yvg7ddkww870kp1o",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "l9qirmp8jaiyoy3y",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "tj7i1g4g1oxwyhxi",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 110
+    },
+    {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "011|2",
+        "bases_after": [
+          false,
+          true,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
+        ],
+        "home_score_before": 5,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -6086,7 +6174,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "yypnc9frxmnyc9sf",
@@ -6096,7 +6184,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 1,
         "H": 2,
@@ -6106,6 +6194,7 @@
     }
   ],
   "game_id": "20240703_urgr",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6276,17 +6365,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:30:27Z",
     "parse": {
-      "events_count": 112,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 9 computed 1 != oracle 2",
-        "[linescore] linescore: computed home final R 4 != oracle total 5",
-        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[pa_counts] pa_counts: player irjfs84vgwopll4m events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 113,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:05Z",
+    "parsed_at": "2026-08-28T01:19:10Z",
     "parser_version": "0.7.0",
     "source_sha256": "bad9d70a1f01b970b2208447367038e11dd7ccc48207f95bb1d556bbef155ac0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240703_urgr.xml"
@@ -6651,15 +6736,5 @@
       "team_id": "yypnc9frxmnyc9sf"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 7
-      },
-      "raw": "B. Skinner grounded out p to 2b to 1b, RBI; M. Minzey advanced to second; K. Banks advanced to third; T. Smith scored.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'B. Skinner grounded out p to 2b to 1b, RBI'"
-    }
-  ]
+  "unparsed": []
 }

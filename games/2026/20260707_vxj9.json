@@ -4961,7 +4961,9 @@
       "kind": "plate_appearance",
       "narrative": "Michael Koszewski singled to pitcher, advanced to second on an error by 3b, advanced to third (0-0); Ty Yukumoto scored, unearned.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7185,8 +7187,8 @@
         "away_score_before": 16,
         "base_out_state": "111|0",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -7195,8 +7197,100 @@
           true
         ],
         "home_score_before": 9,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 5,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Wyatt Grant",
+        "player_id": "qkxfaxn4f90ilduj",
+        "resolved": true
+      },
+      "batting_team": "m4b3oa5lpozm3a58",
+      "count": {
+        "balls": 1,
+        "strikes": 2
+      },
+      "fielding_team": "p36jpi9icfitpai5",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Wyatt Grant out at first 1b to p, RBI (1-2 BKK); Joseph Kalafut advanced to second; Logan Meyer advanced to third; Austin Folds scored.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "kyyq2ykztef2ku0w",
+        "resolved": true
+      },
+      "pitches": "BKK",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "qkxfaxn4f90ilduj",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "0cnbl1k7s2e0at2i",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "dpjjkhyu2e4vuehn",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "vkdex7ikq76hr764",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 117
+    },
+    {
+      "_derived": {
+        "away_score_before": 16,
+        "base_out_state": "011|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
+        ],
+        "home_score_before": 10,
+        "outs_after": 1,
+        "outs_before": 1,
         "pa_number_of_batter": 5,
         "runs_on_play": 2
       },
@@ -7245,7 +7339,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "0cnbl1k7s2e0at2i",
           "rbi": true,
@@ -7255,7 +7349,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 2,
+          "from": 3,
           "out": false,
           "player_id": "dpjjkhyu2e4vuehn",
           "rbi": true,
@@ -7264,7 +7358,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 117
+      "seq": 118
     },
     {
       "batting_team": "m4b3oa5lpozm3a58",
@@ -7274,9 +7368,9 @@
       "kind": "substitution",
       "narrative": "Brock Lambert to p for Peyton Walters.",
       "scoring_play": false,
-      "seq": 118,
+      "seq": 119,
       "substitution": {
-        "after_event_seq": 117,
+        "after_event_seq": 118,
         "kind": "pitching",
         "player_in": "x1ku6e1x2phxjjd8",
         "player_out": "kyyq2ykztef2ku0w",
@@ -7286,20 +7380,20 @@
     {
       "_derived": {
         "away_score_before": 16,
-        "base_out_state": "101|0",
+        "base_out_state": "100|1",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
-        "home_score_before": 11,
-        "outs_after": 1,
-        "outs_before": 0,
+        "home_score_before": 12,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -7344,25 +7438,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
         "away_score_before": 16,
-        "base_out_state": "101|1",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
-        "home_score_before": 11,
-        "outs_after": 1,
-        "outs_before": 1,
+        "home_score_before": 12,
+        "outs_after": 2,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -7413,25 +7507,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "_derived": {
         "away_score_before": 16,
-        "base_out_state": "111|1",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
-        "home_score_before": 11,
-        "outs_after": 2,
-        "outs_before": 1,
+        "home_score_before": 12,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -7476,7 +7570,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 121
+      "seq": 122
     },
     {
       "batting_team": "m4b3oa5lpozm3a58",
@@ -7486,7 +7580,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7508,7 +7602,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 7,
@@ -7553,7 +7647,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 123
+      "seq": 124
     },
     {
       "_derived": {
@@ -7569,7 +7663,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 7,
@@ -7614,7 +7708,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 124
+      "seq": 125
     },
     {
       "_derived": {
@@ -7630,7 +7724,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 7,
@@ -7677,7 +7771,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 125
+      "seq": 126
     },
     {
       "_derived": {
@@ -7693,7 +7787,7 @@
           true,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 0
@@ -7715,7 +7809,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 126
+      "seq": 127
     },
     {
       "_derived": {
@@ -7731,7 +7825,7 @@
           false,
           true
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 7,
@@ -7776,7 +7870,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7792,7 +7886,7 @@
           false,
           true
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 7,
@@ -7845,7 +7939,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7861,7 +7955,7 @@
           true,
           true
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 1
@@ -7901,7 +7995,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 129
+      "seq": 130
     },
     {
       "_derived": {
@@ -7917,7 +8011,7 @@
           true,
           true
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 7,
@@ -7964,7 +8058,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 130
+      "seq": 131
     },
     {
       "batting_team": "p36jpi9icfitpai5",
@@ -7974,7 +8068,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 131,
+      "seq": 132,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7990,9 +8084,9 @@
       "kind": "substitution",
       "narrative": "Matthew Taubensee to p for Brock Lambert.",
       "scoring_play": false,
-      "seq": 132,
+      "seq": 133,
       "substitution": {
-        "after_event_seq": 131,
+        "after_event_seq": 132,
         "kind": "pitching",
         "player_in": "st9dm78s4lqttdke",
         "player_out": "x1ku6e1x2phxjjd8",
@@ -8013,7 +8107,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -8060,7 +8154,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 133
+      "seq": 134
     },
     {
       "_derived": {
@@ -8076,7 +8170,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -8121,7 +8215,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 135
     },
     {
       "_derived": {
@@ -8137,7 +8231,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -8182,7 +8276,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 135
+      "seq": 136
     },
     {
       "_derived": {
@@ -8198,7 +8292,7 @@
           false,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 0
@@ -8220,7 +8314,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 136
+      "seq": 137
     },
     {
       "_derived": {
@@ -8236,7 +8330,7 @@
           true,
           false
         ],
-        "home_score_before": 11,
+        "home_score_before": 12,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -8283,7 +8377,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 137
+      "seq": 138
     },
     {
       "batting_team": "m4b3oa5lpozm3a58",
@@ -8293,7 +8387,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 138,
+      "seq": 139,
       "summary": {
         "E": 0,
         "H": 0,
@@ -8303,6 +8397,7 @@
     }
   ],
   "game_id": "20260707_vxj9",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8460,14 +8555,14 @@
           "slot": null
         },
         {
-          "after_event_seq": 117,
+          "after_event_seq": 118,
           "kind": "pitching",
           "player_in": "x1ku6e1x2phxjjd8",
           "player_out": "kyyq2ykztef2ku0w",
           "slot": null
         },
         {
-          "after_event_seq": 131,
+          "after_event_seq": 132,
           "kind": "pitching",
           "player_in": "st9dm78s4lqttdke",
           "player_out": "x1ku6e1x2phxjjd8",
@@ -8480,18 +8575,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:42:43Z",
     "parse": {
-      "events_count": 139,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 8 computed 2 != oracle 3",
-        "[linescore] linescore: computed home final R 11 != oracle total 12",
-        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 8 bottom folded LOB 3 != inning_summary LOB 2",
-        "[pa_counts] pa_counts: player qkxfaxn4f90ilduj events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 140,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:52Z",
+    "parsed_at": "2026-08-28T01:19:57Z",
     "parser_version": "0.7.0",
     "source_sha256": "7868ae8187d23006e163f933a37173857e33606cb687496c45ca727869566b9f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260707_vxj9.xml"
@@ -8859,15 +8949,5 @@
       "team_id": "m4b3oa5lpozm3a58"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 4
-      },
-      "raw": "Wyatt Grant out at first 1b to p, RBI (1-2 BKK); Joseph Kalafut advanced to second; Logan Meyer  advanced to third; Austin Folds scored.",
-      "reason": "primary verb not recognized: 'Wyatt Grant out at first 1b to p, RBI'"
-    }
-  ]
+  "unparsed": []
 }

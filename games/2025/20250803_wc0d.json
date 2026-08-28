@@ -1607,22 +1607,48 @@
         "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "I. Nunez",
+        "player_id": "2kcpx9egaoyfbn7u",
+        "resolved": true
+      },
       "batting_team": "rssm3ae3o1c57tro",
+      "count": null,
       "fielding_team": "ybsjgrorwgm7zp91",
       "half": "bottom",
       "inning": 2,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "I. Nunez out at first 1b to 2b, SAC, bunt; C. Castaneda advanced to third.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "o5fu9y7u3ifzg3uf",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "2kcpx9egaoyfbn7u",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -2537,7 +2563,7 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -3608,7 +3634,7 @@
         "home_score_before": 9,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4958,7 +4984,7 @@
         "base_out_state": "011|0",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -5012,7 +5038,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "x8r6n22qj9009w87",
           "scored": false,
@@ -5052,15 +5078,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "011|1",
+        "base_out_state": "001|1",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 12,
@@ -5112,7 +5138,7 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "011|2",
+        "base_out_state": "001|2",
         "bases_after": [
           false,
           true,
@@ -5120,7 +5146,7 @@
         ],
         "bases_before": [
           false,
-          true,
+          false,
           true
         ],
         "home_score_before": 12,
@@ -5373,7 +5399,7 @@
         "home_score_before": 12,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6514,7 +6540,7 @@
         "home_score_before": 14,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -7860,7 +7886,7 @@
         "home_score_before": 18,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
       "batter": {
@@ -8694,6 +8720,7 @@
     }
   ],
   "game_id": "20250803_wc0d",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8935,14 +8962,12 @@
     "fetched_at": "2026-07-12T17:15:41Z",
     "parse": {
       "events_count": 154,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 20 runner 2kcpx9egaoyfbn7u advances from base 1 which was not occupied at event start",
-        "[illegal_transitions] illegal_transition: seq 83 runner x8r6n22qj9009w87 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:35Z",
+    "parsed_at": "2026-08-28T01:19:40Z",
     "parser_version": "0.7.0",
     "source_sha256": "b3961292876164b68bc672a734f8fa2d9300f09cc3997677f9ad6897598f2329",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250803_wc0d.xml"

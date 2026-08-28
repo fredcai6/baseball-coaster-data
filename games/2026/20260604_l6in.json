@@ -4381,8 +4381,8 @@
         "away_score_before": 2,
         "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -4412,12 +4412,12 @@
       "kind": "plate_appearance",
       "narrative": "Spence Coffman reached on a fielder's choice to second base, RBI, advanced to second (1-2 BFFF); Gianni Horvat advanced to third, scored on an error by 2b, unearned; Harold Torres scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
-          "RBI",
-          "advanced to second"
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "fielders_choice"
@@ -4435,7 +4435,7 @@
           "out": false,
           "player_id": "mho3nl5nn6mdwl9r",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -4464,15 +4464,15 @@
     {
       "_derived": {
         "away_score_before": 4,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -4522,7 +4522,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "mho3nl5nn6mdwl9r",
           "scored": false,
@@ -5783,6 +5783,7 @@
     }
   ],
   "game_id": "20260604_l6in",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5961,11 +5962,12 @@
     "fetched_at": "2026-07-12T15:05:13Z",
     "parse": {
       "events_count": 101,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
+    "parsed_at": "2026-08-28T01:19:48Z",
     "parser_version": "0.7.0",
     "source_sha256": "66a030db4ac2a08785677f1716791554cdfb223d2d9eb925992f272024cd51b7",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260604_l6in.xml"

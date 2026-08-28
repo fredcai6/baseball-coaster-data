@@ -3302,11 +3302,11 @@
       "kind": "plate_appearance",
       "narrative": "R. Mccarthy reached on a fielder's choice to shortstop; T. Wyatt out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4259,10 +4259,11 @@
       "kind": "plate_appearance",
       "narrative": "N. Block reached on a fielder's choice to third base, RBI; B. Fitzgeral out at second 3b to 2b; M. Dinesen scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "3b"
+        ],
+        "location": "third base",
         "modifiers": [
-          "to third base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -4338,11 +4339,11 @@
       "kind": "plate_appearance",
       "narrative": "G. Tonkel reached on a fielder's choice to shortstop; N. Block out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6760,6 +6761,7 @@
     }
   ],
   "game_id": "20240616_utqn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7134,6 +7136,7 @@
     "fetched_at": "2026-07-12T18:11:34Z",
     "parse": {
       "events_count": 139,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
@@ -7142,7 +7145,7 @@
         "[pa_counts] pa_counts: player 4jf1wpxr7r3ua3dc events PA 2 != box-implied PA 0 (AB=0 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:01Z",
+    "parsed_at": "2026-08-28T01:19:07Z",
     "parser_version": "0.7.0",
     "source_sha256": "513f8deff8cffadfc530c5f21526392bea1d1cafd7d49fea0c5caa3121f67234",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240616_utqn.xml"

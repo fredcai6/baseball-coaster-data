@@ -4501,8 +4501,8 @@
         "away_score_before": 8,
         "base_out_state": "110|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -4534,9 +4534,7 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "advanced to second"
-        ],
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "fielders_choice"
       },
@@ -4553,7 +4551,7 @@
           "out": false,
           "player_id": "91opkk4jpwvc2gce",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "error",
@@ -4580,15 +4578,15 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 2,
@@ -4642,7 +4640,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "91opkk4jpwvc2gce",
           "rbi": true,
@@ -5073,7 +5071,7 @@
         "base_out_state": "011|1",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -5128,7 +5126,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "feiqfp9kwgceo5b5",
           "scored": false,
@@ -5151,7 +5149,7 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "111|1",
+        "base_out_state": "101|1",
         "bases_after": [
           true,
           true,
@@ -5159,7 +5157,7 @@
         ],
         "bases_before": [
           true,
-          true,
+          false,
           true
         ],
         "home_score_before": 4,
@@ -7796,6 +7794,7 @@
     }
   ],
   "game_id": "20260607_2gh7",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7988,13 +7987,12 @@
     "fetched_at": "2026-07-12T15:09:08Z",
     "parse": {
       "events_count": 133,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 82 runner feiqfp9kwgceo5b5 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:45Z",
+    "parsed_at": "2026-08-28T01:19:49Z",
     "parser_version": "0.7.0",
     "source_sha256": "09c6181a77334645cef6e9b79d752b0a3145dba479e981bba464b5e9327932d1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260607_2gh7.xml"

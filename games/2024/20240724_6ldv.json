@@ -4734,22 +4734,48 @@
         "home_score_before": 7,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
+      "batter": {
+        "name_raw": "D. Rivera",
+        "player_id": "5m0frfj9dc7gzinv",
+        "resolved": true
+      },
       "batting_team": "j2s5i8avme57snyy",
+      "count": null,
       "fielding_team": "2qaeqxdby1itnbm2",
       "half": "bottom",
       "inning": 7,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "D. Rivera out at first c to 2b, SAC, bunt; S. Kuchinski advanced to second; K. Dugan advanced to third.",
+      "outcome": {
+        "fielders": [
+          "c",
+          "2b"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "bunt"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "x10w9d90vygtrcha",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "5m0frfj9dc7gzinv",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -5455,7 +5481,7 @@
         "home_score_before": 9,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 1
       },
       "batter": {
@@ -6534,6 +6560,7 @@
     }
   ],
   "game_id": "20240724_6ldv",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6712,6 +6739,7 @@
     "fetched_at": "2026-07-12T18:55:27Z",
     "parse": {
       "events_count": 117,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6721,7 +6749,7 @@
         "[pa_counts] pa_counts: player 0or6g0vtuqazzkp0 events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:10Z",
+    "parsed_at": "2026-08-28T01:19:15Z",
     "parser_version": "0.7.0",
     "source_sha256": "1d66ff8bc65b3ba345431a36615973868176bbd4ccb6f4d316fe3b69f1a0aa4a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240724_6ldv.xml"

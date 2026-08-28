@@ -800,7 +800,7 @@
         "base_out_state": "111|0",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -809,7 +809,7 @@
           true
         ],
         "home_score_before": 0,
-        "outs_after": 0,
+        "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 1,
         "runs_on_play": 1
@@ -830,10 +830,9 @@
         "fielders": [],
         "location": null,
         "modifiers": [
-          "out at second 2b to 1b",
           "RBI"
         ],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -854,10 +853,10 @@
         {
           "cause": "advance",
           "from": 1,
-          "out": false,
+          "out": true,
           "player_id": "0cd7pfsbqrrvnpoj",
           "scored": false,
-          "to": 2
+          "to": -1
         },
         {
           "cause": "advance",
@@ -884,20 +883,20 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "111|0",
+        "base_out_state": "101|1",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
           true,
-          true,
+          false,
           true
         ],
         "home_score_before": 0,
-        "outs_after": 1,
-        "outs_before": 0,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -944,20 +943,20 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "111|1",
+        "base_out_state": "101|2",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
           true,
-          true,
+          false,
           true
         ],
         "home_score_before": 0,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
@@ -8690,6 +8689,18 @@
     }
   ],
   "game_id": "20240528_iugv",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to 0cd7pfsbqrrvnpoj, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "top",
+        "inning": 1,
+        "line_index": 6
+      },
+      "raw": "T. Halsema reached on a fielder's choice, out at second 2b to 1b, RBI; D. Hubbard advanced to second; N. Martinez advanced to third; M. Jefferson scored.",
+      "rule": "unattributed_force_out"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -8910,15 +8921,14 @@
     "fetched_at": "2026-07-12T17:48:54Z",
     "parse": {
       "events_count": 153,
+      "inferred_count": 1,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
-        "[outs_per_half] outs_per_half: inning 1 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 1 top folded LOB 3 != inning_summary LOB 2",
         "[lob] lob: inning 4 top folded LOB 2 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:08:57Z",
+    "parsed_at": "2026-08-28T01:19:02Z",
     "parser_version": "0.7.0",
     "source_sha256": "09e99717f767b541f2abc4aef8645014b49efdd8bc261cb8d3261a6b2ef6e515",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240528_iugv.xml"

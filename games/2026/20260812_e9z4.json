@@ -965,7 +965,9 @@
       "kind": "plate_appearance",
       "narrative": "Ethan Underwood singled to pitcher (0-0); Diego Murillo advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -2022,7 +2024,9 @@
       "kind": "plate_appearance",
       "narrative": "Diego Murillo singled to pitcher (0-0); Jeremy Piatkiewicz advanced to second; Michael O’Hara advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7391,7 +7395,7 @@
         "base_out_state": "011|1",
         "bases_after": [
           false,
-          true,
+          false,
           true
         ],
         "bases_before": [
@@ -7402,6 +7406,90 @@
         "home_score_before": 18,
         "outs_after": 2,
         "outs_before": 1,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Jeremy Piatkiewicz",
+        "player_id": "syn:home:6",
+        "resolved": true
+      },
+      "batting_team": "m4b3oa5lpozm3a58",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "fs5kcreudvyx5quq",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "plate_appearance",
+      "narrative": "Jeremy Piatkiewicz lined out to cf, SAC, RBI (1-1 SB); Michael O’Hara advanced to third; Wyatt Grant scored.",
+      "outcome": {
+        "fielders": [
+          "cf"
+        ],
+        "location": null,
+        "modifiers": [
+          "SAC",
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "lineout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:away:10",
+        "resolved": true
+      },
+      "pitches": "SB",
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "syn:home:6",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "advance",
+          "from": 2,
+          "out": false,
+          "player_id": "uq1yxwcq784t2v3w",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "qkxfaxn4f90ilduj",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 120
+    },
+    {
+      "_derived": {
+        "away_score_before": 5,
+        "base_out_state": "001|2",
+        "bases_after": [
+          false,
+          false,
+          true
+        ],
+        "bases_before": [
+          false,
+          false,
+          true
+        ],
+        "home_score_before": 19,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 7,
         "runs_on_play": 0
       },
@@ -7444,7 +7532,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "batting_team": "m4b3oa5lpozm3a58",
@@ -7454,7 +7542,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 2 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 121,
+      "seq": 122,
       "summary": {
         "E": 0,
         "H": 2,
@@ -7470,9 +7558,9 @@
       "kind": "substitution",
       "narrative": "Dominick Spinoso to p for Cooper Sain.",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "substitution": {
-        "after_event_seq": 121,
+        "after_event_seq": 122,
         "kind": "pitching",
         "player_in": "syn:home:8",
         "player_out": "syn:home:7",
@@ -7493,7 +7581,7 @@
           false,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -7542,7 +7630,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 123
+      "seq": 124
     },
     {
       "_derived": {
@@ -7558,7 +7646,7 @@
           false,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -7603,7 +7691,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 124
+      "seq": 125
     },
     {
       "_derived": {
@@ -7619,7 +7707,7 @@
           false,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -7674,7 +7762,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 125
+      "seq": 126
     },
     {
       "_derived": {
@@ -7690,7 +7778,7 @@
           false,
           true
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 1,
         "outs_before": 1,
         "runs_on_play": 0
@@ -7712,7 +7800,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 126
+      "seq": 127
     },
     {
       "_derived": {
@@ -7728,7 +7816,7 @@
           true,
           true
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -7798,7 +7886,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7814,7 +7902,7 @@
           false,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -7867,7 +7955,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7883,7 +7971,7 @@
           false,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 0
@@ -7905,7 +7993,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 129
+      "seq": 130
     },
     {
       "_derived": {
@@ -7921,7 +8009,7 @@
           true,
           false
         ],
-        "home_score_before": 18,
+        "home_score_before": 19,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7968,7 +8056,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 130
+      "seq": 131
     },
     {
       "batting_team": "fs5kcreudvyx5quq",
@@ -7978,7 +8066,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 131,
+      "seq": 132,
       "summary": {
         "E": 1,
         "H": 2,
@@ -7988,6 +8076,7 @@
     }
   ],
   "game_id": "20260812_e9z4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8138,7 +8227,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 121,
+          "after_event_seq": 122,
           "kind": "pitching",
           "player_in": "syn:home:8",
           "player_out": "syn:home:7",
@@ -8151,17 +8240,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:07:05Z",
     "parse": {
-      "events_count": 132,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 8 computed 2 != oracle 3",
-        "[linescore] linescore: computed home final R 18 != oracle total 19",
-        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 8 bottom folded LOB 2 != inning_summary LOB 1"
-      ]
+      "events_count": 133,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
+    "parsed_at": "2026-08-28T01:20:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "cb61fe5eb2b5c729154b16739f91d35f9960e2588d8b3b52ad50d186f4e3ee2d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260812_e9z4.xml"
@@ -8507,15 +8592,5 @@
       "team_id": "m4b3oa5lpozm3a58"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 6
-      },
-      "raw": "Jeremy Piatkiewicz lined out to cf, SAC, RBI (1-1 SB); Michael O’Hara advanced to third; Wyatt Grant scored.",
-      "reason": "primary verb not recognized: 'Jeremy Piatkiewicz lined out to cf, SAC, RBI'"
-    }
-  ]
+  "unparsed": []
 }

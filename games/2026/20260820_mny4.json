@@ -5738,7 +5738,9 @@
       "kind": "plate_appearance",
       "narrative": "Garrett Bevacqua singled to catcher, RBI (1-1 BF); Luke Hyzdu scored.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "c"
+        ],
         "location": "catcher",
         "modifiers": [
           "RBI"
@@ -7307,6 +7309,7 @@
     }
   ],
   "game_id": "20260820_mny4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7506,11 +7509,12 @@
     "fetched_at": "2026-08-27T15:16:16Z",
     "parse": {
       "events_count": 127,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:03Z",
+    "parsed_at": "2026-08-28T01:20:07Z",
     "parser_version": "0.7.0",
     "source_sha256": "73ae963f17b00ad3efab0b18714f7d9659ac47f57b93029723e4e78017418b79",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260820_mny4.xml"
@@ -7875,7 +7879,7 @@
         "line_index": 17
       },
       "raw": "/  for Andrew Ravelo.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Andrew Ravelo'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Andrew Ravelo'"
     }
   ]
 }

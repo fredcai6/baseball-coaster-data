@@ -372,7 +372,9 @@
       "kind": "plate_appearance",
       "narrative": "A. Shaver singled to catcher, advanced to second on a throwing error by c.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "c"
+        ],
         "location": "catcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -531,7 +533,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -585,7 +587,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "55tifsir6809w3ea",
           "rbi": true,
@@ -599,16 +601,16 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 2,
@@ -667,16 +669,16 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "111|2",
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 0,
         "outs_after": 3,
@@ -697,11 +699,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Muniz reached on a fielder's choice to third base; P. Mills advanced to second; T. Shelnut out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -987,10 +989,11 @@
       "kind": "plate_appearance",
       "narrative": "T. Cruz reached on a fielder's choice to second base, RBI; B. Watkins out at second 2b to ss; C. Vest advanced to third; A. Swenda scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -5570,6 +5573,7 @@
     }
   ],
   "game_id": "20250822_bsa2",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5734,14 +5738,12 @@
     "fetched_at": "2026-07-12T17:37:13Z",
     "parse": {
       "events_count": 100,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 1 top folded LOB 3 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 3 runner 55tifsir6809w3ea advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:39Z",
+    "parsed_at": "2026-08-28T01:19:44Z",
     "parser_version": "0.7.0",
     "source_sha256": "28245d68cc723edc23ad200c0aae6ab5314fa5ed0e52bf7161025980a2e324d9",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250822_bsa2.xml"

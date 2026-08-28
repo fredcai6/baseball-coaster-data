@@ -3474,7 +3474,9 @@
       "kind": "plate_appearance",
       "narrative": "D. Maynard singled to catcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "c"
+        ],
         "location": "catcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -3532,11 +3534,11 @@
       "kind": "plate_appearance",
       "narrative": "H. George reached on a fielder's choice to second base; D. Maynard out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4472,11 +4474,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Bagnieski reached on a fielder's choice to second base; J. Cone out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4939,10 +4941,11 @@
       "kind": "plate_appearance",
       "narrative": "H. George reached on a fielder's choice to second base, RBI; D. Perez out at second ss to 2b; D. Gomez scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "2b"
+        ],
+        "location": "second base",
         "modifiers": [
-          "to second base",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -6881,6 +6884,7 @@
     }
   ],
   "game_id": "20240523_5giq",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7122,13 +7126,14 @@
     "fetched_at": "2026-07-12T17:43:17Z",
     "parse": {
       "events_count": 130,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 3"
       ]
     },
-    "parsed_at": "2026-08-27T23:08:55Z",
+    "parsed_at": "2026-08-28T01:19:01Z",
     "parser_version": "0.7.0",
     "source_sha256": "e1281d4459f340244cd7aaee3de2a386c7048b112630b9833a6b74a953826e3c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240523_5giq.xml"

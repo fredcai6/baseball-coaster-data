@@ -5986,6 +5986,7 @@
     }
   ],
   "game_id": "20240611_xnkv",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6178,6 +6179,7 @@
     "fetched_at": "2026-07-12T18:05:18Z",
     "parse": {
       "events_count": 111,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6186,7 +6188,7 @@
         "[pa_counts] pa_counts: player 8v0vrbdmsba2mg1t events PA 2 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:00Z",
+    "parsed_at": "2026-08-28T01:19:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "9295a41be69be18c4613c3ca5c4325cd7c68d40b317effee3fe75c1013fbfb87",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240611_xnkv.xml"
@@ -6572,7 +6574,7 @@
         "line_index": 2
       },
       "raw": "D. Poteet struck out swinging, grounded out to c unassisted.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "batter name did not resolve uniquely: 'D. Poteet struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'D. Poteet struck out swinging, grounded out to c unassisted'"
     }
   ]
 }

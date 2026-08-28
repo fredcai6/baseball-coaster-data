@@ -1094,11 +1094,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Bowen reached on a fielder's choice to shortstop; B. Knight out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -1851,11 +1851,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Vest reached on a fielder's choice to second base; Brock. Watki out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2220,22 +2220,47 @@
         "home_score_before": 2,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 2,
         "runs_on_play": 1
       },
+      "batter": {
+        "name_raw": "B. Knight",
+        "player_id": "awhm18x501qzbv11",
+        "resolved": true
+      },
       "batting_team": "9efpyrbbyneh3vac",
+      "count": null,
       "fielding_team": "9fugocpa5h6ockn6",
       "half": "top",
       "inning": 3,
-      "kind": "runner_event",
+      "kind": "plate_appearance",
       "narrative": "B. Knight out at first 1b to p, RBI; J. Kline advanced to third; E. Manzo scored.",
+      "outcome": {
+        "fielders": [
+          "1b",
+          "p"
+        ],
+        "location": null,
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 1,
+        "type": "groundout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "x3wt438b1tfoke8o",
+        "resolved": true
+      },
+      "pitches": null,
       "runners": [
         {
-          "cause": "force_out",
-          "from": 1,
+          "cause": "putout",
+          "from": 0,
           "out": true,
           "player_id": "awhm18x501qzbv11",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
@@ -2251,7 +2276,7 @@
           "from": 3,
           "out": false,
           "player_id": "bzgt5e2myj16pqlq",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -2362,11 +2387,11 @@
       "kind": "plate_appearance",
       "narrative": "J. McHenry reached on a fielder's choice to shortstop; C. Bowen out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3758,7 +3783,7 @@
         "home_score_before": 7,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -4585,7 +4610,7 @@
         "home_score_before": 7,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6234,7 +6259,7 @@
         "home_score_before": 10,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -7058,7 +7083,7 @@
         "home_score_before": 10,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
       "batter": {
@@ -7134,11 +7159,11 @@
       "kind": "plate_appearance",
       "narrative": "C. Bowen reached on a fielder's choice to shortstop; J. Kline out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7439,6 +7464,7 @@
     }
   ],
   "game_id": "20250726_9b8q",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7610,14 +7636,12 @@
     "fetched_at": "2026-07-12T17:06:38Z",
     "parse": {
       "events_count": 130,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player awhm18x501qzbv11 events PA 5 != box-implied PA 6 (AB=4 BB=1 HBP=1 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 32 runner awhm18x501qzbv11 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:33Z",
+    "parsed_at": "2026-08-28T01:19:38Z",
     "parser_version": "0.7.0",
     "source_sha256": "c270d6f369caeea0c7a615ef4d6d5a86bc3ac759f88196dab7700d2d9e174d9b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250726_9b8q.xml"

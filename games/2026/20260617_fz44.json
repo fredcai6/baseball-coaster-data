@@ -1173,7 +1173,9 @@
       "kind": "plate_appearance",
       "narrative": "Logan Meyer singled to pitcher (1-2 KBF).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7255,6 +7257,7 @@
     }
   ],
   "game_id": "20260617_fz44",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7447,11 +7450,12 @@
     "fetched_at": "2026-07-12T15:20:15Z",
     "parse": {
       "events_count": 123,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:47Z",
+    "parsed_at": "2026-08-28T01:19:52Z",
     "parser_version": "0.7.0",
     "source_sha256": "ec696af06ce206832c8fe93cb64e86cb92f914d4a436c96d5e2470f561b09e8c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260617_fz44.xml"
@@ -7840,7 +7844,7 @@
         "line_index": 4
       },
       "raw": "/  for Demarckus Smiley.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Demarckus Smiley'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Demarckus Smiley'"
     }
   ]
 }

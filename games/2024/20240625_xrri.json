@@ -6135,6 +6135,7 @@
     }
   ],
   "game_id": "20240625_xrri",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6376,6 +6377,7 @@
     "fetched_at": "2026-07-12T18:20:44Z",
     "parse": {
       "events_count": 120,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6386,7 +6388,7 @@
         "[pa_counts] pa_counts: player ak1ol9xk8uqfh9p7 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:03Z",
+    "parsed_at": "2026-08-28T01:19:09Z",
     "parser_version": "0.7.0",
     "source_sha256": "a3aec375b8f1ba6be68f155fc99be3c40395f89a24326f3aa068fdc0de9d3efd",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240625_xrri.xml"
@@ -6824,7 +6826,7 @@
         "line_index": 7
       },
       "raw": "T. Viola singled to shortstop, advanced to second on a throwing error by 1b, RBI, advanced to third; D. Poteet advanced to third, scored on an error by 1b; M. Yonamine scored.",
-      "reason": "runner clause name did not resolve uniquely"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'T. Viola singled to shortstop, advanced to second on a throwing error by 1b, RBI, advanced to third'"
     }
   ]
 }

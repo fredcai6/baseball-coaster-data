@@ -3363,7 +3363,7 @@
           false
         ],
         "home_score_before": 4,
-        "outs_after": 2,
+        "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 3,
         "runs_on_play": 0
@@ -3386,10 +3386,8 @@
       "outcome": {
         "fielders": [],
         "location": null,
-        "modifiers": [
-          "out at second ss to 2b"
-        ],
-        "outs_recorded": 0,
+        "modifiers": [],
+        "outs_recorded": 1,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -3406,6 +3404,14 @@
           "player_id": "y09eb27ifb9ivkyz",
           "scored": false,
           "to": 1
+        },
+        {
+          "cause": "force_out",
+          "from": 1,
+          "out": true,
+          "player_id": "760qtmpnnbladwd1",
+          "scored": false,
+          "to": -1
         }
       ],
       "scoring_play": false,
@@ -7207,6 +7213,18 @@
     }
   ],
   "game_id": "20260606_f4kv",
+  "inferred": [
+    {
+      "asserted": "out at second attributed to 760qtmpnnbladwd1, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "location": {
+        "half": "top",
+        "inning": 5,
+        "line_index": 4
+      },
+      "raw": "Jordan Harrison-Dudley reached on a fielder's choice, out at second ss to 2b (0-0).\n                                                                                                                                \t\t\t\t\t(3 out)",
+      "rule": "unattributed_force_out"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7469,13 +7487,12 @@
     "fetched_at": "2026-07-12T15:07:06Z",
     "parse": {
       "events_count": 133,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 5 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:45Z",
+    "parsed_at": "2026-08-28T01:19:49Z",
     "parser_version": "0.7.0",
     "source_sha256": "2b5be57186ade45a3e4a75ba6a4682f6b95cd29d33a31bc8ba9b929a623c3fed",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260606_f4kv.xml"

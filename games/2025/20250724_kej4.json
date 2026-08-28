@@ -5683,6 +5683,7 @@
     }
   ],
   "game_id": "20250724_kej4",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5868,6 +5869,7 @@
     "fetched_at": "2026-07-12T17:03:16Z",
     "parse": {
       "events_count": 107,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 2,
       "warnings": [
@@ -5880,7 +5882,7 @@
         "[pa_counts] pa_counts: player izzcunrxsob3uzsl events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:32Z",
+    "parsed_at": "2026-08-28T01:19:37Z",
     "parser_version": "0.7.0",
     "source_sha256": "7550e14fe3e4c511a8468895d19726e749ebef4a6ca06c57c8e5d7ac63d19654",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250724_kej4.xml"
@@ -6275,7 +6277,7 @@
         "line_index": 7
       },
       "raw": "C. Bagnieski struck out swinging, reached first on an error by p; K. Oyama advanced to third; C. Jordan scored, unearned; T. Fontenot scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'C. Bagnieski struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'C. Bagnieski struck out swinging, reached first on an error by p'"
     }
   ]
 }

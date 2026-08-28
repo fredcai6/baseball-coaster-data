@@ -4214,7 +4214,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -4263,7 +4263,7 @@
         },
         {
           "cause": "force_out",
-          "from": 1,
+          "from": 3,
           "out": true,
           "player_id": "pguqfv85ypfil0bx",
           "scored": false,
@@ -4276,16 +4276,16 @@
     {
       "_derived": {
         "away_score_before": 7,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 3,
         "outs_after": 3,
@@ -7722,6 +7722,7 @@
     }
   ],
   "game_id": "20240608_pvx3",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7949,15 +7950,14 @@
     "fetched_at": "2026-07-12T18:01:53Z",
     "parse": {
       "events_count": 140,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
-        "[lob] lob: inning 6 top folded LOB 2 != inning_summary LOB 1",
-        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 73 runner pguqfv85ypfil0bx advances from base 1 which was not occupied at event start"
+        "[lob] lob: inning 6 bottom folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-08-27T23:08:59Z",
+    "parsed_at": "2026-08-28T01:19:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "937a0ed42bd640c208350709233d51cfab148ef4d7ab32eaa0d765a2c50b8225",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240608_pvx3.xml"
@@ -8356,7 +8356,7 @@
         "line_index": 4
       },
       "raw": "/  for A. Vail.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for A. Vail'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='A. Vail'"
     }
   ]
 }

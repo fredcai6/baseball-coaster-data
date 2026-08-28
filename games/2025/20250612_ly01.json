@@ -2186,7 +2186,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -2241,7 +2241,7 @@
         {
           "cause": "advance",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "zhwvtt83h5dg97d9",
           "rbi": true,
@@ -2255,16 +2255,16 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 2,
@@ -2313,7 +2313,7 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           false,
@@ -2322,7 +2322,7 @@
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 2,
@@ -5299,7 +5299,9 @@
       "kind": "plate_appearance",
       "narrative": "D. Tatum singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5909,6 +5911,7 @@
     }
   ],
   "game_id": "20250612_ly01",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6117,13 +6120,12 @@
     "fetched_at": "2026-07-12T16:16:10Z",
     "parse": {
       "events_count": 111,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[illegal_transitions] illegal_transition: seq 33 runner zhwvtt83h5dg97d9 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:23Z",
+    "parsed_at": "2026-08-28T01:19:28Z",
     "parser_version": "0.7.0",
     "source_sha256": "c219ffffa3e6acb9efa71a56a6fc4461216b6751cff52672bf1b063b0c88e27b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250612_ly01.xml"

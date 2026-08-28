@@ -7289,7 +7289,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -7343,7 +7343,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "2nm8smw9i29cjoz2",
           "rbi": true,
@@ -7357,16 +7357,16 @@
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 23,
         "outs_after": 3,
@@ -7430,6 +7430,7 @@
     }
   ],
   "game_id": "20250612_zjut",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7629,14 +7630,12 @@
     "fetched_at": "2026-07-12T16:16:23Z",
     "parse": {
       "events_count": 129,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 1,
-      "warnings": [
-        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 0",
-        "[illegal_transitions] illegal_transition: seq 126 runner 2nm8smw9i29cjoz2 advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:23Z",
+    "parsed_at": "2026-08-28T01:19:28Z",
     "parser_version": "0.7.0",
     "source_sha256": "0c85fda47a72e82281a1a60a71f61c4c4f13849954e86a0d9e2b220645bb5abf",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250612_zjut.xml"
@@ -8009,7 +8008,7 @@
         "line_index": 9
       },
       "raw": "/  for B. Vaughn.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for B. Vaughn'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='B. Vaughn'"
     }
   ]
 }

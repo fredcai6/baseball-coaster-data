@@ -6726,7 +6726,9 @@
       "kind": "plate_appearance",
       "narrative": "Dylan Wilkinson singled to pitcher (1-2 BKFF); Giuseppe Ferraro-Nahr advanced to second; Bradley Pelle advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7890,6 +7892,7 @@
     }
   ],
   "game_id": "20260529_l6ze",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8138,6 +8141,7 @@
     "fetched_at": "2026-07-12T14:57:48Z",
     "parse": {
       "events_count": 141,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -8147,7 +8151,7 @@
         "[pa_counts] pa_counts: player widh2653g4rul3u2 events PA 6 != box-implied PA 5 (AB=2 BB=1 HBP=1 SAC=1 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:43Z",
+    "parsed_at": "2026-08-28T01:19:47Z",
     "parser_version": "0.7.0",
     "source_sha256": "22ef9613c819eea870cd959746bb11b8cf85886a1766bc91ac8b75e673c5dc2a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260529_l6ze.xml"
@@ -8597,7 +8601,7 @@
         "line_index": 13
       },
       "raw": "Enzo Apodaca Dropped foul ball, E2, homered to right field (2-2 BKFFB).",
-      "reason": "batter name did not resolve uniquely: 'Enzo Apodaca Dropped foul ball, E2,'"
+      "reason": "primary verb not recognized: 'Enzo Apodaca Dropped foul ball, E2, homered to right field'"
     }
   ]
 }

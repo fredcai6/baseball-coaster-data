@@ -2818,7 +2818,9 @@
       "kind": "plate_appearance",
       "narrative": "Tyler Williams singled to pitcher (0-1 K); Max Handron advanced to second; Logan Sutter advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6756,6 +6758,7 @@
     }
   ],
   "game_id": "20260813_9p6p",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7011,11 +7014,12 @@
     "fetched_at": "2026-08-27T15:08:30Z",
     "parse": {
       "events_count": 124,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 2,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
+    "parsed_at": "2026-08-28T01:20:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "74207a856ea9d3fa56d3d997c3d5631909a75b99d15ebd1b4ab739a84fbd5b8b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260813_9p6p.xml"
@@ -7402,7 +7406,7 @@
         "line_index": 2
       },
       "raw": "/  for Ethan Roarke.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Ethan Roarke'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Ethan Roarke'"
     },
     {
       "location": {
@@ -7411,7 +7415,7 @@
         "line_index": 2
       },
       "raw": "/  for Brock Mayer.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Brock Mayer'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Brock Mayer'"
     }
   ]
 }

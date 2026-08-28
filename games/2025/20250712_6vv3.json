@@ -6048,6 +6048,74 @@
       "seq": 113
     },
     {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "100|1",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 9,
+        "outs_after": 3,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 0
+      },
+      "batter": {
+        "name_raw": "O. Jones",
+        "player_id": "fqu82j6ptw1sgi84",
+        "resolved": true
+      },
+      "batting_team": "ybsjgrorwgm7zp91",
+      "count": null,
+      "fielding_team": "zgzmksngghvq54yy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "O. Jones popped into double play ss; A. Adams out on the play.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": null,
+        "modifiers": [],
+        "outs_recorded": 2,
+        "type": "popout"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "am7czikji3iecp9k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "putout",
+          "from": 0,
+          "out": true,
+          "player_id": "fqu82j6ptw1sgi84",
+          "scored": false,
+          "to": -1
+        },
+        {
+          "cause": "putout",
+          "from": 1,
+          "out": true,
+          "player_id": "ospawevye4ncs3mb",
+          "scored": false,
+          "to": -1
+        }
+      ],
+      "scoring_play": false,
+      "seq": 114
+    },
+    {
       "batting_team": "ybsjgrorwgm7zp91",
       "fielding_team": "zgzmksngghvq54yy",
       "half": "top",
@@ -6055,7 +6123,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 114,
+      "seq": 115,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6065,6 +6133,7 @@
     }
   ],
   "game_id": "20250712_6vv3",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6298,16 +6367,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T16:49:53Z",
     "parse": {
-      "events_count": 115,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 9 top totals 1 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 0",
-        "[pa_counts] pa_counts: player fqu82j6ptw1sgi84 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 116,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:30Z",
+    "parsed_at": "2026-08-28T01:19:34Z",
     "parser_version": "0.7.0",
     "source_sha256": "6b7f80f083c2abc4c89ab16d42889babb539925eeb45a8bf65b227658bde0333",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250712_6vv3.xml"
@@ -6724,15 +6790,5 @@
       "team_id": "zgzmksngghvq54yy"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 5
-      },
-      "raw": "O. Jones popped into double play ss; A. Adams out on the play.\n                                                                                                                                                                                                                \t\t\t\t\t(3 out)",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'O. Jones popped into double play ss'"
-    }
-  ]
+  "unparsed": []
 }

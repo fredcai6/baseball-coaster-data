@@ -7074,7 +7074,7 @@
         "base_out_state": "110|1",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
@@ -7085,86 +7085,6 @@
         "home_score_before": 7,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 5,
-        "runs_on_play": 1
-      },
-      "batter": {
-        "name_raw": "T. Fontenot",
-        "player_id": "67lncoxde35w413x",
-        "resolved": true
-      },
-      "batting_team": "56cu2zsze70qcfrx",
-      "count": null,
-      "fielding_team": "4hgc4se23g09mrqm",
-      "half": "bottom",
-      "inning": 9,
-      "kind": "plate_appearance",
-      "narrative": "T. Fontenot reached on a fielder's choice, advanced to second, RBI, advanced to third; D. Brutcher advanced to second, advanced to third on an error by 3b, scored; L. Barns out at third 3b unassisted.",
-      "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "advanced to second",
-          "RBI",
-          "advanced to third"
-        ],
-        "outs_recorded": 1,
-        "type": "fielders_choice"
-      },
-      "pitcher": {
-        "name_raw": null,
-        "player_id": "oucjjh7nh43wiwl7",
-        "resolved": true
-      },
-      "pitches": null,
-      "runners": [
-        {
-          "cause": "fielders_choice",
-          "from": 0,
-          "out": false,
-          "player_id": "67lncoxde35w413x",
-          "scored": false,
-          "to": 1
-        },
-        {
-          "cause": "advance",
-          "earned": true,
-          "from": 1,
-          "out": false,
-          "player_id": "ef8s947884m7rozj",
-          "rbi": true,
-          "scored": true,
-          "to": 4
-        },
-        {
-          "cause": "force_out",
-          "from": 2,
-          "out": true,
-          "player_id": "o05hhky2z0v1iwda",
-          "scored": false,
-          "to": 3
-        }
-      ],
-      "scoring_play": true,
-      "seq": 133
-    },
-    {
-      "_derived": {
-        "away_score_before": 13,
-        "base_out_state": "100|2",
-        "bases_after": [
-          true,
-          false,
-          false
-        ],
-        "bases_before": [
-          true,
-          false,
-          false
-        ],
-        "home_score_before": 8,
-        "outs_after": 3,
-        "outs_before": 2,
         "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
@@ -7206,7 +7126,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 133
     },
     {
       "batting_team": "56cu2zsze70qcfrx",
@@ -7216,7 +7136,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 3 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 135,
+      "seq": 134,
       "summary": {
         "E": 1,
         "H": 3,
@@ -7226,6 +7146,7 @@
     }
   ],
   "game_id": "20240822_2ep6",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7466,14 +7387,20 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:29:33Z",
     "parse": {
-      "events_count": 136,
+      "events_count": 135,
+      "inferred_count": 0,
       "replayable": false,
-      "unparsed_count": 0,
+      "unparsed_count": 1,
       "warnings": [
-        "[lob] lob: inning 3 top folded LOB 2 != inning_summary LOB 1"
+        "[linescore] linescore: home inning 9 computed 2 != oracle 3",
+        "[linescore] linescore: computed home final R 7 != oracle total 8",
+        "[outs_per_half] outs_per_half: inning 9 bottom totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
+        "[lob] lob: inning 3 top folded LOB 2 != inning_summary LOB 1",
+        "[lob] lob: inning 9 bottom folded LOB 2 != inning_summary LOB 1",
+        "[pa_counts] pa_counts: player 67lncoxde35w413x events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:17Z",
+    "parsed_at": "2026-08-28T01:19:22Z",
     "parser_version": "0.7.0",
     "source_sha256": "6cde0812768678058c70ff474e18b2068fc448eaa2d68d61b7b8ee3dda237c67",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240822_2ep6.xml"
@@ -7916,5 +7843,15 @@
       "team_id": "56cu2zsze70qcfrx"
     }
   },
-  "unparsed": []
+  "unparsed": [
+    {
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 7
+      },
+      "raw": "T. Fontenot reached on a fielder's choice, advanced to second, RBI, advanced to third; D. Brutcher advanced to second, advanced to third on an error by 3b, scored; L. Barns out at third 3b unassisted.",
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: \"T. Fontenot reached on a fielder's choice, advanced to second, RBI, advanced to third\""
+    }
+  ]
 }

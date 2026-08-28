@@ -1309,7 +1309,9 @@
       "kind": "plate_appearance",
       "narrative": "Aidan Redahan singled to pitcher (0-0); Vincent Temesvary advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7416,6 +7418,7 @@
     }
   ],
   "game_id": "20260613_e2xi",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7594,11 +7597,12 @@
     "fetched_at": "2026-07-12T15:15:28Z",
     "parse": {
       "events_count": 123,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:46Z",
+    "parsed_at": "2026-08-28T01:19:51Z",
     "parser_version": "0.7.0",
     "source_sha256": "5e14c7650b1e58144c14246b0870d727877aa829d0e86da6f6da845712ffe2c2",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260613_e2xi.xml"
@@ -7961,7 +7965,7 @@
         "line_index": 12
       },
       "raw": "/  for Brock Lucas.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Brock Lucas'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Brock Lucas'"
     }
   ]
 }

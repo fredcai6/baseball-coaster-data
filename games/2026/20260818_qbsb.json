@@ -458,11 +458,11 @@
       "kind": "plate_appearance",
       "narrative": "A.J. Shaver reached on a fielder's choice to shortstop (1-1 BK); Cameron Bowen out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2363,11 +2363,11 @@
       "kind": "plate_appearance",
       "narrative": "John McHenry reached on a fielder's choice to third base (0-0); Jacob Gutierrez out at second 3b to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4404,11 +4404,11 @@
       "kind": "plate_appearance",
       "narrative": "Justin Johnson Jr. reached on a fielder's choice to shortstop (0-0); Charlie Muniz out at second ss to 2b; A.J. Shaver advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6189,11 +6189,11 @@
       "kind": "plate_appearance",
       "narrative": "Justin Johnson Jr. reached on a fielder's choice to shortstop (0-0); Charlie Muniz out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6902,7 +6902,7 @@
         "base_out_state": "110|0",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -6913,6 +6913,87 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 0,
+        "pa_number_of_batter": 6,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "John McHenry",
+        "player_id": "syn:away:7",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "fielding_team": "yaop56c5591myre0",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "John McHenry reached on a fielder's choice to shortstop (0-1 K); Michael Soper out at second ss to 2b; Jacob Gutierrez advanced to third, scored on a throwing error by 2b, unearned.",
+      "outcome": {
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
+        "modifiers": [],
+        "outs_recorded": 1,
+        "type": "fielders_choice"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "syn:home:8",
+        "resolved": true
+      },
+      "pitches": "K",
+      "runners": [
+        {
+          "cause": "fielders_choice",
+          "from": 0,
+          "out": false,
+          "player_id": "syn:away:7",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "force_out",
+          "from": 1,
+          "out": true,
+          "player_id": "0y61reek2k11wgjw",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "syn:away:6",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 114
+    },
+    {
+      "_derived": {
+        "away_score_before": 22,
+        "base_out_state": "100|1",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          true,
+          false,
+          false
+        ],
+        "home_score_before": 4,
+        "outs_after": 2,
+        "outs_before": 1,
         "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
@@ -6957,25 +7038,25 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
-        "away_score_before": 21,
-        "base_out_state": "110|1",
+        "away_score_before": 22,
+        "base_out_state": "100|2",
         "bases_after": [
           true,
-          true,
+          false,
           false
         ],
         "bases_before": [
           true,
-          true,
+          false,
           false
         ],
         "home_score_before": 4,
-        "outs_after": 2,
-        "outs_before": 1,
+        "outs_after": 3,
+        "outs_before": 2,
         "pa_number_of_batter": 7,
         "runs_on_play": 0
       },
@@ -7018,7 +7099,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -7028,7 +7109,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 1,
         "H": 2,
@@ -7044,9 +7125,9 @@
       "kind": "substitution",
       "narrative": "David Stich to p for Tristan Perry.",
       "scoring_play": false,
-      "seq": 117,
+      "seq": 118,
       "substitution": {
-        "after_event_seq": 116,
+        "after_event_seq": 117,
         "kind": "pitching",
         "player_in": "syn:away:9",
         "player_out": "w5q5vym4gyjfpdhg",
@@ -7055,7 +7136,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 21,
+        "away_score_before": 22,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -7114,11 +7195,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
-        "away_score_before": 21,
+        "away_score_before": 22,
         "base_out_state": "100|0",
         "bases_after": [
           false,
@@ -7152,11 +7233,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "_derived": {
-        "away_score_before": 21,
+        "away_score_before": 22,
         "base_out_state": "010|0",
         "bases_after": [
           false,
@@ -7223,11 +7304,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 120
+      "seq": 121
     },
     {
       "_derived": {
-        "away_score_before": 21,
+        "away_score_before": 22,
         "base_out_state": "001|1",
         "bases_after": [
           false,
@@ -7298,11 +7379,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 121
+      "seq": 122
     },
     {
       "_derived": {
-        "away_score_before": 21,
+        "away_score_before": 22,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -7361,7 +7442,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -7371,7 +7452,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 123,
+      "seq": 124,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7381,6 +7462,7 @@
     }
   ],
   "game_id": "20260818_qbsb",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7468,7 +7550,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 116,
+          "after_event_seq": 117,
           "kind": "pitching",
           "player_in": "syn:away:9",
           "player_out": "w5q5vym4gyjfpdhg",
@@ -7537,18 +7619,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T15:13:17Z",
     "parse": {
-      "events_count": 124,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 1 != oracle 2",
-        "[linescore] linescore: computed away final R 21 != oracle total 22",
-        "[outs_per_half] outs_per_half: inning 9 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1",
-        "[pa_counts] pa_counts: player syn:away:7 events PA 5 != box-implied PA 6 (AB=6 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 125,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:03Z",
+    "parsed_at": "2026-08-28T01:20:07Z",
     "parser_version": "0.7.0",
     "source_sha256": "4348507e24bdf5ca8345099723b2613c51441084cc0c1b01cdfc0443550cad4a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260818_qbsb.xml"
@@ -7883,15 +7960,5 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 3
-      },
-      "raw": "John McHenry reached on a fielder's choice to shortstop (0-1 K); Michael Soper out at second ss to 2b; Jacob Gutierrez advanced to third, scored on a throwing error by 2b, unearned.",
-      "reason": "runner clause not recognized: 'Jacob Gutierrez advanced to third, scored on a throwing error by 2b, unearned'"
-    }
-  ]
+  "unparsed": []
 }

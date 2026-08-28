@@ -508,7 +508,9 @@
       "kind": "plate_appearance",
       "narrative": "Emilio Barrera singled to pitcher (1-0 B); Ty Dooley advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -7965,6 +7967,7 @@
     }
   ],
   "game_id": "20260812_1yrw",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8150,11 +8153,12 @@
     "fetched_at": "2026-08-27T15:06:23Z",
     "parse": {
       "events_count": 133,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
+    "parsed_at": "2026-08-28T01:20:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "e45577851f6932fbb895fdf7e5d8b471e55303bdc0174d530078b4c19e134b85",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260812_1yrw.xml"
@@ -8532,7 +8536,7 @@
         "line_index": 1
       },
       "raw": "/  for Carson Kelly.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Carson Kelly'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Carson Kelly'"
     }
   ]
 }

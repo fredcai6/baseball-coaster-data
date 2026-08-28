@@ -2976,7 +2976,9 @@
       "kind": "plate_appearance",
       "narrative": "J. Leslie singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5810,6 +5812,7 @@
     }
   ],
   "game_id": "20240728_mim9",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5995,11 +5998,12 @@
     "fetched_at": "2026-07-12T19:01:16Z",
     "parse": {
       "events_count": 108,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:11Z",
+    "parsed_at": "2026-08-28T01:19:16Z",
     "parser_version": "0.7.0",
     "source_sha256": "d70d28b6345c169c6959347f850376ee971a20eedbc2f9f7777b8b5d2e5bebc7",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240728_mim9.xml"
@@ -6385,7 +6389,7 @@
         "line_index": 1
       },
       "raw": "/  for J. Pyle.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for J. Pyle'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='J. Pyle'"
     }
   ]
 }

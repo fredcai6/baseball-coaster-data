@@ -2845,11 +2845,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Atwood reached on a fielder's choice to shortstop; G. Howell out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -3656,11 +3656,11 @@
       "kind": "plate_appearance",
       "narrative": "A. Sczepkows reached on a fielder's choice to shortstop; T. Penner out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5011,7 +5011,9 @@
       "kind": "plate_appearance",
       "narrative": "C. Castillo singled to pitcher; C. Kirtley advanced to second; T. Penner advanced to third.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6043,6 +6045,7 @@
     }
   ],
   "game_id": "20240702_076q",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6221,11 +6224,12 @@
     "fetched_at": "2026-07-12T18:29:59Z",
     "parse": {
       "events_count": 112,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:05Z",
+    "parsed_at": "2026-08-28T01:19:10Z",
     "parser_version": "0.7.0",
     "source_sha256": "23df2da73657c89c3b48fa339614af0a9d569b63546f00da3b777a98975f7f5e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240702_076q.xml"

@@ -2866,7 +2866,9 @@
       "kind": "plate_appearance",
       "narrative": "Tyler Ganus singled to pitcher (0-0).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -5656,11 +5658,11 @@
       "kind": "plate_appearance",
       "narrative": "Mark Kirkland reached on a fielder's choice to second base (2-1 BFB); Garret Ostrander out at second 2b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7430,6 +7432,7 @@
     }
   ],
   "game_id": "20260603_9bym",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7636,6 +7639,7 @@
     "fetched_at": "2026-07-12T15:03:26Z",
     "parse": {
       "events_count": 130,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -7645,7 +7649,7 @@
         "[pa_counts] pa_counts: player eq0y081gjho45fea events PA 4 != box-implied PA 3 (AB=2 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
+    "parsed_at": "2026-08-28T01:19:48Z",
     "parser_version": "0.7.0",
     "source_sha256": "5ee757c8b15e99ab29f1687fcbe6980ac9b5845d9ab8fbf03ea175f3a6000ac5",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260603_9bym.xml"

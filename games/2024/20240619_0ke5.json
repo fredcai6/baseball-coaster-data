@@ -2587,7 +2587,9 @@
       "kind": "plate_appearance",
       "narrative": "P. Howard singled to pitcher; N. Ultsch advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -8237,6 +8239,7 @@
     }
   ],
   "game_id": "20240619_0ke5",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8492,11 +8495,12 @@
     "fetched_at": "2026-07-12T18:14:34Z",
     "parse": {
       "events_count": 149,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:02Z",
+    "parsed_at": "2026-08-28T01:19:07Z",
     "parser_version": "0.7.0",
     "source_sha256": "09834136867384396bcd914bb8535eba34fb96bf027e94a53a6bbe7a959d2af6",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240619_0ke5.xml"
@@ -8934,7 +8938,7 @@
         "line_index": 0
       },
       "raw": "/  for W. Levine.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for W. Levine'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='W. Levine'"
     }
   ]
 }

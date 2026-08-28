@@ -6067,7 +6067,9 @@
       "kind": "plate_appearance",
       "narrative": "Nate Vargas singled to pitcher (1-2 KSB).",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6495,6 +6497,7 @@
     }
   ],
   "game_id": "20260726_u5ja",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6743,13 +6746,14 @@
     "fetched_at": "2026-08-27T14:47:58Z",
     "parse": {
       "events_count": 118,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
         "[lob] lob: inning 9 top folded LOB 0 != inning_summary LOB 1"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:57Z",
+    "parsed_at": "2026-08-28T01:20:01Z",
     "parser_version": "0.7.0",
     "source_sha256": "d1c4ba552d69e1e4c3151dac6ce17f8985329ff794a43f970e7c6da71bd4c3b3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260726_u5ja.xml"
@@ -7151,7 +7155,7 @@
         "line_index": 1
       },
       "raw": "/  for Alizaeh Gutierrez.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Alizaeh Gutierrez'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Alizaeh Gutierrez'"
     }
   ]
 }

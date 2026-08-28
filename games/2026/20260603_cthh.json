@@ -3832,7 +3832,9 @@
       "kind": "plate_appearance",
       "narrative": "A.J. Shaver singled to pitcher (0-0); Bodee Wright advanced to second.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -3872,12 +3874,93 @@
         "bases_after": [
           false,
           true,
-          false
+          true
         ],
         "bases_before": [
           true,
           true,
           false
+        ],
+        "home_score_before": 2,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 1
+      },
+      "batter": {
+        "name_raw": "Cameron Bowen",
+        "player_id": "xtti55f7ey0u6ih4",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "fielding_team": "yaop56c5591myre0",
+      "half": "top",
+      "inning": 6,
+      "kind": "plate_appearance",
+      "narrative": "Cameron Bowen singled to left field, advanced to second (1-1 BS); A.J. Shaver advanced to third; Bodee Wright advanced to third, scored on a throwing error by 3b, unearned.",
+      "outcome": {
+        "fielders": [
+          "lf"
+        ],
+        "location": "left field",
+        "modifiers": [],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "anqz0wl6onpyqda5",
+        "resolved": true
+      },
+      "pitches": "BS",
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "xtti55f7ey0u6ih4",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "from": 1,
+          "out": false,
+          "player_id": "2n1qbuleya48u0jh",
+          "scored": false,
+          "to": 3
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 2,
+          "out": false,
+          "player_id": "hxoxu8l6i2hp77yc",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 67
+    },
+    {
+      "_derived": {
+        "away_score_before": 4,
+        "base_out_state": "011|1",
+        "bases_after": [
+          false,
+          true,
+          true
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
         ],
         "home_score_before": 2,
         "outs_after": 2,
@@ -3930,7 +4013,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 4,
           "out": false,
           "player_id": "2n1qbuleya48u0jh",
           "rbi": true,
@@ -3939,21 +4022,21 @@
         }
       ],
       "scoring_play": true,
-      "seq": 67
+      "seq": 68
     },
     {
       "_derived": {
-        "away_score_before": 4,
-        "base_out_state": "010|2",
+        "away_score_before": 5,
+        "base_out_state": "011|2",
         "bases_after": [
           true,
-          true,
+          false,
           true
         ],
         "bases_before": [
           false,
           true,
-          false
+          true
         ],
         "home_score_before": 2,
         "outs_after": 2,
@@ -4002,7 +4085,7 @@
         },
         {
           "cause": "advance",
-          "from": 3,
+          "from": 2,
           "out": false,
           "player_id": "xtti55f7ey0u6ih4",
           "scored": false,
@@ -4010,20 +4093,20 @@
         }
       ],
       "scoring_play": false,
-      "seq": 68
+      "seq": 69
     },
     {
       "_derived": {
-        "away_score_before": 4,
-        "base_out_state": "111|2",
+        "away_score_before": 5,
+        "base_out_state": "101|2",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
           true,
-          true,
+          false,
           true
         ],
         "home_score_before": 2,
@@ -4099,20 +4182,20 @@
         }
       ],
       "scoring_play": true,
-      "seq": 69
+      "seq": 70
     },
     {
       "_derived": {
-        "away_score_before": 7,
-        "base_out_state": "010|2",
+        "away_score_before": 8,
+        "base_out_state": "000|2",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
           false,
-          true,
+          false,
           false
         ],
         "home_score_before": 2,
@@ -4164,7 +4247,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 70
+      "seq": 71
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -4174,7 +4257,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 5 Runs, 4 Hits, 1 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 71,
+      "seq": 72,
       "summary": {
         "E": 1,
         "H": 4,
@@ -4184,7 +4267,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "000|0",
         "bases_after": [
           false,
@@ -4241,11 +4324,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 72
+      "seq": 73
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "000|1",
         "bases_after": [
           false,
@@ -4304,11 +4387,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 73
+      "seq": 74
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "000|2",
         "bases_after": [
           false,
@@ -4367,7 +4450,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 74
+      "seq": 75
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -4377,7 +4460,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 75,
+      "seq": 76,
       "summary": {
         "E": 0,
         "H": 0,
@@ -4393,9 +4476,9 @@
       "kind": "substitution",
       "narrative": "Ryan Cullinane to p for Kevin Worek.",
       "scoring_play": false,
-      "seq": 76,
+      "seq": 77,
       "substitution": {
-        "after_event_seq": 75,
+        "after_event_seq": 76,
         "kind": "pitching",
         "player_in": "sqkglfqam7mposcw",
         "player_out": "anqz0wl6onpyqda5",
@@ -4404,7 +4487,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -4463,11 +4546,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 77
+      "seq": 78
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "100|0",
         "bases_after": [
           true,
@@ -4532,11 +4615,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 78
+      "seq": 79
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "101|0",
         "bases_after": [
           true,
@@ -4595,11 +4678,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 79
+      "seq": 80
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "101|1",
         "bases_after": [
           true,
@@ -4664,11 +4747,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 80
+      "seq": 81
     },
     {
       "_derived": {
-        "away_score_before": 7,
+        "away_score_before": 8,
         "base_out_state": "111|1",
         "bases_after": [
           true,
@@ -4683,7 +4766,7 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 1
       },
       "batter": {
@@ -4702,10 +4785,11 @@
       "kind": "plate_appearance",
       "narrative": "Cameron Bowen reached on a fielder's choice to shortstop, RBI (1-2 KFFB); A.J. Shaver out at second ss to 2b; John McHenry advanced to third; Kyle Micklus scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -4754,11 +4838,11 @@
         }
       ],
       "scoring_play": true,
-      "seq": 81
+      "seq": 82
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "101|2",
         "bases_after": [
           false,
@@ -4792,7 +4876,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 82
+      "seq": 83
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -4802,7 +4886,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 83,
+      "seq": 84,
       "summary": {
         "E": 0,
         "H": 2,
@@ -4812,7 +4896,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -4869,11 +4953,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 84
+      "seq": 85
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "100|0",
         "bases_after": [
           true,
@@ -4930,11 +5014,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 85
+      "seq": 86
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "100|1",
         "bases_after": [
           true,
@@ -4999,11 +5083,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 86
+      "seq": 87
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "110|1",
         "bases_after": [
           true,
@@ -5037,11 +5121,11 @@
       "kind": "plate_appearance",
       "narrative": "Aidan Redahan reached on a fielder's choice to pitcher (1-1 BK); Zack Blaszak advanced to second; Anthony Swenda out at third p to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to pitcher"
+        "fielders": [
+          "p"
         ],
+        "location": "pitcher",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5078,11 +5162,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 87
+      "seq": 88
     },
     {
       "_derived": {
-        "away_score_before": 8,
+        "away_score_before": 9,
         "base_out_state": "110|2",
         "bases_after": [
           true,
@@ -5141,7 +5225,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 88
+      "seq": 89
     },
     {
       "batting_team": "yaop56c5591myre0",
@@ -5151,7 +5235,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 89,
+      "seq": 90,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5161,6 +5245,7 @@
     }
   ],
   "game_id": "20260603_cthh",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5287,7 +5372,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 75,
+          "after_event_seq": 76,
           "kind": "pitching",
           "player_in": "sqkglfqam7mposcw",
           "player_out": "anqz0wl6onpyqda5",
@@ -5300,18 +5385,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:02:45Z",
     "parse": {
-      "events_count": 90,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 6 computed 4 != oracle 5",
-        "[linescore] linescore: computed away final R 8 != oracle total 9",
-        "[lob] lob: inning 6 top folded LOB 1 != inning_summary LOB 0",
-        "[pa_counts] pa_counts: player xtti55f7ey0u6ih4 events PA 4 != box-implied PA 5 (AB=5 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 68 runner xtti55f7ey0u6ih4 advances from base 3 which was not occupied at event start"
-      ]
+      "events_count": 91,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:44Z",
+    "parsed_at": "2026-08-28T01:19:48Z",
     "parser_version": "0.7.0",
     "source_sha256": "909d96c1b4d41b3077caf1642ce1a6caede884005644aca8386b5e6621fbd3fc",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260603_cthh.xml"
@@ -5622,15 +5702,5 @@
       "team_id": "yaop56c5591myre0"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 6,
-        "line_index": 4
-      },
-      "raw": "Cameron Bowen singled to left field, advanced to second (1-1 BS); A.J. Shaver advanced to third; Bodee Wright advanced to third, scored on a throwing error by 3b, unearned.",
-      "reason": "runner clause not recognized: 'Bodee Wright advanced to third, scored on a throwing error by 3b, unearned'"
-    }
-  ]
+  "unparsed": []
 }

@@ -1785,7 +1785,9 @@
       "kind": "plate_appearance",
       "narrative": "D. Buggs singled to pitcher.",
       "outcome": {
-        "fielders": [],
+        "fielders": [
+          "p"
+        ],
         "location": "pitcher",
         "modifiers": [],
         "outs_recorded": 0,
@@ -6104,28 +6106,11 @@
       "half": "top",
       "inning": 9,
       "kind": "substitution",
-      "narrative": "/ to p for D. Drewek.",
+      "narrative": "D. Drewek pinch hit for Harris IV.",
       "scoring_play": false,
       "seq": 105,
       "substitution": {
         "after_event_seq": 104,
-        "kind": "pitching",
-        "player_in": "syn:away:1",
-        "player_out": "hb4w8pl6p2jubt8w",
-        "slot": 5
-      }
-    },
-    {
-      "batting_team": "zgzmksngghvq54yy",
-      "fielding_team": "ybsjgrorwgm7zp91",
-      "half": "top",
-      "inning": 9,
-      "kind": "substitution",
-      "narrative": "D. Drewek pinch hit for Harris IV.",
-      "scoring_play": false,
-      "seq": 106,
-      "substitution": {
-        "after_event_seq": 105,
         "kind": "offensive",
         "player_in": "hb4w8pl6p2jubt8w",
         "player_out": "vkeltex4ceuf8kjs",
@@ -6196,7 +6181,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 107
+      "seq": 106
     },
     {
       "_derived": {
@@ -6262,7 +6247,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 107
     },
     {
       "_derived": {
@@ -6331,7 +6316,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 108
     },
     {
       "_derived": {
@@ -6411,7 +6396,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 110
+      "seq": 109
     },
     {
       "_derived": {
@@ -6471,7 +6456,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 110
     },
     {
       "batting_team": "zgzmksngghvq54yy",
@@ -6481,7 +6466,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 111,
       "summary": {
         "E": 0,
         "H": 3,
@@ -6491,6 +6476,7 @@
     }
   ],
   "game_id": "20250813_d95t",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6649,13 +6635,6 @@
         },
         {
           "after_event_seq": 104,
-          "kind": "pitching",
-          "player_in": "syn:away:1",
-          "player_out": "hb4w8pl6p2jubt8w",
-          "slot": 5
-        },
-        {
-          "after_event_seq": 105,
           "kind": "offensive",
           "player_in": "hb4w8pl6p2jubt8w",
           "player_out": "vkeltex4ceuf8kjs",
@@ -6668,12 +6647,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T17:25:42Z",
     "parse": {
-      "events_count": 113,
+      "events_count": 112,
+      "inferred_count": 0,
       "replayable": true,
-      "unparsed_count": 0,
+      "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:37Z",
+    "parsed_at": "2026-08-28T01:19:42Z",
     "parser_version": "0.7.0",
     "source_sha256": "73ba97b7edf4569db16d37a0caeb739bc4993f1c7fc3b880ff0bb835607c365f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250813_d95t.xml"
@@ -6965,17 +6945,6 @@
       ],
       "team_id": "zgzmksngghvq54yy"
     },
-    "syn:away:1": {
-      "bats_side": null,
-      "box_listed": false,
-      "career_id": null,
-      "last_name": "/",
-      "name": "/",
-      "person_id": null,
-      "player_id": "syn:away:1",
-      "positions": [],
-      "team_id": "zgzmksngghvq54yy"
-    },
     "tvsz1zdlkr5ovk4g": {
       "bats_side": null,
       "box_listed": true,
@@ -7036,5 +7005,15 @@
       "team_id": "ybsjgrorwgm7zp91"
     }
   },
-  "unparsed": []
+  "unparsed": [
+    {
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "/ to p for D. Drewek.",
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='D. Drewek'"
+    }
+  ]
 }

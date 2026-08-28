@@ -6463,6 +6463,7 @@
     }
   ],
   "game_id": "20240703_ck18",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -6648,6 +6649,7 @@
     "fetched_at": "2026-07-12T18:31:10Z",
     "parse": {
       "events_count": 118,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -6655,7 +6657,7 @@
         "[pa_counts] pa_counts: player y60jf9pg4ql8s0hx events PA 5 != box-implied PA 6 (AB=5 BB=1 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:05Z",
+    "parsed_at": "2026-08-28T01:19:10Z",
     "parser_version": "0.7.0",
     "source_sha256": "ba2f45b3a0f3797235a83f015d533d5c87b84d468fac0dd1aff4ad01560e0dda",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240703_ck18.xml"
@@ -7054,7 +7056,7 @@
         "line_index": 0
       },
       "raw": "R. Pena struck out swinging, grounded out to c unassisted.\n                                                                                                                                \t\t\t\t\t(1 out)",
-      "reason": "batter name did not resolve uniquely: 'R. Pena struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'R. Pena struck out swinging, grounded out to c unassisted'"
     }
   ]
 }

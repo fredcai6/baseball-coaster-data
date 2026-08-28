@@ -5609,6 +5609,87 @@
       "seq": 100
     },
     {
+      "_derived": {
+        "away_score_before": 2,
+        "base_out_state": "011|2",
+        "bases_after": [
+          true,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          true
+        ],
+        "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "pa_number_of_batter": 4,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "G. Kueber",
+        "player_id": "wuffp5k6iedl9yvi",
+        "resolved": true
+      },
+      "batting_team": "wfkag0okico94mfx",
+      "count": null,
+      "fielding_team": "j2s5i8avme57snyy",
+      "half": "top",
+      "inning": 9,
+      "kind": "plate_appearance",
+      "narrative": "G. Kueber singled up the middle, 2 RBI; E. Diaz scored; H. George H. George.",
+      "outcome": {
+        "fielders": [],
+        "location": "up the middle",
+        "modifiers": [
+          "2 RBI",
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "fa6zbuk5l4f68z7k",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "wuffp5k6iedl9yvi",
+          "scored": false,
+          "to": 1
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "lmdqcass6pt006xa",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 3,
+          "out": false,
+          "player_id": "h4tmaxhcifcr04tj",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 101
+    },
+    {
       "batting_team": "wfkag0okico94mfx",
       "fielding_team": "j2s5i8avme57snyy",
       "half": "top",
@@ -5616,9 +5697,9 @@
       "kind": "substitution",
       "narrative": "A. Alger to p for D. Jordan.",
       "scoring_play": false,
-      "seq": 101,
+      "seq": 102,
       "substitution": {
-        "after_event_seq": 100,
+        "after_event_seq": 101,
         "kind": "pitching",
         "player_in": "ldiy9pp3n3t3qm2i",
         "player_out": "fa6zbuk5l4f68z7k",
@@ -5627,17 +5708,17 @@
     },
     {
       "_derived": {
-        "away_score_before": 2,
-        "base_out_state": "011|2",
+        "away_score_before": 4,
+        "base_out_state": "100|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
-          false,
           true,
-          true
+          false,
+          false
         ],
         "home_score_before": 5,
         "outs_after": 2,
@@ -5681,7 +5762,7 @@
         },
         {
           "cause": "advance",
-          "from": 2,
+          "from": 1,
           "out": false,
           "player_id": "wuffp5k6iedl9yvi",
           "scored": false,
@@ -5689,21 +5770,21 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
-        "away_score_before": 2,
-        "base_out_state": "111|2",
+        "away_score_before": 4,
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 5,
         "outs_after": 2,
@@ -5767,12 +5848,12 @@
         }
       ],
       "scoring_play": true,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
-        "away_score_before": 3,
-        "base_out_state": "111|2",
+        "away_score_before": 5,
+        "base_out_state": "110|2",
         "bases_after": [
           true,
           true,
@@ -5781,7 +5862,7 @@
         "bases_before": [
           true,
           true,
-          true
+          false
         ],
         "home_score_before": 5,
         "outs_after": 2,
@@ -5841,11 +5922,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "111|2",
         "bases_after": [
           true,
@@ -5899,7 +5980,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "batting_team": "wfkag0okico94mfx",
@@ -5909,7 +5990,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 3 Runs, 4 Hits, 0 Errors, 3 LOB",
       "scoring_play": false,
-      "seq": 106,
+      "seq": 107,
       "summary": {
         "E": 0,
         "H": 4,
@@ -5925,9 +6006,9 @@
       "kind": "substitution",
       "narrative": "D. Gomez to rf for H. George.",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "substitution": {
-        "after_event_seq": 106,
+        "after_event_seq": 107,
         "kind": "defensive",
         "player_in": "10fcz4tbqx3hij8l",
         "player_out": "h4tmaxhcifcr04tj",
@@ -5942,9 +6023,9 @@
       "kind": "substitution",
       "narrative": "C. Linton to p for E. Gustofson.",
       "scoring_play": false,
-      "seq": 108,
+      "seq": 109,
       "substitution": {
-        "after_event_seq": 107,
+        "after_event_seq": 108,
         "kind": "pitching",
         "player_in": "vbh3nyxzr56grlis",
         "player_out": "aag4p2jl83ftumua",
@@ -5953,7 +6034,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "000|0",
         "bases_after": [
           true,
@@ -6007,7 +6088,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "batting_team": "j2s5i8avme57snyy",
@@ -6017,9 +6098,9 @@
       "kind": "substitution",
       "narrative": "D. Henderson pinch ran for K. Dugan.",
       "scoring_play": false,
-      "seq": 110,
+      "seq": 111,
       "substitution": {
-        "after_event_seq": 109,
+        "after_event_seq": 110,
         "kind": "offensive",
         "player_in": "xe2dadix8ufcbksu",
         "player_out": "2odthldpoj3pg1gq",
@@ -6028,7 +6109,7 @@
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "100|0",
         "bases_after": [
           true,
@@ -6094,11 +6175,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 111
+      "seq": 112
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "101|0",
         "bases_after": [
           true,
@@ -6152,11 +6233,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "101|1",
         "bases_after": [
           false,
@@ -6190,11 +6271,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "011|1",
         "bases_after": [
           false,
@@ -6248,11 +6329,11 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
-        "away_score_before": 3,
+        "away_score_before": 5,
         "base_out_state": "011|2",
         "bases_after": [
           false,
@@ -6306,7 +6387,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "batting_team": "j2s5i8avme57snyy",
@@ -6316,7 +6397,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 1,
         "H": 1,
@@ -6326,6 +6407,18 @@
     }
   ],
   "game_id": "20240719_xmzc",
+  "inferred": [
+    {
+      "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 8
+      },
+      "raw": "G. Kueber singled up the middle, 2 RBI; E. Diaz scored; H. George H. George.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6427,14 +6520,14 @@
           "slot": 7
         },
         {
-          "after_event_seq": 100,
+          "after_event_seq": 101,
           "kind": "pitching",
           "player_in": "ldiy9pp3n3t3qm2i",
           "player_out": "fa6zbuk5l4f68z7k",
           "slot": null
         },
         {
-          "after_event_seq": 109,
+          "after_event_seq": 110,
           "kind": "offensive",
           "player_in": "xe2dadix8ufcbksu",
           "player_out": "2odthldpoj3pg1gq",
@@ -6518,14 +6611,14 @@
           "slot": 6
         },
         {
-          "after_event_seq": 106,
+          "after_event_seq": 107,
           "kind": "defensive",
           "player_in": "10fcz4tbqx3hij8l",
           "player_out": "h4tmaxhcifcr04tj",
           "slot": 6
         },
         {
-          "after_event_seq": 107,
+          "after_event_seq": 108,
           "kind": "pitching",
           "player_in": "vbh3nyxzr56grlis",
           "player_out": "aag4p2jl83ftumua",
@@ -6538,16 +6631,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:50:12Z",
     "parse": {
-      "events_count": 117,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: away inning 9 computed 2 != oracle 4",
-        "[linescore] linescore: computed away final R 3 != oracle total 5",
-        "[pa_counts] pa_counts: player wuffp5k6iedl9yvi events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "events_count": 118,
+      "inferred_count": 1,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:09Z",
+    "parsed_at": "2026-08-28T01:19:14Z",
     "parser_version": "0.7.0",
     "source_sha256": "a6dee47802c07312f9cc7a99697e264f42572ce9cb3c29ec4cd10e143fa7441a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240719_xmzc.xml"
@@ -6964,15 +7054,5 @@
       "team_id": "j2s5i8avme57snyy"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 8
-      },
-      "raw": "G. Kueber singled up the middle, 2 RBI; E. Diaz scored; H. George H. George.",
-      "reason": "runner clause not recognized: 'H. George H. George'"
-    }
-  ]
+  "unparsed": []
 }

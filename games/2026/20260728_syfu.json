@@ -1192,11 +1192,11 @@
       "kind": "plate_appearance",
       "narrative": "A.J. Shaver reached on a fielder's choice to second base (2-1 FBB); Kyle Micklus out at second 2b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to second base"
+        "fielders": [
+          "2b"
         ],
+        "location": "second base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -2316,11 +2316,11 @@
       "kind": "plate_appearance",
       "narrative": "Ty Dooley reached on a fielder's choice to first base (0-2 KF); Demarckus Smiley out at second 1b to ss.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7668,6 +7668,7 @@
     }
   ],
   "game_id": "20260728_syfu",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7846,11 +7847,12 @@
     "fetched_at": "2026-08-27T14:49:15Z",
     "parse": {
       "events_count": 127,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 1,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:57Z",
+    "parsed_at": "2026-08-28T01:20:02Z",
     "parser_version": "0.7.0",
     "source_sha256": "6d9677398b68988fc5cd15af50700241b0790d80a9a45c69c19efd827f79a0d9",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260728_syfu.xml"
@@ -8215,7 +8217,7 @@
         "line_index": 1
       },
       "raw": "/  for Mason Bryant.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: '/ for Mason Bryant'"
+      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Mason Bryant'"
     }
   ]
 }

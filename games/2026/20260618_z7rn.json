@@ -3792,7 +3792,7 @@
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -3849,7 +3849,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "2ca2toe4du928ugu",
           "rbi": true,
@@ -3863,16 +3863,16 @@
     {
       "_derived": {
         "away_score_before": 19,
-        "base_out_state": "101|1",
+        "base_out_state": "100|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 1,
@@ -3901,16 +3901,16 @@
     {
       "_derived": {
         "away_score_before": 19,
-        "base_out_state": "011|1",
+        "base_out_state": "010|1",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 2,
@@ -3964,16 +3964,16 @@
     {
       "_derived": {
         "away_score_before": 19,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 2,
         "outs_after": 3,
@@ -8734,6 +8734,7 @@
     }
   ],
   "game_id": "20260618_z7rn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8968,14 +8969,12 @@
     "fetched_at": "2026-07-12T15:21:12Z",
     "parse": {
       "events_count": 149,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 1,
-      "warnings": [
-        "[lob] lob: inning 4 top folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 55 runner 2ca2toe4du928ugu advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:48Z",
+    "parsed_at": "2026-08-28T01:19:52Z",
     "parser_version": "0.7.0",
     "source_sha256": "66aceb02a63e037bfcf334ca7180177ab7deaf3d908f05ddfd29e5bde6fca90d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260618_z7rn.xml"

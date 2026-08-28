@@ -4354,7 +4354,7 @@
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
@@ -4376,7 +4376,7 @@
         {
           "cause": "wild_pitch",
           "earned": true,
-          "from": 1,
+          "from": 3,
           "out": false,
           "player_id": "aiqzwlp2f5yyasgu",
           "rbi": false,
@@ -4390,16 +4390,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "001|1",
+        "base_out_state": "000|1",
         "bases_after": [
           false,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -4453,16 +4453,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "001|2",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
-          true
+          false
         ],
         "bases_before": [
           false,
           false,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -4514,16 +4514,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "101|2",
+        "base_out_state": "100|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           true,
           false,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 2,
@@ -4552,16 +4552,16 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "011|2",
+        "base_out_state": "010|2",
         "bases_after": [
           false,
           true,
-          true
+          false
         ],
         "bases_before": [
           false,
           true,
-          true
+          false
         ],
         "home_score_before": 8,
         "outs_after": 3,
@@ -7424,6 +7424,7 @@
     }
   ],
   "game_id": "20260809_ryqq",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -7665,14 +7666,12 @@
     "fetched_at": "2026-08-27T15:04:33Z",
     "parse": {
       "events_count": 133,
-      "replayable": false,
+      "inferred_count": 0,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 5 bottom folded LOB 2 != inning_summary LOB 1",
-        "[illegal_transitions] illegal_transition: seq 68 runner aiqzwlp2f5yyasgu advances from base 1 which was not occupied at event start"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:10:01Z",
+    "parsed_at": "2026-08-28T01:20:05Z",
     "parser_version": "0.7.0",
     "source_sha256": "9653d52b83c522991dddfe487f27294bd216d817cc1237291708af4143920a8d",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260809_ryqq.xml"

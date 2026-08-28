@@ -5513,6 +5513,7 @@
     }
   ],
   "game_id": "20240619_k0tn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5698,6 +5699,7 @@
     "fetched_at": "2026-07-12T18:14:20Z",
     "parse": {
       "events_count": 101,
+      "inferred_count": 0,
       "replayable": false,
       "unparsed_count": 1,
       "warnings": [
@@ -5706,7 +5708,7 @@
         "[pa_counts] pa_counts: player o37lgkrkc5ic47nv events PA 3 != box-implied PA 4 (AB=3 BB=0 HBP=1 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-27T23:09:02Z",
+    "parsed_at": "2026-08-28T01:19:07Z",
     "parser_version": "0.7.0",
     "source_sha256": "3c0e25f14c9487bd596b290b29e36cde0e992da5edbacfd5fd40c6ca27a2f136",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240619_k0tn.xml"
@@ -6092,7 +6094,7 @@
         "line_index": 9
       },
       "raw": "E. Blum struck out swinging, reached first on an error by c; T. Holt advanced to third; P. Mills scored, unearned.",
-      "reason": "batter name did not resolve uniquely: 'E. Blum struck out swinging,'"
+      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'E. Blum struck out swinging, reached first on an error by c'"
     }
   ]
 }

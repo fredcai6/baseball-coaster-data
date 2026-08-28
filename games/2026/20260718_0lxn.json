@@ -3693,8 +3693,8 @@
         "away_score_before": 10,
         "base_out_state": "111|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3727,8 +3727,8 @@
         "fielders": [],
         "location": null,
         "modifiers": [
-          "advanced to second on an error by ss",
-          "2 RBI"
+          "2 RBI",
+          "RBI"
         ],
         "outs_recorded": 1,
         "type": "fielders_choice"
@@ -3746,7 +3746,7 @@
           "out": false,
           "player_id": "p2w9sx75b8r25jmk",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "force_out",
@@ -3762,7 +3762,7 @@
           "from": 2,
           "out": false,
           "player_id": "syn:home:4",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         },
@@ -3772,7 +3772,7 @@
           "from": 3,
           "out": false,
           "player_id": "syn:home:3",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -3783,15 +3783,15 @@
     {
       "_derived": {
         "away_score_before": 10,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 6,
@@ -3844,7 +3844,7 @@
         {
           "cause": "advance",
           "earned": false,
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "p2w9sx75b8r25jmk",
           "rbi": true,
@@ -7958,6 +7958,7 @@
     }
   ],
   "game_id": "20260718_0lxn",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -8171,11 +8172,12 @@
     "fetched_at": "2026-08-27T14:38:47Z",
     "parse": {
       "events_count": 137,
+      "inferred_count": 0,
       "replayable": true,
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:55Z",
+    "parsed_at": "2026-08-28T01:19:59Z",
     "parser_version": "0.7.0",
     "source_sha256": "0784af21e2fdaf8793352dd8676b45c9bb8e03d62db5aad89254cfd896c99afd",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260718_0lxn.xml"

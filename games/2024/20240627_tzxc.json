@@ -5279,7 +5279,7 @@
         "base_out_state": "010|2",
         "bases_after": [
           false,
-          true,
+          false,
           false
         ],
         "bases_before": [
@@ -5288,6 +5288,46 @@
           false
         ],
         "home_score_before": 5,
+        "outs_after": 2,
+        "outs_before": 2,
+        "runs_on_play": 1
+      },
+      "batting_team": "iqwph3d7xajzy4uz",
+      "fielding_team": "z7y9gph0l9ltq3lq",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "runner_event",
+      "narrative": "A. Fogel scored, on a wild pitch.",
+      "runners": [
+        {
+          "cause": "wild_pitch",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "jou038gupboqkglm",
+          "rbi": false,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 101
+    },
+    {
+      "_derived": {
+        "away_score_before": 3,
+        "base_out_state": "000|2",
+        "bases_after": [
+          false,
+          false,
+          false
+        ],
+        "bases_before": [
+          false,
+          false,
+          false
+        ],
+        "home_score_before": 6,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -5331,7 +5371,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 101
+      "seq": 102
     },
     {
       "batting_team": "iqwph3d7xajzy4uz",
@@ -5341,7 +5381,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 102,
+      "seq": 103,
       "summary": {
         "E": 0,
         "H": 1,
@@ -5357,9 +5397,9 @@
       "kind": "substitution",
       "narrative": "A. Garcia to p for T. Anderson.",
       "scoring_play": false,
-      "seq": 103,
+      "seq": 104,
       "substitution": {
-        "after_event_seq": 102,
+        "after_event_seq": 103,
         "kind": "pitching",
         "player_in": "19a9wnzin9avvet1",
         "player_out": "pzdkspfc5jqjdj1t",
@@ -5380,7 +5420,7 @@
           false,
           false
         ],
-        "home_score_before": 5,
+        "home_score_before": 6,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 4,
@@ -5422,7 +5462,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -5438,7 +5478,7 @@
           false,
           false
         ],
-        "home_score_before": 5,
+        "home_score_before": 6,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 4,
@@ -5480,7 +5520,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -5496,7 +5536,7 @@
           false,
           false
         ],
-        "home_score_before": 5,
+        "home_score_before": 6,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 4,
@@ -5540,7 +5580,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 106
+      "seq": 107
     },
     {
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -5550,7 +5590,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "summary": {
         "E": 0,
         "H": 0,
@@ -5560,6 +5600,7 @@
     }
   ],
   "game_id": "20240627_tzxc",
+  "inferred": [],
   "linescore": {
     "innings": {
       "away": [
@@ -5696,7 +5737,7 @@
           "slot": null
         },
         {
-          "after_event_seq": 102,
+          "after_event_seq": 103,
           "kind": "pitching",
           "player_in": "19a9wnzin9avvet1",
           "player_out": "pzdkspfc5jqjdj1t",
@@ -5779,16 +5820,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:24:25Z",
     "parse": {
-      "events_count": 108,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 8 computed 0 != oracle 1",
-        "[linescore] linescore: computed home final R 5 != oracle total 6",
-        "[lob] lob: inning 8 bottom folded LOB 1 != inning_summary LOB 0"
-      ]
+      "events_count": 109,
+      "inferred_count": 0,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:04Z",
+    "parsed_at": "2026-08-28T01:19:09Z",
     "parser_version": "0.7.0",
     "source_sha256": "d896387e2621680f22a5fe4c1aebfa85c10f82ef9eae7559552b2b189d8802b0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240627_tzxc.xml"
@@ -6192,15 +6230,5 @@
       "team_id": "iqwph3d7xajzy4uz"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 5
-      },
-      "raw": "A. Fogel scored, on a wild pitch.",
-      "reason": "no count-tail on primary clause, primary verb not recognized without a count either, and clause did not match any runner rule: runner clause not recognized: 'A. Fogel scored, on a wild pitch'"
-    }
-  ]
+  "unparsed": []
 }

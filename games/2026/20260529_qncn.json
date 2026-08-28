@@ -2373,11 +2373,11 @@
       "kind": "plate_appearance",
       "narrative": "Mateo Matthews reached on a fielder's choice to third base (2-2 BSBFF); Cole Robinson advanced to second; Wesley Mitchell out at third 3b unassisted.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to third base"
+        "fielders": [
+          "3b"
         ],
+        "location": "third base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -4724,11 +4724,11 @@
       "kind": "plate_appearance",
       "narrative": "A.J. Shaver reached on a fielder's choice to shortstop (0-0); Sean Lynch out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -5269,11 +5269,11 @@
       "kind": "plate_appearance",
       "narrative": "Mateo Matthews reached on a fielder's choice to first base (1-2 FBF); Cole Robinson out at second 1b to ss; Wesley Mitchell advanced to third.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to first base"
+        "fielders": [
+          "1b"
         ],
+        "location": "first base",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -6630,7 +6630,7 @@
         "away_score_before": 9,
         "base_out_state": "110|1",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
@@ -6640,6 +6640,91 @@
           false
         ],
         "home_score_before": 9,
+        "outs_after": 1,
+        "outs_before": 1,
+        "pa_number_of_batter": 1,
+        "runs_on_play": 2
+      },
+      "batter": {
+        "name_raw": "John McHenry",
+        "player_id": "uujsp0ot0j7oa9x2",
+        "resolved": true
+      },
+      "batting_team": "tlqlpupbujjreauc",
+      "count": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "fielding_team": "gwwjqo5s6nki4x8c",
+      "half": "bottom",
+      "inning": 7,
+      "kind": "plate_appearance",
+      "narrative": "John McHenry singled down the rf line, advanced to second on a throwing error by rf, RBI (0-0); Kyle Micklus scored, unearned; Cole Calnon Cole Calnon.",
+      "outcome": {
+        "fielders": [
+          "rf"
+        ],
+        "location": "down the rf line",
+        "modifiers": [
+          "RBI"
+        ],
+        "outs_recorded": 0,
+        "type": "single"
+      },
+      "pitcher": {
+        "name_raw": null,
+        "player_id": "b1e6r3q808nfu47f",
+        "resolved": true
+      },
+      "pitches": null,
+      "runners": [
+        {
+          "cause": "batted_ball",
+          "from": 0,
+          "out": false,
+          "player_id": "uujsp0ot0j7oa9x2",
+          "scored": false,
+          "to": 2
+        },
+        {
+          "cause": "advance",
+          "earned": false,
+          "from": 1,
+          "out": false,
+          "player_id": "est4rkrt8d814jy2",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        },
+        {
+          "cause": "advance",
+          "earned": true,
+          "from": 2,
+          "out": false,
+          "player_id": "r50usx1awaxcwqbx",
+          "rbi": true,
+          "scored": true,
+          "to": 4
+        }
+      ],
+      "scoring_play": true,
+      "seq": 109
+    },
+    {
+      "_derived": {
+        "away_score_before": 9,
+        "base_out_state": "010|1",
+        "bases_after": [
+          false,
+          true,
+          false
+        ],
+        "bases_before": [
+          false,
+          true,
+          false
+        ],
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -6686,23 +6771,23 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "_derived": {
         "away_score_before": 9,
-        "base_out_state": "110|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
+          false,
           true,
           false
         ],
         "bases_before": [
-          true,
+          false,
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 5,
@@ -6747,7 +6832,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 110
+      "seq": 111
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -6757,7 +6842,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 3 Hits, 1 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "summary": {
         "E": 1,
         "H": 3,
@@ -6773,9 +6858,9 @@
       "kind": "substitution",
       "narrative": "Charlie Muniz to 1b for Cole Calnon.",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "substitution": {
-        "after_event_seq": 111,
+        "after_event_seq": 112,
         "kind": "defensive",
         "player_in": "opextmjcn8h6x8jj",
         "player_out": "r50usx1awaxcwqbx",
@@ -6790,9 +6875,9 @@
       "kind": "substitution",
       "narrative": "C.J. Colyer to p for Ritter Steinmann.",
       "scoring_play": false,
-      "seq": 113,
+      "seq": 114,
       "substitution": {
-        "after_event_seq": 112,
+        "after_event_seq": 113,
         "kind": "pitching",
         "player_in": "vvqhdd14qwz21se5",
         "player_out": "fntjusmn1m9l9fxu",
@@ -6813,7 +6898,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -6860,7 +6945,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
@@ -6876,7 +6961,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -6931,7 +7016,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "_derived": {
@@ -6947,7 +7032,7 @@
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -6969,10 +7054,11 @@
       "kind": "plate_appearance",
       "narrative": "Jonathan Gonzalez Perez reached on a fielder's choice to pitcher, bunt (0-0); Mateo Matthews advanced to second; Cole Robinson out at third p to 3b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "p"
+        ],
+        "location": "pitcher",
         "modifiers": [
-          "to pitcher",
           "bunt"
         ],
         "outs_recorded": 1,
@@ -7011,7 +7097,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "_derived": {
@@ -7027,7 +7113,7 @@
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 1,
         "outs_before": 1,
         "runs_on_play": 0
@@ -7057,7 +7143,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 117
+      "seq": 118
     },
     {
       "batting_team": "gwwjqo5s6nki4x8c",
@@ -7067,9 +7153,9 @@
       "kind": "substitution",
       "narrative": "Seth Spencer pinch ran for Jonathan Gonzalez Perez.",
       "scoring_play": false,
-      "seq": 118,
+      "seq": 119,
       "substitution": {
-        "after_event_seq": 117,
+        "after_event_seq": 118,
         "kind": "offensive",
         "player_in": "lecp6wvcu0yap0a7",
         "player_out": "cpkfov9ej0s1eqh2",
@@ -7090,7 +7176,7 @@
           true,
           true
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -7135,7 +7221,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "batting_team": "gwwjqo5s6nki4x8c",
@@ -7145,9 +7231,9 @@
       "kind": "substitution",
       "narrative": "Nate Naccarato to p for C.J. Colyer.",
       "scoring_play": false,
-      "seq": 120,
+      "seq": 121,
       "substitution": {
-        "after_event_seq": 119,
+        "after_event_seq": 120,
         "kind": "pitching",
         "player_in": "th5julr6pfa3w7wu",
         "player_out": "vvqhdd14qwz21se5",
@@ -7168,7 +7254,7 @@
           true,
           true
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 5,
@@ -7190,10 +7276,11 @@
       "kind": "plate_appearance",
       "narrative": "Robert Estrada reached on a fielder's choice to shortstop, RBI (1-2 BKK); Casey Vaughan advanced to second; Seth Spencer out at third ss to 3b; Mateo Matthews scored.",
       "outcome": {
-        "fielders": [],
-        "location": null,
+        "fielders": [
+          "ss"
+        ],
+        "location": "shortstop",
         "modifiers": [
-          "to shortstop",
           "RBI"
         ],
         "outs_recorded": 1,
@@ -7242,7 +7329,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 121
+      "seq": 122
     },
     {
       "_derived": {
@@ -7258,7 +7345,7 @@
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7280,11 +7367,11 @@
       "kind": "plate_appearance",
       "narrative": "Ty Dooley reached on a fielder's choice to shortstop (0-0); Robert Estrada out at second ss to 2b.",
       "outcome": {
-        "fielders": [],
-        "location": null,
-        "modifiers": [
-          "to shortstop"
+        "fielders": [
+          "ss"
         ],
+        "location": "shortstop",
+        "modifiers": [],
         "outs_recorded": 1,
         "type": "fielders_choice"
       },
@@ -7313,7 +7400,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 122
+      "seq": 123
     },
     {
       "batting_team": "gwwjqo5s6nki4x8c",
@@ -7323,7 +7410,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 1 Runs, 2 Hits, 0 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 123,
+      "seq": 124,
       "summary": {
         "E": 0,
         "H": 2,
@@ -7339,9 +7426,9 @@
       "kind": "substitution",
       "narrative": "Jonathan Gonzalez Perez to c for Seth Spencer.",
       "scoring_play": false,
-      "seq": 124,
+      "seq": 125,
       "substitution": {
-        "after_event_seq": 123,
+        "after_event_seq": 124,
         "kind": "defensive",
         "player_in": "cpkfov9ej0s1eqh2",
         "player_out": "lecp6wvcu0yap0a7",
@@ -7356,9 +7443,9 @@
       "kind": "substitution",
       "narrative": "Brandon Ross to p for Mason Collins.",
       "scoring_play": false,
-      "seq": 125,
+      "seq": 126,
       "substitution": {
-        "after_event_seq": 124,
+        "after_event_seq": 125,
         "kind": "pitching",
         "player_in": "5uhzvpyzvl2igcja",
         "player_out": "b1e6r3q808nfu47f",
@@ -7379,7 +7466,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 1,
         "outs_before": 0,
         "pa_number_of_batter": 5,
@@ -7426,7 +7513,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 126
+      "seq": 127
     },
     {
       "_derived": {
@@ -7442,7 +7529,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 1,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -7490,7 +7577,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 127
+      "seq": 128
     },
     {
       "_derived": {
@@ -7506,7 +7593,7 @@
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 1,
         "pa_number_of_batter": 6,
@@ -7561,7 +7648,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 128
+      "seq": 129
     },
     {
       "_derived": {
@@ -7577,7 +7664,7 @@
           false,
           true
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7624,7 +7711,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 129
+      "seq": 130
     },
     {
       "batting_team": "tlqlpupbujjreauc",
@@ -7634,7 +7721,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 130,
+      "seq": 131,
       "summary": {
         "E": 0,
         "H": 1,
@@ -7650,9 +7737,9 @@
       "kind": "substitution",
       "narrative": "Nate Roof to p for Nate Naccarato.",
       "scoring_play": false,
-      "seq": 131,
+      "seq": 132,
       "substitution": {
-        "after_event_seq": 130,
+        "after_event_seq": 131,
         "kind": "pitching",
         "player_in": "1sk1fn8a02sjozdy",
         "player_out": "th5julr6pfa3w7wu",
@@ -7673,7 +7760,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 0,
         "outs_before": 0,
         "pa_number_of_batter": 1,
@@ -7718,7 +7805,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 132
+      "seq": 133
     },
     {
       "_derived": {
@@ -7734,7 +7821,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 0,
         "pa_number_of_batter": 6,
@@ -7791,7 +7878,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 133
+      "seq": 134
     },
     {
       "_derived": {
@@ -7807,7 +7894,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7852,7 +7939,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 135
     },
     {
       "_derived": {
@@ -7868,7 +7955,7 @@
           false,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 2,
         "outs_before": 2,
         "runs_on_play": 0
@@ -7890,7 +7977,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 135
+      "seq": 136
     },
     {
       "_derived": {
@@ -7906,7 +7993,7 @@
           true,
           false
         ],
-        "home_score_before": 9,
+        "home_score_before": 11,
         "outs_after": 3,
         "outs_before": 2,
         "pa_number_of_batter": 6,
@@ -7951,7 +8038,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 136
+      "seq": 137
     },
     {
       "batting_team": "gwwjqo5s6nki4x8c",
@@ -7961,7 +8048,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 137,
+      "seq": 138,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7971,6 +8058,18 @@
     }
   ],
   "game_id": "20260529_qncn",
+  "inferred": [
+    {
+      "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
+      "location": {
+        "half": "bottom",
+        "inning": 7,
+        "line_index": 6
+      },
+      "raw": "John McHenry singled down the rf line, advanced to second on a throwing error by rf, RBI (0-0); Kyle Micklus scored, unearned; Cole Calnon Cole Calnon.",
+      "rule": "doubled_name_scored"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -8086,21 +8185,21 @@
           "slot": null
         },
         {
-          "after_event_seq": 117,
+          "after_event_seq": 118,
           "kind": "offensive",
           "player_in": "lecp6wvcu0yap0a7",
           "player_out": "cpkfov9ej0s1eqh2",
           "slot": 8
         },
         {
-          "after_event_seq": 123,
+          "after_event_seq": 124,
           "kind": "defensive",
           "player_in": "cpkfov9ej0s1eqh2",
           "player_out": "lecp6wvcu0yap0a7",
           "slot": 8
         },
         {
-          "after_event_seq": 124,
+          "after_event_seq": 125,
           "kind": "pitching",
           "player_in": "5uhzvpyzvl2igcja",
           "player_out": "b1e6r3q808nfu47f",
@@ -8177,28 +8276,28 @@
           "slot": 3
         },
         {
-          "after_event_seq": 111,
+          "after_event_seq": 112,
           "kind": "defensive",
           "player_in": "opextmjcn8h6x8jj",
           "player_out": "r50usx1awaxcwqbx",
           "slot": 3
         },
         {
-          "after_event_seq": 112,
+          "after_event_seq": 113,
           "kind": "pitching",
           "player_in": "vvqhdd14qwz21se5",
           "player_out": "fntjusmn1m9l9fxu",
           "slot": null
         },
         {
-          "after_event_seq": 119,
+          "after_event_seq": 120,
           "kind": "pitching",
           "player_in": "th5julr6pfa3w7wu",
           "player_out": "vvqhdd14qwz21se5",
           "slot": null
         },
         {
-          "after_event_seq": 130,
+          "after_event_seq": 131,
           "kind": "pitching",
           "player_in": "1sk1fn8a02sjozdy",
           "player_out": "th5julr6pfa3w7wu",
@@ -8211,16 +8310,13 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T14:58:02Z",
     "parse": {
-      "events_count": 138,
-      "replayable": false,
-      "unparsed_count": 1,
-      "warnings": [
-        "[linescore] linescore: home inning 7 computed 0 != oracle 2",
-        "[linescore] linescore: computed home final R 9 != oracle total 11",
-        "[lob] lob: inning 7 bottom folded LOB 2 != inning_summary LOB 1"
-      ]
+      "events_count": 139,
+      "inferred_count": 1,
+      "replayable": true,
+      "unparsed_count": 0,
+      "warnings": []
     },
-    "parsed_at": "2026-08-27T23:09:43Z",
+    "parsed_at": "2026-08-28T01:19:47Z",
     "parser_version": "0.7.0",
     "source_sha256": "39ad3c1f77b3cc905a820febd7e0a49b1070652b3d9c19fc3a05f9d3f4b2bec1",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260529_qncn.xml"
@@ -8662,15 +8758,5 @@
       "team_id": "tlqlpupbujjreauc"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 7,
-        "line_index": 6
-      },
-      "raw": "John McHenry singled down the rf line, advanced to second on a throwing error by rf, RBI (0-0); Kyle Micklus scored, unearned; Cole Calnon Cole Calnon.",
-      "reason": "runner clause not recognized: 'Cole Calnon Cole Calnon'"
-    }
-  ]
+  "unparsed": []
 }
