@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.3.0"
+REPLAYER_VERSION = "0.4.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -188,7 +188,11 @@ def _extract_box_batting_oracle(
                     "BB": int(by_label["BB"]),
                     "SO": int(by_label["SO"]),
                     "LOB": int(by_label["LOB"]),
-                    "AVG": by_label["AVG"].strip(),
+                    # Optional, and read by LABEL here rather than by
+                    # position -- which is why the same defective header that
+                    # made the parser silently drop 33 rows made this raise
+                    # loudly instead. One source fact, two symptoms.
+                    "AVG": by_label.get("AVG", "").strip(),
                 }
             except KeyError as exc:
                 raise ValueError(f"oracle: box batting header missing column {exc}") from exc

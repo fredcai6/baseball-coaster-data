@@ -980,3 +980,60 @@ def test_a_player_already_batting_before_his_entry_is_a_starter():
 def test_fewer_than_nine_survivors_returns_none_rather_than_guessing():
     rows = [_row(f"s{i}") for i in range(1, 4)]
     assert parse._reconstruct_starting_order(rows, [], [], "T") is None
+
+
+# --- AVG is the only OPTIONAL boxscore stat column (#33) --------------------
+#
+# 20240521_gq1b has a Batters header of "Hitters AB R H RBI BB SO LOB" with no
+# AVG, so every row renders 7 cells. A `len(cells) < 8` guard dropped all 33
+# rows for BOTH teams silently -- the game shipped with an empty box beside a
+# 14-9 linescore, and 18 players carried a permanently short season line
+# because those at-bats were never recorded anywhere. It is the only game in
+# the corpus whose Batters table omits AVG.
+
+
+def test_the_one_game_whose_box_omits_avg_still_parses_its_batters():
+    """Regression test against the real page, not a synthetic row."""
+    import glob
+    import json
+    from pathlib import Path
+
+    import pytest
+
+    from bc_pipeline import archive
+    from bc_pipeline.config import PipelineConfig
+
+    try:
+        checkpoint = archive.load_checkpoint(PipelineConfig().checkpoint_path)
+    except Exception:  # pragma: no cover - archive absent
+        pytest.skip("raw archive not available on this machine")
+    by_id = {
+        url.rsplit("/", 1)[-1].replace(".xml", ""): e for url, e in checkpoint.items()
+    }
+    if "20240521_gq1b" not in by_id:
+        pytest.skip("20240521_gq1b not in the local archive")
+
+    entry = by_id["20240521_gq1b"]
+    html = Path(entry["archived_path"]).read_text(encoding="utf-8", errors="replace")
+
+    repo_root = Path(__file__).resolve().parents[1]
+    committed = json.loads(
+        Path(
+            glob.glob(str(repo_root / "games" / "*" / "20240521_gq1b.json"))[0]
+        ).read_text(encoding="utf-8")
+    )
+    game = parse.parse_game(
+        html,
+        source_url=committed["meta"]["source_url"],
+        fetched_at=entry["fetched_at"],
+    )
+    rows = game["box"]["batting"]
+    assert len(rows) == 2, "both teams' Batters tables must be present"
+    for team_id, lines in rows.items():
+        assert lines, f"{team_id} parsed to zero batting rows"
+        for line in lines:
+            # The source omits AVG here; record its absence rather than
+            # inventing a rate.
+            assert line["AVG"] == ""
+            assert isinstance(line["AB"], int)
+    assert sum(len(v) for v in rows.values()) == 33

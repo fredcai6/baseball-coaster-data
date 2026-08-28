@@ -95,9 +95,13 @@ def _load(games_dir: Path):
         game = json.loads(path.read_text(encoding="utf-8"))
         for rows in game["box"]["batting"].values():
             for row in rows:
-                avg = row.get("AVG")
-                if avg in (None, ""):
-                    continue
+                # A row with NO published average still counts toward the
+                # running AB/H -- it just cannot be checked. 20240521_gq1b's
+                # Batters table omits the AVG column entirely, and skipping
+                # its rows outright would leave every later game short by
+                # exactly the at-bats this check exists to notice. Accumulate
+                # always; check only where the source published a figure.
+                avg = row.get("AVG") or None
                 player = game["players"].get(row["player_id"]) or {}
                 person = player.get("person_id")
                 if not person:
@@ -164,6 +168,8 @@ def _first_divergence(rows):
 def _row_reconciles(at_bats, hits, published):
     if at_bats < MIN_AB:
         return True
+    if published is None:
+        return True  # accumulated, but nothing published to check against
     try:
         target = float(published)
     except (TypeError, ValueError):

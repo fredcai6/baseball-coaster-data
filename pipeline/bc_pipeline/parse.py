@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.17.0"
+PARSER_VERSION = "0.18.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -1415,9 +1415,24 @@ def _parse_box_batting(root: Node, player_table: identity.PlayerTable) -> Dict[s
                 for c in row.children
                 if isinstance(c, Node) and c.tag == "td"
             ]
-            if len(cells) < 8:
+            # AVG is the only OPTIONAL stat column. One game in the corpus
+            # (20240521_gq1b) has a Batters header of "Hitters AB R H RBI BB
+            # SO LOB" with no AVG at all, so every one of its 33 rows renders
+            # 7 cells and this guard dropped the entire boxscore for BOTH
+            # teams -- silently, since a short row is indistinguishable here
+            # from a layout row. The game shipped with an empty box and a
+            # linescore reading 14-9, and the damage ran a whole season: 18
+            # players' cumulative averages are permanently short because
+            # their at-bats from this game were never recorded.
+            #
+            # Requiring the 7 stats that always exist, and treating AVG as
+            # absent rather than mandatory, keeps the rows. An absent AVG is
+            # recorded as "" -- what the source said, rather than a rate
+            # invented to fill a column.
+            if len(cells) < 7:
                 continue
-            ab, r, h, rbi, bb, so, lob, avg = cells[:8]
+            ab, r, h, rbi, bb, so, lob, *optional = cells[:8]
+            avg = optional[0] if optional else ""
             lines.append(
                 {
                     "player_id": pid,
