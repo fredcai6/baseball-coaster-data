@@ -662,6 +662,246 @@
       "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"M. Jung-Gold struck out.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20250524_9pwo-1",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "1bcd76f5a8c6082eb878955091c926a03f0f1a4791e15522bdbb5a9648c5bfed",
+      "raw_excerpt": "M. Jackson flied out to lf. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-2",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "b6575f98dd37e11c211102040dfca452e1a71ae008376714c3b6c7ac9920d861",
+      "raw_excerpt": "M. Jackson struck out looking. (3 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-3",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "f2a14eb8a79b1d3d9b71178b3ec31fa1b74e24803bf9904cc6f94d92ebe39036",
+      "raw_excerpt": "M. Jackson struck out swinging. (3 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-4",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "45faff0cd8327a6e9fbc614038b98c2882b1f38175c5a1d3265ae915ed0d81a3",
+      "raw_excerpt": "M. Jackson doubled to right field.",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-5",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "d89c87bbde3c16811cd647bd26414e3e31c38ba6e92e00db2d0e211a32f4c71f",
+      "raw_excerpt": "A. Torreulla reached first on an error by 2b; M. Jackson scored, unearned.",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_runner",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-6",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "137d775f2a55c045b08908eebc55c81276fd206146819c5f571ac30069808ec0",
+      "raw_excerpt": "M. Jackson singled to second base; O. Veloz advanced to second.",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_9pwo-7",
+      "game_id": "20250524_9pwo",
+      "location": {
+        "inning": 7,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "cdb8b4d7fa9efbfb13879876c408276db982c5e4b843729b5171177a2d728460",
+      "raw_excerpt": "M. Jackson struck out swinging. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup: slot 4 = Manny Jackson (dh), slot 6 = Marquis Jackson (2b). Reconstructing the away half-inning batting-order rotation (each non-runner batter clause advances the slot pointer by one, mod 9) places every 'M. Jackson' line at slot 4 or slot 6 with zero contradiction across the whole game. Cross-checked against the box: Manny Jackson AB=3 H=1 SO=1 (flyout+K+single) and Marquis Jackson AB=3 H=1 SO=2 R=1 (K+double+K, scored on Torreulla's error) match the reconstructed lines exactly. Independently checked by swapping the two names across all seven lines: the swap leaves every replay oracle passing (both men have AB=3 H=1 and equal plate appearances, so pa_counts cannot see it) but puts SO=2 on Manny against a box SO=1 and SO=1 on Marquis against a box SO=2. The strikeout column, which no oracle reads, is what forces this assignment."
+    },
+    {
+      "erratum_id": "20250524_cara-1",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "f2a14eb8a79b1d3d9b71178b3ec31fa1b74e24803bf9904cc6f94d92ebe39036",
+      "raw_excerpt": "M. Jackson struck out swinging. (3 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-2",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 3
+      },
+      "raw_sha256": "bde938dc0dc8cecd5a1bb5a2d1ea68bbc74d3f6b5465d50414cc5aee86199ebf",
+      "raw_excerpt": "M. Jackson struck out looking. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-3",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 3,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "fa9d64d2d7794b1a051cf3bac238cf55b180ed7ce8563fe874d8e30bd61c771e",
+      "raw_excerpt": "M. Jackson grounded out to 1b unassisted. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-4",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "7107a8f620716a74f1d74d0309e01310067debdd4119c7e5183c3de9e588f883",
+      "raw_excerpt": "M. Jackson walked.",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-5",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "846b8c97233278be41e59a884fe4ff25cd4502478ed22366c977d63a5c239559",
+      "raw_excerpt": "M. Jackson out at first p to 1b to ss to p, picked off. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_runner",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-6",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 5,
+        "half": "bottom",
+        "line_index": 3
+      },
+      "raw_sha256": "cdb8b4d7fa9efbfb13879876c408276db982c5e4b843729b5171177a2d728460",
+      "raw_excerpt": "M. Jackson struck out swinging. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-7",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 5,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "08d018d0d0cb488ec9d6bd3a8109d6a43746dad686beb224d1a5a1d526974673",
+      "raw_excerpt": "M. Jackson flied out to rf; M. Fabian advanced to third on a balk; O. Veloz scored on a balk.",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-8",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "ed2dbafef6979901e6aa543c0e46816f8081fc2110cdc2a02859476dc9354247",
+      "raw_excerpt": "M. Jackson flied out to rf, sacrifice fly, RBI; T. McKenzie scored.",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
+      "erratum_id": "20250524_cara-9",
+      "game_id": "20250524_cara",
+      "location": {
+        "inning": 7,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "67f654f6ff0dac82de802e2e192afa14a5004479930bbde7b733079c295dff9e",
+      "raw_excerpt": "M. Jackson flied out to cf. (1 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "Sky Sox Batters table lineup (StatCrew nests substitutes under their slot): slot 4 = Manny Jackson (c), slot 7 = Marquis Jackson (2b, after the rf slot's Bridges/Fox/Moody/Kennedy/Hill substitution chain occupies slot 6). Reconstructing the home half-inning batting-order rotation places every 'M. Jackson' line at slot 4 or slot 7 with zero contradiction. Cross-checked against the box: Manny Jackson AB=3 SO=2 RBI=1 (K+GO+K+sac-fly) and Marquis Jackson AB=3 BB=1 SO=1 (K+BB+picked off+flyout+flyout) match the reconstructed lines exactly. Independently checked by swapping the two names across all nine lines: the swap fails pa_counts outright (Manny would take 4 plate appearances against a box-implied 4 that includes his sacrifice fly, and Marquis 4 against 5), so the oracles themselves reject it."
+    },
+    {
       "erratum_id": "20250525_moj2-1",
       "game_id": "20250525_moj2",
       "location": {
@@ -1290,6 +1530,156 @@
       "with": "2 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Bradley Pelle, Garrett Bevacqua, Kyler Stancato. The last plate appearance was \"Garrett Bevacqua walked (3-1 BBBKB); Kyler Stancato advanced to second; Bradley Pelle adva\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260703_t3hf-1",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "d3aac8d35eb3070400f3f0a1a028e3e1e2ba6cda07bea19c349fb231ecf67915",
+      "raw_excerpt": "M. Jackson reached on a fielder's choice (1-0 B); J. Chavez out at second 1b to ss. (2 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-2",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "8b9f2ab62ebe31af24c7a2dd328c409fb0c33bd3c96cef763a1bbc911594bd93",
+      "raw_excerpt": "M. Jackson advanced to second on a passed ball.",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_runner",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-3",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 2,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "d3229034718d755da6816b3edf32860b0ea5030d86de85e9f15d50e7e61bfb64",
+      "raw_excerpt": "M. Jackson walked (3-1 BBFBB).",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-4",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "0d3feb70e122792c841ce720ad70e8611d340db9b1bbae3c6f093bc634280e88",
+      "raw_excerpt": "M. Jackson singled to first base (1-1 BS).",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-5",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "f68ed627a7839b7130066be6761ff99aa75fa14bf90f69b6b1f516182e8c6d88",
+      "raw_excerpt": "M. Jackson flied out to cf (0-2 FK). (1 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-6",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "2e61f045d2d26ba07afebbd028d5f120a6efb3392cac3bbf9ffffbad905a2872",
+      "raw_excerpt": "M. Jackson out at second c to 2b, caught stealing. (2 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_runner",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-7",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "6d78564614a8a900799a7839a4ffc0e3cc78b44ce8b8626c3160fd0e30220be5",
+      "raw_excerpt": "M. Jackson flied out to rf (1-2 FKB). (2 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-8",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "fe809b269b6d0a97b1c889dc506e96dbc21b4182c83a631e0c978956ab7eb388",
+      "raw_excerpt": "M. Jackson struck out swinging (0-2 KFS). (3 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-9",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "97aad1e53b81ee44e032d8636ed75c4544a86f7e2bb098111c6591b87e3c5af0",
+      "raw_excerpt": "M. Jackson flied out to lf (3-2 BFBFB). (1 out)",
+      "replace": "M. Jackson",
+      "with": "Manny Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260703_t3hf-10",
+      "game_id": "20260703_t3hf",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "ac49e1f9ea97c85d24072c4c2a6502587f20ee4269700d9de9dd1ad6305af95a",
+      "raw_excerpt": "M. Jackson popped up to 2b (0-0). (2 out)",
+      "replace": "M. Jackson",
+      "with": "Marquis Jackson",
+      "class": "misidentified_batter",
+      "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
     },
     {
       "erratum_id": "20260726_u5ja-1",
