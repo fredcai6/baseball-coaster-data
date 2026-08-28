@@ -1502,8 +1502,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "M. Castillo",
-        "player_id": "9lz3pn2hm7jt30yw",
+        "name_raw": "R. Gonzalez",
+        "player_id": "k0pbya4a5lsi76d0",
         "resolved": true
       },
       "batting_team": "wq5td5flfeeumd82",
@@ -1512,7 +1512,7 @@
       "half": "bottom",
       "inning": 2,
       "kind": "plate_appearance",
-      "narrative": "M. Castillo lined out to 1b.",
+      "narrative": "R. Gonzalez lined out to 1b.",
       "outcome": {
         "fielders": [
           "1b"
@@ -1533,7 +1533,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "9lz3pn2hm7jt30yw",
+          "player_id": "k0pbya4a5lsi76d0",
           "scored": false,
           "to": -1
         }
@@ -1558,7 +1558,7 @@
         "home_score_before": 2,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
       "batter": {
@@ -2353,7 +2353,7 @@
         "home_score_before": 3,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -2778,7 +2778,7 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -4303,7 +4303,7 @@
         "home_score_before": 3,
         "outs_after": 3,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -5167,7 +5167,7 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -6019,7 +6019,7 @@
         "home_score_before": 5,
         "outs_after": 3,
         "outs_before": 2,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6729,7 +6729,7 @@
         "home_score_before": 5,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6910,6 +6910,16 @@
   ],
   "game_id": "20240524_j5eu",
   "inferred": [
+    {
+      "asserted": "erratum 20240524_j5eu-1 (misidentified_batter): read as 'R. Gonzalez lined out to 1b. (1 out)'. The scorer typed M. Castillo on two consecutive lines: bottom 2nd reads 'M. Castillo lined out to 1b.' then 'M. Castillo grounded out to 2b.' A batter cannot bat twice in a row, and this is the only back-to-back same-batter pair in all 1,484 games. The lineup cycle forces which line is wrong. Counting plate appearances for the home side: the bottom 1st is Backstrom, Washington, Lynch, Morris, Rojas Jr (order positions 1-5); the bottom 2nd holds positions 6-8; the bottom 3rd is Major, Backstrom, Washington, Lynch, Morris, Rojas Jr, Gonzalez (positions 9-15). The cycle checks at two independent points -- position 10 is Backstrom, equal to position 1, and position 14 is Rojas Jr, equal to position 5 -- so position 15 being Gonzalez forces position 6 to be Gonzalez too. Position 6 is this line. Corroborated by the boxscore, which gives Roberto Gonzalez one MORE plate appearance than the events credit him and Marcos Castillo exactly one FEWER, and by the following two lines already reading Castillo (position 7) and Fernandez (position 8) in order.",
+      "location": {
+        "half": "bottom",
+        "inning": 2,
+        "line_index": 0
+      },
+      "raw": "M. Castillo lined out to 1b.\n                                                                                                                                \t\t\t\t\t(1 out)",
+      "rule": "erratum"
+    },
     {
       "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
       "location": {
@@ -7123,20 +7133,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.3.0",
     "fetched_at": "2026-07-12T17:44:39Z",
     "parse": {
       "events_count": 129,
-      "inferred_count": 1,
-      "replayable": false,
+      "inferred_count": 2,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player k0pbya4a5lsi76d0 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player 9lz3pn2hm7jt30yw events PA 5 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:05Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T17:17:26Z",
+    "parser_version": "0.11.0",
     "source_sha256": "48fcefd97300417432eccc4118739108adcf9b97929984b5ac89ebb4ad5d6e23",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240524_j5eu.xml"
   },
@@ -7506,7 +7513,7 @@
       "team_id": "wq5td5flfeeumd82"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
