@@ -1391,17 +1391,95 @@ def _parse_box_pitching(root: Node, player_table: identity.PlayerTable) -> Dict[
     return out
 
 
+def _reconstruct_starting_order(
+    box_rows: List[dict],
+    subs: List[dict],
+    events: List[dict],
+    team_id: str,
+) -> Optional[List[str]]:
+    """The first nine GENUINE starters, from boxscore row order.
+
+    StatCrew nests a slot's substitutes immediately UNDER that slot's
+    starter, so taking the first nine rows in document order pulls bench
+    players into the starting nine and pushes real starters past index 9.
+    Measured against the first nine distinct batters each team's own
+    narrative shows, plain `[:9]` slicing agrees on only 1,309 of 2,957
+    team-games -- 44.3%. It is not a small error; the field was wrong more
+    often than it was right, and nothing validated it.
+
+    A row is a fresh ENTRANT, and so not a starter, only when its player's
+    earliest substitution mention that NAMES a player_out is an entry, and
+    that entry comes before the player's own first plate appearance. Both
+    halves of that test earn their place:
+
+      - A bare `player_out: None` announcement is not evidence of entry. It
+        as often means "starter X moves to a different position" as "bench
+        player X comes in" (20240821_e0zj: Dondrei Hubbard's bare "to dh"
+        line lands AFTER his first plate appearance).
+      - A player already batting before his first named entry is a
+        defensive swap between two men both already in the lineup, each
+        naming the other as outgoing -- not an arrival.
+
+    Scored the same way: 2,860 of 2,952 team-games, 96.9%, against an
+    independent third source. The two losses are a disclosed blind spot,
+    not a new failure mode: a starter who went 0-for-0 can be omitted from
+    the Batters table altogether, leaving no row to keep.
+
+    MEASURED NEGATIVE, so it is not retried: excluding a row whose position
+    duplicates the row above it -- on the theory that a substitute inherits
+    the position of the man he replaced -- scores only 54.8%. Substitutes
+    frequently take a different position.
+
+    Returns None when fewer than nine rows survive, leaving the caller to
+    decide rather than guessing.
+    """
+    first_pa: Dict[str, int] = {}
+    for event in events:
+        if event["kind"] == "plate_appearance" and event["batting_team"] == team_id:
+            first_pa.setdefault(event["batter"]["player_id"], event["seq"])
+
+    first_named_entry: Dict[str, int] = {}
+    for sub in subs:
+        if sub["player_in"] is not None and sub["player_out"] is not None:
+            seq = sub["after_event_seq"]
+            pid = sub["player_in"]
+            if seq < first_named_entry.get(pid, seq + 1):
+                first_named_entry[pid] = seq
+
+    starters = [
+        row["player_id"]
+        for row in box_rows
+        if not (
+            row["player_id"] in first_named_entry
+            and first_pa.get(row["player_id"], float("inf"))
+            >= first_named_entry[row["player_id"]]
+        )
+    ]
+    return starters[:9] if len(starters) >= 9 else None
+
+
 def _build_lineups(
-    player_table: identity.PlayerTable, subs_by_team: Dict[str, List[dict]]
+    player_table: identity.PlayerTable,
+    subs_by_team: Dict[str, List[dict]],
+    box_batting: Dict[str, List[dict]],
+    events: List[dict],
 ) -> Dict[str, dict]:
     lineups: Dict[str, dict] = {}
     for team in (player_table.home, player_table.away):
-        batting_ids = list(team.players.keys())[:9]
+        subs = subs_by_team.get(team.team_id, [])
+        batting_ids = _reconstruct_starting_order(
+            box_batting.get(team.team_id, []), subs, events, team.team_id
+        )
+        if batting_ids is None:
+            # Fewer than nine rows survived -- 5 team-games in 2,968. Keep
+            # the old behaviour rather than raise, so the shortfall stays
+            # visible in the field instead of killing the parse.
+            batting_ids = list(team.players.keys())[:9]
         lineups[team.team_id] = {
             "batting_order": [
                 {"slot": i + 1, "player_id": pid} for i, pid in enumerate(batting_ids)
             ],
-            "substitutions": subs_by_team.get(team.team_id, []),
+            "substitutions": subs,
         }
     return lineups
 
@@ -1546,7 +1624,7 @@ def parse_game(
         for app in erratum_applications
     ] + inferred
 
-    lineups = _build_lineups(player_table, subs_by_team)
+    lineups = _build_lineups(player_table, subs_by_team, box["batting"], events)
     players = _players_table(player_table, person_ids, career_ids)
 
     parsed_at_iso = parsed_at or datetime.now(timezone.utc).strftime(

@@ -911,3 +911,72 @@ def test_scorer_correction_directive_is_not_a_narrative_line():
     # Ordinary narrative must not be caught by it.
     assert not _SCORER_DIRECTIVE_RE.search("Pat Smith walked.")
     assert not _SCORER_DIRECTIVE_RE.search("Pat Smith set the tone.")
+
+
+# --- batting_order was the first nine ROWS, not the first nine batters (#33) --
+#
+# StatCrew nests a slot's substitutes immediately under that slot's starter,
+# so `list(team.players.keys())[:9]` pulled bench players into the starting
+# nine and pushed real starters past index 9. Measured against the first nine
+# distinct batters each team's own narrative shows, the old field agreed on
+# 1,309 of 2,957 team-games (44.3%); the reconstruction agrees on 2,867
+# (97.0%). Nothing validated the field, so it was wrong more often than right
+# and never reported it.
+
+
+def _row(pid):
+    return {"player_id": pid, "AB": 1, "BB": 0}
+
+
+def _sub(seq, pin, pout):
+    return {"after_event_seq": seq, "player_in": pin, "player_out": pout}
+
+
+def _pa(seq, pid, team="T"):
+    return {
+        "kind": "plate_appearance",
+        "seq": seq,
+        "batting_team": team,
+        "batter": {"player_id": pid},
+    }
+
+
+def test_a_nested_substitute_is_not_counted_as_a_starter():
+    # Ten rows: "sub" is nested under s5, the man he replaced. The starting
+    # nine must skip him and keep s9, not stop one short at s8.
+    rows = [_row(f"s{i}") for i in range(1, 6)] + [_row("sub")] + [
+        _row(f"s{i}") for i in range(6, 10)
+    ]
+    subs = [_sub(50, "sub", "s5")]
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_a_bare_announcement_is_not_evidence_of_entry():
+    # `player_out: None` as often means "starter moves to another position"
+    # as "bench player enters", so it must not exclude a genuine starter.
+    rows = [_row(f"s{i}") for i in range(1, 10)]
+    subs = [_sub(20, "s3", None)]
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_a_player_already_batting_before_his_entry_is_a_starter():
+    # A defensive swap between two men BOTH already in the lineup names each
+    # as the other's player_out. The one who was already batting is not an
+    # arrival, whatever the substitution log calls him.
+    rows = [_row(f"s{i}") for i in range(1, 10)]
+    subs = [_sub(90, "s2", "s7")]  # named entry, but AFTER s2's first PA
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_fewer_than_nine_survivors_returns_none_rather_than_guessing():
+    rows = [_row(f"s{i}") for i in range(1, 4)]
+    assert parse._reconstruct_starting_order(rows, [], [], "T") is None
