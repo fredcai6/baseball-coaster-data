@@ -1291,6 +1291,7 @@
     "person:230a13ad077870f2": "career:a7ff4d68abaaf5f0",
     "person:23afbac93a47ec4d": "career:7f6587e8cef76fae",
     "person:2443a7b584631d36": "career:6f9818df66d8572e",
+    "person:245744285f72cfc6": "career:e343ae75a72dd873",
     "person:28ba13b0f1cdcd15": "career:4eaf45794bf5f2bc",
     "person:29792ca712445006": "career:f7900e2a9626d3cd",
     "person:29a9136f88c3c7cb": "career:d837a27aae2f65b4",
@@ -1957,7 +1958,7 @@
   "by_season": {
     "2024": {
       "in_a_multi_season_career": 98,
-      "persons": 635
+      "persons": 636
     },
     "2025": {
       "in_a_multi_season_career": 159,
@@ -32871,6 +32872,25 @@
         2025
       ]
     },
+    "career:e343ae75a72dd873": {
+      "aliases": [
+        "C. Bryant"
+      ],
+      "career_id": "career:e343ae75a72dd873",
+      "franchises": [
+        "franchise:77945f65a19f7f70"
+      ],
+      "name": "C. Bryant",
+      "person_ids": [
+        [
+          2024,
+          "person:245744285f72cfc6"
+        ]
+      ],
+      "seasons": [
+        2024
+      ]
+    },
     "career:e34564aed331f791": {
       "aliases": [
         "Maikol Perez"
@@ -36658,15 +36678,15 @@
     }
   },
   "league": {
-    "careers": 1780,
+    "careers": 1781,
     "careers_by_season_span": {
-      "1": 1620,
+      "1": 1621,
       "2": 147,
       "3": 13
     },
     "links": 173,
     "multi_season_careers": 160,
-    "persons": 1953,
+    "persons": 1954,
     "refused_by_reason": {
       "ambiguous_within_season": 55,
       "franchise_changed": 98
@@ -36720,7 +36740,7 @@
         "proven_same_name_different_people": 3
       },
       "signal_strength": {
-        "different_name_pairs_null": 838585,
+        "different_name_pairs_null": 839223,
         "franchise_continuity": {
           "fires_on_null": 0.0704,
           "fires_on_same_name": 0.5169,
@@ -36728,7 +36748,7 @@
           "used": true
         },
         "position_overlap": {
-          "fires_on_null": 0.4476,
+          "fires_on_null": 0.4473,
           "fires_on_same_name": 0.961,
           "likelihood_ratio": 2.15,
           "note": "NOT used. It fires on a large share of the null -- people who are definitively not each other -- so it barely separates the cases it is meant to decide. Kept here as a measured negative so the choice stays visible and will change if the data ever changes.",
@@ -36738,7 +36758,7 @@
       }
     },
     "games": 1484,
-    "generated_at": "2026-08-28T14:18:03Z",
+    "generated_at": "2026-08-28T16:13:06Z",
     "not_attempted": {
       "franchise_changed": {
         "note": "A player who changed clubs between seasons is NOT linked. This is the honest cost of the rule: it is exactly the shape of every proven-different pair above, and nothing else in the data separates the two cases. Enumerated in `unlinked` so the population stays visible and countable."
@@ -36747,7 +36767,7 @@
         "note": "person_map deliberately does not merge a player across teams WITHIN a season (a measured error floor: of the same-season same-name cross-franchise cases, some are proven to be two people). That ambiguity is inherited here as `ambiguous_within_season` rather than papered over."
       }
     },
-    "persons": 1953,
+    "persons": 1954,
     "scope": "CROSS-SEASON player identity, one level above person_id. Two persons in consecutive seasons are linked iff their display names are exactly equal, that name resolves to exactly one person in EACH season, and they share a franchise. Careers are the connected components."
   },
   "unlinked": [
