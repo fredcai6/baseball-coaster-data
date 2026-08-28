@@ -43,6 +43,16 @@ _HOME = [
 ]
 
 
+#: The synthetic boxscore Pitchers table, in appearance order -- the evidence
+#: the blank-incoming-pitcher rule reads. Deliberately NOT the same thing as
+#: "roster rows past the ninth batter": a reliever who never batted has no
+#: batting row, and on these lines he is very often the man being inferred.
+BOX_PITCHING_ORDER = {
+    "syn:team:home": ["syn:home:10", "syn:home:11"],
+    "syn:team:away": [],
+}
+
+
 def _side(team_id, name, rows):
     return identity.TeamIdentity(
         team_id=team_id,
@@ -75,7 +85,7 @@ def _run(texts):
         for i, t in enumerate(texts)
     ]
     events, unparsed, _subs, inferred = parse_mod.build_events(
-        lines, _player_table()
+        lines, _player_table(), box_pitching_order=BOX_PITCHING_ORDER
     )
     return events, unparsed, inferred
 

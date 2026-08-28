@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.7.0"
-SCHEMA_VERSION = "1.9.0"
+PARSER_VERSION = "0.8.0"
+SCHEMA_VERSION = "1.10.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -211,8 +211,10 @@ def _resolve_substitution_pair(
 
 
 def build_events(
-    lines: List[PbpLine], player_table: identity.PlayerTable
-) -> Tuple[List[dict], List[dict], Dict[str, List[dict]]]:
+    lines: List[PbpLine],
+    player_table: identity.PlayerTable,
+    box_pitching_order: Optional[Dict[str, List[str]]] = None,
+) -> Tuple[List[dict], List[dict], Dict[str, List[dict]], List[dict]]:
     """PURE: fold ordered ``PbpLine``s + the identity player table into the
     schema's ``events[]`` spine, an ``unparsed[]`` list, and a per-team-id
     substitutions list (for ``lineups[team].substitutions``).
@@ -225,6 +227,14 @@ def build_events(
     """
     home_id = player_table.home.team_id
     away_id = player_table.away.team_id
+    #: The boxscore Pitchers table, in appearance order, per team -- the
+    #: evidence the blank-incoming-pitcher rule reads. Distinct from
+    #: `pitching_pool` below: that is "every roster row past the ninth
+    #: batter", which OMITS a reliever who never took a plate appearance and
+    #: therefore has no batting row at all. On the 58 blank-substitution
+    #: lines the missing man is very often exactly the reliever being
+    #: inferred, so the pool cannot stand in for the real order here.
+    box_pitching_order = box_pitching_order or {}
 
     # Batting order = the first 9 rows of each team's Batters table (dict
     # insertion order == document row order, per identity.py); every row
@@ -519,7 +529,7 @@ def build_events(
             out_pid, out_ok = player_table.resolve(
                 _last_name_token(out_full), fielding_side, out_full
             )
-            order = pitching_pool.get(fielding_team_id) or []
+            order = box_pitching_order.get(fielding_team_id) or []
             successor = None
             if out_ok and out_pid in order:
                 idx = order.index(out_pid)
@@ -1317,13 +1327,22 @@ def parse_game(
 
     player_table = identity.build_player_table(root, id_overrides=id_overrides)
     lines = _iter_halves(root)
-    events, unparsed, subs_by_team, inferred = build_events(lines, player_table)
-
+    # The boxscore is parsed BEFORE the events because build_events needs the
+    # Pitchers table's appearance order (issue #40's blank-incoming-pitcher
+    # rule). Neither box parser reads events, so the reorder is inert.
     linescore = _parse_linescore(root, player_table)
     box = {
         "batting": _parse_box_batting(root, player_table),
         "pitching": _parse_box_pitching(root, player_table),
     }
+    events, unparsed, subs_by_team, inferred = build_events(
+        lines,
+        player_table,
+        box_pitching_order={
+            team_id: [row["player_id"] for row in rows]
+            for team_id, rows in box["pitching"].items()
+        },
+    )
     lineups = _build_lineups(player_table, subs_by_team)
     players = _players_table(player_table, person_ids, career_ids)
 
