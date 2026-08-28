@@ -67,6 +67,14 @@ class PrimaryClause:
     #: `.*` catch-all; parse.py attributes it to the forced runner from base
     #: occupancy, or refuses (issue #40).
     forced_out_at: Optional[str] = None
+    #: The fielding chain thrown to record that out, verbatim ("ss to 1b").
+    #: Captured because its TERMINUS says which base the out was actually
+    #: recorded at, and the source's stated base contradicts it on real
+    #: lines -- "out at second ss to 1b" ends at the first baseman, who
+    #: cannot record an out at second. Without this the contradiction is
+    #: invisible and the out gets pinned on whoever happens to occupy the
+    #: base the source misnamed (issue #33).
+    forced_out_chain: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -400,6 +408,7 @@ def _x_fielders_choice(m: re.Match):
         m.group("loc") or m.group("middle") and "up the middle",
         _hit_modifiers_from_tail(m.group("mods")),
         m.group("out_base"),
+        m.group("out_chain"),
     )
 
 
@@ -716,7 +725,7 @@ PRIMARY_RULES: List[PrimaryRule] = [
             rf"^(?P<name>.+?) reached on a fielder's choice"
             rf"(?: to (?P<loc>[a-z][a-z ]*?)|(?P<middle> up the middle))?"
             rf"(?:, out at (?P<out_base>first|second|third|home)"
-            rf"(?: [a-z0-9]+(?: to [a-z0-9]+)*)?)?{_HIT_MOD_TAIL}$"
+            rf"(?: (?P<out_chain>[a-z0-9]+(?: to [a-z0-9]+)*))?)?{_HIT_MOD_TAIL}$"
         ),
         "fielders_choice",
         _x_fielders_choice,
@@ -2081,10 +2090,11 @@ _MODIFIER_ONLY_RE = re.compile(rf"^(?:{_HIT_MOD_TOKEN})$")
 
 def _widen(extracted):
     """Extractors return ``(name, fielders, location, modifiers)``; the
-    fielder's-choice one appends a fifth element (the base of an out whose
-    runner the line never names). Pad the short form rather than touching
-    every other extractor."""
-    return tuple(extracted) + (None,) * (5 - len(extracted))
+    fielder's-choice one appends a fifth and sixth element -- the base of an
+    out whose runner the line never names, and the fielding chain thrown to
+    record it. Pad the short form rather than touching every other
+    extractor."""
+    return tuple(extracted) + (None,) * (6 - len(extracted))
 
 
 def _match_primary_whole(rest: str):
@@ -2125,7 +2135,7 @@ def _match_primary_chain(rest: str):
         head = _match_primary_whole(", ".join(parts[:k]))
         if head is None:
             continue
-        name, fielders, location, modifiers, _fo = _widen(head[0])
+        name, fielders, location, modifiers, _fo, _fc = _widen(head[0])
         outcome_type = head[1]
         tail_parts = list(parts[k:])
         # Modifier tokens belong to the PRIMARY, not to a movement -- and
@@ -2260,9 +2270,14 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
                 extracted, outcome_type, nocount_batter_movements = chained_nc
                 whole_nc = (extracted, outcome_type)
         if whole_nc is not None:
-            name, fielders, location, modifiers, forced_out_at = _widen(
-                whole_nc[0]
-            )
+            (
+                name,
+                fielders,
+                location,
+                modifiers,
+                forced_out_at,
+                forced_out_chain,
+            ) = _widen(whole_nc[0])
             outcome_type = whole_nc[1]
             primary = PrimaryClause(
                 name_token=name,
@@ -2273,6 +2288,7 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
                 count=None,
                 pitches=None,
                 forced_out_at=forced_out_at,
+                forced_out_chain=forced_out_chain,
             )
 
         if primary is not None:
@@ -2331,7 +2347,14 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
             extracted, outcome_type, batter_movements = chained
             whole = (extracted, outcome_type)
     if whole is not None:
-        name, fielders, location, modifiers, forced_out_at = _widen(whole[0])
+        (
+            name,
+            fielders,
+            location,
+            modifiers,
+            forced_out_at,
+            forced_out_chain,
+        ) = _widen(whole[0])
         outcome_type = whole[1]
         primary = PrimaryClause(
             name_token=name,
@@ -2342,6 +2365,7 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
             count=Count(balls=balls, strikes=strikes),
             pitches=pitches,
             forced_out_at=forced_out_at,
+            forced_out_chain=forced_out_chain,
         )
 
     if primary is None:

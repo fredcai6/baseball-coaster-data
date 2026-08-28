@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.11.0"
+PARSER_VERSION = "0.12.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -933,34 +933,79 @@ def build_events(
         # silently. Never a guess.
         if p.forced_out_at is not None:
             out_base = _DEST_BASE[p.forced_out_at]
-            forced_pid = line_snapshot.get(out_base - 1)
-            if forced_pid is None:
-                _unparsed(
+
+            # The stated base can CONTRADICT the line's own fielding chain,
+            # and when it does the chain is right. "out at second ss to 1b"
+            # ends the throw at the FIRST BASEMAN, who does not record an out
+            # at second; the out was made at first, and on a fielder's choice
+            # the runner going to first is the BATTER. So the source's
+            # "reached" is the error, not the out.
+            #
+            # This matters twice over, because the same mislabelled line
+            # lands in two different places depending on who happens to be
+            # standing on first:
+            #
+            #   base 1 EMPTY    -- no force exists, so the line was refused
+            #                      whole. 4 games, and the refusal looked
+            #                      principled ("names no runner").
+            #   base 1 OCCUPIED -- far worse. The block below pins the out on
+            #                      whoever stood there, and _merge_same_runner
+            #                      then folds that fabricated out together
+            #                      with the SAME player's explicitly narrated
+            #                      safe advance, keeping the out. 6 games
+            #                      where the line says "J. Daly advanced to
+            #                      second" and the record says Daly was out.
+            #                      Three of them parse clean AND replay, so
+            #                      nothing anywhere reported it.
+            #
+            # Measured: 11 lines in the corpus state an out base while their
+            # chain ends at 1b, and all 11 are this defect. Every fielder's-
+            # choice line whose chain AGREES with its stated base is left
+            # alone -- the rule fires on the contradiction, not on the shape.
+            chain_end = (p.forced_out_chain or "").split(" to ")[-1].strip()
+            if chain_end == "1b" and p.forced_out_at != "first":
+                batter_runner["to"] = -1
+                batter_runner["out"] = True
+                batter_runner["cause"] = "force_out"
+                batter_runner.pop("earned", None)
+                batter_runner.pop("rbi", None)
+                _inferred(
                     line,
-                    "line records an out at "
-                    f"{p.forced_out_at} but names no runner, and base "
-                    f"{out_base - 1} was empty at the start of the play so "
-                    "the force does not identify one",
+                    "out_base_contradicts_fielding_chain",
+                    f"line says the out was at {p.forced_out_at} but its own "
+                    f"chain {p.forced_out_chain!r} ends at the first baseman, "
+                    "who cannot record one there; the out is the batter's at "
+                    "first, and no runner is retired",
                 )
-                continue
-            runner_records.append(
-                {
-                    "player_id": forced_pid,
-                    "from": out_base - 1,
-                    "to": -1,
-                    "cause": "force_out",
-                    "out": True,
-                    "scored": False,
-                }
-            )
-            base_occ.pop(out_base - 1, None)
-            _inferred(
-                line,
-                "unattributed_force_out",
-                f"out at {p.forced_out_at} attributed to {forced_pid}, the "
-                f"runner occupying base {out_base - 1} before the play; the "
-                "line records the out but names no runner",
-            )
+            else:
+                forced_pid = line_snapshot.get(out_base - 1)
+                if forced_pid is None:
+                    _unparsed(
+                        line,
+                        "line records an out at "
+                        f"{p.forced_out_at} but names no runner, and base "
+                        f"{out_base - 1} was empty at the start of the play "
+                        "so the force does not identify one",
+                    )
+                    continue
+                runner_records.append(
+                    {
+                        "player_id": forced_pid,
+                        "from": out_base - 1,
+                        "to": -1,
+                        "cause": "force_out",
+                        "out": True,
+                        "scored": False,
+                    }
+                )
+                base_occ.pop(out_base - 1, None)
+                _inferred(
+                    line,
+                    "unattributed_force_out",
+                    f"out at {p.forced_out_at} attributed to {forced_pid}, "
+                    f"the runner occupying base {out_base - 1} before the "
+                    "play; the line records the out but names no runner",
+                )
 
         runner_records = _merge_same_runner(runner_records)
 

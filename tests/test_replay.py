@@ -535,3 +535,29 @@ def test_interior_inning_with_no_events_is_still_reported():
     oracle = _ls_oracle(away=[0, 0, 0], home=[0, 0, 0])
     ws = replay.check_linescore(_linescore_game(events), oracle).warnings
     assert any("inning 2" in w for w in ws)
+
+
+# --- a mislabelled out base must not retire a named runner (#33) ------------
+#
+# The damaging half of the same defect. When base 1 happened to be OCCUPIED,
+# the old code pinned the unattributed out on whoever stood there, and
+# _merge_same_runner then folded that fabricated out together with the SAME
+# player's explicitly narrated safe advance -- keeping the out. Six corpus
+# lines said "J. Daly advanced to second" while the record said Daly was out,
+# and three of those games parsed clean AND replayed, so nothing reported it.
+
+
+def _fc_line(text):
+    from bc_pipeline import grammar
+
+    return grammar.parse_clause_group(text)
+
+
+def test_contradicting_chain_leaves_the_named_runner_safe():
+    cg = _fc_line(
+        "G. Tonkel reached on a fielder's choice, out at second p to 1b;"
+        " J. Daly advanced to second."
+    )
+    # The line names Daly advancing SAFELY; nothing here may mark him out.
+    assert cg.primary.forced_out_chain == "p to 1b"
+    assert [(r.name_token, r.out) for r in cg.runners] == [("J. Daly", False)]

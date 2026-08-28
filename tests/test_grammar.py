@@ -1695,3 +1695,41 @@ def test_no_builder_reaches_home_without_scoring():
         for r in parse_clause_group(line).runners:
             if r.destination == "home" and not r.out:
                 assert r.scored, line
+
+
+# --- the stated out base can contradict the line's own fielding chain (#33) --
+#
+# "X reached on a fielder's choice, out at second ss to 1b" ends its throw at
+# the FIRST BASEMAN, who does not record an out at second. The chain is right
+# and the stated base is wrong: the out was made at first, and on a fielder's
+# choice the runner going to first is the batter. Capturing the chain is what
+# makes the contradiction visible at all -- the old regex matched it and threw
+# it away, so nothing downstream could see it.
+
+
+def test_fielders_choice_captures_the_fielding_chain():
+    cg = grammar.parse_clause_group(
+        "T. Halsema reached on a fielder's choice, out at second ss to 1b, RBI;"
+        " D. Hubbard scored."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "ss to 1b"
+
+
+def test_fielding_chain_is_captured_when_it_agrees_with_the_stated_base():
+    # The rule must fire on the CONTRADICTION, not on the shape, so a chain
+    # that agrees has to be captured just the same and left alone downstream.
+    cg = grammar.parse_clause_group(
+        "Wesley Mitchell reached on a fielder's choice, out at second c to 2b"
+        " (1-1 BS)."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "c to 2b"
+
+
+def test_fielders_choice_without_a_chain_still_parses():
+    cg = grammar.parse_clause_group(
+        "T. Halsema reached on a fielder's choice, out at second."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain is None
