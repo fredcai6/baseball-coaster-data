@@ -7131,10 +7131,27 @@
       "fielding_team": "ybsjgrorwgm7zp91",
       "half": "top",
       "inning": 10,
+      "kind": "substitution",
+      "narrative": "H. Bryan to c.",
+      "scoring_play": false,
+      "seq": 129,
+      "substitution": {
+        "after_event_seq": 128,
+        "kind": "defensive",
+        "player_in": "u5obcvsxszazzd7q",
+        "player_out": null,
+        "slot": null
+      }
+    },
+    {
+      "batting_team": "0f7i5wcuhuv2tipc",
+      "fielding_team": "ybsjgrorwgm7zp91",
+      "half": "top",
+      "inning": 10,
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 129,
+      "seq": 130,
       "summary": {
         "E": 0,
         "H": 0,
@@ -7351,22 +7368,29 @@
           "player_in": "u5obcvsxszazzd7q",
           "player_out": "o5fu9y7u3ifzg3uf",
           "slot": 6
+        },
+        {
+          "after_event_seq": 128,
+          "kind": "defensive",
+          "player_in": "u5obcvsxszazzd7q",
+          "player_out": null,
+          "slot": null
         }
       ]
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T16:07:53Z",
     "parse": {
-      "events_count": 130,
+      "events_count": 131,
       "inferred_count": 0,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:30Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T02:55:52Z",
+    "parser_version": "0.9.0",
     "source_sha256": "c0fd719b050b989da1176e7f6eee6b08755cc50c2cb12aed4ab0d54d8fcd9582",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250605_l4nk.xml"
   },
@@ -7769,15 +7793,5 @@
       "team_id": "ybsjgrorwgm7zp91"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 10,
-        "line_index": 0
-      },
-      "raw": "H. Bryan to c.",
-      "reason": "substitution names resolved uniquely on BOTH the home and away side (genuine cross-side ambiguity): out=None in='H. Bryan'"
-    }
-  ]
+  "unparsed": []
 }

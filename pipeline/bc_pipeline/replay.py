@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.1.0"
+REPLAYER_VERSION = "0.2.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -537,8 +537,39 @@ def check_lob(game: dict, oracle: dict) -> CheckResult:
         if not evd:
             continue  # no folded plays this half (shouldn't happen with a summary)
         pa_only = [(e, d) for e, d in evd if e.get("kind") == "plate_appearance"]
-        _, last_d = (pa_only or evd)[-1]
+        last_e, last_d = (pa_only or evd)[-1]
         folded_lob = sum(1 for b in last_d["bases_after"] if b)
+        # ... minus any runner who SCORED after that plate appearance. A run
+        # is not a runner left on base, and measuring occupancy AT the last
+        # plate appearance still shows him standing on third.
+        #
+        # This is the residual of the plate-appearance rule above, not a
+        # loosening of it: that rule is right that a runner RETIRED between
+        # plate appearances is still counted by the box, and this changes
+        # nothing about him. It corrects only the runner who came home.
+        # The shape is common enough to matter -- "D. Covino singled; T.
+        # Lozano advanced to third." ends the batting, then "T. Lozano
+        # scored." and "D. Covino out at second, caught stealing." follow.
+        #
+        # Measured over all 24,706 half-innings of the clean-parse corpus,
+        # an oracle-DEFINITION change kept deliberate and separately tested
+        # per issue #33's standing instruction:
+        #
+        #   occupancy after the last plate appearance      99.6438%
+        #   ... minus post-plate-appearance scorers        99.6964%
+        #   occupancy after the last EVENT (rejected)      97.8467%
+        #
+        # The +1 miss cohort falls 40 -> 25. Reported beside it, because it
+        # is the cost and not a rounding error: the -1 cohort RISES 48 -> 50.
+        # Two half-innings are newly wrong to make fifteen newly right.
+        post_pa_scored = sum(
+            1
+            for e, _d in evd
+            if e["seq"] > last_e["seq"]
+            for r in (e.get("runners") or [])
+            if r["scored"]
+        )
+        folded_lob -= post_pa_scored
         summary_lob = ev["summary"]["LOB"]
         if folded_lob != summary_lob:
             warnings.append(

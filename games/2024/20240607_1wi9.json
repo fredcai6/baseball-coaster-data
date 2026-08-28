@@ -5555,9 +5555,9 @@
         "away_score_before": 5,
         "base_out_state": "011|1",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           false,
@@ -5589,8 +5589,8 @@
         "location": null,
         "modifiers": [
           "error",
-          "advanced to third on the throw",
-          "2 RBI"
+          "2 RBI",
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5608,7 +5608,7 @@
           "out": false,
           "player_id": "gz3x4am779xxs5jr",
           "scored": false,
-          "to": 1
+          "to": 3
         },
         {
           "cause": "advance",
@@ -5616,7 +5616,7 @@
           "from": 2,
           "out": false,
           "player_id": "glrhrgv4qegkywkb",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         },
@@ -5626,7 +5626,7 @@
           "from": 3,
           "out": false,
           "player_id": "k0g6sblr2d4wu9zg",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -5637,16 +5637,16 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "100|1",
+        "base_out_state": "001|1",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "home_score_before": 11,
         "outs_after": 2,
@@ -5695,16 +5695,16 @@
     {
       "_derived": {
         "away_score_before": 5,
-        "base_out_state": "100|2",
+        "base_out_state": "001|2",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "home_score_before": 11,
         "outs_after": 3,
@@ -6218,8 +6218,8 @@
         "away_score_before": 6,
         "base_out_state": "100|2",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -6251,8 +6251,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second on the throw"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -6270,7 +6269,7 @@
           "out": false,
           "player_id": "cp1etm66a78jbd11",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -6287,15 +6286,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "101|2",
+        "base_out_state": "011|2",
         "bases_after": [
           false,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 11,
@@ -6312,7 +6311,7 @@
       "runners": [
         {
           "cause": "wild_pitch",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "cp1etm66a78jbd11",
           "scored": false,
@@ -7004,7 +7003,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T18:00:46Z",
     "parse": {
       "events_count": 123,
@@ -7013,8 +7012,8 @@
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:08Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:37Z",
+    "parser_version": "0.10.0",
     "source_sha256": "cb6c4b1d82e49b2ad2b08a0fd32a746ede3f703b3e31c016c4d6bd5500c5b45b",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240607_1wi9.xml"
   },

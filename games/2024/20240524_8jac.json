@@ -1194,7 +1194,7 @@
         "fielders": [],
         "location": null,
         "modifiers": [],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "single"
       },
       "pitcher": {
@@ -5637,8 +5637,8 @@
         "away_score_before": 2,
         "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -5670,8 +5670,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5689,7 +5688,7 @@
           "out": false,
           "player_id": "vn9w1trjnv6inxsz",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -5723,15 +5722,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "101|1",
+        "base_out_state": "011|1",
         "bases_after": [
           true,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 18,
@@ -5778,7 +5777,7 @@
         },
         {
           "cause": "advance",
-          "from": 1,
+          "from": 2,
           "out": false,
           "player_id": "vn9w1trjnv6inxsz",
           "scored": false,
@@ -8069,7 +8068,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T17:45:17Z",
     "parse": {
       "events_count": 143,
@@ -8083,8 +8082,8 @@
         "[illegal_transitions] illegal_transition: seq 43 runner 0kspizc11s5t8o6h advances from base 2 which was not occupied at event start"
       ]
     },
-    "parsed_at": "2026-08-28T01:31:04Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:34Z",
+    "parser_version": "0.10.0",
     "source_sha256": "2724b3f698c2af68a0fa92ddb0c8af9f63835de8652f7197e769b9776acd70bf",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240524_8jac.xml"
   },

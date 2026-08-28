@@ -324,3 +324,33 @@ def test_id_overrides_keep_a_name_shared_across_two_teams():
         ("Dee Twin", "team1"): "realaaaaaaaaaaa1",
         ("Dee Twin", "team2"): "realaaaaaaaaaaa2",
     }
+
+
+def test_a_stale_replay_verdict_is_refreshed_even_when_the_game_is_unchanged(
+    tmp_path, monkeypatch
+):
+    """The companion to the provenance test above, and its boundary.
+
+    A change to the REPLAYER moves `meta.parse.replayable` while the game's
+    events do not move at all. `semantic_equal` strips meta wholesale, so the
+    file was skipped and went on reporting a verdict the current replayer no
+    longer gives -- 13 games' worth on the v0.9.0 check_lob refinement, with
+    nothing able to catch it (a stale verdict is perfectly schema-valid).
+
+    `changed` must still read False -- the GAME did not move -- but the file
+    must be rewritten, and the refresh reported on its own line.
+    """
+    committed = _game("g1", replayable=False)
+    root = _make_repo(tmp_path, {"g1": committed})
+    fresh = json.loads(json.dumps(committed))
+    fresh["meta"]["parse"]["replayable"] = True
+    html = tmp_path / "raw.html"
+    html.write_text("<html></html>", encoding="utf-8")
+    monkeypatch.setattr(reparse, "_archived_html_by_game_id", lambda cfg: {"g1": html})
+    monkeypatch.setattr(reparse.parse, "parse_game", lambda *a, **k: fresh)
+    monkeypatch.setattr(reparse.replay, "replay_game", lambda g, h: fresh)
+
+    result = reparse.run_reparse(repo_root=root, config=None, write=True)
+    assert result.deltas[0].changed is False
+    assert result.wrote == 1
+    assert result.summary()["refreshed_derived"] == 1

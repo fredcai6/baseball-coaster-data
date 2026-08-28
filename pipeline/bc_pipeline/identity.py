@@ -173,22 +173,43 @@ def _narrow_by_first_token(
     """
     if not full_name:
         return None
-    pbp_first = _first_token(full_name).lower()
-    if not pbp_first:
-        # A blank pbp first token would make `startswith("")` trivially True
-        # for every candidate -- vacuous, not a narrowing. Never guess (same
-        # discipline as resolve()'s own empty-last_name guard).
-        return None
-    matches = []
-    for pid in candidate_ids:
-        cand_first = _first_token(team.players[pid].name).lower()
-        if cand_first and (
-            cand_first.startswith(pbp_first) or pbp_first.startswith(cand_first)
-        ):
-            matches.append(pid)
+    matches = [
+        pid
+        for pid in candidate_ids
+        if first_token_agrees(full_name, team.players[pid].name)
+    ]
     if len(matches) == 1:
         return matches[0]
     return None
+
+
+def first_token_agrees(pbp_full: Optional[str], candidate_display: Optional[str]) -> bool:
+    """Does the PBP name token's first-name token agree with a candidate's?
+
+    Case-insensitive ``startswith`` in EITHER direction, so all three real
+    shapes compare on equal footing: a bare initial (``"M."`` -> ``"m"``
+    agrees with "Marquis"), a truncated first name (``"Man."`` agrees with
+    "Manny"), and a full first name (``"Marquis"``).
+
+    An empty token on either side is NOT agreement. A blank first token would
+    make ``startswith("")`` trivially True against every candidate -- vacuous,
+    not evidence (the same discipline as ``resolve()``'s empty-last_name
+    guard). Both callers depend on that: ``_narrow_by_first_token`` would
+    otherwise "narrow" to an arbitrary lone candidate, and parse.py's
+    cross-side discriminator would otherwise treat "no information" as a
+    reason to pick a side.
+
+    This predicate is the SINGLE definition of first-name agreement. It has
+    two callers -- the within-side surname tie-breaker below and parse.py's
+    cross-side substitution discriminator -- and they must not drift apart:
+    a name the tie-breaker accepts on one roster and the discriminator
+    rejects across two would be an incoherent identity rule.
+    """
+    pbp_first = _first_token(pbp_full or "").lower()
+    cand_first = _first_token(candidate_display or "").lower()
+    if not pbp_first or not cand_first:
+        return False
+    return cand_first.startswith(pbp_first) or pbp_first.startswith(cand_first)
 
 
 @dataclass
@@ -318,6 +339,38 @@ class PlayerTable:
             ]
             if len(near) == 1 and _narrow_by_first_token(team, near, full_name):
                 return near[0], True
+
+        # INVERTED name token -- a StatCrew source defect. The narrative
+        # writes "<surname initial>. <FIRST name>" instead of the usual
+        # "<first initial>. <SURNAME>": "H. Casey" is Casey Harford, not
+        # anyone named Casey. Read that way, `last_name` above was never a
+        # surname at all, which is why every tier up to here found nothing.
+        #
+        # Fires ONLY here, after all four surname tiers have come up empty,
+        # and only on a unique match. Measured against known answers: over
+        # every batter token in the corpus that ALREADY resolves normally,
+        # the number that would ALSO resolve under the inverted reading is
+        # ZERO -- so this can never overrule a correct answer, and its null
+        # is exact rather than small.
+        #
+        # Corroborated independently in the games where it fires: the player
+        # it names sits in the committed batting order with ZERO plate
+        # appearances attributed to him, while exactly these lines sit in
+        # unparsed[]. A man in the batting order batted.
+        if full_name:
+            tokens = full_name.split()
+            if len(tokens) == 2 and tokens[0].endswith("."):
+                initial = tokens[0].rstrip(".").lower()
+                given = tokens[1].lower()
+                inverted = [
+                    pid
+                    for pid, pl in team.players.items()
+                    if pl.name.split()
+                    and pl.name.split()[0].lower() == given
+                    and pl.last_name.lower().startswith(initial)
+                ]
+                if len(inverted) == 1:
+                    return inverted[0], True
 
         return None, False
 

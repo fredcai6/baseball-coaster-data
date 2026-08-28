@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.8.0"
+PARSER_VERSION = "0.10.0"
 SCHEMA_VERSION = "1.10.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -208,6 +208,32 @@ def _resolve_substitution_pair(
         return in_pid, in_ok, None, True
     out_pid, out_ok = player_table.resolve(out_last, side, out_full)
     return in_pid, in_ok, out_pid, out_ok
+
+
+def _side_first_names_agree(
+    player_table: identity.PlayerTable,
+    side: str,
+    pairs: Tuple[Tuple[Optional[str], Optional[str]], ...],
+) -> bool:
+    """Does EVERY name this substitution line states agree, by first-name
+    token, with the player it resolved to on ``side``?
+
+    ``pairs`` is ``((pbp_full_name, resolved_pid), ...)`` for the incoming
+    and outgoing halves. A ``None`` pbp token is a half the line never named
+    (a bare position move names no outgoing player) and is skipped -- a name
+    that was never stated cannot disagree. Requiring ALL stated names to
+    agree is what makes this a discriminator rather than a vote: a line whose
+    incoming name points at one side and whose outgoing name points at the
+    other agrees with NEITHER, and the caller refuses.
+    """
+    team = player_table.home if side == "home" else player_table.away
+    for token, pid in pairs:
+        if token is None:
+            continue
+        entry = team.players.get(pid) if pid is not None else None
+        if entry is None or not identity.first_token_agrees(token, entry.name):
+            return False
+    return True
 
 
 def build_events(
@@ -623,9 +649,70 @@ def build_events(
             elif fallback_full and not primary_full:
                 side, team_id = fallback_side, fallback_team
                 in_pid, in_ok, out_pid, out_ok = f_in_pid, f_in_ok, f_out_pid, f_out_ok
+            elif primary_full and fallback_full:
+                # BOTH sides resolve every name -- but "this surname exists on
+                # both rosters" is NOT the same thing as "the line is
+                # ambiguous". Each side resolved to exactly ONE player, so the
+                # only open question is WHICH SIDE, and the line itself
+                # usually answers it: the PBP names a first initial, and
+                # "J. Smith" cannot be Tanner Smith.
+                #
+                # That evidence was being discarded. `resolve()` threads the
+                # full pbp token in as `full_name`, but `_narrow_by_first_token`
+                # only consults it on the >= 2-candidates-WITHIN-ONE-SIDE
+                # branch -- so when each roster held exactly one Smith, the
+                # initial never entered the decision at all and the line was
+                # filed as "genuine cross-side ambiguity". It was not
+                # ambiguous; the discriminating fact was simply never read.
+                #
+                # Measured against known answers before use (the discipline
+                # DECISION.md sets for every identity signal): over all 14,675
+                # substitution lines the corpus already resolves -- where the
+                # answer is established independently, by the outgoing name or
+                # by the surname resolving on one roster only -- this rule
+                # fires on 14,409 and is correct on 14,409. Zero wrong. It
+                # declines to fire on the other 266 rather than guessing.
+                #
+                # Two rival signals were measured on the same known answers
+                # and REJECTED, and are recorded here so the choice stays
+                # visible: the kind-implied fielding side ("X to 1b" is a
+                # defensive move, so X fields) scores 97.8% -- a half-inning
+                # boundary roster shuffle is logged in the previous half often
+                # enough to break it; boxscore position overlap ("X to lf" and
+                # only one candidate is listed at lf) scores 95.0%; and
+                # match-tier precedence (an exact surname match outranking the
+                # one-edit typo tier) scores 93.3%. All three are below the
+                # 98.44% signal issue #40 rejected, so none is used. Only the
+                # first-name token is forced.
+                primary_agrees = _side_first_names_agree(
+                    player_table,
+                    primary_side,
+                    ((in_full, p_in_pid), (out_full, p_out_pid)),
+                )
+                fallback_agrees = _side_first_names_agree(
+                    player_table,
+                    fallback_side,
+                    ((in_full, f_in_pid), (out_full, f_out_pid)),
+                )
+                if primary_agrees and not fallback_agrees:
+                    side, team_id = primary_side, primary_team
+                    in_pid, in_ok, out_pid, out_ok = (
+                        p_in_pid, p_in_ok, p_out_pid, p_out_ok
+                    )
+                elif fallback_agrees and not primary_agrees:
+                    side, team_id = fallback_side, fallback_team
+                    in_pid, in_ok, out_pid, out_ok = (
+                        f_in_pid, f_in_ok, f_out_pid, f_out_ok
+                    )
+                else:
+                    # The initial does not separate them either -- both
+                    # candidates answer to it (two players who share a first
+                    # AND last name, one per team), or neither does. This is
+                    # the irreducible case. Never guess.
+                    side, team_id = primary_side, primary_team
+                    in_pid, in_ok, out_pid, out_ok = None, False, None, False
             else:
-                # Neither side fully resolves, OR both do (genuine
-                # cross-side ambiguity) -- either way, never guess.
+                # Neither side fully resolves -- never guess.
                 side, team_id = primary_side, primary_team
                 in_pid, in_ok, out_pid, out_ok = None, False, None, False
             # issue #40: admit a PBP-named player the boxscore never lists,
@@ -678,8 +765,8 @@ def build_events(
                 if primary_full and fallback_full:
                     reason = (
                         f"substitution names resolved uniquely on BOTH the "
-                        f"{primary_side} and {fallback_side} side (genuine "
-                        f"cross-side ambiguity): "
+                        f"{primary_side} and {fallback_side} side and the "
+                        f"first-name token does not separate them: "
                         f"out={cg.substitution.player_out!r} "
                         f"in={cg.substitution.player_in!r}"
                     )
@@ -903,9 +990,29 @@ def build_events(
                     base_occ.pop(b, None)
             if final_base not in (-1, 4):
                 base_occ[final_base] = batter_pid
-        outs_recorded = (1 if out_flag else 0) + sum(
-            1 for r in runner_records[1:] if r["out"]
-        )
+        # Schema: "Outs THIS event adds." Read that off the MERGED runner
+        # records -- the same primitives g6 replay folds -- not off the
+        # primary verb's `out_flag`, which describes the verb rather than the
+        # play's outcome. The two disagree whenever a chained clause changes
+        # the batter's disposition, in BOTH directions:
+        #
+        #   "struck out swinging, reached first on a wild pitch" -- a dropped
+        #   third strike. The pitcher is credited a strikeout, but the batter
+        #   is standing on first and the play adds NO out. `out_flag` said 1.
+        #   108 corpus events carried that contradiction: an `outcome` block
+        #   claiming an out beside a `runners` entry with `out: false, to: 1`.
+        #
+        #   "singled to right field, out at second" -- the batter is retired
+        #   after reaching. `out_flag` said 0, and the retiring clause merged
+        #   into the batter's own record at index 0, which the old
+        #   `records[1:]` slice skipped, so the out vanished.
+        #
+        # Replay never noticed either: `fold_base_out` derives outs from
+        # `runners[].out` independently and ignores this field entirely. That
+        # is exactly why it could stay wrong -- so it is fixed at the source
+        # rather than left as a discrepancy a consumer would have to know
+        # about.
+        outs_recorded = sum(1 for r in runner_records if r["out"])
 
         _note_inferred_runners(line, cg)
         events.append(

@@ -1380,8 +1380,8 @@
         "away_score_before": 2,
         "base_out_state": "000|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -1413,8 +1413,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -1432,7 +1431,7 @@
           "out": false,
           "player_id": "s5axf8w7zilwjv21",
           "scored": false,
-          "to": 1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -1441,15 +1440,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 0,
@@ -1479,14 +1478,14 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "100|2",
+        "base_out_state": "000|2",
         "bases_after": [
           true,
           false,
           false
         ],
         "bases_before": [
-          true,
+          false,
           false,
           false
         ],
@@ -6063,7 +6062,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T19:02:49Z",
     "parse": {
       "events_count": 111,
@@ -6073,12 +6072,11 @@
       "warnings": [
         "[linescore] linescore: home inning 2 computed 0 != oracle 1",
         "[linescore] linescore: computed home final R 1 != oracle total 2",
-        "[pa_counts] pa_counts: player spkrmn1lntn5rifc events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[illegal_transitions] illegal_transition: seq 19 runner spkrmn1lntn5rifc advances from base 2 which was not occupied at event start"
+        "[pa_counts] pa_counts: player spkrmn1lntn5rifc events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
       ]
     },
-    "parsed_at": "2026-08-28T01:31:20Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:49Z",
+    "parser_version": "0.10.0",
     "source_sha256": "ede7e2a37aec80548d1daf627d7385899d9a7b15e8803004fee245a09e46db74",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240730_sau3.xml"
   },

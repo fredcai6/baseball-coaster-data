@@ -577,6 +577,14 @@ def test_e2e_dh_sub_ambiguous_on_both_sides_stays_unparsed_never_guesses():
     # fallback logic checks BOTH sides (never short-circuits on a primary
     # success) specifically so it can detect this and refuse to guess, same
     # as the pre-rework "never guess" doctrine.
+    #
+    # Both candidates on both sides share a FIRST name as well as a surname,
+    # so the cross-side first-name discriminator (which recovers the ordinary
+    # "J. Smith is Jaylen, not Tanner" case -- see the two tests below) has
+    # nothing to separate them here either, and must fall through to this
+    # same refusal. This is the irreducible case: two distinct people with
+    # the same full name, one per roster. The corpus contains a real one --
+    # a Ryan McCarthy on each side of two 2024 games.
     table = _two_team_table(
         away_players={
             "a1": _entry2("a1", "J. Smith", "Smith", "syn:team:away", ["dh"]),
@@ -597,7 +605,60 @@ def test_e2e_dh_sub_ambiguous_on_both_sides_stays_unparsed_never_guesses():
     events, unparsed, _subs, _inferred = parse.build_events([line], table)
     assert events == []
     assert len(unparsed) == 1
-    assert "cross-side ambiguity" in unparsed[0]["reason"]
+    assert "resolved uniquely on BOTH" in unparsed[0]["reason"]
+    assert "first-name token does not separate them" in unparsed[0]["reason"]
+
+
+def test_e2e_sub_on_both_rosters_is_discriminated_by_first_name():
+    # "Resolves on both rosters" is NOT "ambiguous": each side resolved to
+    # exactly ONE player, so the only open question is which side, and the
+    # line's own first-name token answers it. Away has Tanner Smith, home has
+    # Jaylen Smith; "J. Smith" cannot be Tanner. Measured over the 14,675
+    # substitution lines the corpus resolves independently, this rule fires
+    # on 14,409 and is correct on all of them (see parse.py's branch comment).
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "Tanner Smith", "Smith", "syn:team:away", ["rf"]),
+        },
+        home_players={
+            "h1": _entry2("h1", "Jaylen Smith", "Smith", "syn:team:home", ["2b"]),
+        },
+    )
+    # half="top" -> batting_side="away", fielding_side="home". A bare
+    # position move names no outgoing player, so the surname alone would
+    # resolve uniquely on BOTH rosters and the line used to be refused.
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0, text="J. Smith to 2b.", is_strong=False,
+    )
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
+    assert unparsed == []
+    assert len(events) == 1
+    assert events[0]["substitution"]["player_in"] == "h1"
+
+
+def test_e2e_sub_with_names_pointing_at_opposite_sides_stays_unparsed():
+    # The discriminator requires EVERY name the line states to agree with the
+    # SAME side. Here the incoming name matches only away's Andrew and the
+    # outgoing name only home's Mason, so neither side agrees on both -- a
+    # contradiction, not a resolution. Never guess.
+    table = _two_team_table(
+        away_players={
+            "a1": _entry2("a1", "Andrew Garcia", "Garcia", "syn:team:away", ["p"]),
+            "a2": _entry2("a2", "Hunter Bryant", "Bryant", "syn:team:away", ["p"]),
+        },
+        home_players={
+            "h1": _entry2("h1", "Tristin Garcia", "Garcia", "syn:team:home", ["p"]),
+            "h2": _entry2("h2", "Mason Bryant", "Bryant", "syn:team:home", ["p"]),
+        },
+    )
+    line = parse.PbpLine(
+        inning=1, half="top", line_index=0,
+        text="A. Garcia to p for M. Bryant.", is_strong=False,
+    )
+    events, unparsed, _subs, _inferred = parse.build_events([line], table)
+    assert events == []
+    assert len(unparsed) == 1
+    assert "first-name token does not separate them" in unparsed[0]["reason"]
 
 
 def test_count_tail_optional_event_is_schema_valid():

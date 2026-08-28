@@ -3845,8 +3845,8 @@
         "away_score_before": 6,
         "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3878,8 +3878,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -3897,7 +3896,7 @@
           "out": false,
           "player_id": "ejjvip09zufm08ji",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -3916,15 +3915,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
-          false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -3974,15 +3973,15 @@
     {
       "_derived": {
         "away_score_before": 6,
-        "base_out_state": "100|1",
+        "base_out_state": "110|1",
         "bases_after": [
           false,
-          false,
+          true,
           false
         ],
         "bases_before": [
           true,
-          false,
+          true,
           false
         ],
         "home_score_before": 3,
@@ -6347,7 +6346,7 @@
         ],
         "location": "left field",
         "modifiers": [],
-        "outs_recorded": 0,
+        "outs_recorded": 1,
         "type": "single"
       },
       "pitcher": {
@@ -7001,19 +7000,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T19:14:04Z",
     "parse": {
       "events_count": 122,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 5 bottom folded LOB 0 != inning_summary LOB 1"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:22Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:16:51Z",
+    "parser_version": "0.10.0",
     "source_sha256": "b414e46dd58499e5cba4a8776556a4a821218e24da678e3510ad5968dca3e99f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240809_93ln.xml"
   },

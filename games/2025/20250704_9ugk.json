@@ -2401,9 +2401,7 @@
           "rf"
         ],
         "location": "right field",
-        "modifiers": [
-          "unearned"
-        ],
+        "modifiers": [],
         "outs_recorded": 0,
         "type": "single"
       },
@@ -2416,7 +2414,7 @@
       "runners": [
         {
           "cause": "batted_ball",
-          "earned": true,
+          "earned": false,
           "from": 0,
           "out": false,
           "player_id": "c8oh72nhpzvo2p76",
@@ -5459,9 +5457,9 @@
         "away_score_before": 8,
         "base_out_state": "000|2",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
           false,
@@ -5492,8 +5490,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to third"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5511,7 +5508,7 @@
           "out": false,
           "player_id": "7hawkykz292el0ws",
           "scored": false,
-          "to": 1
+          "to": 3
         }
       ],
       "scoring_play": false,
@@ -5520,16 +5517,16 @@
     {
       "_derived": {
         "away_score_before": 8,
-        "base_out_state": "100|2",
+        "base_out_state": "001|2",
         "bases_after": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "bases_before": [
-          true,
           false,
-          false
+          false,
+          true
         ],
         "home_score_before": 6,
         "outs_after": 3,
@@ -6340,7 +6337,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T16:41:11Z",
     "parse": {
       "events_count": 112,
@@ -6349,8 +6346,8 @@
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:36Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:04Z",
+    "parser_version": "0.10.0",
     "source_sha256": "4f6f0021c162c3f8df355ebd8feca5efff9ce252c72907ad79c6ee4c33d914a6",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250704_9ugk.xml"
   },

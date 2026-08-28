@@ -1288,8 +1288,8 @@
         "away_score_before": 0,
         "base_out_state": "110|2",
         "bases_after": [
-          true,
           false,
+          true,
           true
         ],
         "bases_before": [
@@ -1321,8 +1321,7 @@
         ],
         "location": null,
         "modifiers": [
-          "error",
-          "advanced to second on the error"
+          "error"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -1340,7 +1339,7 @@
           "out": false,
           "player_id": "o5fu9y7u3ifzg3uf",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "error",
@@ -1367,15 +1366,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|2",
+        "base_out_state": "011|2",
         "bases_after": [
           true,
-          false,
+          true,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -1425,15 +1424,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "101|2",
+        "base_out_state": "111|2",
         "bases_after": [
           true,
-          false,
+          true,
           true
         ],
         "bases_before": [
           true,
-          false,
+          true,
           true
         ],
         "home_score_before": 1,
@@ -8786,19 +8785,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T17:12:34Z",
     "parse": {
       "events_count": 153,
       "inferred_count": 0,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 2 top folded LOB 2 != inning_summary LOB 3"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:43Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:11Z",
+    "parser_version": "0.10.0",
     "source_sha256": "c3f461e9aadeffa86366c8f741b5db9f715c5e667ab43ddc09dbac6f5b620b61",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250801_fy2o.xml"
   },

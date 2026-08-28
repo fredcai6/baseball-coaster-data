@@ -6394,6 +6394,23 @@
       }
     },
     {
+      "batting_team": "fs5kcreudvyx5quq",
+      "fielding_team": "maotayco79j2g2lx",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Tyler Young to 2b.",
+      "scoring_play": false,
+      "seq": 113,
+      "substitution": {
+        "after_event_seq": 112,
+        "kind": "defensive",
+        "player_in": "du0fj5kw3qprbslf",
+        "player_out": null,
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 4,
         "base_out_state": "000|0",
@@ -6452,7 +6469,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 113
+      "seq": 114
     },
     {
       "_derived": {
@@ -6515,7 +6532,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 114
+      "seq": 115
     },
     {
       "_derived": {
@@ -6578,7 +6595,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "batting_team": "fs5kcreudvyx5quq",
@@ -6588,7 +6605,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 116,
+      "seq": 117,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6796,22 +6813,29 @@
           "player_in": "du0fj5kw3qprbslf",
           "player_out": "ul6mvinxyg0iv4yg",
           "slot": 6
+        },
+        {
+          "after_event_seq": 112,
+          "kind": "defensive",
+          "player_in": "du0fj5kw3qprbslf",
+          "player_out": null,
+          "slot": null
         }
       ]
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T15:02:19Z",
     "parse": {
-      "events_count": 117,
+      "events_count": 118,
       "inferred_count": 0,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:52Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T02:56:12Z",
+    "parser_version": "0.9.0",
     "source_sha256": "d205cc05b446bc18bafcaf3a8d0f39186b3dc5a4b104b839fec870e62de00caa",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260602_hjmh.xml"
   },
@@ -7182,15 +7206,5 @@
       "team_id": "maotayco79j2g2lx"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 0
-      },
-      "raw": "Tyler Young to 2b.",
-      "reason": "substitution names resolved uniquely on BOTH the home and away side (genuine cross-side ambiguity): out=None in='Tyler Young'"
-    }
-  ]
+  "unparsed": []
 }

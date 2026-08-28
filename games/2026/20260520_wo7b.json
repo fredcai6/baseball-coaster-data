@@ -3861,8 +3861,8 @@
         "away_score_before": 0,
         "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -3898,7 +3898,6 @@
         "location": null,
         "modifiers": [
           "error",
-          "advanced to second",
           "RBI"
         ],
         "outs_recorded": 0,
@@ -3917,7 +3916,7 @@
           "out": false,
           "player_id": "t0wytyl3ylepo8qy",
           "scored": false,
-          "to": 1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -3936,15 +3935,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 0,
@@ -3997,15 +3996,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 0,
@@ -5186,7 +5185,8 @@
         "location": null,
         "modifiers": [
           "error",
-          "2 RBI"
+          "2 RBI",
+          "RBI"
         ],
         "outs_recorded": 0,
         "type": "reached_on_error"
@@ -5220,7 +5220,7 @@
           "from": 2,
           "out": false,
           "player_id": "vqkuwm8ezcpz7g4u",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         },
@@ -5230,7 +5230,7 @@
           "from": 3,
           "out": false,
           "player_id": "quxk0ram2ev0tb3h",
-          "rbi": false,
+          "rbi": true,
           "scored": true,
           "to": 4
         }
@@ -6335,6 +6335,23 @@
       }
     },
     {
+      "batting_team": "maotayco79j2g2lx",
+      "fielding_team": "toa4e66upwknb2r7",
+      "half": "top",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "Devon Dixon to ss.",
+      "scoring_play": false,
+      "seq": 116,
+      "substitution": {
+        "after_event_seq": 115,
+        "kind": "defensive",
+        "player_in": "m5bj7y0r7wfqds1f",
+        "player_out": null,
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 5,
         "base_out_state": "000|0",
@@ -6395,7 +6412,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "_derived": {
@@ -6456,7 +6473,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
@@ -6517,7 +6534,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6580,7 +6597,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "batting_team": "maotayco79j2g2lx",
@@ -6590,7 +6607,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 120,
+      "seq": 121,
       "summary": {
         "E": 0,
         "H": 1,
@@ -6819,22 +6836,29 @@
           "player_in": "m5bj7y0r7wfqds1f",
           "player_out": "d9muxuqf8vp9yp8k",
           "slot": 7
+        },
+        {
+          "after_event_seq": 115,
+          "kind": "defensive",
+          "player_in": "m5bj7y0r7wfqds1f",
+          "player_out": null,
+          "slot": null
         }
       ]
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.2.0",
     "fetched_at": "2026-07-12T04:56:47Z",
     "parse": {
-      "events_count": 121,
+      "events_count": 122,
       "inferred_count": 0,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:49Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T14:17:16Z",
+    "parser_version": "0.10.0",
     "source_sha256": "a1724cc784a212d94f5f616e80026bf70d00bce1628e71cd009cfcfada49d812",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260520_wo7b.xml"
   },
@@ -7238,15 +7262,5 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "top",
-        "inning": 9,
-        "line_index": 0
-      },
-      "raw": "Devon Dixon to ss.",
-      "reason": "substitution names resolved uniquely on BOTH the home and away side (genuine cross-side ambiguity): out=None in='Devon Dixon'"
-    }
-  ]
+  "unparsed": []
 }

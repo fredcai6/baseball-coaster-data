@@ -72,6 +72,9 @@ class GameDelta:
 class ReparseResult:
     deltas: List[GameDelta] = field(default_factory=list)
     missing_archive: List[str] = field(default_factory=list)
+    #: Files whose GAME content was unchanged but whose committed meta held a
+    #: stale derived result (see `_derived_result_is_stale`).
+    refreshed_derived: int = 0
     parse_failed: List[tuple] = field(default_factory=list)
     wrote: int = 0
     commit_subject: Optional[str] = None
@@ -104,6 +107,7 @@ class ReparseResult:
             "league": total,
             "by_season": by_season,
             "missing_archive": len(self.missing_archive),
+            "refreshed_derived": self.refreshed_derived,
             "parse_failed": len(self.parse_failed),
             "wrote": self.wrote,
             "commit_subject": self.commit_subject,
@@ -232,6 +236,50 @@ def _load_career_map(repo_root: Path, path: Optional[str]) -> Optional[dict]:
     return json.loads(artifact_path.read_text(encoding="utf-8"))
 
 
+def _derived_result_is_stale(committed: dict, fresh: dict) -> bool:
+    """Does the committed file's ``meta`` disagree with this run's RESULT?
+
+    ``semantic_equal`` strips ``meta`` wholesale, on the reading that meta is
+    provenance and a run that changes nothing but provenance should not churn
+    1,484 files. That reading is right about timestamps and source hashes and
+    WRONG about three fields, because they are derived results rather than
+    provenance:
+
+      * ``meta.parse.replayable`` and ``meta.parse.warnings`` -- the g6
+        replay verdict. Change the REPLAYER and these move while the game
+        content does not, so every semantically-unchanged file keeps a
+        verdict the current replayer no longer gives.
+      * ``meta.parser_version`` / ``meta.derived_replayer_version`` -- the
+        files' own claim about what produced them.
+
+    Found the hard way: the v0.9.0 check_lob refinement made 13 more games
+    replayable, the re-parse correctly saw their EVENTS were unchanged and
+    skipped them, and the committed corpus went on reporting 1,330 replayable
+    while the current replayer produced 1,343. Nothing could have caught it --
+    the game validator checks games against their schema, and a stale verdict
+    is perfectly well-formed. Exactly the failure mode that
+    check_artifacts_current.py exists to prevent for the four artifacts, one
+    layer down and previously unguarded.
+
+    Deliberately narrow: ONLY ``meta.parse``. The version strings and
+    timestamps beside it stay pure provenance and still do not trigger a
+    write, because "don't churn 1,484 files over a version string" is the
+    rule this comparison exists to enforce (and
+    test_a_provenance_only_difference_is_not_a_change pins it). The resulting
+    mix of `parser_version` values across the corpus is meaningful rather
+    than partial: a file says 0.8.0 because parser 0.9.0 produces byte-identical
+    content AND an identical verdict for it, which a re-parse has verified.
+    What must never differ is the RESULT, and that is what this catches.
+
+    Kept SEPARATE from `changed` rather than folded into it, so the summary's
+    "changed" still means "the game itself moved" -- a result refresh is
+    reported on its own line as `refreshed_derived`.
+    """
+    cm = committed.get("meta") or {}
+    fm = fresh.get("meta") or {}
+    return (cm.get("parse") or {}) != (fm.get("parse") or {})
+
+
 def run_reparse(
     *,
     repo_root: Path,
@@ -307,6 +355,7 @@ def run_reparse(
             continue
 
         changed = not serialize.semantic_equal(committed, fresh)
+        stale_derived = _derived_result_is_stale(committed, fresh)
         cm, fm = committed.get("meta", {}).get("parse", {}), fresh["meta"]["parse"]
         result.deltas.append(
             GameDelta(
@@ -319,7 +368,9 @@ def run_reparse(
                 replayable_after=bool(fm.get("replayable")),
             )
         )
-        if write and changed:
+        if stale_derived and not changed:
+            result.refreshed_derived += 1
+        if write and (changed or stale_derived):
             path.write_text(serialize.canonical_dumps(fresh), encoding="utf-8")
             result.wrote += 1
 
