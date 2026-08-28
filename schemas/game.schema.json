@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://baseball-coaster/schema/game.schema.json",
   "title": "baseball-coaster per-game file (games/<season>/<game_id>.json)",
-  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine \u2014 the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31). 1.7.0 (additive MINOR) `$defs.player_entry` gains optional nullable `person_id`, the within-season cross-GAME join key: `player_id` is file-local and a synthetic `syn:<side>:<n>` is per-game positional, so joining on it silently mixes people together. Populated from `artifacts/latest/person_map.json` (issue #41 Gap 2). No existing property removed, renamed, or retyped. NOTE: this history has a gap -- 1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without an entry here. 1.8.0 (additive MINOR) `$defs.team` gains optional nullable `franchise_id`, the cross-season club key: `team_id` is reissued every season (0 of 12 multi-season teams keep theirs), so joining a franchise across years on it silently breaks. Minted from the exact team name; registry at `artifacts/latest/team_map.json` (issue #41, team half). No existing property removed, renamed, or retyped. 1.9.0 (additive MINOR) `$defs.player_entry` gains optional nullable `career_id`, the CROSS-SEASON key above person_id: Presto reissues every player id each year, so no source id survives a season boundary. Linked on exact display name + franchise continuity + one-person-per-season, never on name alone (the corpus contains proven same-name different people). Registry and every refused pair: `artifacts/latest/career_map.json` (issue #41 Gap 1). No existing property removed, renamed, or retyped.",
+  "$comment": "SEMANTIC EQUALITY: Two files are the same game iff they are deep-equal after deleting `meta` and every `_derived` block. EVOLUTION: MINOR = additive only (new optional property / stat column / `_derived` key); MAJOR = remove/rename/retype/redefine \u2014 the only file-invalidating change, the labeled re-parse case. TAXONOMY IS CLOSED: unknown source lines route to `unparsed[]`, never an escape hatch; there is no `x` object and no open `type` enum anywhere. The sole open object is the `_derived` regenerable cache (additionalProperties:true); it and `meta` are excluded from semantic equality. VERSION HISTORY: 1.0.0 initial hybrid (B spine + C grafts). 1.1.0 (additive MINOR) `$defs.substitution.slot` made nullable so a DH-game pitching change (pitcher not in the batting order) is a real substitution event instead of an `unparsed[]` residue. 1.2.0 (additive MINOR) $defs.count and $defs.substitution.player_out made nullable: count=null for a plate_appearance event whose source PBP line carries no count-tail (the historical template), player_out=null for a bare DH-slot entry naming only the incoming player. Ratified by the human via Admiral (issue #30). 1.3.0 (additive MINOR) $defs.outcome.properties.type.enum gains \"foul_out\" (a foul fly ball caught for an out, fielders populated exactly like flyout/popout) and \"strikeout\" (a bare struck-out narrative carrying no swinging/looking qualifier, fielders always []) -- no removal/reorder of any existing value. Ratified by the human via Admiral (issue #31). 1.7.0 (additive MINOR) `$defs.player_entry` gains optional nullable `person_id`, the within-season cross-GAME join key: `player_id` is file-local and a synthetic `syn:<side>:<n>` is per-game positional, so joining on it silently mixes people together. Populated from `artifacts/latest/person_map.json` (issue #41 Gap 2). No existing property removed, renamed, or retyped. NOTE: this history has a gap -- 1.4.0 (`box_listed`), 1.5.0 (interference) and 1.6.0 (`infield_fly`) landed without an entry here. 1.8.0 (additive MINOR) `$defs.team` gains optional nullable `franchise_id`, the cross-season club key: `team_id` is reissued every season (0 of 12 multi-season teams keep theirs), so joining a franchise across years on it silently breaks. Minted from the exact team name; registry at `artifacts/latest/team_map.json` (issue #41, team half). No existing property removed, renamed, or retyped. 1.9.0 (additive MINOR) `$defs.player_entry` gains optional nullable `career_id`, the CROSS-SEASON key above person_id: Presto reissues every player id each year, so no source id survives a season boundary. Linked on exact display name + franchise continuity + one-person-per-season, never on name alone (the corpus contains proven same-name different people). Registry and every refused pair: `artifacts/latest/career_map.json` (issue #41 Gap 1). No existing property removed, renamed, or retyped. 1.10.0 (additive MINOR) new top-level `inferred[]` (and `meta.parse.inferred_count`): the disclosure record for every fact `events[]` asserts that its source line does NOT state. Two StatCrew source defects are recovered rather than dropped -- a runner's name written twice where the verb belongs (read as \"scored\"; the linescore oracle reconciles 54/54 such half-innings when it is counted as a run and 0/54 when it is not) and a pitching change with the incoming pitcher's name blank (filled from the boxscore pitching order, a rule that predicts the named reliever in 8,917 of the 8,991 substitutions that name both). Every such assertion is listed with its rule and its evidence, so a consumer wanting only source-stated facts can drop the events they name. Not added to `required`, so a file written before 1.10.0 stays valid (issue #40).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -25,7 +25,7 @@
     "schema_version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.9.0."
+      "description": "Semver of THIS schema; the breaking-change gate. MINOR = additive only; MAJOR = remove/rename/retype/redefine. Current: 1.10.0."
     },
     "game_id": {
       "type": "string",
@@ -102,6 +102,13 @@
       "description": "Verbatim source lines the parser could not classify, with location. A non-empty array means events[] is not a complete reconstruction; the file is still published (finals are not blocked on a perfect parse) but flagged.",
       "items": {
         "$ref": "#/$defs/unparsed_line"
+      }
+    },
+    "inferred": {
+      "type": "array",
+      "description": "Facts asserted by events[] that the source line does not state. Empty for a game whose source text was clean. Not in `required`: additive at 1.10.0, so a file written before it stays valid.",
+      "items": {
+        "$ref": "#/$defs/inferred_line"
       }
     },
     "meta": {
@@ -999,6 +1006,60 @@
         }
       }
     },
+    "inferred_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A fact events[] ASSERTS that the source line does not state, because the source line is defective and a measured rule concluded what it must have meant. Disclosure, not decoration: a consumer that wants only what the source said can drop every event these entries name. Added 1.10.0 (issue #40).",
+      "required": [
+        "location",
+        "raw",
+        "rule",
+        "asserted"
+      ],
+      "properties": {
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inning",
+            "half",
+            "line_index"
+          ],
+          "properties": {
+            "inning": {
+              "type": "integer"
+            },
+            "half": {
+              "type": "string",
+              "enum": [
+                "top",
+                "bottom"
+              ]
+            },
+            "line_index": {
+              "type": "integer"
+            }
+          }
+        },
+        "raw": {
+          "type": "string",
+          "description": "The verbatim defective line."
+        },
+        "rule": {
+          "type": "string",
+          "description": "Identifier of the inference rule that fired.",
+          "enum": [
+            "doubled_name_scored",
+            "blank_incoming_pitcher",
+            "unattributed_force_out"
+          ]
+        },
+        "asserted": {
+          "type": "string",
+          "description": "What was filled in, and the evidence for it."
+        }
+      }
+    },
     "meta": {
       "type": "object",
       "additionalProperties": false,
@@ -1050,6 +1111,9 @@
               "type": "integer"
             },
             "unparsed_count": {
+              "type": "integer"
+            },
+            "inferred_count": {
               "type": "integer"
             },
             "replayable": {
