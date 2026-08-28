@@ -163,12 +163,63 @@ def test_spliced_dropped_foul_ball_lets_the_real_outcome_through():
     ).primary.outcome_type == "home_run"
 
 
-def test_repeated_subject_token_is_dropped_without_asserting_a_run():
+def test_repeated_subject_with_no_run_in_the_clause_is_read_as_scored():
     # "T. Smith advanced to third on an error by 3b, T. Smith, unearned" --
-    # the template re-emits the subject. Removing it asserts nothing new; the
-    # runner is on third, not home.
-    cg = _group("A. Rios singled to left field; T. Smith advanced to third on an error by 3b, T. Smith, unearned.")
+    # the template re-emits the subject where the verb belongs. An earlier
+    # pass dropped it as noise; that was wrong, and wrong in the falsifiable
+    # direction. All four affected games came up short by exactly one run in
+    # exactly that inning against the linescore oracle. Same defect, same
+    # meaning as the standalone "M. Moralez M. Moralez." shape 1.10.0
+    # measured at 54/54.
+    cg = _group(
+        "A. Rios singled to left field; T. Smith advanced to third on an "
+        "error by 3b, T. Smith, unearned."
+    )
     moved = [r for r in cg.runners if r.name_token == "T. Smith"]
-    assert len(moved) == 1
-    assert moved[0].destination == "third"
-    assert moved[0].scored is False
+    assert [(r.destination, r.scored) for r in moved] == [
+        ("third", False),
+        ("home", True),
+    ]
+    # It is an inference, so it must be DISCLOSED, never pass as something
+    # the line said in words.
+    assert moved[-1].inferred
+    assert moved[-1].unearned is True
+
+
+def test_repeated_subject_beside_an_explicit_scored_is_only_redundant():
+    # The other half of the conditional. Here the clause already records the
+    # run, so the re-emitted name adds nothing -- dropping it is correct, and
+    # nothing is inferred because nothing was asserted beyond the line.
+    cg = _group(
+        "A. Rios singled to left field; T. Smith advanced to third, scored "
+        "on an error by 3b, T. Smith, unearned."
+    )
+    moved = [r for r in cg.runners if r.name_token == "T. Smith"]
+    assert sum(1 for r in moved if r.scored) == 1
+    assert not any(r.inferred for r in moved)
+
+
+def test_unearned_stays_attached_to_its_run_on_the_primary_chain():
+    # `scored, unearned` is a PAIR. The primary chain lifts modifier tokens
+    # out of the movement chain, and lifting "unearned" away from "scored"
+    # left the bare `scored` row to win -- recording as EARNED a run the line
+    # says is unearned. `earned` is a real emitted field, so that is a wrong
+    # fact, not a lost one.
+    cg = _group(
+        "A. Rios reached first on an error by 1b, advanced to second on an "
+        "error by lf, A. Rios, unearned, RBI."
+    )
+    scored = [r for r in cg.runners if r.scored]
+    assert len(scored) == 1
+    assert scored[0].unearned is True
+    assert "RBI" in cg.primary.modifiers
+
+
+def test_reached_on_error_records_movement_as_runners_not_modifier_strings():
+    # The row's tail was the only unrestricted `.*` in the table and it ate
+    # real content: 248 events across 228 games stored movement clauses as
+    # MODIFIER STRINGS, so those runners never moved in runners[].
+    cg = _group("A. Rios reached first on an error by cf to right center, advanced to second.")
+    assert cg.primary.location == "right center"
+    assert [(r.destination, r.scored) for r in cg.runners] == [("second", False)]
+    assert not any("advanced" in m for m in cg.primary.modifiers)

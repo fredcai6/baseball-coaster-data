@@ -37,7 +37,7 @@ rule table (deterministic, closed-taxonomy, no state), just not one that
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable, Dict, List, Optional, Tuple, Union
 import re
 
@@ -161,12 +161,12 @@ _CAUSEPHRASE = {
     "wild pitch": "wild_pitch",
     "passed ball": "passed_ball",
     "balk": "balk",
-    # An illegal pitch advances runners the way a balk does, but the schema's
-    # cause enum has no token for it and "balk" is a DIFFERENT ruling. Mapped
-    # to the generic "advance" rather than asserting a balk the source did
-    # not call: the base-state change is recorded exactly, and no ruling is
-    # invented. The verbatim narrative keeps the distinction either way.
-    "illegal pitch": "advance",
+    # An illegal pitch is enforced as a balk with runners on -- the runners
+    # are awarded the base either way -- so it takes the `balk` cause rather
+    # than the generic `advance`, which would lose the fact that a pitching
+    # infraction caused the movement. The verbatim narrative preserves the
+    # scorer's own wording, so the distinction is never destroyed.
+    "illegal pitch": "balk",
 }
 _DEST_ALT = r"(?:second|third|home)"
 
@@ -249,6 +249,11 @@ def _split_chain(chain: str) -> List[str]:
 #: the run is unearned for the TEAM though charged to the pitcher. Both are
 #: the same fact for this schema's boolean, so both are accepted.
 _UNEARNED_TAIL = r"(?:, (?P<unearned>(?:team )?unearned))?"
+
+#: A clause that already records a run. Two readers: the repeated-subject
+#: correction (is a re-emitted name redundant, or is it the missing verb?)
+#: and the primary-chain modifier lift (does "unearned" belong to a run?).
+_SCORED_TOKEN_RE = re.compile(r"\bscored\b")
 
 
 #: Closed alternation of every modifier token the corpus writes in a
@@ -428,8 +433,8 @@ def _x_batter_interference(m: re.Match):
 
 
 def _x_reached_on_error(m: re.Match):
-    mods = ["error"] + _modifiers_from_tail(m.group("tail"))
-    return (m.group("name"), [m.group("f")], None, mods)
+    mods = ["error"] + _hit_modifiers_from_tail(m.group("mods"))
+    return (m.group("name"), [m.group("f")], m.group("loc"), mods)
 
 
 def _x_single(m: re.Match):
@@ -718,17 +723,35 @@ PRIMARY_RULES: List[PrimaryRule] = [
     ),
     (
         # "first" is optional (the "reached on a fielding error by X"
-        # no-first wording); the tail capture is unrestricted, feeding
-        # `_modifiers_from_tail` exactly as before.
+        # no-first wording). The error spelling comes from `_ERROR_BY`: this
+        # row used to carry its own inline "(?:an error|a fielding error|a
+        # throwing error)" list -- a THIRD copy of a list that already
+        # existed twice -- so "reached first on a muffed throw by 1b" failed
+        # here while the sibling runner rows using the shared fragment
+        # accepted it.
         #
-        # The error spelling comes from `_ERROR_BY`. This row used to carry
-        # its own inline "(?:an error|a fielding error|a throwing error)"
-        # list -- a THIRD copy of a list that already existed twice -- so
-        # "reached first on a muffed throw by 1b" failed here while the
-        # sibling runner rows that do use the shared fragment accepted it.
+        # The tail is `_HIT_MOD_TAIL`, the same CLOSED alternation every
+        # other verb row uses. It was an unrestricted `(?P<tail>.*)`, the
+        # only such tail in the table, and it quietly ate real content: 248
+        # events across 228 games had movement clauses stored as MODIFIER
+        # STRINGS -- "advanced to second", "advanced to third on an error by
+        # lf", "out at second 2b to ss", even a location ("to right center")
+        # and a runner's name. Those runners never moved in `runners[]`, so
+        # their advances and runs simply were not in the record.
+        #
+        # Because `_match_primary_whole` is tried before `_match_primary_chain`,
+        # a greedy tail here also PRE-EMPTED the chain path that exists to
+        # parse exactly these continuations. Closing the tail lets that path
+        # see the line.
+        # The optional " to <loc>" is the same batted-ball location every hit
+        # row records ("reached first on an error by cf TO RIGHT CENTER").
+        # The old unrestricted tail swallowed it into `modifiers` as the
+        # string "to right center"; closing the tail without capturing it
+        # would have made those lines unparseable instead. A location is
+        # information, so it goes where the hit rows put theirs.
         re.compile(
             rf"^(?P<name>.+?) reached (?:first )?on "
-            rf"{_ERROR_BY}(?P<tail>.*)$"
+            rf"{_ERROR_BY}(?: to (?P<loc>[a-z][a-z ]*?))?{_HIT_MOD_TAIL}$"
         ),
         "reached_on_error",
         _x_reached_on_error,
@@ -1971,6 +1994,7 @@ def _match_clause_chain(clause: str) -> Optional[List[RunnerMovement]]:
 #: that says unearned. Stripping mid-clause keeps the two halves adjacent.
 _NO_STATE_TAIL_RE = re.compile(
     r",\s*(?:assist by [a-z0-9]+|did not advance|interference|obstruction"
+    # See `_strip_no_state_tails` for why ", caught stealing" is here.
     # ", caught stealing" trailing a MOVEMENT clause annotates the play; it
     # does not retire the runner here. StatCrew writes the out on its own
     # following line -- "C. Hanson advanced to second on an error by 2b,
@@ -1981,40 +2005,6 @@ _NO_STATE_TAIL_RE = re.compile(
     r"|caught stealing)"
     r"(?=,|$)"
 )
-
-
-def _strip_repeated_subject(clause: str) -> str:
-    """Drop a clause's own subject name when the template re-emits it as a
-    bare token: "T. Sheehan advanced to third on an error by 3b, T. Sheehan,
-    unearned" -> "... by 3b, unearned".
-
-    This is the same StatCrew name-doubling defect `_b_source_defect_scored`
-    handles standalone, in its other position. There the doubled name IS the
-    whole clause, so the verb was lost and 1.10.0 recovered what it must have
-    meant (measured: the linescore oracle reconciles 54/54 when it is counted
-    as a run). Here the verb is present and the clause already says where the
-    runner went, so the repeated name adds nothing -- and this function
-    therefore asserts nothing. It removes a redundant token; it does not
-    decide the runner scored.
-
-    That restraint is checkable rather than merely cautious: if the token did
-    mean "and scored", these runners are left stranded, and the replay
-    linescore/LOB checks fail on exactly these games. Silence here would be
-    caught, not hidden.
-
-    The subject is read as the text before the clause's first verb token, and
-    only removed where it appears as a WHOLE comma-delimited fragment, so a
-    surname occurring inside another clause is untouched. A subject that
-    already contains a comma ("Cobb, Jr") is left alone rather than risk
-    splitting a real name suffix.
-    """
-    verb = _NAME_VERB_RE.search(clause)
-    if verb is None or verb.start() == 0:
-        return clause
-    subject = clause[: verb.start()].strip()
-    if not subject or "," in subject:
-        return clause
-    return re.sub(rf",\s*{re.escape(subject)}(?=,|$)", "", clause)
 
 
 def _strip_no_state_tails(clause: str) -> str:
@@ -2051,7 +2041,6 @@ def _match_runner_clauses(
         if _NO_MOVEMENT_RE.fullmatch(clause):
             continue
         clause = _strip_no_state_tails(clause)
-        clause = _strip_repeated_subject(clause)
         # issue #40, in strict precedence order:
         #   1. a whole-clause RUNNER_RULES match whose name looks like a name;
         #   2. a lead clause plus name-elided continuations.
@@ -2150,12 +2139,22 @@ def _match_primary_chain(rest: str):
         # This can only ever ADD parses: a chain carrying a mid-chain
         # modifier returns None today, so no line that parses now takes this
         # path. Relative order is preserved for `_expand_rbi_modifiers`.
-        trailing_mods: List[str] = [
-            part for part in tail_parts if _MODIFIER_ONLY_RE.fullmatch(part)
-        ]
-        tail_parts = [
-            part for part in tail_parts if not _MODIFIER_ONLY_RE.fullmatch(part)
-        ]
+        # ... except "unearned" when the chain also carries a RUN. There the
+        # token belongs to the run, not the primary: `scored, unearned` is a
+        # PAIR that the `^scored<unearned tail>$` continuation row matches as
+        # one fragment, and lifting the second half away from the first
+        # leaves the bare `scored` row to win, recording as EARNED a run the
+        # line says is unearned. `earned` is a real field on the emitted
+        # runner record, so this is a wrong fact, not a lost one.
+        scoring_tail = any(_SCORED_TOKEN_RE.search(part) for part in tail_parts)
+
+        def _liftable(part: str) -> bool:
+            if not _MODIFIER_ONLY_RE.fullmatch(part):
+                return False
+            return not (scoring_tail and part in ("unearned", "team unearned"))
+
+        trailing_mods: List[str] = [p for p in tail_parts if _liftable(p)]
+        tail_parts = [p for p in tail_parts if not _liftable(p)]
         if not tail_parts:
             # Nothing but modifiers followed -- that is a plain hit-tail the
             # existing _HIT_MOD_TAIL should have taken. Decline rather than
@@ -2180,7 +2179,7 @@ def _match_primary_chain(rest: str):
 _SPLICED_FOUL_BALL_RE = re.compile(r"\s*Dropped foul ball, E\d+,?\s*(?=[^\s.])")
 
 
-def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
+def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
 
     Never raises on unrecognized input -- returns a ``GrammarMiss`` with a
@@ -2371,3 +2370,98 @@ def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
         runners=tuple(runners_or_miss),
         trailing_outs=trailing_outs,
     )
+
+
+def _promote_repeated_subject(line: str) -> Tuple[str, frozenset]:
+    """Rewrite the StatCrew defect that re-emits a clause's own subject as a
+    bare token, and say which subjects were promoted to a RUN.
+
+    Two positions of one defect. `_b_source_defect_scored` handles the case
+    where the doubled name is the WHOLE clause ("M. Moralez M. Moralez.") --
+    the verb was lost, and 1.10.0 measured that the missing verb is "scored"
+    (linescore oracle reconciles 54/54, null 0/54). This handles the case
+    where the name is re-emitted as a TRAILING token on a clause that does
+    have a verb:
+
+        "T. Sheehan advanced to third on an error by 3b, T. Sheehan, unearned"
+
+    and it means the same thing. Measured the same way, against the same
+    independent oracle:
+
+      * clause does NOT already say "scored" -- the re-emitted name IS the
+        missing run. All four such games are short by exactly one run in
+        exactly that inning (`linescore: home inning 5 computed 0 != oracle
+        1`), and one shows both halves of the signature at once, a missing
+        run AND an extra runner left on base. 4 of 4.
+      * clause ALREADY says "scored" -- the name is redundant and asserts
+        nothing new; dropping it is correct. Three such lines, no linescore
+        discrepancy in any of their innings.
+
+    So the reading is conditional, and this returns the promoted subjects so
+    the caller can tag the resulting movement `inferred` -- it belongs in the
+    game's top-level `inferred[]` under the same `doubled_name_scored` rule
+    name as its sibling, never passing as something the line said in words.
+
+    An earlier pass here dropped the token unconditionally, on the reasoning
+    that a clause with a verb needs no help. That was wrong, and it was wrong
+    in the falsifiable direction: the runners were left stranded and the
+    linescore check failed on precisely those games. The oracle caught it.
+    """
+    promoted = set()
+    segments = []
+    for segment in line.split(";"):
+        verb = _NAME_VERB_RE.search(segment)
+        if verb is None or verb.start() == 0:
+            segments.append(segment)
+            continue
+        subject = segment[: verb.start()].strip()
+        # A subject carrying its own comma ("Cobb, Jr") would be split by the
+        # substitution below; leave it alone rather than risk a real name.
+        if not subject or "," in subject:
+            segments.append(segment)
+            continue
+        repeated = re.compile(rf",\s*{re.escape(subject)}(?=,|\s*\.?\s*$)")
+        if not repeated.search(segment):
+            segments.append(segment)
+            continue
+        if _SCORED_TOKEN_RE.search(segment):
+            segments.append(repeated.sub("", segment))
+        else:
+            segments.append(repeated.sub(", scored", segment))
+            promoted.add(subject)
+    return ";".join(segments), frozenset(promoted)
+
+
+_PROMOTED_SCORE_NOTE = (
+    "source line re-emits the runner's own name as a bare token on a clause "
+    "that records no run; read as 'scored' (linescore oracle reconciles 4/4 "
+    "in the affected innings, and the same defect standalone measured 54/54)"
+)
+
+
+def parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
+    """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
+
+    Never raises on unrecognized input -- returns a ``GrammarMiss`` with a
+    reason and the untouched original ``line`` instead.
+
+    Wraps the matcher with the repeated-subject source-defect correction, so
+    that defect is handled in exactly ONE place for both the primary clause
+    and the runner clauses (it occurs in both).
+    """
+    rewritten, promoted = _promote_repeated_subject(line)
+    result = _parse_clause_group(rewritten)
+    if isinstance(result, GrammarMiss):
+        # Report the caller's own line, never this function's working copy.
+        return result if rewritten == line else GrammarMiss(
+            raw=line, reason=result.reason
+        )
+    if not promoted:
+        return result
+    runners = tuple(
+        replace(rm, inferred=_PROMOTED_SCORE_NOTE)
+        if (rm.scored and not rm.inferred and rm.name_token in promoted)
+        else rm
+        for rm in result.runners
+    )
+    return replace(result, runners=runners)
