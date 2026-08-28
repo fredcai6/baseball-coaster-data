@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fredcai6/baseball-coaster-data/schemas/errata.schema.json",
+  "title": "Source errata",
+  "$comment": "Authored corrections to DEFECTIVE SOURCE LINES, one entry per line. This file exists so that a one-off scorer error never becomes a reason to weaken a general rule. Every rule in the parser is scored corpus-wide against cases whose answer is already known; a phenomenon with N=1 cannot be scored that way, and a rule written to swallow it is a hardcode wearing a rule's clothes. Errata are the pressure valve that keeps the general rules general.\n\nAn erratum is admissible only when BOTH hold: the phenomenon is essentially unique in the corpus (N=1 or 2), AND other evidence in the same game FORCES the correction -- the batting order, the boxscore line, the linescore, an inning summary. `evidence` must name it. An erratum is not a place to record an opinion about what a line probably meant.\n\nCorrections apply to the raw PBP line text before the grammar sees it, so the corrected line is parsed by exactly the same rules as every other line -- there is no erratum code path through the parser. Each application is disclosed in the game file's `inferred[]` under rule `erratum`, so a consumer that wants only what the source said can drop the events it names.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "errata"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "errata": { "type": "array", "items": { "$ref": "#/$defs/erratum" } }
+  },
+  "$defs": {
+    "erratum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["erratum_id", "game_id", "location", "raw_sha256", "raw_excerpt", "replace", "with", "class", "evidence"],
+      "properties": {
+        "erratum_id": {
+          "type": "string",
+          "pattern": "^[0-9]{8}_[a-z0-9]+-[0-9]+$",
+          "description": "Stable identifier, `<game_id>-<n>`, unique across this file."
+        },
+        "game_id": { "type": "string" },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["inning", "half", "line_index"],
+          "properties": {
+            "inning": { "type": "integer", "minimum": 1 },
+            "half": { "type": "string", "enum": ["top", "bottom"] },
+            "line_index": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "raw_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "sha256 of the VERBATIM source line this erratum was authored against, whitespace included. The loader refuses to apply an erratum whose line no longer hashes to this, so a change in the source detaches the correction LOUDLY instead of silently rewriting different text."
+        },
+        "raw_excerpt": {
+          "type": "string",
+          "description": "The defective line, whitespace collapsed. For human review only -- `raw_sha256` is what the loader matches on."
+        },
+        "replace": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Substring of the raw line to replace. Must occur EXACTLY ONCE in it; the loader refuses a substring that is absent or ambiguous."
+        },
+        "with": { "type": "string", "description": "What it becomes." },
+        "class": {
+          "type": "string",
+          "enum": ["misidentified_batter", "misidentified_runner", "misidentified_fielder", "wrong_outcome", "malformed_line"],
+          "description": "What kind of defect the SOURCE has. Not a parser concept -- these describe the scorer's error."
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 40,
+          "description": "What FORCES this correction, stated so a reader can check it without rerunning anything. Name the batting-order positions, the box columns, the linescore cells. 'Looks wrong' is not evidence."
+        }
+      }
+    }
+  }
+}

@@ -25,10 +25,10 @@ import hashlib
 import re
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.parse import urlparse
 
-from . import career_map, identity, team_map
+from . import career_map, errata as errata_mod, identity, team_map
 from .grammar import (
     BATTER_OUTCOME_CAUSE,
     GrammarMiss,
@@ -46,7 +46,7 @@ from .html_struct import (
 )
 
 PARSER_VERSION = "0.11.0"
-SCHEMA_VERSION = "1.10.0"
+SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1405,6 +1405,7 @@ def parse_game(
     id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
     person_ids: Optional[Dict[str, Optional[str]]] = None,
     career_ids: Optional[Dict[str, Optional[str]]] = None,
+    errata_entries: Optional[Sequence[dict]] = None,
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
@@ -1434,6 +1435,17 @@ def parse_game(
 
     player_table = identity.build_player_table(root, id_overrides=id_overrides)
     lines = _iter_halves(root)
+    # Authored corrections to DEFECTIVE SOURCE LINES, applied to the raw line
+    # text BEFORE the grammar sees it -- so a corrected line is parsed by
+    # exactly the same rules as every other line, and no rule is relaxed
+    # anywhere to accommodate a one-off. See bc_pipeline.errata for the
+    # admissibility bar. Defaults to the COMMITTED errata file so that every
+    # caller (reparse, backfill, fetch) parses a game identically; pass an
+    # empty sequence to disable.
+    lines, erratum_applications = errata_mod.apply_to_lines(
+        errata_mod.for_game(game_id) if errata_entries is None else errata_entries,
+        lines,
+    )
     # The boxscore is parsed BEFORE the events because build_events needs the
     # Pitchers table's appearance order (issue #40's blank-incoming-pitcher
     # rule). Neither box parser reads events, so the reorder is inert.
@@ -1450,6 +1462,24 @@ def parse_game(
             for team_id, rows in box["pitching"].items()
         },
     )
+    # Disclose every applied correction alongside the parser's own
+    # inferences, under the same contract: a consumer that wants only what
+    # the source actually said can drop the events these entries name.
+    # Prepended because a correction happened BEFORE any rule fired on the
+    # line, so `inferred[]` reads in the order the assertions were made.
+    inferred = [
+        {
+            "location": app["location"],
+            "raw": app["raw"],
+            "rule": "erratum",
+            "asserted": (
+                f"erratum {app['erratum_id']} ({app['class']}): read as "
+                f"{' '.join(app['corrected'].split())!r}. {app['evidence']}"
+            ),
+        }
+        for app in erratum_applications
+    ] + inferred
+
     lineups = _build_lineups(player_table, subs_by_team)
     players = _players_table(player_table, person_ids, career_ids)
 
