@@ -77,6 +77,21 @@
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chad Castillo, Gavin Tonkel, JD McLaughlin, Trevor Sheehan. The last plate appearance was \"J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240606_fk5k-1",
+      "game_id": "20240606_fk5k",
+      "location": {
+        "inning": 4,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "14ced1c2ba06dd50ee5573ab34b98a5817fccd25dcdc9dcdf4589bb258488a74",
+      "raw_excerpt": "J. Lynch picked off.",
+      "replace": "J. Lynch picked off.",
+      "with": "J. Lynch Failed pickoff attempt.",
+      "class": "malformed_line",
+      "evidence": "The source reports this pickoff TWICE. This bare line carries no out-tag; the very next line reads 'J. Lynch out at second p to ss, picked off. (1 out)' and describes the same physical play. Scanning all 1,484 games for a bare 'X picked off.' line finds 179, of which 177 carry the out-tag on that same line -- this is the only one whose tag instead sits on a separate following line, and the only place the two-line shape occurs at all. Parsed as written, both lines record an out and inning 4 top totals 4. Errata can only rewrite a line, not delete one, so the duplicate is neutralised with the source's OWN no-op phrasing for a pickoff throw that retires nobody ('X Failed pickoff attempt.', 845 occurrences corpus-wide). The pickoff itself is still recorded, by the following line, which is where the out-tag is."
+    },
+    {
       "erratum_id": "20240612_w4tf-1",
       "game_id": "20240612_w4tf",
       "location": {
@@ -527,6 +542,21 @@
       "evidence": "The play-by-play names 'M. Sykes' on 6 lines. The surname 'Sykes' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the away side has plate appearances with no play attributed to it: Wyatt Tucker, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'M. Sykes' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
     },
     {
+      "erratum_id": "20240724_6ldv-1",
+      "game_id": "20240724_6ldv",
+      "location": {
+        "inning": 7,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "0a9214c660638b9240b553a1adb992c08a87335e62e4d0da0fc6e188b9980c5d",
+      "raw_excerpt": "C. Villafuer reached first on a throwing error by p, advanced to second on the error; S. Kuchinski scored on the error, unearned; K. Dugan on the error, unearned.",
+      "replace": "K. Dugan on the error, unearned",
+      "with": "K. Dugan scored on the error, unearned",
+      "class": "malformed_line",
+      "evidence": "The runner clause has lost its verb. Scanning the corpus for 'NAME on {a|an|the} error..., unearned' finds 123 occurrences, of which 121 spell out 'scored on ...'; this is one of only two exceptions. The official linescore gives the home side 5 runs in inning 7, and the half's own explicit scoring clauses (Rios, Kuchinski, Villafuerte, Halvorson) account for only 4. Dugan was on third when the throwing error occurred; crediting his run is what makes the folded inning and the published linescore agree."
+    },
+    {
       "erratum_id": "20240724_o3th-1",
       "game_id": "20240724_o3th",
       "location": {
@@ -540,6 +570,51 @@
       "with": "2 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Alejandro Figueredo, Brayland Skinner, Ed Niemann, Jose Gonzalez. The last plate appearance was \"B. Blackford struck out looking.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240730_sau3-1",
+      "game_id": "20240730_sau3",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "058757c856daaed7b19ce4b516f4b5cdb6deafea1c59b6bef985d1d6f0cbe5b7",
+      "raw_excerpt": "D. Woodcox reached on a fielder's choice; T. Lozano advanced to third, scored on an error by ss, advanced on an error by c, unearned.",
+      "replace": "T. Lozano advanced to third, scored on an error by ss, advanced on an error by c, unearned.",
+      "with": "T. Lozano advanced to third, scored on an error by ss, unearned.",
+      "class": "malformed_line",
+      "evidence": "A runner who has already scored cannot then advance, and this clause says he does both: 'advanced to third, scored on an error by ss, advanced on an error by c'. No other line in the corpus puts an 'advanced on an error by X' fragment after a scoring clause for the same runner. The published linescore gives the home side 1 run in inning 2, which Lozano's single run already accounts for, so the trailing fragment adds nothing the linescore wants. Woodcox, the only other runner on the play, is shown still on first by his own next line ('out at second c to ss, caught stealing'), so the fragment cannot belong to him either."
+    },
+    {
+      "erratum_id": "20240802_j118-1",
+      "game_id": "20240802_j118",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "c4f5f2239486ad3638e82fc83325e0f910df19b179d5257c54392b77a041d4c1",
+      "raw_excerpt": "M. Rosario grounded into double play 2b to first base unassisted; R. Pena out on the play. (2 out)",
+      "replace": "M. Rosario grounded into double play 2b to first base unassisted",
+      "with": "M. Rosario grounded into double play 2b unassisted",
+      "class": "malformed_line",
+      "evidence": "'Unassisted' means one fielder and no throw; '2b to first base' names a throw between two. The line asserts both, and no other line in the corpus pairs a throw chain with 'unassisted'. '2b unassisted' is the source's own phrasing elsewhere for this play. Both outs (Rosario, and Pena on the play) and the double play itself are unchanged -- only the contradictory chain is dropped."
+    },
+    {
+      "erratum_id": "20240802_j118-2",
+      "game_id": "20240802_j118",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "ed3cc5fc3adf572501410214eff86d76f5501a17a7f2b8134175eac75c9d4d13",
+      "raw_excerpt": "Inning Summary: 1 Runs , 2 Hits , 0 Errors , 3 LOB",
+      "replace": "3 LOB",
+      "with": "2 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "An ordinary member of the already-adopted class, and the same final-half shape: this is the game's last half-inning, a walk-off. At the last plate appearance the half has T. Smith on third and C. Gordon on first after his walk-off single -- 2 runners left on base. The tag claims 3, one more than the half's own plays put there, counting the batter who just completed that plate appearance."
     },
     {
       "erratum_id": "20240803_lwuz-1",
@@ -645,6 +720,21 @@
       "with": "2 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Freddy Guilamo, Gabe Howell. The last plate appearance was \"R. McCarthy grounded out to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250521_04ck-1",
+      "game_id": "20250521_04ck",
+      "location": {
+        "inning": 3,
+        "half": "bottom",
+        "line_index": 3
+      },
+      "raw_sha256": "9208a979ef3aa53d5636c6aacf780898bc88045e16b98e526271d8162d0c96c6",
+      "raw_excerpt": "C. Seltzer picked off.",
+      "replace": "C. Seltzer picked off.",
+      "with": "C. Seltzer Failed pickoff attempt.",
+      "class": "malformed_line",
+      "evidence": "Of the 179 bare 'X picked off.' lines in the corpus, 177 carry an out-tag on the same line and one more (20240606_fk5k) has it on the following line. This is the only one with no out-tag anywhere, and no following line. The half's own tags run Blum (1 out), Shaver (2 out), O'Dowd (3 out) and never count Seltzer, so the source's own out sequence says he was not retired; its Inning Summary LOB of 1 reconciles only if he stayed on base. Rewritten to the source's own phrasing for a pickoff throw that retires nobody ('X Failed pickoff attempt.', 845 occurrences)."
     },
     {
       "erratum_id": "20250522_20si-1",
@@ -1035,6 +1125,21 @@
       "with": "F. Romano",
       "class": "misidentified_batter",
       "evidence": "The play-by-play names 'D. Leonard' on 4 lines. The surname 'Leonard' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Frederick Romano, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'D. Leonard' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20250605_rabi-1",
+      "game_id": "20250605_rabi",
+      "location": {
+        "inning": 1,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "78e2e271ba588349ebc7cef0b65347697fe651665a1f7cd460bb2801d26c3f29",
+      "raw_excerpt": "M. Rosario grounded out to 2b, RBI; R. Pena on an error by 1b, unearned. (2 out)",
+      "replace": "R. Pena on an error by 1b, unearned",
+      "with": "R. Pena scored on an error by 1b, unearned",
+      "class": "malformed_line",
+      "evidence": "The same lost verb as 20240724_6ldv-1 -- the other of only two exceptions among 123 corpus occurrences of 'NAME on {a|an|the} error..., unearned'. Pena was on second from his own double. Rosario's clause already carries an RBI tag, which requires a run, and the game's standing failure is exactly 'linescore: away inning 1 computed 0 != oracle 1'. Crediting Pena's run resolves both."
     },
     {
       "erratum_id": "20250617_gitd-1",
@@ -1532,6 +1637,21 @@
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Bradley Pelle, Garrett Bevacqua, Kyler Stancato. The last plate appearance was \"Garrett Bevacqua walked (3-1 BBBKB); Kyler Stancato advanced to second; Bradley Pelle adva\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20260620_xub6-1",
+      "game_id": "20260620_xub6",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 9
+      },
+      "raw_sha256": "d2c539f9a91a9e758ed785d8c4f899c14da87e227b6fdfbd62c9c1892679a4ed",
+      "raw_excerpt": "Sebastian Greico reached on a fielder's choice, advanced to second (2-2 KBKB); Carmine Lane out at second ss to 2b; Garrett Bevacqua Garrett Bevacqua, advanced on an error by 2b. (2 out)",
+      "replace": "Garrett Bevacqua Garrett Bevacqua, advanced on an error by 2b",
+      "with": "Garrett Bevacqua scored on an error by 2b, unearned",
+      "class": "malformed_line",
+      "evidence": "The player's name is typed twice in the raw HTML and the clause never names a destination, so the whole compound line -- including Greico's plate appearance and Lane's force-out at second -- goes unparsed. Bevacqua was on second (he singled, then took second on Lane's single). The published linescore gives the away side 4 runs in inning 8; the half's explicit scoring clauses (Ferraro-Nahr, Dodson, Valentine) account for only 3, so the error must have carried Bevacqua home. Two further fields corroborate: the half's Inning Summary LOB of 1 is satisfied by Greico alone, which requires Bevacqua to have left the bases, and the line's own '(2 out)' tag places it before Lawrence's strikeout, which is the third out. The same Inning Summary's '3 Runs' contradicts the linescore's 4; no check reads that field, and it is one of 232 games where the summary's R/E disagree with the linescore."
+    },
+    {
       "erratum_id": "20260703_t3hf-1",
       "game_id": "20260703_t3hf",
       "location": {
@@ -1680,6 +1800,21 @@
       "with": "Marquis Jackson",
       "class": "misidentified_batter",
       "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
+    },
+    {
+      "erratum_id": "20260716_10f2-1",
+      "game_id": "20260716_10f2",
+      "location": {
+        "inning": 6,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "dcf71c9b1afb6e5b568751c3e3247d4d8e0241fc997d2c3623f9b3f6af6fd376",
+      "raw_excerpt": "Wesley Mitchell reached on a fielder's choice, out at second c to 2b (1-1 BS); Drew Stengren out at home ss to c. (3 out)",
+      "replace": "Wesley Mitchell reached on a fielder's choice, out at second c to 2b (1-1 BS); Drew Stengren out at home ss to c.",
+      "with": "Wesley Mitchell reached on a fielder's choice (1-1 BS); Parker Lester out at second c to 2b; Drew Stengren out at home ss to c.",
+      "class": "misidentified_runner",
+      "evidence": "The line records an out at second but names no runner, and first base was empty when the play began, so no force identifies one -- the parser's existing guard refuses to invent a runner and sends the line to unparsed. The base state settles it without inference: after Parker Lester's double the half has Stengren on third and Lester on second, and Lester is the ONLY runner on second, so he is the only man who can be out there. The half's Inning Summary LOB of 1 agrees -- with Stengren out at home and Lester out at second, Mitchell alone is left on base -- and the line's own '(3 out)' tag requires exactly these two outs on top of Trimble's earlier groundout."
     },
     {
       "erratum_id": "20260726_u5ja-1",
