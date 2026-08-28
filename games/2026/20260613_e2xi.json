@@ -7340,6 +7340,23 @@
       }
     },
     {
+      "batting_team": "qqpt4ybnm28oyy1e",
+      "fielding_team": "yaop56c5591myre0",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "/ for Brock Lucas.",
+      "scoring_play": false,
+      "seq": 121,
+      "substitution": {
+        "after_event_seq": 120,
+        "kind": "pitching",
+        "player_in": "tfxluz08ebz3w2s1",
+        "player_out": "qr7au2aifadybwck",
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 13,
         "base_out_state": "101|2",
@@ -7383,7 +7400,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "qr7au2aifadybwck",
+        "player_id": "tfxluz08ebz3w2s1",
         "resolved": true
       },
       "pitches": "BSSS",
@@ -7398,7 +7415,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 121
+      "seq": 122
     },
     {
       "batting_team": "qqpt4ybnm28oyy1e",
@@ -7408,7 +7425,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 6 Runs, 4 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 122,
+      "seq": 123,
       "summary": {
         "E": 1,
         "H": 4,
@@ -7418,7 +7435,18 @@
     }
   ],
   "game_id": "20260613_e2xi",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "incoming pitcher tfxluz08ebz3w2s1 read from the boxscore pitching order as the successor to qr7au2aifadybwck",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 12
+      },
+      "raw": "/  for Brock Lucas.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7588,6 +7616,13 @@
           "player_in": "tfxluz08ebz3w2s1",
           "player_out": null,
           "slot": null
+        },
+        {
+          "after_event_seq": 120,
+          "kind": "pitching",
+          "player_in": "tfxluz08ebz3w2s1",
+          "player_out": "qr7au2aifadybwck",
+          "slot": null
         }
       ]
     }
@@ -7596,14 +7631,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T15:15:28Z",
     "parse": {
-      "events_count": 123,
-      "inferred_count": 0,
+      "events_count": 124,
+      "inferred_count": 1,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:19:51Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:55Z",
+    "parser_version": "0.8.0",
     "source_sha256": "5e14c7650b1e58144c14246b0870d727877aa829d0e86da6f6da845712ffe2c2",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260613_e2xi.xml"
   },
@@ -7937,7 +7972,7 @@
       "team_id": "qqpt4ybnm28oyy1e"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -7957,15 +7992,5 @@
       "team_id": "qqpt4ybnm28oyy1e"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 12
-      },
-      "raw": "/  for Brock Lucas.",
-      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Brock Lucas'"
-    }
-  ]
+  "unparsed": []
 }

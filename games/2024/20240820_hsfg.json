@@ -7196,6 +7196,23 @@
       }
     },
     {
+      "batting_team": "iqwph3d7xajzy4uz",
+      "fielding_team": "z7y9gph0l9ltq3lq",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "/ for R. Supple.",
+      "scoring_play": false,
+      "seq": 132,
+      "substitution": {
+        "after_event_seq": 131,
+        "kind": "pitching",
+        "player_in": "7ta8lyaitqov5yq3",
+        "player_out": "7bjrqb5ve8b1thpr",
+        "slot": null
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 17,
         "base_out_state": "000|0",
@@ -7239,7 +7256,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7254,7 +7271,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 132
+      "seq": 133
     },
     {
       "_derived": {
@@ -7297,7 +7314,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7312,7 +7329,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 133
+      "seq": 134
     },
     {
       "_derived": {
@@ -7359,7 +7376,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7382,7 +7399,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 134
+      "seq": 135
     },
     {
       "_derived": {
@@ -7427,7 +7444,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7458,7 +7475,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 135
+      "seq": 136
     },
     {
       "_derived": {
@@ -7505,7 +7522,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7546,7 +7563,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 136
+      "seq": 137
     },
     {
       "_derived": {
@@ -7591,7 +7608,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7632,7 +7649,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 137
+      "seq": 138
     },
     {
       "_derived": {
@@ -7677,7 +7694,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "7bjrqb5ve8b1thpr",
+        "player_id": "7ta8lyaitqov5yq3",
         "resolved": true
       },
       "pitches": null,
@@ -7692,7 +7709,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 138
+      "seq": 139
     },
     {
       "batting_team": "iqwph3d7xajzy4uz",
@@ -7702,7 +7719,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 2 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 139,
+      "seq": 140,
       "summary": {
         "E": 1,
         "H": 2,
@@ -7712,7 +7729,18 @@
     }
   ],
   "game_id": "20240820_hsfg",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "incoming pitcher 7ta8lyaitqov5yq3 read from the boxscore pitching order as the successor to 7bjrqb5ve8b1thpr",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 3
+      },
+      "raw": "/  for R. Supple.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7938,6 +7966,13 @@
           "player_in": "7ta8lyaitqov5yq3",
           "player_out": null,
           "slot": null
+        },
+        {
+          "after_event_seq": 131,
+          "kind": "pitching",
+          "player_in": "7ta8lyaitqov5yq3",
+          "player_out": "7bjrqb5ve8b1thpr",
+          "slot": null
         }
       ]
     }
@@ -7946,14 +7981,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T19:27:28Z",
     "parse": {
-      "events_count": 140,
-      "inferred_count": 0,
+      "events_count": 141,
+      "inferred_count": 1,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:19:21Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:25Z",
+    "parser_version": "0.8.0",
     "source_sha256": "bb4fd549fed2408aa709ff1084868ef36cadeb3cf81fe102539cf722dbe1f2bf",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240820_hsfg.xml"
   },
@@ -8297,7 +8332,7 @@
       "team_id": "z7y9gph0l9ltq3lq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -8317,15 +8352,5 @@
       "team_id": "iqwph3d7xajzy4uz"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 3
-      },
-      "raw": "/  for R. Supple.",
-      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='R. Supple'"
-    }
-  ]
+  "unparsed": []
 }

@@ -6272,11 +6272,28 @@
       "half": "bottom",
       "inning": 8,
       "kind": "substitution",
-      "narrative": "B. Blackford to p.",
+      "narrative": "/ for R. Garland.",
       "scoring_play": false,
       "seq": 111,
       "substitution": {
         "after_event_seq": 110,
+        "kind": "pitching",
+        "player_in": "qr7n0l6f209t85wn",
+        "player_out": "97lso72acauz8s60",
+        "slot": null
+      }
+    },
+    {
+      "batting_team": "3ward2o2o9m0w2dj",
+      "fielding_team": "yypnc9frxmnyc9sf",
+      "half": "bottom",
+      "inning": 8,
+      "kind": "substitution",
+      "narrative": "B. Blackford to p.",
+      "scoring_play": false,
+      "seq": 112,
+      "substitution": {
+        "after_event_seq": 111,
         "kind": "defensive",
         "player_in": "qr7n0l6f209t85wn",
         "player_out": null,
@@ -6326,7 +6343,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "97lso72acauz8s60",
+        "player_id": "qr7n0l6f209t85wn",
         "resolved": true
       },
       "pitches": null,
@@ -6341,7 +6358,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 112
+      "seq": 113
     },
     {
       "batting_team": "3ward2o2o9m0w2dj",
@@ -6351,7 +6368,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 1 Hits, 1 Errors, 2 LOB",
       "scoring_play": false,
-      "seq": 113,
+      "seq": 114,
       "summary": {
         "E": 1,
         "H": 1,
@@ -6367,9 +6384,9 @@
       "kind": "substitution",
       "narrative": "N. Adgar to lf.",
       "scoring_play": false,
-      "seq": 114,
+      "seq": 115,
       "substitution": {
-        "after_event_seq": 113,
+        "after_event_seq": 114,
         "kind": "defensive",
         "player_in": "v8snr9e9affrgnbz",
         "player_out": null,
@@ -6434,7 +6451,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 115
+      "seq": 116
     },
     {
       "_derived": {
@@ -6494,7 +6511,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 116
+      "seq": 117
     },
     {
       "_derived": {
@@ -6569,7 +6586,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 117
+      "seq": 118
     },
     {
       "_derived": {
@@ -6629,7 +6646,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 118
+      "seq": 119
     },
     {
       "_derived": {
@@ -6697,7 +6714,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 119
+      "seq": 120
     },
     {
       "batting_team": "yypnc9frxmnyc9sf",
@@ -6707,7 +6724,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 2 Runs, 3 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 120,
+      "seq": 121,
       "summary": {
         "E": 0,
         "H": 3,
@@ -6717,7 +6734,18 @@
     }
   ],
   "game_id": "20240727_1p3e",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "incoming pitcher qr7n0l6f209t85wn read from the boxscore pitching order as the successor to 97lso72acauz8s60",
+      "location": {
+        "half": "bottom",
+        "inning": 8,
+        "line_index": 7
+      },
+      "raw": "/  for R. Garland.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6847,7 +6875,7 @@
           "slot": 4
         },
         {
-          "after_event_seq": 113,
+          "after_event_seq": 114,
           "kind": "defensive",
           "player_in": "v8snr9e9affrgnbz",
           "player_out": null,
@@ -6925,6 +6953,13 @@
         },
         {
           "after_event_seq": 110,
+          "kind": "pitching",
+          "player_in": "qr7n0l6f209t85wn",
+          "player_out": "97lso72acauz8s60",
+          "slot": null
+        },
+        {
+          "after_event_seq": 111,
           "kind": "defensive",
           "player_in": "qr7n0l6f209t85wn",
           "player_out": null,
@@ -6937,14 +6972,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-07-12T18:58:45Z",
     "parse": {
-      "events_count": 121,
-      "inferred_count": 0,
+      "events_count": 122,
+      "inferred_count": 1,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:19:16Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:31:19Z",
+    "parser_version": "0.8.0",
     "source_sha256": "4c9e5755f89d5de17651495b7d6cf3cc89d0c094187be5e7617106be9ad872ba",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240727_1p3e.xml"
   },
@@ -7327,7 +7362,7 @@
       "team_id": "yypnc9frxmnyc9sf"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",
@@ -7347,15 +7382,5 @@
       "team_id": "3ward2o2o9m0w2dj"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 8,
-        "line_index": 7
-      },
-      "raw": "/  for R. Garland.",
-      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='R. Garland'"
-    }
-  ]
+  "unparsed": []
 }

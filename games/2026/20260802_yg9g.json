@@ -5893,6 +5893,23 @@
       }
     },
     {
+      "batting_team": "gnd7gosh9l5fc5us",
+      "fielding_team": "fs5kcreudvyx5quq",
+      "half": "bottom",
+      "inning": 9,
+      "kind": "substitution",
+      "narrative": "/ to p for Ren Abe-Arias.",
+      "scoring_play": false,
+      "seq": 102,
+      "substitution": {
+        "after_event_seq": 101,
+        "kind": "pitching",
+        "player_in": "syn:away:4",
+        "player_out": "hn8tir2yzla2etbs",
+        "slot": 5
+      }
+    },
+    {
       "_derived": {
         "away_score_before": 9,
         "base_out_state": "000|0",
@@ -5953,7 +5970,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 102
+      "seq": 103
     },
     {
       "_derived": {
@@ -6014,7 +6031,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 103
+      "seq": 104
     },
     {
       "_derived": {
@@ -6083,7 +6100,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 104
+      "seq": 105
     },
     {
       "_derived": {
@@ -6162,7 +6179,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 105
+      "seq": 106
     },
     {
       "_derived": {
@@ -6260,7 +6277,7 @@
         }
       ],
       "scoring_play": true,
-      "seq": 106
+      "seq": 107
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6270,13 +6287,13 @@
       "kind": "substitution",
       "narrative": "Jordan Hamberg to p for Ren Abe-Arias.",
       "scoring_play": false,
-      "seq": 107,
+      "seq": 108,
       "substitution": {
-        "after_event_seq": 106,
+        "after_event_seq": 107,
         "kind": "pitching",
         "player_in": "syn:away:4",
         "player_out": "hn8tir2yzla2etbs",
-        "slot": 5
+        "slot": 7
       }
     },
     {
@@ -6340,7 +6357,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 108
+      "seq": 109
     },
     {
       "_derived": {
@@ -6401,7 +6418,7 @@
         }
       ],
       "scoring_play": false,
-      "seq": 109
+      "seq": 110
     },
     {
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6411,7 +6428,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 4 Runs, 2 Hits, 1 Errors, 0 LOB",
       "scoring_play": false,
-      "seq": 110,
+      "seq": 111,
       "summary": {
         "E": 1,
         "H": 2,
@@ -6427,9 +6444,9 @@
       "kind": "substitution",
       "narrative": "Kishon Frett to lf for T.J. McKenzie.",
       "scoring_play": false,
-      "seq": 111,
+      "seq": 112,
       "substitution": {
-        "after_event_seq": 110,
+        "after_event_seq": 111,
         "kind": "defensive",
         "player_in": "syn:away:3",
         "player_out": "9b358hg1798rpztd",
@@ -6444,7 +6461,7 @@
       "kind": "inning_summary",
       "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
-      "seq": 112,
+      "seq": 113,
       "summary": {
         "E": 0,
         "H": 0,
@@ -6454,7 +6471,18 @@
     }
   ],
   "game_id": "20260802_yg9g",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "incoming pitcher syn:away:4 read from the boxscore pitching order as the successor to hn8tir2yzla2etbs",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "/ to p for Ren Abe-Arias.",
+      "rule": "blank_incoming_pitcher"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6551,14 +6579,21 @@
           "slot": 5
         },
         {
-          "after_event_seq": 106,
+          "after_event_seq": 101,
           "kind": "pitching",
           "player_in": "syn:away:4",
           "player_out": "hn8tir2yzla2etbs",
           "slot": 5
         },
         {
-          "after_event_seq": 110,
+          "after_event_seq": 107,
+          "kind": "pitching",
+          "player_in": "syn:away:4",
+          "player_out": "hn8tir2yzla2etbs",
+          "slot": 7
+        },
+        {
+          "after_event_seq": 111,
           "kind": "defensive",
           "player_in": "syn:away:3",
           "player_out": "9b358hg1798rpztd",
@@ -6634,14 +6669,14 @@
     "derived_replayer_version": "0.1.0",
     "fetched_at": "2026-08-27T14:56:42Z",
     "parse": {
-      "events_count": 113,
-      "inferred_count": 0,
+      "events_count": 114,
+      "inferred_count": 1,
       "replayable": true,
-      "unparsed_count": 1,
+      "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:20:03Z",
-    "parser_version": "0.7.0",
+    "parsed_at": "2026-08-28T01:32:07Z",
+    "parser_version": "0.8.0",
     "source_sha256": "6d788760f7fc3adc257ec2f50f26a247ac1d941a99b14b84da986d140f1250ea",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260802_yg9g.xml"
   },
@@ -6955,7 +6990,7 @@
       "team_id": "fs5kcreudvyx5quq"
     }
   },
-  "schema_version": "1.9.0",
+  "schema_version": "1.10.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",
@@ -6975,15 +7010,5 @@
       "team_id": "gnd7gosh9l5fc5us"
     }
   },
-  "unparsed": [
-    {
-      "location": {
-        "half": "bottom",
-        "inning": 9,
-        "line_index": 2
-      },
-      "raw": "/ to p for Ren Abe-Arias.",
-      "reason": "substitution names no incoming player and the boxscore pitching order does not force one: out='Ren Abe-Arias'"
-    }
-  ]
+  "unparsed": []
 }
