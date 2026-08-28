@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.18.0"
+PARSER_VERSION = "0.19.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -263,15 +263,43 @@ def build_events(
     #: inferred, so the pool cannot stand in for the real order here.
     box_pitching_order = box_pitching_order or {}
 
-    # Batting order = the first 9 rows of each team's Batters table (dict
-    # insertion order == document row order, per identity.py); every row
-    # after that is a non-batting-order pitching-staff bookkeeping entry.
+    # `slot_occupant` is seeded from the first 9 Batters rows in document
+    # order, which is WRONG -- see PASS 2 at the end of this function, which
+    # corrects it once `events` exists. It is left wrong here because the
+    # correction needs the fold's output.
+    #
+    # The PITCHING seed does not have that problem and is not left wrong.
+    # `ids[9:]` inherits the same document-order defect (a nested substitute
+    # pushes real pitchers around), but the boxscore publishes its own
+    # Pitchers table, already in appearance order, and `parse_game` parses it
+    # BEFORE calling this function -- so the right answer is available at
+    # seed time and the fix belongs here rather than in a second pass. It has
+    # to be here: `current_pitcher` is both read (the `pitcher` written onto
+    # every plate appearance) and mutated (on each pitching change) DURING
+    # the fold, so a post-hoc pass could not reach the events it already
+    # stamped.
+    #
+    # Measured against two oracles independent of this seed, both read from
+    # that separate Pitchers table:
+    #
+    #   pitcher sequence matches the box's order   37.7% -> 92.4%
+    #   starting pitcher matches the box's first   38.3% -> 99.6%
+    #   innings-pitched reconciles to outs exactly 76.1% -> 87.8%
+    #   total absolute IP-outs error               27,596 -> 2,360
+    #
+    # It rewrites `pitcher` on 41,602 of 125,749 plate appearances across
+    # 1,238 games, which is a large blast radius -- and is the point, because
+    # those values were wrong. Every change is one resolved pitcher to a
+    # different resolved pitcher; none add or remove an attribution. Replay
+    # is untouched (0 verdict changes, warning sets byte-identical), since no
+    # check reads `pitcher`.
     slot_occupant: Dict[str, Dict[int, str]] = {}
     pitching_pool: Dict[str, List[str]] = {}
     current_pitcher: Dict[str, Optional[str]] = {}
     for team in (player_table.home, player_table.away):
         ids = list(team.players.keys())
-        batting_ids, pitcher_ids = ids[:9], ids[9:]
+        batting_ids = ids[:9]
+        pitcher_ids = (box_pitching_order or {}).get(team.team_id) or ids[9:]
         slot_occupant[team.team_id] = {i + 1: pid for i, pid in enumerate(batting_ids)}
         pitching_pool[team.team_id] = pitcher_ids
         current_pitcher[team.team_id] = pitcher_ids[0] if pitcher_ids else None
