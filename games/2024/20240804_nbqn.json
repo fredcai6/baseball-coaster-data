@@ -1150,8 +1150,8 @@
         "away_score_before": 0,
         "base_out_state": "101|0",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -1194,20 +1194,20 @@
       "pitches": null,
       "runners": [
         {
-          "cause": "fielders_choice",
+          "cause": "force_out",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "tj7i1g4g1oxwyhxi",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
           "from": 1,
-          "out": true,
+          "out": false,
           "player_id": "zibfbv60c76ytzg9",
           "scored": false,
-          "to": -1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -1226,15 +1226,15 @@
     {
       "_derived": {
         "away_score_before": 1,
-        "base_out_state": "100|1",
+        "base_out_state": "010|1",
         "bases_after": [
           true,
           false,
           true
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 0,
@@ -6626,14 +6626,14 @@
   "game_id": "20240804_nbqn",
   "inferred": [
     {
-      "asserted": "out at second attributed to zibfbv60c76ytzg9, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "asserted": "line says the out was at second but its own chain 'p to 1b' ends at the first baseman, who cannot record one there; the out is the batter's at first, and no runner is retired",
       "location": {
         "half": "top",
         "inning": 2,
         "line_index": 2
       },
       "raw": "T. Smith reached on a fielder's choice, out at second p to 1b, RBI; A. Figueredo advanced to second; J. Gonzalez scored.",
-      "rule": "unattributed_force_out"
+      "rule": "out_base_contradicts_fielding_chain"
     },
     {
       "asserted": "source line names the runner twice with no verb; read as 'scored' (linescore oracle reconciles 54/54, null 0/54)",
@@ -6864,12 +6864,11 @@
       "unparsed_count": 0,
       "warnings": [
         "[lob] lob: inning 3 bottom folded LOB 1 != inning_summary LOB 0",
-        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 2",
-        "[illegal_transitions] illegal_transition: seq 14 runner zibfbv60c76ytzg9 advances from base 2 which was not occupied at event start"
+        "[lob] lob: inning 9 top folded LOB 1 != inning_summary LOB 2"
       ]
     },
-    "parsed_at": "2026-08-28T17:17:42Z",
-    "parser_version": "0.11.0",
+    "parsed_at": "2026-08-28T17:55:37Z",
+    "parser_version": "0.12.0",
     "source_sha256": "40cf57f6f95b81e00e23157ddf678052b60fc10bd961e253e902f2da363a152e",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240804_nbqn.xml"
   },
