@@ -45,7 +45,7 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.13.0"
+PARSER_VERSION = "0.16.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
@@ -1004,7 +1004,34 @@ def build_events(
             # choice line whose chain AGREES with its stated base is left
             # alone -- the rule fires on the contradiction, not on the shape.
             chain_end = (p.forced_out_chain or "").split(" to ")[-1].strip()
-            if chain_end == "1b" and p.forced_out_at != "first":
+
+            # A second reading of the same defect. The unattributed out can
+            # name a base at which a runner the line NAMES is already out:
+            #
+            #   "N. Marcelo reached on a fielder's choice to shortstop, out
+            #    at second 1b to 2b; M. O'Hara out at second ss to 2b."
+            #
+            # Two runners cannot both be retired at second base on one play,
+            # so the unattributed out is not a second runner -- it is the
+            # batter, and "reached" is again the part that is wrong. One line
+            # states it twice over: 20240530_ufps repeats the identical chain
+            # ("3b to 2b") in both clauses.
+            #
+            # 3 corpus lines, and the argument is logical rather than
+            # statistical: the base is already spoken for. Each reconciles on
+            # TWO independent oracles at once -- the half goes from 2 outs to
+            # its expected 3, and the folded LOB goes from 1 to the box's 0,
+            # which only happens if the batter is off the bases.
+            named_out_at_same_base = any(
+                rm.out
+                and rm.destination is not None
+                and _DEST_BASE.get(rm.destination) == out_base
+                for rm in cg.runners
+            )
+
+            if named_out_at_same_base or (
+                chain_end == "1b" and p.forced_out_at != "first"
+            ):
                 batter_runner["to"] = -1
                 batter_runner["out"] = True
                 batter_runner["cause"] = "force_out"
@@ -1013,10 +1040,19 @@ def build_events(
                 _inferred(
                     line,
                     "out_base_contradicts_fielding_chain",
-                    f"line says the out was at {p.forced_out_at} but its own "
-                    f"chain {p.forced_out_chain!r} ends at the first baseman, "
-                    "who cannot record one there; the out is the batter's at "
-                    "first, and no runner is retired",
+                    (
+                        f"line says the out was at {p.forced_out_at} but a "
+                        "runner it NAMES is already out there, and two "
+                        "runners cannot be retired at one base on one play; "
+                        "the out is the batter's"
+                    )
+                    if named_out_at_same_base
+                    else (
+                        f"line says the out was at {p.forced_out_at} but its "
+                        f"own chain {p.forced_out_chain!r} ends at the first "
+                        "baseman, who cannot record one there; the out is the "
+                        "batter's at first, and no runner is retired"
+                    ),
                 )
             else:
                 forced_pid = line_snapshot.get(out_base - 1)

@@ -1778,3 +1778,36 @@ def test_a_spliced_dropped_foul_ball_is_still_stripped_so_the_real_verb_reads():
     )
     assert cg.kind == "plate_appearance"
     assert cg.primary.outcome_type == "home_run"
+
+
+# --- the unattributed out names a base a NAMED runner already holds (#33) ---
+#
+# "N. Marcelo reached on a fielder's choice to shortstop, out at second 1b to
+# 2b; M. O'Hara out at second ss to 2b." Two runners cannot both be retired
+# at second base on one play, so the unattributed out is not a second runner
+# -- it is the batter. 20240530_ufps states it twice over, repeating the
+# identical chain "3b to 2b" in both clauses.
+
+
+def test_a_named_runner_out_at_the_same_base_is_parsed_alongside_the_primary():
+    cg = grammar.parse_clause_group(
+        "N. Marcelo reached on a fielder's choice to shortstop, out at second"
+        " 1b to 2b; M. O'Hara out at second ss to 2b."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "1b to 2b"
+    # The named runner's own out must survive as its own movement -- the rule
+    # that reads the primary's unattributed out must not consume it.
+    assert [(r.name_token, r.destination, r.out) for r in cg.runners] == [
+        ("M. O'Hara", "second", True)
+    ]
+
+
+def test_an_unattributed_out_with_no_competing_named_out_is_left_alone():
+    # The rule fires on the collision, not on the shape: here nobody else is
+    # out at second, so the ordinary forced-runner reading still applies.
+    cg = grammar.parse_clause_group(
+        "T. Lomack reached on a fielder's choice; M. Moralez advanced to third."
+    )
+    assert cg.primary.forced_out_at is None
+    assert [(r.name_token, r.out) for r in cg.runners] == [("M. Moralez", False)]
