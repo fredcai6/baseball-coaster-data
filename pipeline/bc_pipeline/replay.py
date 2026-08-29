@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.6.0"
+REPLAYER_VERSION = "0.7.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -805,10 +805,10 @@ def check_illegal_transitions(game: dict, oracle: dict) -> CheckResult:
 
 
 def check_has_content(game: dict, oracle: dict) -> CheckResult:
-    """A game must contain at least one plate appearance.
+    """A game must contain something for the other checks to disagree with.
 
-    The floor under the other five. Every one of them is written to find a
-    DISAGREEMENT, so every one of them passes when handed nothing: no half
+    The floor under all of them. Every other check is written to find a
+    DISAGREEMENT, so every other check passes when handed nothing: no half
     to count outs for, no runner to leave on base, no plate appearance to
     reconcile against the boxscore. A page describing no baseball therefore
     scored as fully validated -- `20260809_3555`, twenty boxscore rows
@@ -819,7 +819,29 @@ def check_has_content(game: dict, oracle: dict) -> CheckResult:
     reach here. This stays as the second line: a check that cannot pass
     vacuously, because the thing it asserts is that there is something to
     check.
+
+    WHAT COUNTS AS SOMETHING depends on the record shape, and it has to --
+    a `boxscore_only` record has no events by construction, so demanding a
+    plate-appearance EVENT of it would refuse a legitimate shape while
+    still leaving its real floor unchecked. There the floor is the box: at
+    least one at-bat recorded. Both branches assert the same thing, which is
+    that the checks below have something to bite on.
     """
+    if game.get("record_shape") == "boxscore_only":
+        at_bats = sum(
+            row.get("AB") or 0
+            for rows in (game.get("box") or {}).get("batting", {}).values()
+            for row in rows
+        )
+        if at_bats > 0:
+            return CheckResult(ok=True, warnings=[])
+        return CheckResult(
+            ok=False,
+            warnings=[
+                "content: boxscore-only record whose batting box totals zero "
+                "at-bats, so the box/linescore check has nothing to validate"
+            ],
+        )
     for ev in game.get("events") or ():
         if ev.get("kind") == "plate_appearance":
             return CheckResult(ok=True, warnings=[])
@@ -832,13 +854,66 @@ def check_has_content(game: dict, oracle: dict) -> CheckResult:
     )
 
 
+def check_box_linescore(game: dict, oracle: dict) -> CheckResult:
+    """Our batting box must add up to the linescore the page publishes.
+
+    The only check here that reads NO events, which is what makes it worth
+    having twice over. For an ordinary game it is a genuinely independent
+    constraint -- the batting box and the linescore are two different tables
+    on the page, and nothing else we run compares them; `check_linescore`
+    folds our own events against the linescore, and `check_pa_counts` reads
+    box plate-appearance columns without ever touching R or H. For a
+    `boxscore_only` record it is the ONLY check that can run at all, and
+    the shape would be committed unvalidated without it.
+
+    Three comparisons per side: box R against the linescore total R, box H
+    against total H, and the per-inning cells against their own total. The
+    third is the source checked against itself, which catches a misread
+    column rather than a scorer error.
+
+    SCORED before it was adopted: 0 disagreements across all 1,483 committed
+    play-by-play games. Null inning cells (667 unbatted bottom halves, the
+    'X') are skipped rather than read as zero.
+    """
+    warnings: List[str] = []
+    box_batting = (game.get("box") or {}).get("batting", {})
+    for side in ("away", "home"):
+        team_id = game["teams"][side]["team_id"]
+        rows = box_batting.get(team_id, [])
+        totals = oracle["linescore"]["totals"][side]
+        for column in ("R", "H"):
+            ours = sum(row.get(column) or 0 for row in rows)
+            theirs = totals[column]
+            if ours != theirs:
+                warnings.append(
+                    f"box_linescore: {side} box {column} {ours} != linescore "
+                    f"total {column} {theirs}"
+                )
+        cells = [c for c in oracle["linescore"]["innings"][side] if c is not None]
+        if sum(cells) != totals["R"]:
+            warnings.append(
+                f"box_linescore: {side} linescore innings sum {sum(cells)} != "
+                f"its own total R {totals['R']}"
+            )
+    return CheckResult(ok=not warnings, warnings=warnings)
+
+
+#: Every check, with whether it READS EVENTS. The flag is what lets a
+#: `boxscore_only` record be validated by the checks that apply to it
+#: instead of being excused from validation altogether: the five event
+#: oracles have no play-by-play to read, so running them there would be
+#: five vacuous passes -- this repository's oldest failure mode -- while
+#: skipping all six would commit a record shape nothing checks. The two
+#: that read no events run on every game, and `content` guarantees they are
+#: never handed nothing.
 _CHECKS = (
-    ("content", check_has_content),
-    ("linescore", check_linescore),
-    ("outs_per_half", check_outs_per_half),
-    ("lob", check_lob),
-    ("pa_counts", check_pa_counts),
-    ("illegal_transitions", check_illegal_transitions),
+    ("content", check_has_content, False),
+    ("box_linescore", check_box_linescore, False),
+    ("linescore", check_linescore, True),
+    ("outs_per_half", check_outs_per_half, True),
+    ("lob", check_lob, True),
+    ("pa_counts", check_pa_counts, True),
+    ("illegal_transitions", check_illegal_transitions, True),
 )
 
 
@@ -862,7 +937,7 @@ def replay_game(game: dict, html: str) -> dict:
 
     try:
         oracle = extract_oracle(html, out)
-        derived_list = fold_base_out(out["events"])
+        derived_list = fold_base_out(out["events"])  # empty in, empty out
         di = 0
         for ev in out["events"]:
             if ev.get("kind") in _FOLDABLE_KINDS:
@@ -871,7 +946,10 @@ def replay_game(game: dict, html: str) -> dict:
 
         new_warnings: List[str] = []
         all_ok = True
-        for name, check_fn in _CHECKS:
+        reads_events = out.get("record_shape") != "boxscore_only"
+        for name, check_fn, needs_events in _CHECKS:
+            if needs_events and not reads_events:
+                continue
             result = check_fn(out, oracle)
             if not result.ok:
                 all_ok = False
