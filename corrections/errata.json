@@ -2,6 +2,66 @@
   "schema_version": "1.0.0",
   "errata": [
     {
+      "erratum_id": "20240521_7sf7-1",
+      "game_id": "20240521_7sf7",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 14
+      },
+      "raw_sha256": "1eafbfc1ef6956ac002fae71c0389c80adb6a1a6795a365994154061e3548f3c",
+      "raw_excerpt": "B. Lada walked.",
+      "replace": "B. Lada",
+      "with": "J. Leslie",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Bobby Lada is credited by the events with more plate appearances than his boxscore row supports (AB=5 BB=0 H=1 SO=0), and Josh Leslie with fewer (AB=3 BB=2 H=0 SO=0). Moving these lines to Josh Leslie is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. Leslie to 2b for B. Lada (top 6th)."
+    },
+    {
+      "erratum_id": "20240521_7sf7-2",
+      "game_id": "20240521_7sf7",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "1eafbfc1ef6956ac002fae71c0389c80adb6a1a6795a365994154061e3548f3c",
+      "raw_excerpt": "B. Lada walked.",
+      "replace": "B. Lada",
+      "with": "J. Leslie",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Bobby Lada is credited by the events with more plate appearances than his boxscore row supports (AB=5 BB=0 H=1 SO=0), and Josh Leslie with fewer (AB=3 BB=2 H=0 SO=0). Moving these lines to Josh Leslie is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. Leslie to 2b for B. Lada (top 6th)."
+    },
+    {
+      "erratum_id": "20240521_7sf7-3",
+      "game_id": "20240521_7sf7",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "b4ba21d718d0ed2dda95fededb480fb3cc6a409fffeb1c46a46496cd0d06cb19",
+      "raw_excerpt": "B. Blackford doubled to left field, 2 RBI; B. Lada advanced to third; A. Mendoza scored; B. Skinner scored.",
+      "replace": "B. Lada",
+      "with": "J. Leslie",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Bobby Lada is credited by the events with more plate appearances than his boxscore row supports (AB=5 BB=0 H=1 SO=0), and Josh Leslie with fewer (AB=3 BB=2 H=0 SO=0). Moving these lines to Josh Leslie is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. Leslie to 2b for B. Lada (top 6th)."
+    },
+    {
+      "erratum_id": "20240521_7sf7-4",
+      "game_id": "20240521_7sf7",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 8
+      },
+      "raw_sha256": "05587536220a68888ab1d6a4e1dc4df20c43487b01d811ca0c365ee2ae514d2c",
+      "raw_excerpt": "S. Kuchinski singled to center field, 2 RBI; B. Blackford scored; B. Lada scored.",
+      "replace": "B. Lada",
+      "with": "J. Leslie",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Bobby Lada is credited by the events with more plate appearances than his boxscore row supports (AB=5 BB=0 H=1 SO=0), and Josh Leslie with fewer (AB=3 BB=2 H=0 SO=0). Moving these lines to Josh Leslie is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. Leslie to 2b for B. Lada (top 6th)."
+    },
+    {
       "erratum_id": "20240523_5giq-1",
       "game_id": "20240523_5giq",
       "location": {
@@ -30,6 +90,21 @@
       "with": "2 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Dan Covino, Tyler Davis. The last plate appearance was \"T. Lozano flied out to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20240524_91ql-2",
+      "game_id": "20240524_91ql",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "a39395c4f08d38b092b86ba2bd0adcaa47bc1bf078f6a921a5384bc79e72587b",
+      "raw_excerpt": "C. Steele flied out to cf. (1 out)",
+      "replace": "C. Steele",
+      "with": "N. Adgar",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Chuck Steele is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Nick Adgar with fewer (AB=1 BB=0 H=0 SO=0). Moving these lines to Nick Adgar is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: N. Adgar pinch hit for L. Barns, the line immediately before this one, after L. Barns and C. Steele had exchanged slots in the top of the 9th."
     },
     {
       "erratum_id": "20240524_91ql-1",
@@ -77,6 +152,36 @@
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chad Castillo, Gavin Tonkel, JD McLaughlin, Trevor Sheehan. The last plate appearance was \"J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240602_zf00-1",
+      "game_id": "20240602_zf00",
+      "location": {
+        "inning": 3,
+        "half": "bottom",
+        "line_index": 0
+      },
+      "raw_sha256": "633dbed05401dc50706442fbc60326fd0bd5303e760ae6e0eb1a1dc1716bbd05",
+      "raw_excerpt": "T. Baker doubled to center field.",
+      "replace": "T. Baker",
+      "with": "J. Daly",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Trevor Baker is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and John Daly with fewer (AB=4 BB=0 H=4 SO=0). Moving these lines to John Daly is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man before this line; the boxscore is the whole of the evidence."
+    },
+    {
+      "erratum_id": "20240602_zf00-2",
+      "game_id": "20240602_zf00",
+      "location": {
+        "inning": 3,
+        "half": "bottom",
+        "line_index": 3
+      },
+      "raw_sha256": "393eb3a51f9cd4a8ea06772eb4658b79d90751312316f6d2060e84ca42c60193",
+      "raw_excerpt": "A. Atwood singled to pitcher; T. Baker advanced to third.",
+      "replace": "T. Baker",
+      "with": "J. Daly",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Trevor Baker is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and John Daly with fewer (AB=4 BB=0 H=4 SO=0). Moving these lines to John Daly is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man before this line; the boxscore is the whole of the evidence."
+    },
+    {
       "erratum_id": "20240606_fk5k-1",
       "game_id": "20240606_fk5k",
       "location": {
@@ -90,6 +195,36 @@
       "with": "J. Lynch Failed pickoff attempt.",
       "class": "malformed_line",
       "evidence": "The source reports this pickoff TWICE. This bare line carries no out-tag; the very next line reads 'J. Lynch out at second p to ss, picked off. (1 out)' and describes the same physical play. Scanning all 1,484 games for a bare 'X picked off.' line finds 179, of which 177 carry the out-tag on that same line -- this is the only one whose tag instead sits on a separate following line, and the only place the two-line shape occurs at all. Parsed as written, both lines record an out and inning 4 top totals 4. Errata can only rewrite a line, not delete one, so the duplicate is neutralised with the source's OWN no-op phrasing for a pickoff throw that retires nobody ('X Failed pickoff attempt.', 845 occurrences corpus-wide). The pickoff itself is still recorded, by the following line, which is where the out-tag is."
+    },
+    {
+      "erratum_id": "20240611_xnkv-1",
+      "game_id": "20240611_xnkv",
+      "location": {
+        "inning": 7,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "9d9bcb284236ab24971ba2c87f0d00c6502cc53bc4e42fd85842d92c41b2c5d8",
+      "raw_excerpt": "A. Martinez struck out swinging. (3 out)",
+      "replace": "A. Martinez",
+      "with": "Z. Martinez",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Andrew Martinez is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Zach Martinez with fewer (AB=1 BB=0 H=0 SO=1). Moving these lines to Zach Martinez is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Z. Martinez to p for F. Racioppo (bottom 5th); the two men share a surname and the narrative differs from the boxscore only in the initial."
+    },
+    {
+      "erratum_id": "20240612_5ldk-1",
+      "game_id": "20240612_5ldk",
+      "location": {
+        "inning": 8,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "7e31b21d3cca99433a12d15e6f4e34cf9fee3065035325c71f9d2e97dda3c27e",
+      "raw_excerpt": "P. DePasqual grounded into double play ss to 2b to 1b; J. Cone out on the play. (2 out)",
+      "replace": "P. DePasqual",
+      "with": "L. Barns",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Parker DePasquale is credited by the events with more plate appearances than his boxscore row supports (AB=1 BB=0 H=0 SO=1), and Landen Barns with fewer (AB=4 BB=0 H=1 SO=0). Moving these lines to Landen Barns is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: L. Barns to c for P. DePasqual (top 8th)."
     },
     {
       "erratum_id": "20240612_w4tf-1",
@@ -572,6 +707,21 @@
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Alejandro Figueredo, Brayland Skinner, Ed Niemann, Jose Gonzalez. The last plate appearance was \"B. Blackford struck out looking.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240728_6ptb-1",
+      "game_id": "20240728_6ptb",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "fa966252f7b2ec6c3a30791a280ce2e5d97425ce4aceedf5fdffed5ce0cc9c4e",
+      "raw_excerpt": "J. Huntzinge struck out looking. (1 out)",
+      "replace": "J. Huntzinge",
+      "with": "J. McLaughlin",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Jerome Huntzinger is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=0 SO=1), and JD McLaughlin with fewer (AB=1 BB=0 H=0 SO=1). Moving these lines to JD McLaughlin is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. McLaughli to p for R. Supple (top 8th) and to cf (top 9th)."
+    },
+    {
       "erratum_id": "20240730_sau3-1",
       "game_id": "20240730_sau3",
       "location": {
@@ -705,6 +855,21 @@
       "with": "G. Tonkel",
       "class": "misidentified_batter",
       "evidence": "The play-by-play names 'R. McCarthy' on 4 lines. The surname 'McCarthy' appears nowhere else in the source: not in either Batters table, not in the pitching table, not in any roster link, not in any box note -- only inside play-by-play prose. Exactly one batting row on the home side has plate appearances with no play attributed to it: Gavin Tonkel, AB=4 BB=0, against 0 events; every other row on that side reconciles. The 4 lines where 'R. McCarthy' is the batter are the only unattributed plate appearances on that side. Corpus-wide, a lone zero-event batting row occurs on 22 of 2,968 team-sides, so the coincidence is not load-bearing on its own -- it is the conjunction with an unresolvable name of the right multiplicity that forces this."
+    },
+    {
+      "erratum_id": "20240815_iace-1",
+      "game_id": "20240815_iace",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "7f2c6c70396b6c8d0be7d05c53808723a640ca5d46554a4abca2d3af21c5da4f",
+      "raw_excerpt": "M. Minzey homered, 3 RBI; C. Day scored; C. Lomeli scored.",
+      "replace": "M. Minzey",
+      "with": "D. Tofteland",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Mason Minzey is credited by the events with more plate appearances than his boxscore row supports (AB=1 BB=0 H=0 SO=1), and Dane Tofteland with fewer (AB=1 BB=0 H=1 SO=0). Moving these lines to Dane Tofteland is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: D. Tofteland pinch hit for G. Miller three lines earlier -- the same slot M. Minzey had pinch hit for in the 7th."
     },
     {
       "erratum_id": "20240822_sh30-1",
@@ -1067,6 +1232,96 @@
       "evidence": "The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Manny Jackson, Matt Fabian. The last plate appearance was \"M. Fabian reached on a fielder's choice; Man. Jackson out at second ss to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20250603_58a6-1",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 2,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "f7fd7e974301f6795dabc4251be0eec0fc61ef293616f5604d78b866f6cc5573",
+      "raw_excerpt": "A. Barranca walked; E. Manzo advanced to second.",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
+      "erratum_id": "20250603_58a6-2",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 4,
+        "half": "bottom",
+        "line_index": 1
+      },
+      "raw_sha256": "db2e8b5ff685f44d2976fc3e65e6fcbbd76870df916e6f3e22dd2c31f87bc584",
+      "raw_excerpt": "A. Barranca struck out swinging. (1 out)",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
+      "erratum_id": "20250603_58a6-3",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 6,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "8d143ef0aeafaf67bd8afb805e5c45d4b76e638655745b6eef6d26a77310d097",
+      "raw_excerpt": "A. Barranca struck out swinging. (2 out)",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
+      "erratum_id": "20250603_58a6-4",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 2
+      },
+      "raw_sha256": "43dcd2e0d91263eaedcbde7f0147b4497e9f4b545257871ea65be7bbe4a66dab",
+      "raw_excerpt": "A. Barranca struck out swinging, reached first on a passed ball.",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
+      "erratum_id": "20250603_58a6-5",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 3
+      },
+      "raw_sha256": "160ab5bc761c7bc67a198467c4ad3df019d4494f5b688d63b1c1748b7961cc1d",
+      "raw_excerpt": "A. Mendoza grounded out to ss; A. Barranca advanced to second. (2 out)",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
+      "erratum_id": "20250603_58a6-6",
+      "game_id": "20250603_58a6",
+      "location": {
+        "inning": 9,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "8324756e26ba43b9e5688303aa0b0025f142d302d87169dd7b2cfdbd6ed85bec",
+      "raw_excerpt": "J. McLaughli tripled to left center, RBI; A. Barranca scored, unearned.",
+      "replace": "A. Barranca",
+      "with": "L. Beard",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one."
+    },
+    {
       "erratum_id": "20250603_wnqq-1",
       "game_id": "20250603_wnqq",
       "location": {
@@ -1155,6 +1410,81 @@
       "with": "2 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Cam Bufford, Darryl Buggs, Esai Santos, Lou Helmig, Tremayne Cobb Jr.. The last plate appearance was \"C. Bufford singled to second base; D. Buggs advanced to second; Cobb, Jr advanced to third\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20250619_vp9r-1",
+      "game_id": "20250619_vp9r",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 4
+      },
+      "raw_sha256": "9d238db7608e17e4976403ccedd660e0c227ef4d6fb1ed192a4b8f4775b27e35",
+      "raw_excerpt": "G. Richardso singled to second base.",
+      "replace": "G. Richardso",
+      "with": "Q. Landis",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Gordon Richardson is credited by the events with more plate appearances than his boxscore row supports (AB=4 BB=0 H=1 SO=1), and Quintt Landis with fewer (AB=5 BB=0 H=2 SO=2). Moving these lines to Quintt Landis is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: K. Carrillo to p for G. Richardso in the top of the 1st, before this half began."
+    },
+    {
+      "erratum_id": "20250619_vp9r-2",
+      "game_id": "20250619_vp9r",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 5
+      },
+      "raw_sha256": "58e95858fa49e08ab27c985195d4427232852713853905dc284f26a8dc8a4bc3",
+      "raw_excerpt": "G. Richardso Failed pickoff attempt.",
+      "replace": "G. Richardso",
+      "with": "Q. Landis",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Gordon Richardson is credited by the events with more plate appearances than his boxscore row supports (AB=4 BB=0 H=1 SO=1), and Quintt Landis with fewer (AB=5 BB=0 H=2 SO=2). Moving these lines to Quintt Landis is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: K. Carrillo to p for G. Richardso in the top of the 1st, before this half began."
+    },
+    {
+      "erratum_id": "20250619_vp9r-3",
+      "game_id": "20250619_vp9r",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 6
+      },
+      "raw_sha256": "f3da42bb6f456a249ba4d16c6f9ce0fcbffceca32fce369020589fb190f40b9d",
+      "raw_excerpt": "K. Moody singled to center field; G. Richardso advanced to second.",
+      "replace": "G. Richardso",
+      "with": "Q. Landis",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Gordon Richardson is credited by the events with more plate appearances than his boxscore row supports (AB=4 BB=0 H=1 SO=1), and Quintt Landis with fewer (AB=5 BB=0 H=2 SO=2). Moving these lines to Quintt Landis is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: K. Carrillo to p for G. Richardso in the top of the 1st, before this half began."
+    },
+    {
+      "erratum_id": "20250619_vp9r-4",
+      "game_id": "20250619_vp9r",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 7
+      },
+      "raw_sha256": "969505b23263af8738673cc94886d57179203fcb7fbff3cbfd3789ebc092efbc",
+      "raw_excerpt": "E. Sleight reached on a fielder's choice; K. Moody out at second 2b to ss; G. Richardso advanced to third. (1 out)",
+      "replace": "G. Richardso",
+      "with": "Q. Landis",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Gordon Richardson is credited by the events with more plate appearances than his boxscore row supports (AB=4 BB=0 H=1 SO=1), and Quintt Landis with fewer (AB=5 BB=0 H=2 SO=2). Moving these lines to Quintt Landis is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: K. Carrillo to p for G. Richardso in the top of the 1st, before this half began."
+    },
+    {
+      "erratum_id": "20250619_vp9r-5",
+      "game_id": "20250619_vp9r",
+      "location": {
+        "inning": 1,
+        "half": "bottom",
+        "line_index": 9
+      },
+      "raw_sha256": "afc4a6e20d82efa23391b37ccb13d57c8328b6ae31e2c19f22325545017b13ee",
+      "raw_excerpt": "C. Hall singled to left field, RBI; E. Sleight advanced to second; G. Richardso scored.",
+      "replace": "G. Richardso",
+      "with": "Q. Landis",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Gordon Richardson is credited by the events with more plate appearances than his boxscore row supports (AB=4 BB=0 H=1 SO=1), and Quintt Landis with fewer (AB=5 BB=0 H=2 SO=2). Moving these lines to Quintt Landis is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: K. Carrillo to p for G. Richardso in the top of the 1st, before this half began."
     },
     {
       "erratum_id": "20250624_19gz-1",
@@ -1802,6 +2132,66 @@
       "evidence": "RedPocket Mobiles Batters table lineup: slot 7 = Manny Jackson (dh), slot 8 = Marquis Jackson (2b), adjacent slots. Reconstructing the away half-inning batting-order rotation places every 'M. Jackson' line at slot 7 or slot 8 with zero contradiction, including three innings where the two bat back-to-back. Cross-checked against the box: Manny Jackson AB=4 H=1 (FC+single+flyout+flyout) and Marquis Jackson AB=3 BB=1 SO=1 (BB+flyout+K+popup) match the reconstructed lines exactly. Independently checked by swapping the two names across all ten lines: the swap leaves every replay oracle passing (both men come to the plate four times, Manny 4 AB and Marquis 3 AB plus a walk) but puts AB=3 H=0 SO=1 BB=1 on Manny against a box line of AB=4 H=1 SO=0 BB=0, and the mirror error on Marquis. The hit, strikeout and walk columns, which no oracle reads, are what force this assignment."
     },
     {
+      "erratum_id": "20260704_913e-1",
+      "game_id": "20260704_913e",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 0
+      },
+      "raw_sha256": "ca26dd7f1dcd3ec265d5b3bee549fc834b31482d74fe67a83f3992598019721d",
+      "raw_excerpt": "Myles Beale singled to right field (2-1 BBF).",
+      "replace": "Myles Beale",
+      "with": "Esai Santos",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half."
+    },
+    {
+      "erratum_id": "20260704_913e-2",
+      "game_id": "20260704_913e",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 1
+      },
+      "raw_sha256": "0547ac1be624adf3e46594a712ada2e8adac4162ad2b73f13ef1a275d48f28c8",
+      "raw_excerpt": "Jaden Collura singled to center field (1-0 B); Myles Beale advanced to second.",
+      "replace": "Myles Beale",
+      "with": "Esai Santos",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half."
+    },
+    {
+      "erratum_id": "20260704_913e-3",
+      "game_id": "20260704_913e",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 3
+      },
+      "raw_sha256": "f68a55e5324cc496fe452a66a0926c5179244a3585dee61e0e5ac3d15221f833",
+      "raw_excerpt": "Myles Beale advanced to third.",
+      "replace": "Myles Beale",
+      "with": "Esai Santos",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half."
+    },
+    {
+      "erratum_id": "20260704_913e-4",
+      "game_id": "20260704_913e",
+      "location": {
+        "inning": 5,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "301219a7b0d98d3d0854f04de0996b93626b36da384bb0dc377d962dcca34e67",
+      "raw_excerpt": "Paul Winland singled to center field, RBI (1-1 BF); Jaden Collura advanced to second; Myles Beale scored.",
+      "replace": "Myles Beale",
+      "with": "Esai Santos",
+      "class": "misidentified_runner",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half."
+    },
+    {
       "erratum_id": "20260716_10f2-1",
       "game_id": "20260716_10f2",
       "location": {
@@ -1830,6 +2220,21 @@
       "with": "0 LOB",
       "class": "inflated_inning_summary_lob",
       "evidence": "The half's own plays leave 0 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 1. Runners who reached base in this half: NONE -- every batter was retired. The last plate appearance was \"Michael Soper lined out to 2b (0-0).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
+    },
+    {
+      "erratum_id": "20260729_n8h9-1",
+      "game_id": "20260729_n8h9",
+      "location": {
+        "inning": 9,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "a065e83a64b23e3158f077b50fd82e506ded3cfdc13b0ff2949fa5931ff715a7",
+      "raw_excerpt": "Mitchell Sanford singled to shortstop (3-2 BBFFB).",
+      "replace": "Mitchell Sanford",
+      "with": "Esai Santos",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about who occupies one batting slot. Mitchell Sanford is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=2 H=0 SO=0), and Esai Santos with fewer (AB=1 BB=0 H=1 SO=0). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to cf for Mitchell Sanford (bottom 7th, repeated bottom 8th)."
     },
     {
       "erratum_id": "20260730_mzgo-1",

@@ -64,6 +64,33 @@ ADMISSIBILITY -- both must hold:
      10 for 10, but that antecedent fires ONLY where the answer is unknown,
      so there is no held-out population to score it against at all. An
      unscorable rule is the thing this file exists to refuse.
+
+     A THIRD POPULATION, same reasoning again: 27 entries across 11 games
+     where the narrative calls one batting slot by the name of a man who is
+     no longer in it. Usually he was just replaced -- `J. Leslie to 2b for
+     B. Lada`, then two more plate appearances arrive under Lada -- and the
+     scorer keeps typing the name he started the game with.
+
+     The boxscore settles each one, and settles it on columns no replay
+     check reads. `pa_counts` only compares plate-appearance totals, so it
+     says a slot is misattributed without saying which line. Hits,
+     strikeouts and walks say which: across these 11 games exactly one
+     reassignment reconciles BOTH men on all three at once. Two further
+     constraints the boxscore cannot express narrow the four that were
+     still ambiguous to one each -- a batter may not bat twice in a row,
+     and may not bat before he enters the game.
+
+     Why not a rule. The obvious one, "a plate appearance by a player
+     already substituted out belongs to whoever replaced him", was written
+     and scored: it fires on 100 plate appearances across 21 games, and 17
+     of those games currently pass every check. The reason is that this
+     source writes an ordinary defensive shuffle as `X to 2b for Y` -- Y
+     has moved, not left, and goes on batting all night. 4 for 21 is not a
+     rule. Gating it on the reconciliation instead ("only where a balanced
+     pa_counts mismatch already exists") reaches 11 for 11, but that gate
+     fires only where a check has already failed, so once again there is no
+     held-out population to score against.
+
   2. Other evidence IN THE SAME GAME forces the correction: the batting
      order, the boxscore line, the linescore, an inning summary. The
      `evidence` field must name it, in enough detail that a reader can
