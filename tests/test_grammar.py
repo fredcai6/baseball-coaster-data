@@ -1811,3 +1811,90 @@ def test_an_unattributed_out_with_no_competing_named_out_is_left_alone():
     )
     assert cg.primary.forced_out_at is None
     assert [(r.name_token, r.out) for r in cg.runners] == [("M. Moralez", False)]
+
+
+# --- the article is part of the cause phrase -------------------------------
+#
+# `illegal pitch` sat in four cause-phrase alternations behind a literal
+# `on a `, and StatCrew writes `on an illegal pitch`. The branch could not
+# fire on any line the source has ever published: the corpus's only two
+# occurrences (20250629_14vg, one line, two clauses) went to `unparsed[]`
+# and stayed there. Both directions are asserted -- the article that the
+# source uses must parse, and the one it does not must still be refused,
+# because the fix is meant to correct the alternation, not widen it.
+
+
+def test_a_runner_advance_on_an_illegal_pitch_parses_as_a_balk():
+    result = parse_clause_group(
+        "D. Tofteland advanced to second on an illegal pitch;"
+        " C. Booth advanced to third on an illegal pitch."
+    )
+    assert isinstance(result, ClauseGroup)
+    assert [(r.name_token, r.cause, r.destination) for r in result.runners] == [
+        ("D. Tofteland", "balk", "second"),
+        ("C. Booth", "balk", "third"),
+    ]
+
+
+def test_the_wrong_article_is_still_a_miss():
+    """Not a line the source writes. Accepting it would mean the alternation
+    got wider rather than right."""
+    assert isinstance(
+        parse_clause_group("D. Tofteland advanced to second on a illegal pitch."),
+        GrammarMiss,
+    )
+
+
+def test_every_cause_phrase_row_agrees_with_the_cause_map():
+    """The map is the alternation. If a phrase is ever added to one and not
+    the other, the row it feeds is dead on arrival -- which is exactly how
+    `illegal pitch` was introduced."""
+    for phrase in grammar._CAUSEPHRASE:
+        result = parse_clause_group(f"D. Ratfield scored on {phrase}.")
+        assert isinstance(result, ClauseGroup), phrase
+        (r,) = result.runners
+        assert r.cause == grammar._CAUSEPHRASE[phrase], phrase
+
+
+# --- a substitution whose position the scorer left blank --------------------
+#
+# "E. Gill  for E. Swanson." -- the double space is where "to <pos>" belongs.
+# Accepting it guesses nothing: `Substitution` has no position field, so
+# `<pos>` is read only to pick the `kind`, and the source omits the position
+# from the boxscore too (Gill's batting row carries pos ""). An erratum would
+# have to invent one; the rule does not.
+
+
+def test_a_substitution_with_no_position_token_parses_as_defensive():
+    for line in ("E. Gill  for E. Swanson.", "E. Gill  for T. Smith."):
+        cg = parse_clause_group(line)
+        assert isinstance(cg, ClauseGroup), line
+        assert cg.kind == "substitution"
+        assert cg.substitution.player_in == "E. Gill"
+        assert cg.substitution.kind == "defensive"
+    assert parse_clause_group("E. Gill  for E. Swanson.").substitution.player_out == (
+        "E. Swanson"
+    )
+
+
+def test_the_no_position_row_does_not_shadow_the_rows_above_it():
+    """It is ordered last precisely so it cannot. Each of these names either
+    a position token or an explicit pinch verb, and must keep its own kind."""
+    for line, kind, out in (
+        ("J. Elvir to rf for P. Chung.", "defensive", "P. Chung"),
+        ("M. Bono to p for J. Czeslawsk.", "pitching", "J. Czeslawsk"),
+        ("Z. Walker pinch hit for K. Jenkins.", "offensive", "K. Jenkins"),
+        ("O. Young pinch ran for C. Monroe.", "offensive", "C. Monroe"),
+        ("/  for J. Pyle.", "pitching", "J. Pyle"),
+    ):
+        cg = parse_clause_group(line)
+        assert (cg.substitution.kind, cg.substitution.player_out) == (kind, out), line
+
+
+def test_the_no_position_row_requires_a_closing_period():
+    """A `_NAME_TOKEN` may end in "." -- with an optional trailing period the
+    out-group swallows the sentence period and parse.py is handed
+    "E. Swanson." to resolve against the roster."""
+    assert isinstance(
+        parse_clause_group("E. Gill  for E. Swanson"), GrammarMiss
+    )

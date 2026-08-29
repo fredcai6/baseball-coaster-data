@@ -165,17 +165,25 @@ _COUNT_TAIL_RE = re.compile(
     r"(?:\s+(?P<pitches>[BFKSH]+))?\)$"
 )
 
+#: The pitching-infraction cause phrases, ARTICLE INCLUDED. StatCrew writes
+#: "on an illegal pitch" -- the only one of the four that takes "an" -- and
+#: every row below used to spell the article as a literal `on a ` outside the
+#: alternation. `illegal pitch` was therefore dead the day it was added: no
+#: line in three seasons could reach it, and the two that tried sat in
+#: `unparsed[]` for the life of the corpus. Binding the article to the phrase
+#: is what stops the next cause phrase from being added the same way.
 _CAUSEPHRASE = {
-    "wild pitch": "wild_pitch",
-    "passed ball": "passed_ball",
-    "balk": "balk",
+    "a wild pitch": "wild_pitch",
+    "a passed ball": "passed_ball",
+    "a balk": "balk",
     # An illegal pitch is enforced as a balk with runners on -- the runners
     # are awarded the base either way -- so it takes the `balk` cause rather
     # than the generic `advance`, which would lose the fact that a pitching
     # infraction caused the movement. The verbatim narrative preserves the
     # scorer's own wording, so the distinction is never destroyed.
-    "illegal pitch": "balk",
+    "an illegal pitch": "balk",
 }
+_CAUSE_ALT = "|".join(_CAUSEPHRASE)
 _DEST_ALT = r"(?:second|third|home)"
 
 #: The error-cause phrase, as ONE fragment shared by every row that accepts
@@ -1162,8 +1170,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            rf"^(?P<name>.+?) advanced to (?P<dest1>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch), "
+            rf"^(?P<name>.+?) advanced to (?P<dest1>{_DEST_ALT}) on "
+            rf"(?P<causephrase>{_CAUSE_ALT}), "
             rf"advanced to (?P<dest2>{_DEST_ALT})$"
         ),
         ("wild_pitch", "passed_ball", "balk", "advance"),
@@ -1171,8 +1179,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
+            rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on "
+            rf"(?P<causephrase>{_CAUSE_ALT})$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_advance_on_causephrase,
@@ -1217,8 +1225,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            r"^(?P<name>.+?) scored on a "
-            r"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)"
+            r"^(?P<name>.+?) scored on "
+            rf"(?P<causephrase>{_CAUSE_ALT})"
             r"(?:, (?P<unearned>(?:team )?unearned))?$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
@@ -1259,8 +1267,8 @@ RUNNER_RULES: List[RunnerRule] = [
     ),
     (
         re.compile(
-            rf"^(?P<name>.+?) scored, on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch){_UNEARNED_TAIL}$"
+            rf"^(?P<name>.+?) scored, on "
+            rf"(?P<causephrase>{_CAUSE_ALT}){_UNEARNED_TAIL}$"
         ),
         ("wild_pitch", "passed_ball", "balk"),
         _b_scored_on_causephrase,
@@ -1504,6 +1512,48 @@ def _build_blank_sub(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
     )
 
 
+#: A two-name substitution whose POSITION token StatCrew left blank: the line
+#: is verbatim "E. Gill  for E. Swanson.", the double space marking where
+#: "to <pos>" belongs. The sibling `_SUBSTITUTION_RE` shape sits two lines
+#: below it in both corpus occurrences ("J. Elvir to rf for P. Chung.").
+#:
+#: Nothing is guessed by accepting it, which is the whole argument for the
+#: row: `Substitution` has no position field. `<pos>` is read ONLY by
+#: `_substitution_kind_for_pos`, and the source omits the position from the
+#: boxscore too -- Gill's batting row carries `pos` "" in both games -- so a
+#: rewrite could not recover it either, and an erratum would have to invent
+#: one. kind is flat "defensive" for exactly the reason `_build_position_
+#: move_bare` gives: "defensive" and "pitching" resolve against the same
+#: fielding side in parse.py's assembly, so the flat label costs no
+#: correctness. Both games corroborate the label -- Gill never pitches, and
+#: the incoming pitcher takes the mound on his own separate line.
+#:
+#: SCORED before it was written, per the corpus's own convention: over all
+#: 176,318 narrative lines (91,657 distinct) this pattern matches exactly the
+#: 2 lines above and steals none. It is additive, not a loosening -- which is
+#: what makes it a rule rather than an erratum. `_NAME_TOKEN` on BOTH sides is
+#: what buys that: a bare ".+? for .+?" would swallow every "pinch hit for" /
+#: "pinch ran for" line, whose verbs are lowercase prose.
+#: The closing period is REQUIRED, unlike the `.+?`-lazy sibling rows: a
+#: `_NAME_TOKEN` may legitimately end in "." ("E."), so an optional `\.?`
+#: lets the out-group swallow the sentence period and hand parse.py
+#: "E. Swanson." to resolve. Mandatory forces the backtrack.
+_SUBSTITUTION_NO_POS_RE = re.compile(
+    rf"^(?P<in>{_NAME_TOKEN}(?:\s+{_NAME_TOKEN})*)\s+for\s+"
+    rf"(?P<out>{_NAME_TOKEN}(?:\s+{_NAME_TOKEN})*)\.$"
+)
+
+
+def _build_substitution_no_pos(m: re.Match, trailing_outs: Optional[int]) -> ClauseGroup:
+    return ClauseGroup(
+        kind="substitution",
+        substitution=Substitution(
+            player_in=m.group("in"), player_out=m.group("out"), kind="defensive"
+        ),
+        trailing_outs=trailing_outs,
+    )
+
+
 STANDALONE_RULES: List[StandaloneRule] = [
     (_BLANK_SUB_RE, None, _build_blank_sub),
     (_INNING_SUMMARY_RE, None, _build_inning_summary),
@@ -1512,6 +1562,9 @@ STANDALONE_RULES: List[StandaloneRule] = [
     (_PINCH_HIT_RE, None, _build_pinch_hit),
     (_DH_SLOT_BARE_RE, None, _build_dh_slot_bare),
     (_POSITION_MOVE_BARE_RE, None, _build_position_move_bare),
+    # Ordered LAST: every row above names a position token or an explicit
+    # pinch verb, so this one can only claim a line none of them wanted.
+    (_SUBSTITUTION_NO_POS_RE, None, _build_substitution_no_pos),
 ]
 
 
@@ -1773,8 +1826,8 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
     ),
     (
         re.compile(
-            rf"^advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
+            rf"^advanced to (?P<dest>{_DEST_ALT}) on "
+            rf"(?P<causephrase>{_CAUSE_ALT})$"
         ),
         _c_advance_on_causephrase,
     ),
@@ -1791,8 +1844,8 @@ CONTINUATION_RULES: List[Tuple["re.Pattern", Callable]] = [
         # to first -- but a dropped third strike is precisely a batter
         # REACHING first, so this row needs its own alternation.
         re.compile(
-            r"^reached (?P<dest>first|second|third|home) on a "
-            r"(?P<causephrase>wild pitch|passed ball|balk|illegal pitch)$"
+            r"^reached (?P<dest>first|second|third|home) on "
+            rf"(?P<causephrase>{_CAUSE_ALT})$"
         ),
         _c_advance_on_causephrase,
     ),
