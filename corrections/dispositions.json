@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "dispositions": [
+    {
+      "game_id": "20240607_b76w",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "pa_counts"
+      ],
+      "warnings_sha256": "3a824906767ded9df5ac9c0858b7ccdfc44dcce83eb6e7e767a66c80bbf34ce3",
+      "warnings_excerpt": [
+        "[pa_counts] pa_counts: player rgrqoozkcljlkgum events PA 0 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)"
+      ],
+      "evidence": "Edwin DeLaCruz holds a boxscore batting row reading ph, AB 3, H 0, SO 2 -- three plate appearances, two of them strikeouts -- and the surname 'DeLaCruz' does not occur anywhere in this game's play-by-play, in any event narrative or in unparsed[]. There is no line to correct.",
+      "alternative_scored": "Errata rewrite a defective line; they cannot author one that was never written. The only alternative is to synthesise three plate appearances from the box columns and place them in the batting order, which is box-deficit orphan attribution -- scored elsewhere in this corpus at 1 correct in 109."
+    },
+    {
+      "game_id": "20240720_pzh6",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "pa_counts"
+      ],
+      "warnings_sha256": "bcdb940bf71521c87ea462c641f8862ddee413c9617de4c9044b7f5d6d37672c",
+      "warnings_excerpt": [
+        "[pa_counts] pa_counts: player g9dq0iop5jmi1z2o events PA 0 != box-implied PA 3 (AB=1 BB=2 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player wswcdo5rkhdrmp2h events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)"
+      ],
+      "evidence": "Two batters, not one. Jonny Barditch holds a 3b row with AB 1, and Alec Ackerman an rf row with AB 1 BB 2 H 1 -- four plate appearances between them -- and neither surname occurs anywhere in the play-by-play. Two independent omissions in one game rule out a single dropped pane.",
+      "alternative_scored": "Same as 20240607_b76w: no line exists to correct, and synthesising four plate appearances from box columns is box-deficit orphan attribution, scored at 1 in 109. With two batters the placement problem compounds -- nothing orders them against each other."
+    },
+    {
+      "game_id": "20250521_a4ms",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "pa_counts"
+      ],
+      "warnings_sha256": "7798f23bfef5bc759a9d4647c7504208f65ac982e16faac5100f886925c51dde",
+      "warnings_excerpt": [
+        "[pa_counts] pa_counts: player xrt4t3rtxpa246x2 events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)"
+      ],
+      "evidence": "Noel Soto holds an lf row with AB 1 and the surname 'Soto' occurs nowhere in the play-by-play. One plate appearance, no line, and no half-inning short of outs to place it in -- outs_per_half passes on every half of this game.",
+      "alternative_scored": "No line to correct, so the only route is box-deficit orphan attribution -- synthesising the plate appearance from the box row and placing it in a half -- scored in this corpus at 1 correct in 109. It is worse than usual here: unlike the fourth-out games, no check disagrees about WHERE, so every half-inning in the game is an equally good candidate and nothing narrows them."
+    },
+    {
+      "game_id": "20240816_14zu",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "outs_per_half"
+      ],
+      "warnings_sha256": "91054909dcee0d707c4176105085df8f62d7e11b521614746037c839460d4858",
+      "warnings_excerpt": [
+        "[outs_per_half] outs_per_half: inning 2 top totals 2 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 2nd top totals 2 outs and closes on a normal Inning Summary (2 Runs, 3 Hits, 0 Errors, 2 LOB) immediately after 'C. Green struck out swinging.' -- the half ends in good order with the third out never narrated. No walk-off, unbatted or called-game exception applies: this is the 2nd inning of a completed game.",
+      "alternative_scored": "The rule that suggests itself -- when a half is one out short and the summary is normal, credit an unrecorded out -- was rejected on the same ground as the naive occupancy guard (regresses 929 games): it would fire on every legitimately short half the three known exceptions do not yet cover, and it invents a batter, a result, and a base-out transition from nothing."
+    },
+    {
+      "game_id": "20250522_okm7",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "outs_per_half"
+      ],
+      "warnings_sha256": "14a7ffdcc9c834f4f34f42bcad214cce4e736879a227c6714d88bfabce552334",
+      "warnings_excerpt": [
+        "[outs_per_half] outs_per_half: inning 3 top totals 2 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 3rd top totals 2 outs across 5 events and closes on 'C. Hall popped up to ss.' followed by a normal Inning Summary (1 Runs, 2 Hits, 0 Errors, 1 LOB). The batter who made the third out is never narrated, and no walk-off, unbatted or called-game exception applies in the 3rd inning of a completed game.",
+      "alternative_scored": "Same rejected rule as 20240816_14zu: crediting an unrecorded out invents a batter and a base-out transition, and would fire on every short half the three known exceptions do not cover."
+    },
+    {
+      "game_id": "20250618_mb3i",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "outs_per_half"
+      ],
+      "warnings_sha256": "14a7ffdcc9c834f4f34f42bcad214cce4e736879a227c6714d88bfabce552334",
+      "warnings_excerpt": [
+        "[outs_per_half] outs_per_half: inning 3 top totals 2 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 3rd top totals 2 outs across 8 events and closes on \"R. Orsak out on batter's interference.\" followed by a normal Inning Summary (2 Runs, 3 Hits, 0 Errors, 1 LOB). Batter's interference is an out and is counted as one here, so the shortfall is a genuinely unnarrated third out rather than an outcome we score wrongly.",
+      "alternative_scored": "Same rejected rule as 20240816_14zu. Checked additionally that the interference outcome is not the shortfall -- it is folded as an out already, so widening the outs taxonomy would recover nothing here."
+    },
+    {
+      "game_id": "20250709_3q9x",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "outs_per_half"
+      ],
+      "warnings_sha256": "957fe724d5119edc7fe916d21bbf812546a61dddc9ebb2287f6e4e3cf81e641a",
+      "warnings_excerpt": [
+        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 8th bottom totals 2 outs across 7 events and closes on 'M. Campagna singled; J. Duarte out at second rf to 2b.' followed by a normal Inning Summary (0 Runs, 1 Hits, 0 Errors, 1 LOB). The half's final out -- the one that ends it -- is never narrated, and the game runs to a full 9.",
+      "alternative_scored": "Same rejected rule as 20240816_14zu. The runner out at second is already folded as an out, so the shortfall is not a missed base-out fold."
+    },
+    {
+      "game_id": "20260627_tq9v",
+      "state": "committed_no_replay",
+      "class": "missing_plate_appearances",
+      "checks_failed": [
+        "outs_per_half"
+      ],
+      "warnings_sha256": "957fe724d5119edc7fe916d21bbf812546a61dddc9ebb2287f6e4e3cf81e641a",
+      "warnings_excerpt": [
+        "[outs_per_half] outs_per_half: inning 8 bottom totals 2 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 8th bottom totals 2 outs across 9 events and closes on 'K. Ashworth doubled to right field, 3 RBI' followed by a normal Inning Summary (4 Runs, 3 Hits, 1 Errors, 1 LOB). A four-run half ends on a double with two outs recorded: the third out is never written.",
+      "alternative_scored": "Same rejected rule as 20240816_14zu. Note this half is NOT walk-off-shaped -- the home side bats in the 9th -- so the existing walk-off exception correctly declines to cover it."
+    },
+    {
+      "game_id": "20240521_9kys",
+      "state": "committed_no_replay",
+      "class": "fourth_out_tagged_by_source",
+      "checks_failed": [
+        "illegal_transitions",
+        "outs_per_half"
+      ],
+      "warnings_sha256": "52d2a42ba0c30721883ac547a4fc6b468858bc451f77e4ef0fdf1f6085a6b070",
+      "warnings_excerpt": [
+        "[illegal_transitions] illegal_transition: seq 30 outs_after 4 exceeds 3 in inning 2 bottom",
+        "[outs_per_half] outs_per_half: inning 2 bottom totals 4 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 2nd bottom folds to 4 outs and seq 30 carries outs_after 4. The source says so itself: a scan of all 1,486 archived pages for a literal '(4 out)' tag returns exactly three files, and this is one of them, with one occurrence. The extra out is the scorer's, recorded in the source and read faithfully by us.",
+      "alternative_scored": "Neutralising the extra plate appearance was tried and does not close the game: the boxscore counts it too, so the failure moves from outs_per_half to pa_counts -- 1 failing check becomes 1 failing check. Nothing in the source says which of the 18 half-innings the plate appearance belongs to, and errata rewrite a line where it stands -- they cannot move one to another half."
+    },
+    {
+      "game_id": "20240714_iyg0",
+      "state": "committed_no_replay",
+      "class": "fourth_out_tagged_by_source",
+      "checks_failed": [
+        "illegal_transitions",
+        "outs_per_half",
+        "pa_counts"
+      ],
+      "warnings_sha256": "dbaa704dfce85b3411d1079e16e640101d5dfa335f2d603ca6d4a9a9383782af",
+      "warnings_excerpt": [
+        "[illegal_transitions] illegal_transition: seq 71 outs_after 4 exceeds 3 in inning 6 top",
+        "[outs_per_half] outs_per_half: inning 6 top totals 4 outs (expected 3, no walk-off/unbatted/called-game exception applies)",
+        "[pa_counts] pa_counts: player uovggtnkh4gyqp5c events PA 5 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0 INT=0)"
+      ],
+      "evidence": "The 6th top folds to 4 outs, seq 71 carries outs_after 4, and the page is one of the three in the archive carrying a literal '(4 out)' tag. The knock-on is visible in the second warning: Hylan Hall shows 5 plate appearances against a box-implied 4 (rf, AB 3 BB 1). Unlike the missing-plate-appearance games, his surname DOES appear in the play-by-play -- the line exists, it is the count that is wrong.",
+      "alternative_scored": "Same as 20240521_9kys: neutralising the extra plate appearance moves the failure to pa_counts, because the boxscore counts it as well. The two warnings here are one defect seen from two directions, not two defects."
+    },
+    {
+      "game_id": "20260610_y0b3",
+      "state": "committed_no_replay",
+      "class": "fourth_out_tagged_by_source",
+      "checks_failed": [
+        "illegal_transitions",
+        "linescore",
+        "outs_per_half"
+      ],
+      "warnings_sha256": "dd859a1b0347b02c6d974c3aa67d665afc6f28b9107fe3d46bd2e651302fa92c",
+      "warnings_excerpt": [
+        "[illegal_transitions] illegal_transition: seq 80 outs_after 4 exceeds 3 in inning 5 bottom",
+        "[linescore] linescore: computed home final R 11 != oracle total 12",
+        "[linescore] linescore: home inning 5 computed 3 != oracle 4",
+        "[outs_per_half] outs_per_half: inning 5 bottom totals 4 outs (expected 3, no walk-off/unbatted/called-game exception applies)"
+      ],
+      "evidence": "The 5th bottom folds to 4 outs with seq 80 at outs_after 4, and the page carries the third and last '(4 out)' tag in the archive. The linescore disagrees in the same half -- computed 3 against an oracle 4, and a final of 11 against 12 -- so a run scored during the disputed sequence as well.",
+      "alternative_scored": "Same as 20240521_9kys, with one addition that makes it harder rather than easier: any neutralisation must also decide which run to drop from the 5th, and the linescore cell is the only evidence about it. Correcting a line to satisfy a cell we read from the same page is circular."
+    },
+    {
+      "game_id": "20250705_0ea6",
+      "state": "committed_no_replay",
+      "class": "missing_half_inning",
+      "checks_failed": [
+        "linescore",
+        "pa_counts"
+      ],
+      "warnings_sha256": "bb6ab88dd36b15d2e79e2148a98051918e5474c8b35871689bf2244f2c346378",
+      "warnings_excerpt": [
+        "[linescore] linescore: away inning 7 has no folded events but oracle expects 5",
+        "[linescore] linescore: computed away final R 7 != oracle total 12",
+        "[pa_counts] pa_counts: player 2oyr5r7opv23s3pv events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player 9ehhwn7kkvce4g7l events PA 4 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player aosasucsaoh7qieu events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player fed90noy2ji0f5sl events PA 3 != box-implied PA 4 (AB=2 BB=2 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player hq3sxg95w4ouku79 events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player kunvku6xjcnf6ymi events PA 3 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player yivveofv9v11u1cl events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)"
+      ],
+      "evidence": "The linescore credits the away side 5 runs in the 7th and the play-by-play holds no folded events for that half at all -- not a short half, an absent one. The knock-on runs through the whole game: the away final computes 7 against an oracle 12 (exactly the missing 5), and six batters show one plate appearance fewer than their box rows imply. This game also carries the corpus's blank-incoming-pitcher line, '/  for Z. Denton.', which the box pitching order does not force.",
+      "alternative_scored": "Nothing to score, and the count is why: reconstructing this half means inventing a batting-order position to start from, at least 6 plate appearances, 3 outs and the sequence of 5 runs -- against exactly 1 constraint, the linescore cell being reconstructed toward. A reconstruction fitted to its own only oracle is unfalsifiable by construction."
+    },
+    {
+      "game_id": "20240818_iu7f",
+      "state": "committed_no_replay",
+      "class": "oracle_residual",
+      "checks_failed": [
+        "lob"
+      ],
+      "warnings_sha256": "c2b03dc8cc34548bb87245aa90878b3b9a62d689538957b14186fee65363baed",
+      "warnings_excerpt": [
+        "[lob] lob: inning 9 top folded LOB 2 != inning_summary LOB 1"
+      ],
+      "evidence": "OURS, NOT THE SOURCE'S. In the 9th top two runners are retired together on the half's terminal non-plate-appearance event. check_lob measures at the last plate appearance and reports 2; the true end state is 0; the source's Inning Summary says 1, matching neither. The source is not wrong here in a way an erratum could fix -- our rule is measuring at the wrong instant, and this is one of its eleven known misses.",
+      "alternative_scored": "The broadened rule -- also subtract runners retired on the terminal event -- was written and scored corpus-wide: it fires on 476 half-innings, recovers 2 and regresses 474, for 98.11% against the current rule's 99.96%. Correcting the source line instead would use the errata file to hide a limitation of our own oracle, which its docstring forbids outright."
+    },
+    {
+      "game_id": "20250715_pdfw",
+      "state": "committed_no_replay",
+      "class": "oracle_residual",
+      "checks_failed": [
+        "lob"
+      ],
+      "warnings_sha256": "f97234771153d5aef7fa00ee0f74360c065586411573f9715825b012084f6349",
+      "warnings_excerpt": [
+        "[lob] lob: inning 2 top folded LOB 2 != inning_summary LOB 1"
+      ],
+      "evidence": "OURS, NOT THE SOURCE'S. The 2nd top, same shape as 20240818_iu7f: two runners retired together on the terminal non-plate-appearance event, check_lob reports 2 measured at the last plate appearance, the true end state is 0, the source says 1. Two occurrences three seasons and eleven months apart, in different innings and different games, which is what makes it a rule's blind spot rather than a scorer's slip.",
+      "alternative_scored": "Same measurement as 20240818_iu7f -- the broadened rule scores 98.11% against 99.96%, recovering these 2 at the cost of 474. Do not write errata for either game."
+    },
+    {
+      "game_id": "20260603_9bym",
+      "state": "committed_no_replay",
+      "class": "lineup_misalignment",
+      "checks_failed": [
+        "pa_counts"
+      ],
+      "warnings_sha256": "f257166371c103c60779b6dbbb986d6f5288c30e28fb51e23f03a76c113148b7",
+      "warnings_excerpt": [
+        "[pa_counts] pa_counts: player eq0y081gjho45fea events PA 4 != box-implied PA 3 (AB=2 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player eqdyvg4ngztn2e2w events PA 5 != box-implied PA 4 (AB=2 BB=2 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player pywbrhh02bn4ywqh events PA 5 != box-implied PA 6 (AB=4 BB=1 HBP=0 SAC=1 INT=0)"
+      ],
+      "evidence": "Three batters disagree with their box rows in both directions at once -- 5 events against 4 implied, 5 against 6, 4 against 3 -- and the pattern is not one misattribution but a drift: each player's events match a NEIGHBOURING player's box line, with the offset changing across the order. The box parse itself was verified correct against the raw table, so the misalignment is between the narrative's names and the order, not in our reading of either.",
+      "alternative_scored": "The stale-slot-name reassignment that resolves the corpus's 30 other misattributions does not apply: that method works because H, SO and BB pick out a unique assignment, and here the drift means several assignments satisfy the totals. Position-duplicate lineup reconstruction was scored on this class at 54.8%. Correcting line by line would be arithmetic layered on a guess."
+    },
+    {
+      "game_id": "20260529_l6ze",
+      "state": "committed_no_replay",
+      "class": "lineup_misalignment",
+      "checks_failed": [
+        "linescore",
+        "pa_counts"
+      ],
+      "warnings_sha256": "3ad53963b9c3c673b7e0b06a3bd2ab2eb661804decc7688b7fad4e2abe499e4a",
+      "warnings_excerpt": [
+        "[linescore] linescore: away inning 6 computed 11 != oracle 10",
+        "[linescore] linescore: computed away final R 17 != oracle total 16",
+        "[pa_counts] pa_counts: player 3cv8o4jyk7mqzz5d events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player 96xvyzwx9sxydn2z events PA 0 != box-implied PA 1 (AB=0 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player aiqzwlp2f5yyasgu events PA 6 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player te21i4ec5vlt1xni events PA 6 != box-implied PA 5 (AB=4 BB=1 HBP=0 SAC=0 INT=0)",
+        "[pa_counts] pa_counts: player widh2653g4rul3u2 events PA 6 != box-implied PA 5 (AB=2 BB=1 HBP=1 SAC=1 INT=0)"
+      ],
+      "evidence": "Five batters disagree with their box rows in both directions (6 against 5 three times, 0 against 1 twice), the same neighbour-drift shape as 20260603_9bym. The linescore disagrees too -- away 6th computes 11 against an oracle 10, final 17 against 16 -- so a run is attached to the misaligned sequence as well.",
+      "alternative_scored": "Same as 20260603_9bym: the H/SO/BB reassignment that settles ordinary misattribution does not pick out a unique answer under a drifting offset, and position-duplicate reconstruction scores 54.8%. The extra run makes it worse, not better -- any reassignment must also move a run without the source saying which."
+    },
+    {
+      "game_id": "20260809_3555",
+      "state": "not_committed",
+      "class": "no_baseball_on_the_page",
+      "checks_failed": [],
+      "warnings_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "warnings_excerpt": [],
+      "evidence": "Marked final, 0-0 linescore, twenty boxscore rows totalling ZERO at-bats, and two events: a substitution and an Inning Summary claiming one runner left on base by a side that never batted. There is no game here to parse. parse_game refuses it at the source, requiring a page with panes to yield either a plate appearance or an unparsed line before it can become a final file.",
+      "alternative_scored": "Not a candidate for correction -- there is nothing to correct toward. The number worth recording is the one that makes this dangerous rather than trivial: it passed 5 of 5 replay oracles for the life of the corpus, because all 5 were written to find a disagreement and an empty game offers none. check_has_content (the 6th) exists because of it, and its own test asserts that the original five still pass on the empty game -- if one ever starts catching it, the sixth check can go."
+    }
+  ]
+}

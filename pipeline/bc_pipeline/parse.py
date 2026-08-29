@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.28.0"
-SCHEMA_VERSION = "1.11.0"
+PARSER_VERSION = "0.30.0"
+SCHEMA_VERSION = "1.12.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1703,17 +1703,42 @@ def parse_game(
     resolvable ``person_id`` gets no career either.
     """
     root = parse_html(html)
-    if not has_pbp_panes(root):
-        raise NonFinalPageError(
-            "page has no PBP panes (id='pbp-inning-N'); not a final boxscore"
-        )
+    boxscore_only = not has_pbp_panes(root)
+
+    # A page with no PBP panes is USUALLY a pre-game / "today" page and not a
+    # game at all. Twice in three seasons it is something else: a completed
+    # final whose play-by-play the league simply never published. 20250520_iiqj
+    # and 20250521_jyjy each carry a full linescore and a full batting box --
+    # 68 and 60 at-bats, reconciling with their linescores exactly -- and were
+    # refused for the life of the corpus because they arrived through the same
+    # door as the pre-game pages.
+    #
+    # The two are told apart by EVIDENCE, not by hope, and the evidence is
+    # everything a final page needs and a pre-game page does not have: a
+    # parseable game date, a `linescore` element (without which
+    # `build_player_table` cannot even resolve home from away), and a batting
+    # box recording at least one at-bat -- checked further down, and the same
+    # floor the paned path gets, because neither shape may produce a record
+    # with nothing in it (see `replay.check_has_content`).
+    #
+    # Only this branch converts those failures into a refusal. On a PANED page
+    # an unreadable date or linescore is a parser bug and must stay loud.
+    if boxscore_only:
+        try:
+            date_iso = _extract_date_iso(root)
+            player_table = identity.build_player_table(root, id_overrides=id_overrides)
+        except ValueError as exc:
+            raise NonFinalPageError(
+                f"page has no PBP panes (id='pbp-inning-N') and does not carry a "
+                f"readable final boxscore either; not a final boxscore ({exc})"
+            ) from exc
+    else:
+        date_iso = _extract_date_iso(root)
+        player_table = identity.build_player_table(root, id_overrides=id_overrides)
 
     game_id = _extract_game_id(source_url)
-    date_iso = _extract_date_iso(root)
     season = int(date_iso[:4])
-
-    player_table = identity.build_player_table(root, id_overrides=id_overrides)
-    lines = _iter_halves(root)
+    lines = [] if boxscore_only else _iter_halves(root)
     # Authored corrections to DEFECTIVE SOURCE LINES, applied to the raw line
     # text BEFORE the grammar sees it -- so a corrected line is parsed by
     # exactly the same rules as every other line, and no rule is relaxed
@@ -1758,7 +1783,16 @@ def parse_game(
     # The guard requires BOTH counts to be zero. A game whose lines all FAILED
     # to parse has unparsed[] entries and stays committed and visible; only a
     # page that yields no batting content at all is refused.
-    if not any(ev.get("kind") == "plate_appearance" for ev in events) and not unparsed:
+    if boxscore_only:
+        at_bats = sum(
+            row.get("AB") or 0 for rows in box["batting"].values() for row in rows
+        )
+        if at_bats == 0:
+            raise NonFinalPageError(
+                "page has no PBP panes and its batting box records no at-bat; "
+                "not a final boxscore"
+            )
+    elif not any(ev.get("kind") == "plate_appearance" for ev in events) and not unparsed:
         raise NonFinalPageError(
             "page has PBP panes but describes no plate appearance and no "
             "unparsed line; not a final boxscore"
@@ -1781,7 +1815,19 @@ def parse_game(
         for app in erratum_applications
     ] + inferred
 
-    lineups = _build_lineups(player_table, subs_by_team, box["batting"], events)
+    # `_build_lineups` reads the substitution sequence to order the slots. A
+    # boxscore-only record has none, and the box row order is not a substitute
+    # for one -- position-duplicate lineup reconstruction was scored on this
+    # corpus at 54.8%. Empty is the honest answer; a half-right batting order
+    # would be worse than none, because nothing downstream could tell.
+    lineups = (
+        {
+            team.team_id: {"batting_order": [], "substitutions": []}
+            for team in (player_table.home, player_table.away)
+        }
+        if boxscore_only
+        else _build_lineups(player_table, subs_by_team, box["batting"], events)
+    )
     players = _players_table(player_table, person_ids, career_ids)
 
     parsed_at_iso = parsed_at or datetime.now(timezone.utc).strftime(
@@ -1793,6 +1839,12 @@ def parse_game(
         "game_id": game_id,
         "season": season,
         "status": "final",
+        # schema 1.12.0. REQUIRED and explicit on every game, rather than
+        # inferred from `events` being empty: a consumer must not have to know
+        # that absence means play-by-play, and the two shapes are validated by
+        # different check sets, so which one a file is has to be a fact it
+        # states rather than one the reader derives.
+        "record_shape": "boxscore_only" if boxscore_only else "play_by_play",
         "date": date_iso,
         "source": {
             "provider": provider,

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fredcai6/baseball-coaster-data/schemas/disposition.schema.json",
+  "title": "Terminal dispositions",
+  "$comment": "One entry per game that does not reach a clean parse-and-replay, recording the TERMINAL state a human put it in and the evidence for that state. A disclosed refusal is a done state, not a gap: this file is what makes that claim checkable instead of asserted.\n\nIt exists because the alternative had already failed. The argument for each of these games lived in a handoff document -- prose, outside the repository, read by nobody and checked by nothing. It went stale twice: 20240508_04ck and 20240528_6w90 were each recorded as unfixable and each became fixable the moment an unrelated oracle was corrected. A disposition that no longer describes its game is a lie the corpus tells about itself, and the only reliable way to catch one is to make the corpus check.\n\nSo every entry is PINNED to the exact failure it was authored against, exactly as an erratum is pinned to the sha256 of its line. If the checks a game fails ever change -- because an oracle got better, a rule got tighter, or the source moved -- the pin stops matching and the loader RAISES. A disposition can go stale; it cannot go stale QUIETLY.\n\nA disposition is not an excuse. `evidence` must say what in the source makes the game unrecoverable, and `alternative_scored` must report the fix that was tried and the number that killed it. 'We looked and could not fix it' is not a disposition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dispositions"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "dispositions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/disposition"
+      }
+    }
+  },
+  "$defs": {
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "game_id",
+        "state",
+        "class",
+        "checks_failed",
+        "warnings_sha256",
+        "warnings_excerpt",
+        "evidence",
+        "alternative_scored"
+      ],
+      "properties": {
+        "game_id": {
+          "type": "string",
+          "pattern": "^[0-9]{8}_[a-z0-9]+$",
+          "description": "The game this disposes. Unique across this file -- a game has exactly one terminal state."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "committed_no_replay",
+            "committed_no_play_by_play",
+            "not_committed"
+          ],
+          "description": "WHERE the game ends up, which is a different question from why. `committed_no_replay` -- the game file is in games/** and its events are the source's, but at least one replay oracle refuses it and no correction can reach the defect. `committed_no_play_by_play` -- the source published a boxscore and a linescore and no play-by-play at all, so the record carries no events by construction and the event-reading oracles have nothing to check. `not_committed` -- no game file exists, because the page describes no baseball."
+        },
+        "class": {
+          "type": "string",
+          "enum": [
+            "missing_plate_appearances",
+            "fourth_out_tagged_by_source",
+            "missing_half_inning",
+            "lineup_misalignment",
+            "oracle_residual",
+            "no_play_by_play_published",
+            "no_baseball_on_the_page"
+          ],
+          "description": "WHY, and the one distinction here that matters most is `oracle_residual`. Every other class names a defect in the SOURCE -- something it failed to write down. `oracle_residual` names a defect in OURS: a known, measured miss of one of our own checks, where the source is right and we are wrong. Collapsing those two into one label would let this file quietly reclassify our bugs as the league's, which is the single failure mode it is most exposed to."
+        },
+        "checks_failed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "linescore",
+              "outs_per_half",
+              "lob",
+              "pa_counts",
+              "illegal_transitions",
+              "content"
+            ]
+          },
+          "uniqueItems": true,
+          "description": "Sorted, deduped names of the replay checks this game fails, as measured when the entry was authored. Empty for a game that is not replayed at all (`not_committed`, or a boxscore-only record). Coarse half of the pin, and the legible half: it is what a reader scans."
+        },
+        "warnings_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "sha256 of the game's replay warnings, sorted and newline-joined -- the fine half of the pin. Any change in WHICH check fails, or in what it says, detaches the disposition loudly. `e3b0c442...` (the empty-string digest) is correct and expected for a game with no warnings to pin."
+        },
+        "warnings_excerpt": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The warnings themselves, for human review. `warnings_sha256` is what the loader matches on."
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 80,
+          "description": "What in the SOURCE makes this unrecoverable, in enough detail that a reader can check it without rerunning anything. Name the innings, the box rows, the linescore cells, the surname that appears nowhere. 'Could not fix it' is not evidence."
+        },
+        "alternative_scored": {
+          "type": "string",
+          "minLength": 40,
+          "description": "The fix that was tried, and the number that killed it. A recorded negative is what stops the next reader spending a morning re-deriving it -- this corpus has a list of them (position-duplicate lineup reconstruction 54.8%, box-deficit orphan attribution 1 in 109, the broadened lob rule 98.11% against 99.96%) and every one was earned. Where the shape of the data forecloses a fix outright, say which fact forecloses it."
+        }
+      }
+    }
+  }
+}

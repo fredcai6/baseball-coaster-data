@@ -140,7 +140,7 @@ def test_replay_game_each_individual_check_passes_on_real_sample():
         if ev["kind"] in ("plate_appearance", "runner_event"):
             ev["_derived"] = derived_list[di]
             di += 1
-    for name, fn in replay._CHECKS:
+    for name, fn, _reads_events in replay._CHECKS:
         result = fn(game, oracle)
         assert result.ok, f"{name} failed on real sample: {result.warnings}"
 
@@ -184,11 +184,11 @@ def test_replay_game_never_raises_on_broken_html():
 # targeted check while the other four still pass.
 # ---------------------------------------------------------------------------
 
-_ALL_CHECK_NAMES = [name for name, _ in replay._CHECKS]
+_ALL_CHECK_NAMES = [name for name, _fn, _reads_events in replay._CHECKS]
 
 
 def _run_all_checks(game: dict, oracle: dict) -> dict:
-    return {name: fn(game, oracle) for name, fn in replay._CHECKS}
+    return {name: fn(game, oracle) for name, fn, _reads_events in replay._CHECKS}
 
 
 def test_good_baseline_passes_all_five_checks():
@@ -198,21 +198,34 @@ def test_good_baseline_passes_all_five_checks():
         assert result.ok, f"{name} unexpectedly failed on the clean baseline: {result.warnings}"
 
 
-def _assert_isolated_failure(fixture_name: str, failing_check: str):
+def _assert_isolated_failure(fixture_name: str, *failing_checks: str):
+    """Every check but ``failing_checks`` must still pass on the fixture.
+
+    Usually exactly one check is named. `bad_linescore.json` names two, and
+    the reason is worth stating rather than papering over: a defect in the
+    SOURCE's linescore is visible from both sides of it. `check_linescore`
+    reads linescore-against-events, `check_box_linescore` reads
+    linescore-against-box, and this fixture corrupts the linescore itself,
+    so both are right to object. They are not redundant -- a fault in our
+    event folding trips only the first, and a fault in our box parse trips
+    only the second. The overlap is the third case, and it is a signal:
+    when both fire, the disagreement is with the source rather than with us.
+    """
+    expected = set(failing_checks)
     data = _load_synth(fixture_name)
     results = _run_all_checks(data["game"], data["oracle"])
     for name, result in results.items():
-        if name == failing_check:
-            assert not result.ok, f"{failing_check} was expected to fail on {fixture_name}"
+        if name in expected:
+            assert not result.ok, f"{name} was expected to fail on {fixture_name}"
         else:
             assert result.ok, (
                 f"{name} unexpectedly failed on {fixture_name} (should only break "
-                f"{failing_check}): {result.warnings}"
+                f"{', '.join(sorted(expected))}): {result.warnings}"
             )
 
 
-def test_bad_linescore_fails_only_check_linescore():
-    _assert_isolated_failure("bad_linescore.json", "linescore")
+def test_bad_linescore_fails_both_checks_that_read_the_linescore():
+    _assert_isolated_failure("bad_linescore.json", "linescore", "box_linescore")
 
 
 def test_bad_outs_per_half_fails_only_check_outs_per_half():
@@ -661,8 +674,8 @@ def test_the_other_five_checks_all_pass_vacuously_on_an_empty_game():
             }
         },
     }
-    for name, check in replay._CHECKS:
-        if name == "content":
+    for name, check, _reads_events in replay._CHECKS:
+        if name in ("content", "box_linescore"):
             continue
         assert check(game, oracle).ok, (
             f"{name} unexpectedly caught the empty game -- good news, but the "

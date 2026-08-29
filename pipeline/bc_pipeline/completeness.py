@@ -106,6 +106,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+from bc_pipeline import dispositions
 from bc_pipeline.backfill import BackfillResult
 
 __all__ = [
@@ -178,6 +179,46 @@ def _unparsed_rate(line_totals: dict) -> float:
     if total_lines == 0:
         return 0.0
     return line_totals["unparsed_lines"] / total_lines
+
+
+def build_accounting(totals: dict, dispositions_path=None) -> dict:
+    """The corpus's own score, against the source rather than against itself.
+
+    ``failure_rate`` answers "what fraction of what we tried did not come out
+    clean". It is honest and it is not the goal. The goal is that every game
+    the league published reaches a state a human put it in ON PURPOSE, and a
+    disclosed refusal is one of those states -- so the number that matters is
+    how many of the discovered games are ACCOUNTED FOR::
+
+        accounted = games_replayable + games_disposed
+        unaccounted = games_discovered - accounted
+
+    ``unaccounted`` is the only one of the three that can be a lie, and it is
+    the one to read. A game lands there by failing replay with nothing in
+    `corrections/dispositions.json` explaining why -- which is the state this
+    corpus spent three sessions in without a number that said so.
+
+    The two terms cannot double-count. `dispositions.audit` reports a
+    disposition on a game that now passes as SPENT, so an entry surviving
+    the audit is an entry for a game that is genuinely not in
+    ``games_replayable``.
+    """
+    ledger = dispositions.load(dispositions_path)
+    disposed = len(ledger)
+    discovered = totals.get("games_discovered", 0)
+    accounted = totals.get("games_replayable", 0) + disposed
+    by_class: dict[str, int] = {}
+    for entry in ledger.values():
+        by_class[entry["class"]] = by_class.get(entry["class"], 0) + 1
+    return {
+        "games_discovered": discovered,
+        "games_replay_validating": totals.get("games_replayable", 0),
+        "games_disposed": disposed,
+        "games_accounted": accounted,
+        "games_unaccounted": discovered - accounted,
+        "accounted_rate": (accounted / discovered) if discovered else 0.0,
+        "disposed_by_class": dict(sorted(by_class.items())),
+    }
 
 
 def build_completeness_report(
@@ -297,6 +338,7 @@ def build_completeness_report(
             "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         },
         "league": league_totals,
+        "accounting": build_accounting(league_totals),
         "by_season": by_season_out,
         "enumerated_failures": enumerated_failures,
         "non_final_games": non_final_games,
