@@ -194,10 +194,42 @@ in three independently-testable stages, plus a machine-checkable summary of any 
 2. **Replay** (`bc_pipeline.replay.replay_game(game, html)`) is an INDEPENDENT check —
    it re-derives the linescore/box oracle from the same raw HTML with its own,
    unshared table-reading code, folds the parser's asserted runner primitives forward
-   into the `_derived` base-out cache, and runs five checks (linescore, outs-per-half,
-   LOB, PA counts, illegal transitions). A failed check flags the game
-   (`meta.parse.replayable = False` + a warning); it never silently passes and never
-   raises past the caller.
+   into the `_derived` base-out cache, and runs seven checks. Five read events
+   (linescore, outs-per-half, LOB, PA counts, illegal transitions); two do not
+   (`content`, `box_linescore`) and therefore run on every game whatever its
+   `record_shape`. A failed check flags the game (`meta.parse.replayable = False` + a
+   warning); it never silently passes and never raises past the caller.
+
+   `content` is the floor and reads as a tautology until you know why it is there.
+   Every other check is written to find a DISAGREEMENT, so every other check passes
+   when handed nothing — a page describing no baseball scored as fully validated for
+   the life of the corpus. `content` asserts there is something to check, which is the
+   one thing that cannot pass vacuously.
+
+**Record shapes.** `record_shape` (schema 1.12.0) is `play_by_play` for all but two
+games. `boxscore_only` is a completed final whose play-by-play the league never
+published — a real linescore and a real batting box, no events — and it selects the
+check set, because the five event oracles have nothing to read on one and running them
+anyway would be five vacuous passes. The schema enforces both floors: a `boxscore_only`
+record may not carry events, and a `play_by_play` record may not be empty of them.
+
+**Corrections and dispositions.** Two files, both pinned, neither a place to record an
+opinion. `corrections/errata.json` rewrites a defective SOURCE line before the grammar
+sees it, pinned to that line's sha256, so a one-off scorer error never becomes a reason
+to loosen a general rule. `corrections/dispositions.json` records the games that are
+DONE without being clean — parsed, committed, and refused by an oracle with no
+correction that can reach the defect — pinned to the sha256 of the replay warnings the
+entry was authored against. `tests/test_dispositions.py` reconciles that ledger against
+a full corpus replay in both directions, so a disposition can go stale but not quietly:
+a game failing with no entry is `undisclosed`, an entry whose pinned failure changed is
+`stale`, and an entry for a game that now passes is `spent`.
+
+**The score.** `artifacts/latest/completeness.json` carries an `accounting` block —
+discovered / replay-validating / disposed / accounted / **unaccounted**. `unaccounted`
+is the only one of them that can be a lie, and it is the one to read. Regenerate with
+`python scripts/build_completeness.py`, or ask whether it is current with
+`--check`; this is the one derived artifact `check_artifacts_current.py` does not
+cover, and it went stale silently for most of 2026 before there was a script.
 3. **Reparse-summary** (`bc_pipeline.reparse_summary`) turns one parse+replay run into a
    small, stable, JSON-serializable summary (`summarize`: replay pass/fail, unparsed
    rate, event-type counts) and the delta between two runs (`diff`: zero on two
