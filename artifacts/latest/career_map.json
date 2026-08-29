@@ -1402,6 +1402,7 @@
     "person:c8da16d103cbc1ff": "career:1b4f805e1d76f76f",
     "person:ca74bf6bb207e668": "career:28de2f0cc91fe00e",
     "person:cb211d47707bf6fa": "career:9f6d2b5a1ddf9746",
+    "person:cbf7b6b22b7ac0cb": "career:c8edea6abc9f9287",
     "person:cc298cf6bb4cf6df": "career:ef3c3373aecd1842",
     "person:ccf882139cf381f4": "career:076b67051893fb45",
     "person:ce7e32a20db542f4": "career:91da33d6aca230ba",
@@ -1959,7 +1960,7 @@
     },
     "2025": {
       "in_a_multi_season_career": 159,
-      "persons": 636
+      "persons": 637
     },
     "2026": {
       "in_a_multi_season_career": 76,
@@ -29341,6 +29342,25 @@
         2024
       ]
     },
+    "career:c8edea6abc9f9287": {
+      "aliases": [
+        "Matthew Hess"
+      ],
+      "career_id": "career:c8edea6abc9f9287",
+      "franchises": [
+        "franchise:90a3be9c4ea14687"
+      ],
+      "name": "Matthew Hess",
+      "person_ids": [
+        [
+          2025,
+          "person:cbf7b6b22b7ac0cb"
+        ]
+      ],
+      "seasons": [
+        2025
+      ]
+    },
     "career:c8f9d68fcaaff05d": {
       "aliases": [
         "W. Lavin"
@@ -36618,20 +36638,20 @@
     }
   },
   "league": {
-    "careers": 1778,
+    "careers": 1779,
     "careers_by_season_span": {
-      "1": 1618,
+      "1": 1619,
       "2": 147,
       "3": 13
     },
     "links": 173,
     "multi_season_careers": 160,
-    "persons": 1951,
+    "persons": 1952,
     "refused_by_reason": {
       "ambiguous_within_season": 55,
-      "franchise_changed": 97
+      "franchise_changed": 98
     },
-    "refused_pairs": 152
+    "refused_pairs": 153
   },
   "meta": {
     "career_map_version": "1.0.0",
@@ -36680,25 +36700,25 @@
         "proven_same_name_different_people": 3
       },
       "signal_strength": {
-        "different_name_pairs_null": 835956,
+        "different_name_pairs_null": 837270,
         "franchise_continuity": {
           "fires_on_null": 0.0704,
-          "fires_on_same_name": 0.5182,
-          "likelihood_ratio": 7.36,
+          "fires_on_same_name": 0.5169,
+          "likelihood_ratio": 7.34,
           "used": true
         },
         "position_overlap": {
-          "fires_on_null": 0.449,
-          "fires_on_same_name": 0.9635,
+          "fires_on_null": 0.4492,
+          "fires_on_same_name": 0.9636,
           "likelihood_ratio": 2.15,
           "note": "NOT used. It fires on a large share of the null -- people who are definitively not each other -- so it barely separates the cases it is meant to decide. Kept here as a measured negative so the choice stays visible and will change if the data ever changes.",
           "used": false
         },
-        "same_name_pairs": 384
+        "same_name_pairs": 385
       }
     },
-    "games": 1483,
-    "generated_at": "2026-08-29T13:03:36Z",
+    "games": 1485,
+    "generated_at": "2026-08-29T13:35:48Z",
     "not_attempted": {
       "franchise_changed": {
         "note": "A player who changed clubs between seasons is NOT linked. This is the honest cost of the rule: it is exactly the shape of every proven-different pair above, and nothing else in the data separates the two cases. Enumerated in `unlinked` so the population stays visible and countable."
@@ -36707,7 +36727,7 @@
         "note": "person_map deliberately does not merge a player across teams WITHIN a season (a measured error floor: of the same-season same-name cross-franchise cases, some are proven to be two people). That ambiguity is inherited here as `ambiguous_within_season` rather than papered over."
       }
     },
-    "persons": 1951,
+    "persons": 1952,
     "scope": "CROSS-SEASON player identity, one level above person_id. Two persons in consecutive seasons are linked iff their display names are exactly equal, that name resolves to exactly one person in EACH season, and they share a franchise. Careers are the connected components."
   },
   "unlinked": [
@@ -38151,6 +38171,19 @@
         ]
       },
       "reason": "ambiguous_within_season",
+      "season_pair": "2024->2025"
+    },
+    {
+      "name": "Matthew Hess",
+      "person_ids": {
+        "2024": [
+          "4usg8nmw69h710rg"
+        ],
+        "2025": [
+          "person:cbf7b6b22b7ac0cb"
+        ]
+      },
+      "reason": "franchise_changed",
       "season_pair": "2024->2025"
     },
     {
