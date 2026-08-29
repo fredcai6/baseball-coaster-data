@@ -55,7 +55,7 @@ def test_the_published_average_is_cumulative_not_per_game():
         hits += h
         if not at_bats:
             continue
-        assert abs(round(hits / at_bats, 3) - float(avg)) <= mod.TOLERANCE
+        assert abs(hits / at_bats - float(avg)) <= mod.TOLERANCE
         checked += 1
     assert checked >= 5
 
@@ -99,3 +99,47 @@ def test_an_ordinary_season_is_unaffected():
         _row("2025-05-22", "c", 6, 2, ".385"),
     ]
     assert mod._first_divergence(rows) is None
+
+
+# --- the rounding mode is the source's, not Python's -----------------------
+#
+# `round(0.3125, 3)` is 0.312 -- Python rounds half to even. The league's
+# scorer rounds half up and publishes .313. Rounding our own side before
+# comparing therefore failed every exact-half quotient, and 5/16, 15/48,
+# 20/64 and 18/32 are ordinary denominators in a short season: 114 of the
+# then-215 reported divergences were this check's arithmetic rather than the
+# corpus's. The comparison is against the UNROUNDED quotient now, at half a
+# unit in the published figure's last place.
+
+
+def test_an_exact_rounding_tie_reconciles_either_way():
+    """A quotient of .3125 sits exactly half a unit from both .312 and .313.
+    The source's rounding mode is not documented, so both are accepted --
+    guessing one would be inventing a fact about the scoring software."""
+    for published in (".312", ".313"):
+        assert mod._row_reconciles(64, 20, published), published
+        assert mod._row_reconciles(16, 5, published), published
+    for published in (".562", ".563"):
+        assert mod._row_reconciles(32, 18, published), published
+
+
+def test_the_tie_tolerance_does_not_swallow_a_real_shortfall():
+    """Half a unit and not a hair more. .3125 against .314 is one full unit
+    out and must still be reported, or the fix would have bought its 114
+    recoveries by going blind."""
+    assert not mod._row_reconciles(64, 20, ".314")
+    assert not mod._row_reconciles(64, 20, ".311")
+    # The smallest real gap the published precision can express.
+    assert mod._row_reconciles(100, 30, ".300")
+    assert not mod._row_reconciles(100, 30, ".301")
+
+
+def test_the_real_corpus_residual_is_the_2025_cluster_not_a_rounding_artifact():
+    """Regression guard on the measurement the fix is justified by. If this
+    number moves, the check changed -- read why before believing the new one."""
+    seasons, _ = mod._load(REPO_ROOT / "games")
+    diverging = [k for k, rows in seasons.items() if mod._first_divergence(rows)]
+    assert len(diverging) == 90, (
+        f"{len(diverging)} diverging person-seasons, expected 90 -- the AVG "
+        f"residual moved; see issue for the 2025 May-27/Jun-21 cluster"
+    )

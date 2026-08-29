@@ -42,9 +42,14 @@ same thing from inside this check:
 
 The reading of the column is not the problem either: taken as CUMULATIVE
 INCLUDING this game, 84.05% of 29,953 checkable rows reconcile; taken as
-"entering this game", 9.85% do. The first is plainly the right reading and
-the residual is something else -- most likely person_id splits and merges,
-which this check has no way to see.
+"entering this game", 9.85% do. The first is plainly the right reading.
+
+WHAT CHANGED, 2026-08-29. 114 of the then-215 reported divergences were this
+check's own rounding, not the corpus's -- see TOLERANCE. After the fix, 90 of
+1,895 person-seasons diverge (95.3% reconcile) and the residual is SHARPER
+rather than merely smaller: 69 of the 90 fall in eight games, all in 2025,
+all between May 27 and June 21. That is the shape worth attacking, and it is
+not one this check can explain by itself.
 
 Do not use a cluster here as a reason to fetch. That mistake has already
 been made once on this corpus: roughly 35 games were called missing, and the
@@ -67,9 +72,20 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-#: A published AVG is rounded to three places, so compare at that precision
-#: with half a unit of slack rather than demanding exact float equality.
-TOLERANCE = 0.0006
+#: Half a unit in the published figure's last place, plus a float-comparison
+#: epsilon. The published AVG is rounded to three places and the source's
+#: ROUNDING MODE is not documented, so the comparison is made against the
+#: UNROUNDED quotient and both conventions are accepted at an exact tie.
+#:
+#: Rounding our own side first is what this replaces, and it was wrong in one
+#: specific way that cost 114 of 215 reported divergences. Python's `round`
+#: is banker's rounding, so 20/64 = .3125 becomes .312; the league's scorer
+#: rounds half up and publishes .313. Every exact-half quotient failed, and
+#: 5/16, 15/48, 20/64 and 18/32 are ordinary denominators in a short season.
+#: Measured on the committed corpus, the change moves 215 divergences to 90
+#: and 88.7% reconciling to 95.3% -- with no game file touched, because the
+#: defect was in the check.
+TOLERANCE = 0.0005 + 1e-9
 
 #: Below this many at-bats a single hit moves the average by more than the
 #: rounding tolerance can absorb, so early-season rows are noisy by
@@ -213,7 +229,10 @@ def _row_reconciles(at_bats, hits, published):
         target = float(published)
     except (TypeError, ValueError):
         return True
-    return abs(round(hits / at_bats, 3) - target) <= TOLERANCE
+    # The quotient is deliberately NOT rounded before comparing -- see
+    # TOLERANCE. A tie like .3125 sits exactly half a unit from both .312
+    # and .313, so both published values reconcile and neither is guessed at.
+    return abs(hits / at_bats - target) <= TOLERANCE
 
 
 def main() -> int:
