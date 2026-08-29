@@ -131,6 +131,16 @@ def _load(games_dir: Path):
                 # exactly the at-bats this check exists to notice. Accumulate
                 # always; check only where the source published a figure.
                 avg = row.get("AVG") or None
+                # "0" is the source's SENTINEL for "no figure published",
+                # not a batting average of zero -- it writes ".000" for a
+                # genuine zero. Measured: 11,633 rows carry "0" and 11,617
+                # of them have AB=0, i.e. the player appeared but never
+                # batted, while ".000" appears on 743 rows. Read as a value
+                # it makes every later row for a bench appearance compare a
+                # real cumulative average against 0.000; treating it as
+                # missing removes 7 false divergences (231 -> 224).
+                if avg == "0":
+                    avg = None
                 player = game["players"].get(row["player_id"]) or {}
                 person = player.get("person_id")
                 if not person:
