@@ -616,3 +616,55 @@ def test_short_final_BOTTOM_half_is_not_excused_by_the_called_game_rule():
     data["oracle"]["linescore"]["innings"]["away"][6] = None
     result = replay.check_outs_per_half(data["game"], data["oracle"])
     assert not result.ok, result.warnings
+
+
+# ---------------------------------------------------------------------------
+# The floor under the other five: they are all written to find a
+# DISAGREEMENT, so they all pass when handed nothing.
+# ---------------------------------------------------------------------------
+
+
+def test_a_game_with_no_plate_appearance_fails_the_content_check():
+    data = _load_synth("good_baseline.json")
+    game = copy.deepcopy(data["game"])
+    game["events"] = [e for e in game["events"] if e["kind"] != "plate_appearance"]
+    assert not replay.check_has_content(game, data["oracle"]).ok
+
+
+def test_the_other_five_checks_all_pass_vacuously_on_an_empty_game():
+    """Why the content check has to exist, asserted rather than asserted-of.
+
+    The oracle has to be emptied too, because that is the real shape:
+    20260809_3555 pairs its two events with a 0-0 linescore and twenty
+    boxscore rows totalling zero at-bats. The source agrees nothing
+    happened, so there is no disagreement for any of the five to find.
+
+    If this ever starts failing because one of the five DOES catch it, the
+    content check is redundant and can go.
+    """
+    data = _load_synth("good_baseline.json")
+    game = copy.deepcopy(data["game"])
+    game["events"] = [e for e in game["events"] if e["kind"] != "plate_appearance"]
+    oracle = {
+        "linescore": {
+            "innings": {"away": [0], "home": [None]},
+            "totals": {
+                "away": {"R": 0, "H": 0, "E": 0},
+                "home": {"R": 0, "H": 0, "E": 0},
+            },
+        },
+        "box": {
+            "batting": {
+                team: [dict(row, AB=0, R=0, H=0, RBI=0, BB=0, SO=0, LOB=0)
+                       for row in rows]
+                for team, rows in data["oracle"]["box"]["batting"].items()
+            }
+        },
+    }
+    for name, check in replay._CHECKS:
+        if name == "content":
+            continue
+        assert check(game, oracle).ok, (
+            f"{name} unexpectedly caught the empty game -- good news, but the "
+            f"content check's rationale needs rewriting: {check(game, oracle).warnings}"
+        )

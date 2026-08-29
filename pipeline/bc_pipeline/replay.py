@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.5.0"
+REPLAYER_VERSION = "0.6.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -804,7 +804,36 @@ def check_illegal_transitions(game: dict, oracle: dict) -> CheckResult:
     return CheckResult(ok=not warnings, warnings=warnings)
 
 
+def check_has_content(game: dict, oracle: dict) -> CheckResult:
+    """A game must contain at least one plate appearance.
+
+    The floor under the other five. Every one of them is written to find a
+    DISAGREEMENT, so every one of them passes when handed nothing: no half
+    to count outs for, no runner to leave on base, no plate appearance to
+    reconcile against the boxscore. A page describing no baseball therefore
+    scored as fully validated -- `20260809_3555`, twenty boxscore rows
+    totalling zero at-bats and two events, was DONE for the life of the
+    corpus on the strength of having nothing in it.
+
+    `parse.parse_game` now refuses such a page outright, so nothing should
+    reach here. This stays as the second line: a check that cannot pass
+    vacuously, because the thing it asserts is that there is something to
+    check.
+    """
+    for ev in game.get("events") or ():
+        if ev.get("kind") == "plate_appearance":
+            return CheckResult(ok=True, warnings=[])
+    return CheckResult(
+        ok=False,
+        warnings=[
+            "content: game holds no plate appearance at all, so the other "
+            "checks have nothing to validate and pass vacuously"
+        ],
+    )
+
+
 _CHECKS = (
+    ("content", check_has_content),
     ("linescore", check_linescore),
     ("outs_per_half", check_outs_per_half),
     ("lob", check_lob),

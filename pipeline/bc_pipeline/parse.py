@@ -45,13 +45,16 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.27.0"
+PARSER_VERSION = "0.28.0"
 SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
 class NonFinalPageError(Exception):
-    """Raised when a page has no PBP panes -- it is not a final boxscore.
+    """Raised when a page describes no game -- it is not a final boxscore.
+
+    Two shapes reach this: no PBP panes at all, and panes that yield no
+    plate appearance and no unparsed line.
 
     The caller must never fabricate a schema `final` game dict from a page
     like this (e.g. a pre-game/"today" page); this is the negative-path
@@ -1684,7 +1687,8 @@ def parse_game(
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
-    Raises ``NonFinalPageError`` if the page has no PBP panes (the negative-
+    Raises ``NonFinalPageError`` if the page has no PBP panes, or if it has
+    panes but yields no plate appearance and no unparsed line (the negative-
     path contract) -- never fabricates a `final` file from such a page.
 
     ``person_ids`` (schema 1.7.0, issue #41) maps this game's SYNTHETIC
@@ -1738,6 +1742,27 @@ def parse_game(
         },
         box_batting=box["batting"],
     )
+
+    # A page can carry PBP panes and still describe no baseball. 20260809_3555
+    # is marked final, has a 0-0 linescore, twenty boxscore rows totalling
+    # ZERO at-bats, and exactly two events -- a substitution and an inning
+    # summary claiming one runner left on base by a side that never batted.
+    #
+    # It is refused here rather than downstream because every replay oracle
+    # passes VACUOUSLY on a game with nothing in it: no half to count outs
+    # for, no runner to leave on base, no plate appearance to reconcile. It
+    # scored as fully validated for the life of the corpus, which is this
+    # repository's oldest failure mode wearing its plainest disguise -- an
+    # empty parse hiding behind a clean replay.
+    #
+    # The guard requires BOTH counts to be zero. A game whose lines all FAILED
+    # to parse has unparsed[] entries and stays committed and visible; only a
+    # page that yields no batting content at all is refused.
+    if not any(ev.get("kind") == "plate_appearance" for ev in events) and not unparsed:
+        raise NonFinalPageError(
+            "page has PBP panes but describes no plate appearance and no "
+            "unparsed line; not a final boxscore"
+        )
     # Disclose every applied correction alongside the parser's own
     # inferences, under the same contract: a consumer that wants only what
     # the source actually said can drop the events these entries name.
