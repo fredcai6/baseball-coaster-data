@@ -511,7 +511,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": null,
@@ -574,7 +574,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "K",
@@ -637,7 +637,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "BBBKFB",
@@ -700,7 +700,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "FB",
@@ -763,7 +763,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "KBSBB",
@@ -836,7 +836,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": null,
@@ -918,7 +918,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "BB",
@@ -1001,7 +1001,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "K",
@@ -1074,7 +1074,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "B",
@@ -1145,7 +1145,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "BK",
@@ -1439,7 +1439,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "BK",
@@ -1504,7 +1504,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "B",
@@ -1569,7 +1569,7 @@
       },
       "pitcher": {
         "name_raw": null,
-        "player_id": "ru8dkwfibybm8e3c",
+        "player_id": "3opa9lncff1dj1go",
         "resolved": true
       },
       "pitches": "SBS",
@@ -2832,13 +2832,13 @@
       "half": "top",
       "inning": 4,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 2 LOB",
+      "narrative": "Inning Summary: 0 Runs, 0 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
       "seq": 41,
       "summary": {
         "E": 0,
         "H": 0,
-        "LOB": 2,
+        "LOB": 1,
         "R": 0
       }
     },
@@ -6248,7 +6248,7 @@
         "kind": "offensive",
         "player_in": "ru8dkwfibybm8e3c",
         "player_out": "qrcvsc8dgweehvhj",
-        "slot": 9
+        "slot": 8
       }
     },
     {
@@ -6393,7 +6393,18 @@
     }
   ],
   "game_id": "20260519_wmxc",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260519_wmxc-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 0 Hits , 0 Errors , 1 LOB'. The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Cuba Bess, Matthew Bardowell. The last plate appearance was \"Jacob Jablonski flied out to rf (2-1 BBK).\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the a non-final half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "top",
+        "inning": 4,
+        "line_index": 5
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            0 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            2 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6526,19 +6537,19 @@
           "slot": 5
         },
         {
-          "player_id": "wfv4r8jwy2m3guzl",
+          "player_id": "gelonbto1li8tatl",
           "slot": 6
         },
         {
-          "player_id": "gelonbto1li8tatl",
+          "player_id": "m5bj7y0r7wfqds1f",
           "slot": 7
         },
         {
-          "player_id": "m5bj7y0r7wfqds1f",
+          "player_id": "qrcvsc8dgweehvhj",
           "slot": 8
         },
         {
-          "player_id": "qrcvsc8dgweehvhj",
+          "player_id": "62r3h5cc9435ya57",
           "slot": 9
         }
       ],
@@ -6583,25 +6594,23 @@
           "kind": "offensive",
           "player_in": "ru8dkwfibybm8e3c",
           "player_out": "qrcvsc8dgweehvhj",
-          "slot": 9
+          "slot": 8
         }
       ]
     }
   },
   "meta": {
-    "derived_replayer_version": "0.2.0",
+    "derived_replayer_version": "0.4.0",
     "fetched_at": "2026-07-12T04:52:35Z",
     "parse": {
       "events_count": 113,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T02:56:09Z",
-    "parser_version": "0.9.0",
+    "parsed_at": "2026-08-28T20:58:40Z",
+    "parser_version": "0.20.0",
     "source_sha256": "2c87f7c624040615b2563780015894c7e7e9f9ae3971cdf14f93b7d5d08ccbe3",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260519_wmxc.xml"
   },
@@ -6985,7 +6994,7 @@
       "team_id": "toa4e66upwknb2r7"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2026,
   "source": {
     "league_id": "pioneer",

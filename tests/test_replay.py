@@ -10,6 +10,7 @@ bad-sequence fixture proving it fails ONLY that check (isolation).
 """
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -260,6 +261,41 @@ def _pa_counts_case(outcome_type, ab, bb):
     return replay.check_pa_counts(game, oracle).warnings
 
 
+# --- a box row with NO events is the case this check exists to see (#33) ---
+#
+# The `pid not in events_pa` skip used to be unconditional, so a batter whose
+# EVERY plate appearance was misattributed dropped out of `events_pa` and
+# produced no warning -- the check was blind in exactly its own direction.
+# The skip now applies only when the box row implies no plate appearance
+# either (a defensive replacement or a pinch runner who never batted).
+
+
+def _pa_counts_no_events(ab, bb):
+    """A box row for a batter with ZERO events. Returns the check's warnings."""
+    oracle = {"box": {"batting": {"t1": [{"player_id": "syn:home:9", "AB": ab, "BB": bb}]}}}
+    return replay.check_pa_counts({"events": []}, oracle).warnings
+
+
+def test_box_row_with_at_bats_and_no_events_is_a_failure():
+    # 20250521_a4ms: the box gives Noel Soto AB=1 and his name never appears
+    # in any narrative line. A game whose events cannot reproduce its own box
+    # does not replay, however well-formed the file is.
+    assert _pa_counts_no_events(ab=1, bb=0) != []
+    assert _pa_counts_no_events(ab=3, bb=1) != []
+
+
+def test_box_row_with_a_walk_and_no_events_is_a_failure():
+    # BB alone is a plate appearance too -- 20260529_l6ze's Tyler Collins is
+    # AB=0 BB=1, so keying the skip on AB alone would still miss him.
+    assert _pa_counts_no_events(ab=0, bb=1) != []
+
+
+def test_box_row_implying_no_plate_appearance_is_still_skipped():
+    # The legitimate case the skip exists for: a defensive replacement or a
+    # pinch runner who never came to the plate. Nothing to reconcile.
+    assert _pa_counts_no_events(ab=0, bb=0) == []
+
+
 def test_catchers_interference_is_a_pa_but_not_an_at_bat():
     """AB=0, BB=0 and one interference PA must reconcile."""
     assert _pa_counts_case("reached_on_interference", ab=0, bb=0) == []
@@ -500,3 +536,135 @@ def test_interior_inning_with_no_events_is_still_reported():
     oracle = _ls_oracle(away=[0, 0, 0], home=[0, 0, 0])
     ws = replay.check_linescore(_linescore_game(events), oracle).warnings
     assert any("inning 2" in w for w in ws)
+
+
+# --- a mislabelled out base must not retire a named runner (#33) ------------
+#
+# The damaging half of the same defect. When base 1 happened to be OCCUPIED,
+# the old code pinned the unattributed out on whoever stood there, and
+# _merge_same_runner then folded that fabricated out together with the SAME
+# player's explicitly narrated safe advance -- keeping the out. Six corpus
+# lines said "J. Daly advanced to second" while the record said Daly was out,
+# and three of those games parsed clean AND replayed, so nothing reported it.
+
+
+def _fc_line(text):
+    from bc_pipeline import grammar
+
+    return grammar.parse_clause_group(text)
+
+
+def test_contradicting_chain_leaves_the_named_runner_safe():
+    cg = _fc_line(
+        "G. Tonkel reached on a fielder's choice, out at second p to 1b;"
+        " J. Daly advanced to second."
+    )
+    # The line names Daly advancing SAFELY; nothing here may mark him out.
+    assert cg.primary.forced_out_chain == "p to 1b"
+    assert [(r.name_token, r.out) for r in cg.runners] == [("J. Daly", False)]
+
+
+# ---------------------------------------------------------------------------
+# Called-game exception: a game's LAST half being a short TOP half is the
+# shape of play stopping mid-half, not of a lost out -- but only once the
+# game is official.
+# ---------------------------------------------------------------------------
+
+
+def _relabel_inning(data: dict, inning: int) -> dict:
+    """The bad_outs_per_half fixture, moved wholesale to another inning.
+
+    Its top half is two outs long, which is exactly the called-game shape;
+    what separates a stoppage from a missing out is how far the game got.
+    """
+    game = copy.deepcopy(data["game"])
+    for event in game["events"]:
+        event["inning"] = inning
+    oracle = copy.deepcopy(data["oracle"])
+    for side in ("away", "home"):
+        arr = oracle["linescore"]["innings"][side]
+        oracle["linescore"]["innings"][side] = [0] * (inning - 1) + arr
+    return {"game": game, "oracle": oracle}
+
+
+def test_short_final_top_half_is_excused_once_the_game_is_official():
+    data = _relabel_inning(_load_synth("bad_outs_per_half.json"), 7)
+    result = replay.check_outs_per_half(data["game"], data["oracle"])
+    assert result.ok, result.warnings
+
+
+def test_short_final_top_half_before_the_fifth_is_still_a_failure():
+    for inning in (1, 4):
+        data = _relabel_inning(_load_synth("bad_outs_per_half.json"), inning)
+        result = replay.check_outs_per_half(data["game"], data["oracle"])
+        assert not result.ok, (
+            f"inning {inning} is too early for a game to be called; a short "
+            "half there is a missing out and must still be reported"
+        )
+
+
+def test_short_final_BOTTOM_half_is_not_excused_by_the_called_game_rule():
+    """The bottom-half case belongs to the walk-off exception, which carries
+    a score test. Position alone must not excuse it."""
+    data = _relabel_inning(_load_synth("bad_outs_per_half.json"), 7)
+    for event in data["game"]["events"]:
+        event["half"] = "bottom"
+    # The fixture's half moves to the home side, so the home linescore entry
+    # has to move with it -- left null it would be excused as UNBATTED and
+    # the test would pass without exercising anything.
+    data["oracle"]["linescore"]["innings"]["home"][6] = 1
+    data["oracle"]["linescore"]["innings"]["away"][6] = None
+    result = replay.check_outs_per_half(data["game"], data["oracle"])
+    assert not result.ok, result.warnings
+
+
+# ---------------------------------------------------------------------------
+# The floor under the other five: they are all written to find a
+# DISAGREEMENT, so they all pass when handed nothing.
+# ---------------------------------------------------------------------------
+
+
+def test_a_game_with_no_plate_appearance_fails_the_content_check():
+    data = _load_synth("good_baseline.json")
+    game = copy.deepcopy(data["game"])
+    game["events"] = [e for e in game["events"] if e["kind"] != "plate_appearance"]
+    assert not replay.check_has_content(game, data["oracle"]).ok
+
+
+def test_the_other_five_checks_all_pass_vacuously_on_an_empty_game():
+    """Why the content check has to exist, asserted rather than asserted-of.
+
+    The oracle has to be emptied too, because that is the real shape:
+    20260809_3555 pairs its two events with a 0-0 linescore and twenty
+    boxscore rows totalling zero at-bats. The source agrees nothing
+    happened, so there is no disagreement for any of the five to find.
+
+    If this ever starts failing because one of the five DOES catch it, the
+    content check is redundant and can go.
+    """
+    data = _load_synth("good_baseline.json")
+    game = copy.deepcopy(data["game"])
+    game["events"] = [e for e in game["events"] if e["kind"] != "plate_appearance"]
+    oracle = {
+        "linescore": {
+            "innings": {"away": [0], "home": [None]},
+            "totals": {
+                "away": {"R": 0, "H": 0, "E": 0},
+                "home": {"R": 0, "H": 0, "E": 0},
+            },
+        },
+        "box": {
+            "batting": {
+                team: [dict(row, AB=0, R=0, H=0, RBI=0, BB=0, SO=0, LOB=0)
+                       for row in rows]
+                for team, rows in data["oracle"]["box"]["batting"].items()
+            }
+        },
+    }
+    for name, check in replay._CHECKS:
+        if name == "content":
+            continue
+        assert check(game, oracle).ok, (
+            f"{name} unexpectedly caught the empty game -- good news, but the "
+            f"content check's rationale needs rewriting: {check(game, oracle).warnings}"
+        )

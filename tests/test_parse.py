@@ -911,3 +911,129 @@ def test_scorer_correction_directive_is_not_a_narrative_line():
     # Ordinary narrative must not be caught by it.
     assert not _SCORER_DIRECTIVE_RE.search("Pat Smith walked.")
     assert not _SCORER_DIRECTIVE_RE.search("Pat Smith set the tone.")
+
+
+# --- batting_order was the first nine ROWS, not the first nine batters (#33) --
+#
+# StatCrew nests a slot's substitutes immediately under that slot's starter,
+# so `list(team.players.keys())[:9]` pulled bench players into the starting
+# nine and pushed real starters past index 9. Measured against the first nine
+# distinct batters each team's own narrative shows, the old field agreed on
+# 1,309 of 2,957 team-games (44.3%); the reconstruction agrees on 2,867
+# (97.0%). Nothing validated the field, so it was wrong more often than right
+# and never reported it.
+
+
+def _row(pid):
+    return {"player_id": pid, "AB": 1, "BB": 0}
+
+
+def _sub(seq, pin, pout):
+    return {"after_event_seq": seq, "player_in": pin, "player_out": pout}
+
+
+def _pa(seq, pid, team="T"):
+    return {
+        "kind": "plate_appearance",
+        "seq": seq,
+        "batting_team": team,
+        "batter": {"player_id": pid},
+    }
+
+
+def test_a_nested_substitute_is_not_counted_as_a_starter():
+    # Ten rows: "sub" is nested under s5, the man he replaced. The starting
+    # nine must skip him and keep s9, not stop one short at s8.
+    rows = [_row(f"s{i}") for i in range(1, 6)] + [_row("sub")] + [
+        _row(f"s{i}") for i in range(6, 10)
+    ]
+    subs = [_sub(50, "sub", "s5")]
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_a_bare_announcement_is_not_evidence_of_entry():
+    # `player_out: None` as often means "starter moves to another position"
+    # as "bench player enters", so it must not exclude a genuine starter.
+    rows = [_row(f"s{i}") for i in range(1, 10)]
+    subs = [_sub(20, "s3", None)]
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_a_player_already_batting_before_his_entry_is_a_starter():
+    # A defensive swap between two men BOTH already in the lineup names each
+    # as the other's player_out. The one who was already batting is not an
+    # arrival, whatever the substitution log calls him.
+    rows = [_row(f"s{i}") for i in range(1, 10)]
+    subs = [_sub(90, "s2", "s7")]  # named entry, but AFTER s2's first PA
+    events = [_pa(i, f"s{i}") for i in range(1, 10)]
+    assert parse._reconstruct_starting_order(rows, subs, events, "T") == [
+        f"s{i}" for i in range(1, 10)
+    ]
+
+
+def test_fewer_than_nine_survivors_returns_none_rather_than_guessing():
+    rows = [_row(f"s{i}") for i in range(1, 4)]
+    assert parse._reconstruct_starting_order(rows, [], [], "T") is None
+
+
+# --- AVG is the only OPTIONAL boxscore stat column (#33) --------------------
+#
+# 20240521_gq1b has a Batters header of "Hitters AB R H RBI BB SO LOB" with no
+# AVG, so every row renders 7 cells. A `len(cells) < 8` guard dropped all 33
+# rows for BOTH teams silently -- the game shipped with an empty box beside a
+# 14-9 linescore, and 18 players carried a permanently short season line
+# because those at-bats were never recorded anywhere. It is the only game in
+# the corpus whose Batters table omits AVG.
+
+
+def test_the_one_game_whose_box_omits_avg_still_parses_its_batters():
+    """Regression test against the real page, not a synthetic row."""
+    import glob
+    import json
+    from pathlib import Path
+
+    import pytest
+
+    from bc_pipeline import archive
+    from bc_pipeline.config import PipelineConfig
+
+    try:
+        checkpoint = archive.load_checkpoint(PipelineConfig().checkpoint_path)
+    except Exception:  # pragma: no cover - archive absent
+        pytest.skip("raw archive not available on this machine")
+    by_id = {
+        url.rsplit("/", 1)[-1].replace(".xml", ""): e for url, e in checkpoint.items()
+    }
+    if "20240521_gq1b" not in by_id:
+        pytest.skip("20240521_gq1b not in the local archive")
+
+    entry = by_id["20240521_gq1b"]
+    html = Path(entry["archived_path"]).read_text(encoding="utf-8", errors="replace")
+
+    repo_root = Path(__file__).resolve().parents[1]
+    committed = json.loads(
+        Path(
+            glob.glob(str(repo_root / "games" / "*" / "20240521_gq1b.json"))[0]
+        ).read_text(encoding="utf-8")
+    )
+    game = parse.parse_game(
+        html,
+        source_url=committed["meta"]["source_url"],
+        fetched_at=entry["fetched_at"],
+    )
+    rows = game["box"]["batting"]
+    assert len(rows) == 2, "both teams' Batters tables must be present"
+    for team_id, lines in rows.items():
+        assert lines, f"{team_id} parsed to zero batting rows"
+        for line in lines:
+            # The source omits AVG here; record its absence rather than
+            # inventing a rate.
+            assert line["AVG"] == ""
+            assert isinstance(line["AB"], int)
+    assert sum(len(v) for v in rows.values()) == 33

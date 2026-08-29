@@ -371,7 +371,7 @@
         "kind": "defensive",
         "player_in": "lmdqcass6pt006xa",
         "player_out": "t8mu8ambhqo05rkt",
-        "slot": null
+        "slot": 9
       }
     },
     {
@@ -5079,19 +5079,30 @@
       "half": "top",
       "inning": 7,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 2 Runs, 1 Hits, 0 Errors, 1 LOB",
+      "narrative": "Inning Summary: 2 Runs, 1 Hits, 0 Errors, 0 LOB",
       "scoring_play": false,
       "seq": 89,
       "summary": {
         "E": 0,
         "H": 1,
-        "LOB": 1,
+        "LOB": 0,
         "R": 2
       }
     }
   ],
   "game_id": "20240528_6w90",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240528_6w90-1 (inflated_inning_summary_lob): read as 'Inning Summary: 2 Runs , 1 Hits , 0 Errors , 0 LOB'. An ordinary member of the adopted class, in the game's FINAL half-inning -- the game was called with the visitors batting and two out. The half's own plays leave nobody on base: Jenkins and Jablonski struck out, Monroe walked, and T. Rogers then homered with 2 RBI, scoring Monroe ahead of him and emptying the bases. The tag claims 1, one more than the fold supports, counting the batter who completed that plate appearance. Held out of the original 34-entry batch because outs_per_half was also failing this half; that failure was the curtailed ending, now covered by check_outs_per_half's called-game exception, so the half's own account is trustworthy and the LOB tag is the only thing left disagreeing with it.",
+      "location": {
+        "half": "top",
+        "inning": 7,
+        "line_index": 5
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            2 Runs\n                                                                    ,             \t\t\t                            1 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            1 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -5218,7 +5229,7 @@
           "slot": 8
         },
         {
-          "player_id": "lmdqcass6pt006xa",
+          "player_id": "t8mu8ambhqo05rkt",
           "slot": 9
         }
       ],
@@ -5228,7 +5239,7 @@
           "kind": "defensive",
           "player_in": "lmdqcass6pt006xa",
           "player_out": "t8mu8ambhqo05rkt",
-          "slot": null
+          "slot": 9
         },
         {
           "after_event_seq": 0,
@@ -5255,21 +5266,18 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.2.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T17:48:26Z",
     "parse": {
       "events_count": 90,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 7 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 7 top folded LOB 0 != inning_summary LOB 1"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T02:55:29Z",
-    "parser_version": "0.9.0",
-    "source_sha256": "752ebf3a71c842c86b9b79f9463fcd544b499e076022fb4ab4437354d2d97820",
+    "parsed_at": "2026-08-29T04:06:01Z",
+    "parser_version": "0.27.0",
+    "source_sha256": "23114ec464f0aa871c7abb800fc10afc361871da0728c2c4952b5ca067212813",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240528_6w90.xml"
   },
   "players": {
@@ -5586,7 +5594,7 @@
       "team_id": "4hgc4se23g09mrqm"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

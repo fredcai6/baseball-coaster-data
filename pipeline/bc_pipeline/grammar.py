@@ -67,6 +67,14 @@ class PrimaryClause:
     #: `.*` catch-all; parse.py attributes it to the forced runner from base
     #: occupancy, or refuses (issue #40).
     forced_out_at: Optional[str] = None
+    #: The fielding chain thrown to record that out, verbatim ("ss to 1b").
+    #: Captured because its TERMINUS says which base the out was actually
+    #: recorded at, and the source's stated base contradicts it on real
+    #: lines -- "out at second ss to 1b" ends at the first baseman, who
+    #: cannot record an out at second. Without this the contradiction is
+    #: invisible and the out gets pinned on whoever happens to occupy the
+    #: base the source misnamed (issue #33).
+    forced_out_chain: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -329,7 +337,11 @@ def _x_into_double_play(m: re.Match):
 
 
 def _x_groundout_chain(m: re.Match):
-    mods = _hit_modifiers_from_tail(m.groupdict().get("mods"))
+    # `unassisted` is optional here because this extractor is shared by two
+    # rules and only one of them captures the group -- the same shape
+    # `_x_into_double_play` above already uses for `mods`.
+    mods = ["unassisted"] if m.groupdict().get("unassisted") else []
+    mods += _hit_modifiers_from_tail(m.groupdict().get("mods"))
     return (m.group("name"), _split_chain(m.group("chain")), None, mods)
 
 
@@ -400,6 +412,7 @@ def _x_fielders_choice(m: re.Match):
         m.group("loc") or m.group("middle") and "up the middle",
         _hit_modifiers_from_tail(m.group("mods")),
         m.group("out_base"),
+        m.group("out_chain"),
     )
 
 
@@ -554,7 +567,8 @@ PRIMARY_RULES: List[PrimaryRule] = [
         re.compile(
             rf"^(?!.*\bstruck out\b)(?!.*\bpicked off\b)"
             rf"(?P<name>.+?) out at first "
-            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*){_HIT_MOD_TAIL}$"
+            rf"(?P<chain>[a-z0-9]+(?: to [a-z0-9]+)*)"
+            rf"(?P<unassisted> unassisted)?{_HIT_MOD_TAIL}$"
         ),
         "groundout",
         _x_groundout_chain,
@@ -716,7 +730,7 @@ PRIMARY_RULES: List[PrimaryRule] = [
             rf"^(?P<name>.+?) reached on a fielder's choice"
             rf"(?: to (?P<loc>[a-z][a-z ]*?)|(?P<middle> up the middle))?"
             rf"(?:, out at (?P<out_base>first|second|third|home)"
-            rf"(?: [a-z0-9]+(?: to [a-z0-9]+)*)?)?{_HIT_MOD_TAIL}$"
+            rf"(?: (?P<out_chain>[a-z0-9]+(?: to [a-z0-9]+)*))?)?{_HIT_MOD_TAIL}$"
         ),
         "fielders_choice",
         _x_fielders_choice,
@@ -914,12 +928,20 @@ def _b_advance_on_error(m: re.Match):
 
 
 def _b_advance_on_fielders_choice(m: re.Match):
+    # `scored` was hardcoded False while `destination` was free to be "home".
+    # No corpus line had ever reached here with dest="home" -- the only one
+    # that says it carries an `, unearned` tail the rule did not accept, so
+    # the whole line went to unparsed[] and the contradiction never fired.
+    # Widening the tail without fixing this would have started silently
+    # dropping a run.
+    dest = m.group("dest")
     return RunnerMovement(
         name_token=m.group("name"),
         cause="fielders_choice",
-        destination=m.group("dest"),
+        destination=dest,
         out=False,
-        scored=False,
+        scored=dest == "home",
+        unearned=bool(m.groupdict().get("unearned")),
     )
 
 
@@ -1174,7 +1196,8 @@ RUNNER_RULES: List[RunnerRule] = [
     (
         re.compile(
             rf"^(?P<name>.+?) advanced to (?P<dest>{_DEST_ALT}) on a "
-            rf"fielder's choice(?: to (?P<fc_fielder>[a-z][a-z ]*?))?$"
+            rf"fielder's choice(?: to (?P<fc_fielder>[a-z][a-z ]*?))?"
+            rf"{_UNEARNED_TAIL}$"
         ),
         ("fielders_choice",),
         _b_advance_on_fielders_choice,
@@ -2081,10 +2104,11 @@ _MODIFIER_ONLY_RE = re.compile(rf"^(?:{_HIT_MOD_TOKEN})$")
 
 def _widen(extracted):
     """Extractors return ``(name, fielders, location, modifiers)``; the
-    fielder's-choice one appends a fifth element (the base of an out whose
-    runner the line never names). Pad the short form rather than touching
-    every other extractor."""
-    return tuple(extracted) + (None,) * (5 - len(extracted))
+    fielder's-choice one appends a fifth and sixth element -- the base of an
+    out whose runner the line never names, and the fielding chain thrown to
+    record it. Pad the short form rather than touching every other
+    extractor."""
+    return tuple(extracted) + (None,) * (6 - len(extracted))
 
 
 def _match_primary_whole(rest: str):
@@ -2125,7 +2149,7 @@ def _match_primary_chain(rest: str):
         head = _match_primary_whole(", ".join(parts[:k]))
         if head is None:
             continue
-        name, fielders, location, modifiers, _fo = _widen(head[0])
+        name, fielders, location, modifiers, _fo, _fc = _widen(head[0])
         outcome_type = head[1]
         tail_parts = list(parts[k:])
         # Modifier tokens belong to the PRIMARY, not to a movement -- and
@@ -2178,6 +2202,12 @@ def _match_primary_chain(rest: str):
 #: See `parse_clause_group` for what this removes and why it is safe.
 _SPLICED_FOUL_BALL_RE = re.compile(r"\s*Dropped foul ball, E\d+,?\s*(?=[^\s.])")
 
+#: A dropped foul ball narrated as the WHOLE line, one clause, with nothing
+#: after it -- as opposed to the same fragment spliced into another
+#: statement. No ';' is permitted: a line with clauses says something, and
+#: this shape by definition does not.
+_STANDALONE_FOUL_BALL_RE = re.compile(r"[^;]+ [Dd]ropped foul ball, E\d")
+
 
 def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     """Parse one verbatim PBP narrative line into a ``ClauseGroup``.
@@ -2200,6 +2230,45 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
     # downstream always comes from the caller's original line, never from
     # this normalized working copy.
     stripped = _normalize_ws(body)
+
+    # A STANDALONE "X Dropped foul ball, E5 (3-1 BBKB)." -- recognized here,
+    # BEFORE the spliced-fragment stripper below can damage it.
+    #
+    # That stripper removes a "Dropped foul ball, E<n>" fragment StatCrew
+    # spliced into some OTHER statement, and it protects the standalone
+    # spelling with a lookahead for the closing period. But a standalone line
+    # can also carry a pitch count, and then the fragment is followed by
+    # " (3-1 BBKB)." rather than by the period -- so the lookahead let it
+    # through and the stripper ate the only predicate on the line, leaving
+    # "Eddy Pelc (3-1 BBKB)." and a `primary verb not recognized: 'Eddy Pelc'`
+    # refusal. The protection was right; it just did not cover the count.
+    #
+    # Tightening the lookahead cannot fix it, because the genuinely spliced
+    # lines carry counts too ("Wesley Mitchell walkedDropped foul ball, E3
+    # (3-2 BKBBFFB).") and must still be stripped. So match the standalone
+    # shape positively instead, which is unambiguous: the fragment ends the
+    # statement, and nothing else on the line asserts anything.
+    #
+    # The count is deliberately not carried onto anything. It is a
+    # mid-plate-appearance count and there is no outcome here to attach it
+    # to; inventing one is the silent-wrong-parse failure mode issue #40
+    # exists to remove. 4 lines across 4 games.
+    # Matched narrowly and positively: the WHOLE line, one clause, ending in
+    # the fragment. `_NO_MOVEMENT_RE` is deliberately NOT reused here -- its
+    # other alternative ("did not advance") appears as one clause among
+    # several on ordinary lines, and its leading `.+?` would happily swallow
+    # everything before it, silently reducing a real multi-clause play to
+    # "asserts nothing". Six games regressed on exactly that before this was
+    # narrowed.
+    _probe = stripped.rstrip(".").strip()
+    _count_m = _COUNT_TAIL_RE.fullmatch(_probe)
+    if _count_m:
+        _probe = _count_m.group("rest").strip()
+    if _STANDALONE_FOUL_BALL_RE.fullmatch(_probe):
+        return ClauseGroup(
+            kind="runner_event", runners=(), trailing_outs=trailing_outs
+        )
+
     # A "Dropped foul ball, E<n>" event StatCrew spliced INTO a plate
     # appearance's line instead of emitting it on its own:
     #
@@ -2260,9 +2329,14 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
                 extracted, outcome_type, nocount_batter_movements = chained_nc
                 whole_nc = (extracted, outcome_type)
         if whole_nc is not None:
-            name, fielders, location, modifiers, forced_out_at = _widen(
-                whole_nc[0]
-            )
+            (
+                name,
+                fielders,
+                location,
+                modifiers,
+                forced_out_at,
+                forced_out_chain,
+            ) = _widen(whole_nc[0])
             outcome_type = whole_nc[1]
             primary = PrimaryClause(
                 name_token=name,
@@ -2273,6 +2347,7 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
                 count=None,
                 pitches=None,
                 forced_out_at=forced_out_at,
+                forced_out_chain=forced_out_chain,
             )
 
         if primary is not None:
@@ -2331,7 +2406,14 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
             extracted, outcome_type, batter_movements = chained
             whole = (extracted, outcome_type)
     if whole is not None:
-        name, fielders, location, modifiers, forced_out_at = _widen(whole[0])
+        (
+            name,
+            fielders,
+            location,
+            modifiers,
+            forced_out_at,
+            forced_out_chain,
+        ) = _widen(whole[0])
         outcome_type = whole[1]
         primary = PrimaryClause(
             name_token=name,
@@ -2342,6 +2424,7 @@ def _parse_clause_group(line: str) -> Union[ClauseGroup, GrammarMiss]:
             count=Count(balls=balls, strikes=strikes),
             pitches=pitches,
             forced_out_at=forced_out_at,
+            forced_out_chain=forced_out_chain,
         )
 
     if primary is None:

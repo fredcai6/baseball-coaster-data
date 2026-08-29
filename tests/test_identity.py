@@ -286,6 +286,95 @@ def test_resolve_prefix_match_reverse_direction_token_longer_than_last_name():
     assert pid == "p1"
 
 
+# --- prefix tier consults the first name before short-circuiting (#33) -----
+#
+# A unique prefix hit is WEAKER evidence than a unique exact hit, and unlike
+# the exact tier it can name the wrong man while the RIGHT one is still
+# waiting in a tier below. Real corpus shape (games/2025/20250522_2f4w and
+# two more): "La" is a unique prefix of "Lane", so `E. La` short-circuited to
+# Carmine Lane and never reached the compound-surname tier, where "La" is an
+# interior token of "Edwin De La Cruz". Corroborated independently in all
+# three games -- De La Cruz sits in the box with AB=3 BB=1 and zero plate
+# appearances attributed to him.
+#
+# Measured before adopting, over the 83,282 batter tokens in the corpus that
+# the initial+surname pair forces to a single candidate: the guard agrees
+# with the committed parse on 83,273 (99.9892%) and disagrees on 9 -- every
+# one of them an `E. La`. It never overrules a line that was already right.
+
+
+def test_prefix_tier_defers_to_compound_surname_when_first_name_disagrees():
+    # "E. La" must reach Edwin De La Cruz, not the prefix-unique Carmine Lane.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1", name="Carmine Lane", last_name="Lane", team_id="syn:team:away"
+        ),
+        "p2": identity.PlayerEntry(
+            player_id="p2",
+            name="Edwin De La Cruz",
+            last_name="Cruz",
+            team_id="syn:team:away",
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("La", "away", full_name="E. La")
+    assert resolved is True
+    assert pid == "p2"
+
+
+def test_prefix_tier_still_short_circuits_when_first_name_agrees():
+    # The ordinary truncated-surname case is untouched: "C. Lane" agrees with
+    # Carmine, so the prefix hit stands without consulting any lower tier.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1", name="Carmine Lane", last_name="Lane", team_id="syn:team:away"
+        ),
+        "p2": identity.PlayerEntry(
+            player_id="p2",
+            name="Edwin De La Cruz",
+            last_name="Cruz",
+            team_id="syn:team:away",
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("La", "away", full_name="C. Lane")
+    assert resolved is True
+    assert pid == "p1"
+
+
+def test_prefix_tier_short_circuits_unchanged_when_no_full_name_is_supplied():
+    # A pbp token carrying no first name has nothing to consult, so the
+    # prefix hit must stand exactly as it did before the guard -- callers
+    # that pass no full_name see no behaviour change at all.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1",
+            name="Conner Richardson",
+            last_name="Richardson",
+            team_id="syn:team:away",
+        ),
+    }
+    table = _one_side_table(players)
+    assert table.resolve("Richardso", "away") == ("p1", True)
+    assert table.resolve("Richardso", "away", full_name="") == ("p1", True)
+
+
+def test_prefix_tier_refuses_when_first_name_disagrees_and_no_better_candidate():
+    # Corpus shape from games/2024/20240720_pzh6: "C. Bryant" prefix-matches
+    # the lone "Hunter Bryan", but the game names BOTH -- each pinch hits for
+    # a different player, so one man cannot be both. With no lower tier able
+    # to name him, an honest refusal beats a confident wrong answer.
+    players = {
+        "p1": identity.PlayerEntry(
+            player_id="p1", name="Hunter Bryan", last_name="Bryan", team_id="syn:team:away"
+        ),
+    }
+    table = _one_side_table(players)
+    pid, resolved = table.resolve("Bryant", "away", full_name="C. Bryant")
+    assert resolved is False
+    assert pid is None
+
+
 # --- empty-string guard (issue #30 g2b) -------------------------------------
 
 

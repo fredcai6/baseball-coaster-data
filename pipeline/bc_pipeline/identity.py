@@ -302,8 +302,23 @@ class PlayerTable:
             if p.last_name.startswith(last_name) or last_name.startswith(p.last_name)
         ]
         if len(prefix) == 1:
-            return prefix[0], True
-        if len(prefix) >= 2:
+            # A prefix hit is WEAKER evidence than an exact one, and unlike
+            # the exact tier it can name the wrong man while the RIGHT one is
+            # still waiting in a tier below. "La" is a unique prefix of
+            # "Lane", so `E. La` short-circuited to Carmine Lane and never
+            # reached the compound-surname tier -- where "La" is an interior
+            # token of "Edwin De La Cruz", who sits in the same box with
+            # AB=3 BB=1 and zero plate appearances attributed to him.
+            #
+            # The deciding evidence, the first-name token, was on the line
+            # and simply not consulted. So consult it before short-circuiting.
+            # A pbp token carrying no first name has nothing to consult and
+            # the match stands, exactly as before.
+            if not full_name or first_token_agrees(
+                full_name, team.players[prefix[0]].name
+            ):
+                return prefix[0], True
+        elif len(prefix) >= 2:
             narrowed = _narrow_by_first_token(team, prefix, full_name)
             if narrowed is not None:
                 return narrowed, True

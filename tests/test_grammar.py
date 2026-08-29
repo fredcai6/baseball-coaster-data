@@ -1695,3 +1695,119 @@ def test_no_builder_reaches_home_without_scoring():
         for r in parse_clause_group(line).runners:
             if r.destination == "home" and not r.out:
                 assert r.scored, line
+
+
+# --- the stated out base can contradict the line's own fielding chain (#33) --
+#
+# "X reached on a fielder's choice, out at second ss to 1b" ends its throw at
+# the FIRST BASEMAN, who does not record an out at second. The chain is right
+# and the stated base is wrong: the out was made at first, and on a fielder's
+# choice the runner going to first is the batter. Capturing the chain is what
+# makes the contradiction visible at all -- the old regex matched it and threw
+# it away, so nothing downstream could see it.
+
+
+def test_fielders_choice_captures_the_fielding_chain():
+    cg = grammar.parse_clause_group(
+        "T. Halsema reached on a fielder's choice, out at second ss to 1b, RBI;"
+        " D. Hubbard scored."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "ss to 1b"
+
+
+def test_fielding_chain_is_captured_when_it_agrees_with_the_stated_base():
+    # The rule must fire on the CONTRADICTION, not on the shape, so a chain
+    # that agrees has to be captured just the same and left alone downstream.
+    cg = grammar.parse_clause_group(
+        "Wesley Mitchell reached on a fielder's choice, out at second c to 2b"
+        " (1-1 BS)."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "c to 2b"
+
+
+def test_fielders_choice_without_a_chain_still_parses():
+    cg = grammar.parse_clause_group(
+        "T. Halsema reached on a fielder's choice, out at second."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain is None
+
+
+# --- a STANDALONE dropped-foul-ball line that carries a count (#33) ---------
+#
+# The spliced-fragment stripper protected the standalone spelling with a
+# lookahead for the closing period, but a standalone line can also carry a
+# pitch count -- and then the stripper ate the only predicate on the line,
+# leaving "Eddy Pelc (3-1 BBKB)." and a `primary verb not recognized` refusal.
+# Tightening the lookahead cannot fix it: the genuinely spliced lines carry
+# counts too and must still be stripped. So the standalone shape is matched
+# positively, before the stripper runs.
+
+
+def test_standalone_dropped_foul_ball_with_a_count_asserts_nothing():
+    for text in (
+        "Eddy Pelc Dropped foul ball, E5 (3-1 BBKB).",
+        "Johnny Pappas Dropped foul ball, E3 (1-2 KBK).",
+        "Eddy Pelc Dropped foul ball, E5 (0-0).",
+    ):
+        cg = grammar.parse_clause_group(text)
+        assert cg.kind == "runner_event", text
+        assert cg.runners == (), text
+
+
+def test_standalone_dropped_foul_ball_without_a_count_still_asserts_nothing():
+    cg = grammar.parse_clause_group("E. Pelc Dropped foul ball, E5.")
+    assert cg.kind == "runner_event"
+    assert cg.runners == ()
+
+
+def test_a_spliced_dropped_foul_ball_is_still_stripped_so_the_real_verb_reads():
+    # The fragment is spliced INTO another statement, which must still parse.
+    # These carry counts too, which is why the fix cannot be a narrower
+    # lookahead on the stripper.
+    cg = grammar.parse_clause_group(
+        "Wesley Mitchell walkedDropped foul ball, E3 (3-2 BKBBFFB)."
+    )
+    assert cg.kind == "plate_appearance"
+    assert cg.primary.outcome_type == "walk"
+
+    cg = grammar.parse_clause_group(
+        "Enzo Apodaca Dropped foul ball, E2, homered to right field (2-2 BK)."
+    )
+    assert cg.kind == "plate_appearance"
+    assert cg.primary.outcome_type == "home_run"
+
+
+# --- the unattributed out names a base a NAMED runner already holds (#33) ---
+#
+# "N. Marcelo reached on a fielder's choice to shortstop, out at second 1b to
+# 2b; M. O'Hara out at second ss to 2b." Two runners cannot both be retired
+# at second base on one play, so the unattributed out is not a second runner
+# -- it is the batter. 20240530_ufps states it twice over, repeating the
+# identical chain "3b to 2b" in both clauses.
+
+
+def test_a_named_runner_out_at_the_same_base_is_parsed_alongside_the_primary():
+    cg = grammar.parse_clause_group(
+        "N. Marcelo reached on a fielder's choice to shortstop, out at second"
+        " 1b to 2b; M. O'Hara out at second ss to 2b."
+    )
+    assert cg.primary.forced_out_at == "second"
+    assert cg.primary.forced_out_chain == "1b to 2b"
+    # The named runner's own out must survive as its own movement -- the rule
+    # that reads the primary's unattributed out must not consume it.
+    assert [(r.name_token, r.destination, r.out) for r in cg.runners] == [
+        ("M. O'Hara", "second", True)
+    ]
+
+
+def test_an_unattributed_out_with_no_competing_named_out_is_left_alone():
+    # The rule fires on the collision, not on the shape: here nobody else is
+    # out at second, so the ordinary forced-runner reading still applies.
+    cg = grammar.parse_clause_group(
+        "T. Lomack reached on a fielder's choice; M. Moralez advanced to third."
+    )
+    assert cg.primary.forced_out_at is None
+    assert [(r.name_token, r.out) for r in cg.runners] == [("M. Moralez", False)]

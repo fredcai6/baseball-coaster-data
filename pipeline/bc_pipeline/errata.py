@@ -1,0 +1,251 @@
+"""Authored corrections to defective SOURCE lines.
+
+Every rule in this parser is scored corpus-wide against cases whose answer
+is already known, with its null reported beside it. That discipline is what
+makes the rules trustworthy, and it has a hard edge: a phenomenon that
+occurs ONCE cannot be scored that way. "100% correct on one case" is not
+evidence, and a rule narrow enough to catch only that case is a hardcode
+wearing a rule's clothes -- it carries a rule's authority without a rule's
+evidence, and the next reader cannot tell the difference.
+
+The alternative that keeps offering itself is worse: loosen a real rule
+until the one-off falls inside it. That is exactly the trade `check_lob`
+already measured and refused -- 66 recoveries against 287 regressions.
+Widening a rule to reach one line puts every line the rule already got
+right at risk.
+
+So errata are the pressure valve that keeps the general rules general. A
+one-off scorer error goes here, named and evidenced, and the rules stay as
+tight as their evidence supports.
+
+ADMISSIBILITY -- both must hold:
+
+  1. No general rule can reach it. Usually that is because the phenomenon
+     is essentially unique (N=1 or 2) and so cannot be scored; at higher N,
+     a rule is normally the right answer and gets scored like one.
+
+     ONE POPULATION is admitted despite being large, deliberately and with
+     the owner's ruling: `inflated_inning_summary_lob`, 34 entries. A source
+     Inning Summary reports one more runner left on base than its own half's
+     plays put there. Measured, the defect sits at 2.01% of FINAL
+     half-innings (29 of 1,445) against 0.030% everywhere else (7 of
+     23,486) -- a 67x concentration -- spread evenly over all 12 home clubs
+     and all three seasons, which makes it a close-out artifact of the
+     scoring software rather than one scorer or a fault of ours. Ruled out
+     by measurement: the summary tags are not misaligned by a half (99.80%
+     match in place), walk-offs explain only 5, and the play type ending the
+     half carries no signal.
+
+     The reason it is errata and not a rule: the only rule available would
+     be "in a final half-inning, when the tag exceeds the fold by one,
+     believe the fold" -- which fires blind on every future instance,
+     including any that turn out to be OUR bug. That is precisely the
+     failure this file exists to avoid. Per-line entries pinned to a hash,
+     each carrying its own arithmetic, cannot fire on anything but the exact
+     lines a human checked.
+
+     A SECOND POPULATION is admitted on the same reasoning: 53 entries
+     across 10 games where the play-by-play calls one lineup slot by a name
+     that exists nowhere else in the source. `K. Johnson` bats four times
+     for a club whose boxscore, roster links, pitching table and box notes
+     contain no Johnson at all, while `Austin Bates` holds a batting row
+     with plate appearances and not one play attributed to him. Four of the
+     ten are corroborated by a box note naming the boxscore player for a
+     play the narrative gives the phantom -- a Sac, a GIDP, a 2B, an RBI.
+     One game's phantom surname is the literal string `null`.
+
+     The rule that suggests itself is "bind an unresolvable name to the
+     lone batting row that has plate appearances and no events." Measured,
+     that antecedent holds on 22 of 2,968 team-sides and only 10 of them
+     are this defect; the other 12 are ordinary misattribution, where
+     binding would move plate appearances onto the wrong man. 45% is not a
+     rule. Tightening it -- also require an unresolvable name on that side
+     whose line count equals the row's implied plate appearances -- reaches
+     10 for 10, but that antecedent fires ONLY where the answer is unknown,
+     so there is no held-out population to score it against at all. An
+     unscorable rule is the thing this file exists to refuse.
+
+     A THIRD POPULATION, same reasoning again: 27 entries across 11 games
+     where the narrative calls one batting slot by the name of a man who is
+     no longer in it. Usually he was just replaced -- `J. Leslie to 2b for
+     B. Lada`, then two more plate appearances arrive under Lada -- and the
+     scorer keeps typing the name he started the game with.
+
+     The boxscore settles each one, and settles it on columns no replay
+     check reads. `pa_counts` only compares plate-appearance totals, so it
+     says a slot is misattributed without saying which line. Hits,
+     strikeouts and walks say which: across these 11 games exactly one
+     reassignment reconciles BOTH men on all three at once. Two further
+     constraints the boxscore cannot express narrow the four that were
+     still ambiguous to one each -- a batter may not bat twice in a row,
+     and may not bat before he enters the game.
+
+     Why not a rule. The obvious one, "a plate appearance by a player
+     already substituted out belongs to whoever replaced him", was written
+     and scored: it fires on 100 plate appearances across 21 games, and 17
+     of those games currently pass every check. The reason is that this
+     source writes an ordinary defensive shuffle as `X to 2b for Y` -- Y
+     has moved, not left, and goes on batting all night. 4 for 21 is not a
+     rule. Gating it on the reconciliation instead ("only where a balanced
+     pa_counts mismatch already exists") reaches 11 for 11, but that gate
+     fires only where a check has already failed, so once again there is no
+     held-out population to score against.
+
+  2. Other evidence IN THE SAME GAME forces the correction: the batting
+     order, the boxscore line, the linescore, an inning summary. The
+     `evidence` field must name it, in enough detail that a reader can
+     check it without rerunning anything.
+
+HOW IT APPLIES. A correction rewrites the raw PBP line text BEFORE the
+grammar sees it, so the corrected line is parsed by exactly the same rules
+as every other line in the corpus. There is no erratum code path through
+the parser, and no rule is relaxed anywhere. Each application is disclosed
+in the game file's ``inferred[]`` under rule ``erratum``, so a consumer
+that wants only what the source actually said can drop the events it names.
+
+HOW IT FAILS. Loudly, always. An erratum is pinned to the sha256 of the
+verbatim line it was authored against. If the archived source ever changes,
+the hash stops matching and the loader RAISES rather than rewriting text
+its author never read. Same for a `replace` substring that is absent, or
+that occurs more than once and so does not name a unique edit. A silently
+skipped correction would be a wrong parse hiding behind a clean one -- this
+repository's oldest failure mode -- so nothing here is skipped silently.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence, Tuple
+
+#: The committed errata file, resolved relative to this package.
+DEFAULT_ERRATA_PATH: Path = Path(__file__).resolve().parents[2] / "corrections" / "errata.json"
+
+_CACHE: Optional[Dict[str, List[dict]]] = None
+
+
+class ErratumError(RuntimeError):
+    """An erratum could not be applied as authored.
+
+    Never caught inside this module. A correction that cannot be applied
+    exactly as written is a correction whose author's assumptions no longer
+    hold, and continuing past it would rewrite text nobody reviewed.
+    """
+
+
+def load(path: Optional[Path] = None) -> Dict[str, List[dict]]:
+    """Read the errata file and index it by ``game_id``.
+
+    Raises ``ErratumError`` on a duplicate ``erratum_id`` -- ids are how a
+    correction is referred to in a game file and in review, so a collision
+    would make two different edits indistinguishable.
+    """
+    target = Path(path) if path is not None else DEFAULT_ERRATA_PATH
+    if not target.exists():
+        return {}
+    doc = json.loads(target.read_text(encoding="utf-8"))
+    by_game: Dict[str, List[dict]] = {}
+    seen: set = set()
+    for entry in doc.get("errata", []):
+        eid = entry["erratum_id"]
+        if eid in seen:
+            raise ErratumError(f"duplicate erratum_id {eid!r} in {target}")
+        seen.add(eid)
+        by_game.setdefault(entry["game_id"], []).append(entry)
+    return by_game
+
+
+def for_game(game_id: str, path: Optional[Path] = None) -> List[dict]:
+    """Every erratum authored for ``game_id``, in file order.
+
+    The committed file is read once and cached, so this is cheap to call
+    per game across a corpus-wide re-parse. Pass ``path`` to bypass the
+    cache in a test.
+    """
+    global _CACHE
+    if path is not None:
+        return load(path).get(game_id, [])
+    if _CACHE is None:
+        _CACHE = load()
+    return _CACHE.get(game_id, [])
+
+
+def line_sha256(text: str) -> str:
+    """sha256 of a raw PBP line, whitespace and all.
+
+    Hashing the VERBATIM text rather than a normalized form is deliberate:
+    normalization is a parser decision that can change, and an erratum must
+    stay pinned to the bytes its author actually read.
+    """
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def apply_to_lines(entries: Sequence[dict], lines: Sequence) -> Tuple[List, List[dict]]:
+    """Apply ``entries`` to ``lines`` (a sequence of ``parse.PbpLine``).
+
+    Returns ``(corrected_lines, applications)``, where each application is
+    ``{"erratum_id", "location", "raw", "corrected", "class", "evidence"}``
+    ready for disclosure in the game file's ``inferred[]``.
+
+    Raises ``ErratumError`` if an erratum names a location that does not
+    exist, a line whose text does not hash to ``raw_sha256``, or a
+    ``replace`` substring that is absent from that line or occurs more than
+    once. Every one of those means the correction no longer describes the
+    source it was written for.
+    """
+    out = list(lines)
+    applications: List[dict] = []
+    for entry in entries:
+        loc = entry["location"]
+        matches = [
+            i
+            for i, line in enumerate(out)
+            if line.inning == loc["inning"]
+            and line.half == loc["half"]
+            and line.line_index == loc["line_index"]
+        ]
+        if len(matches) != 1:
+            raise ErratumError(
+                f"{entry['erratum_id']}: expected exactly one line at "
+                f"inning {loc['inning']} {loc['half']} index {loc['line_index']}, "
+                f"found {len(matches)}"
+            )
+        idx = matches[0]
+        line = out[idx]
+        actual = line_sha256(line.text)
+        if actual != entry["raw_sha256"]:
+            raise ErratumError(
+                f"{entry['erratum_id']}: the source line has changed since this "
+                f"erratum was authored (expected sha256 {entry['raw_sha256']}, "
+                f"found {actual}). Re-read the line and re-author the correction; "
+                f"do not repin the hash without doing so."
+            )
+        occurrences = line.text.count(entry["replace"])
+        if occurrences != 1:
+            raise ErratumError(
+                f"{entry['erratum_id']}: replace={entry['replace']!r} occurs "
+                f"{occurrences} times in the line; a correction must name a "
+                f"unique edit"
+            )
+        corrected = line.text.replace(entry["replace"], entry["with"])
+        # PbpLine is frozen, so this is a replacement rather than a mutation
+        # -- the original line object is left exactly as the HTML produced it.
+        out[idx] = type(line)(
+            inning=line.inning,
+            half=line.half,
+            line_index=line.line_index,
+            text=corrected,
+            is_strong=line.is_strong,
+        )
+        applications.append(
+            {
+                "erratum_id": entry["erratum_id"],
+                "location": dict(loc),
+                "raw": line.text,
+                "corrected": corrected,
+                "class": entry["class"],
+                "evidence": entry["evidence"],
+            }
+        )
+    return out, applications

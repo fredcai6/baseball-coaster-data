@@ -35,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .html_struct import Node, find_all, find_all_by_class, parse_html, text_of
 
-REPLAYER_VERSION = "0.2.0"
+REPLAYER_VERSION = "0.6.0"
 
 _BASE_INDEXES = (1, 2, 3)
 
@@ -188,7 +188,11 @@ def _extract_box_batting_oracle(
                     "BB": int(by_label["BB"]),
                     "SO": int(by_label["SO"]),
                     "LOB": int(by_label["LOB"]),
-                    "AVG": by_label["AVG"].strip(),
+                    # Optional, and read by LABEL here rather than by
+                    # position -- which is why the same defective header that
+                    # made the parser silently drop 33 rows made this raise
+                    # loudly instead. One source fact, two symptoms.
+                    "AVG": by_label.get("AVG", "").strip(),
                 }
             except KeyError as exc:
                 raise ValueError(f"oracle: box batting header missing column {exc}") from exc
@@ -378,6 +382,19 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
     #: linescore-table padding rather than a played half.
     last_played_inning = max((inn for inn, _half in groups), default=0)
 
+    #: True when the game's final half is a TOP half, so the home side never
+    #: came to bat in `last_played_inning`. Some pages publish a 0 for that
+    #: unplayed bottom half rather than leaving it blank, which the trailing-
+    #: padding rule above cannot reach because the inning IS the last played
+    #: one. Same shape and the same five games as `check_outs_per_half`'s
+    #: called-game exception; kept to `o_val == 0` so a non-zero expectation
+    #: is still always reported.
+    ended_in_a_top_half = (
+        bool(groups)
+        and max(groups, key=_half_order)[1] == "top"
+        and max(groups, key=_half_order)[0] >= 5
+    )
+
     oracle_innings = oracle["linescore"]["innings"]
     for side in ("away", "home"):
         oi = oracle_innings[side]
@@ -405,6 +422,13 @@ def check_linescore(game: dict, oracle: dict) -> CheckResult:
                     # corpus this silences 189 warnings and keeps 4 (issue
                     # #40).
                     if o_val == 0 and (i + 1) > last_played_inning:
+                        continue
+                    if (
+                        o_val == 0
+                        and side == "home"
+                        and (i + 1) == last_played_inning
+                        and ended_in_a_top_half
+                    ):
                         continue
                     warnings.append(
                         f"linescore: {side} inning {i + 1} has no folded events but "
@@ -488,11 +512,37 @@ def check_outs_per_half(game: dict, oracle: dict) -> CheckResult:
             and (last_d["home_score_before"] + last_d["runs_on_play"])
             > oracle["linescore"]["totals"]["away"]["R"]
         )
-        if unbatted or walkoff:
+        # Called-game exception: the game's LAST half is a TOP half that
+        # never reached three outs. A game that reaches a normal conclusion
+        # cannot end that way -- either the visitors finish their half, or
+        # the home team bats after them -- so the shape is itself the
+        # evidence that play stopped mid-half (rain, a run rule, a curfew).
+        #
+        # Deliberately NOT "the last half is short": that reads on 75 of
+        # 1,484 games and would excuse the bottom-9th of every walk-off on
+        # position alone, which is the walk-off exception's job and which
+        # already carries a score test. Requiring a TOP half narrows it to
+        # exactly 5 games corpus-wide (20240528_6w90, 20250605_ujjf,
+        # 20250812_xe7a, 20260620_hbib, 20260812_sbyz), each a blowout or a
+        # weather stoppage -- one reads "Rainy" in its own weather field.
+        #
+        # What this costs: an out genuinely LOST by the parser from the away
+        # side's final half of an already-curtailed game stops being caught
+        # here. It is still caught by `pa_counts` (the boxscore row keeps
+        # the plate appearance) and by `lob`/`linescore` if any runner or
+        # run went with it, and `replayable` requires all five to pass.
+        # `inning >= 5` is the official-game rule, not a tuned threshold: a
+        # contest called before the visitors have batted five times is not a
+        # game at all, so a short top half that early is a missing out, not a
+        # stoppage. All five real instances sit at innings 6, 7, 7, 6 and 9.
+        called_game = (
+            is_last_half and half == "top" and total_outs < 3 and inning >= 5
+        )
+        if unbatted or walkoff or called_game:
             continue
         warnings.append(
             f"outs_per_half: inning {inning} {half} totals {total_outs} outs "
-            "(expected 3, no walk-off/unbatted exception applies)"
+            "(expected 3, no walk-off/unbatted/called-game exception applies)"
         )
 
     return CheckResult(ok=not warnings, warnings=warnings)
@@ -638,8 +688,31 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
     for team_id, lines in oracle["box"]["batting"].items():
         for line in lines:
             pid = line["player_id"]
-            if pid not in events_pa:
-                continue  # box row with no PBP plate appearance in this game slice
+            if pid not in events_pa and (line["AB"] + line["BB"]) == 0:
+                # A box row that implies no plate appearance EITHER -- a
+                # defensive replacement or a pinch runner who never batted.
+                # There is nothing to reconcile, so skip it.
+                #
+                # This skip used to be unconditional, which made the check
+                # blind in exactly the direction it exists to see. A batter
+                # whose EVERY plate appearance was misattributed ends with
+                # zero events, drops out of `events_pa`, and was skipped --
+                # so the worst case this oracle can catch produced no warning
+                # at all, while the batter who absorbed his PAs was often
+                # caught by the same amount in the other direction. A guard
+                # whose fallback is silence is not a guard.
+                #
+                # Counted over the corpus at the time of the change: 25 games
+                # carry a box row with AB+BB > 0 and zero plate appearances
+                # in the events. In 8 of them the missing PAs are exactly
+                # conserved by a surplus on another batter -- misattribution,
+                # recoverable. In the rest the plate appearances are absent
+                # from the narrative altogether (the M. Jackson games, where
+                # they sit in unparsed[], and 20250521_a4ms, whose box gives
+                # Noel Soto AB=1 while his name never appears in any line).
+                # Both are real: a game whose events cannot reproduce its own
+                # box does not replay, however well-formed the file is.
+                continue
             expected = (
                 line["AB"]
                 + line["BB"]
@@ -647,7 +720,7 @@ def check_pa_counts(game: dict, oracle: dict) -> CheckResult:
                 + sac.get(pid, 0)
                 + interference.get(pid, 0)
             )
-            actual = events_pa[pid]
+            actual = events_pa.get(pid, 0)
             if actual != expected:
                 warnings.append(
                     f"pa_counts: player {pid} events PA {actual} != box-implied "
@@ -731,7 +804,36 @@ def check_illegal_transitions(game: dict, oracle: dict) -> CheckResult:
     return CheckResult(ok=not warnings, warnings=warnings)
 
 
+def check_has_content(game: dict, oracle: dict) -> CheckResult:
+    """A game must contain at least one plate appearance.
+
+    The floor under the other five. Every one of them is written to find a
+    DISAGREEMENT, so every one of them passes when handed nothing: no half
+    to count outs for, no runner to leave on base, no plate appearance to
+    reconcile against the boxscore. A page describing no baseball therefore
+    scored as fully validated -- `20260809_3555`, twenty boxscore rows
+    totalling zero at-bats and two events, was DONE for the life of the
+    corpus on the strength of having nothing in it.
+
+    `parse.parse_game` now refuses such a page outright, so nothing should
+    reach here. This stays as the second line: a check that cannot pass
+    vacuously, because the thing it asserts is that there is something to
+    check.
+    """
+    for ev in game.get("events") or ():
+        if ev.get("kind") == "plate_appearance":
+            return CheckResult(ok=True, warnings=[])
+    return CheckResult(
+        ok=False,
+        warnings=[
+            "content: game holds no plate appearance at all, so the other "
+            "checks have nothing to validate and pass vacuously"
+        ],
+    )
+
+
 _CHECKS = (
+    ("content", check_has_content),
     ("linescore", check_linescore),
     ("outs_per_half", check_outs_per_half),
     ("lob", check_lob),

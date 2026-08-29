@@ -5653,19 +5653,30 @@
       "half": "bottom",
       "inning": 7,
       "kind": "inning_summary",
-      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 2 LOB",
+      "narrative": "Inning Summary: 0 Runs, 1 Hits, 0 Errors, 1 LOB",
       "scoring_play": false,
       "seq": 98,
       "summary": {
         "E": 0,
         "H": 1,
-        "LOB": 2,
+        "LOB": 1,
         "R": 0
       }
     }
   ],
   "game_id": "20250530_07p6",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20250530_07p6-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 1 Hits , 0 Errors , 1 LOB'. The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Manny Jackson, Matt Fabian. The last plate appearance was \"M. Fabian reached on a fielder's choice; Man. Jackson out at second ss to 2b.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
+      "location": {
+        "half": "bottom",
+        "inning": 7,
+        "line_index": 6
+      },
+      "raw": "Inning Summary: \n        \t\t\t                                    \t\t\t                            0 Runs\n                                                                    ,             \t\t\t                            1 Hits\n                                                                    ,             \t\t\t                            0 Errors\n                                                                    ,             \t\t\t                            2 LOB",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -5829,19 +5840,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.4.0",
     "fetched_at": "2026-07-12T16:01:33Z",
     "parse": {
       "events_count": 99,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[lob] lob: inning 7 bottom folded LOB 1 != inning_summary LOB 2"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:28Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T20:58:21Z",
+    "parser_version": "0.20.0",
     "source_sha256": "cf36858abcbc5019a43f33179c69b0836f916d751972c0757c772c59a937b7a0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250530_07p6.xml"
   },
@@ -6172,7 +6181,7 @@
       "team_id": "ybsjgrorwgm7zp91"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

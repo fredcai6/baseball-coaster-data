@@ -2785,8 +2785,8 @@
         "away_score_before": 2,
         "base_out_state": "100|1",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
@@ -2827,20 +2827,20 @@
       "pitches": null,
       "runners": [
         {
-          "cause": "fielders_choice",
+          "cause": "force_out",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "rh9f2ek376lfc148",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "advance",
           "from": 1,
-          "out": true,
+          "out": false,
           "player_id": "kp4qf4i7gq5p5536",
           "scored": false,
-          "to": -1
+          "to": 2
         }
       ],
       "scoring_play": false,
@@ -2849,15 +2849,15 @@
     {
       "_derived": {
         "away_score_before": 2,
-        "base_out_state": "100|2",
+        "base_out_state": "010|2",
         "bases_after": [
-          true,
           false,
+          true,
           false
         ],
         "bases_before": [
-          true,
           false,
+          true,
           false
         ],
         "home_score_before": 2,
@@ -6531,14 +6531,14 @@
   "game_id": "20240623_w3xo",
   "inferred": [
     {
-      "asserted": "out at second attributed to kp4qf4i7gq5p5536, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "asserted": "line says the out was at second but its own chain '3b to 1b' ends at the first baseman, who cannot record one there; the out is the batter's at first, and no runner is retired",
       "location": {
         "half": "bottom",
         "inning": 4,
         "line_index": 2
       },
       "raw": "E. Scavotto reached on a fielder's choice, out at second 3b to 1b; K. Santiago advanced to second.\n                                                                                                                                                                                    \t\t\t\t\t(2 out)",
-      "rule": "unattributed_force_out"
+      "rule": "out_base_contradicts_fielding_chain"
     }
   ],
   "linescore": {
@@ -6722,7 +6722,7 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.3.0",
     "fetched_at": "2026-07-12T18:19:39Z",
     "parse": {
       "events_count": 118,
@@ -6731,8 +6731,8 @@
       "unparsed_count": 0,
       "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:12Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T17:55:29Z",
+    "parser_version": "0.12.0",
     "source_sha256": "fe74f65dad93bab0a6637946cfddf2eaccde2c8c8a8ad9c47de960c2c93dceb7",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240623_w3xo.xml"
   },
@@ -7102,7 +7102,7 @@
       "team_id": "2qaeqxdby1itnbm2"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2024,
   "source": {
     "league_id": "pioneer",

@@ -2976,7 +2976,7 @@
         "away_score_before": 3,
         "base_out_state": "110|1",
         "bases_after": [
-          true,
+          false,
           false,
           false
         ],
@@ -2986,7 +2986,7 @@
           false
         ],
         "home_score_before": 7,
-        "outs_after": 2,
+        "outs_after": 3,
         "outs_before": 1,
         "pa_number_of_batter": 3,
         "runs_on_play": 1
@@ -3009,7 +3009,7 @@
         ],
         "location": "second base",
         "modifiers": [],
-        "outs_recorded": 1,
+        "outs_recorded": 2,
         "type": "fielders_choice"
       },
       "pitcher": {
@@ -3020,12 +3020,12 @@
       "pitches": null,
       "runners": [
         {
-          "cause": "fielders_choice",
+          "cause": "force_out",
           "from": 0,
-          "out": false,
+          "out": true,
           "player_id": "z7ztrgtqignsuqk1",
           "scored": false,
-          "to": 1
+          "to": -1
         },
         {
           "cause": "force_out",
@@ -3033,7 +3033,7 @@
           "out": true,
           "player_id": "qotgjv4pigiosj7u",
           "scored": false,
-          "to": -1
+          "to": 2
         },
         {
           "cause": "advance",
@@ -6820,14 +6820,14 @@
   "game_id": "20250819_ubwo",
   "inferred": [
     {
-      "asserted": "out at second attributed to qotgjv4pigiosj7u, the runner occupying base 1 before the play; the line records the out but names no runner",
+      "asserted": "line says the out was at second but a runner it NAMES is already out there, and two runners cannot be retired at one base on one play; the out is the batter's",
       "location": {
         "half": "top",
         "inning": 4,
         "line_index": 3
       },
       "raw": "K. Micklus reached on a fielder's choice to second base, out at second 1b to ss; J. O'Dowd out at second 2b to ss; P. Mills advanced to third, scored on a throwing error by ss, unearned.",
-      "rule": "unattributed_force_out"
+      "rule": "out_base_contradicts_fielding_chain"
     }
   ],
   "linescore": {
@@ -7004,20 +7004,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.1.0",
+    "derived_replayer_version": "0.3.0",
     "fetched_at": "2026-07-12T17:33:11Z",
     "parse": {
       "events_count": 120,
       "inferred_count": 1,
-      "replayable": false,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[outs_per_half] outs_per_half: inning 4 top totals 2 outs (expected 3, no walk-off/unbatted exception applies)",
-        "[lob] lob: inning 4 top folded LOB 1 != inning_summary LOB 0"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T01:31:47Z",
-    "parser_version": "0.8.0",
+    "parsed_at": "2026-08-28T19:15:29Z",
+    "parser_version": "0.16.0",
     "source_sha256": "a533ea656f5c5c545419515e7a83e9361c853b490b83636f82845c4185fee0ff",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250819_ubwo.xml"
   },
@@ -7374,7 +7371,7 @@
       "team_id": "9efpyrbbyneh3vac"
     }
   },
-  "schema_version": "1.10.0",
+  "schema_version": "1.11.0",
   "season": 2025,
   "source": {
     "league_id": "pioneer",

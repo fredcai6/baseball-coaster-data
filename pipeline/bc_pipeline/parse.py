@@ -25,10 +25,10 @@ import hashlib
 import re
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.parse import urlparse
 
-from . import career_map, identity, team_map
+from . import career_map, errata as errata_mod, identity, team_map
 from .grammar import (
     BATTER_OUTCOME_CAUSE,
     GrammarMiss,
@@ -45,13 +45,16 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.10.0"
-SCHEMA_VERSION = "1.10.0"
+PARSER_VERSION = "0.28.0"
+SCHEMA_VERSION = "1.11.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
 class NonFinalPageError(Exception):
-    """Raised when a page has no PBP panes -- it is not a final boxscore.
+    """Raised when a page describes no game -- it is not a final boxscore.
+
+    Two shapes reach this: no PBP panes at all, and panes that yield no
+    plate appearance and no unparsed line.
 
     The caller must never fabricate a schema `final` game dict from a page
     like this (e.g. a pre-game/"today" page); this is the negative-path
@@ -240,6 +243,7 @@ def build_events(
     lines: List[PbpLine],
     player_table: identity.PlayerTable,
     box_pitching_order: Optional[Dict[str, List[str]]] = None,
+    box_batting: Optional[Dict[str, List[dict]]] = None,
 ) -> Tuple[List[dict], List[dict], Dict[str, List[dict]], List[dict]]:
     """PURE: fold ordered ``PbpLine``s + the identity player table into the
     schema's ``events[]`` spine, an ``unparsed[]`` list, and a per-team-id
@@ -262,15 +266,43 @@ def build_events(
     #: inferred, so the pool cannot stand in for the real order here.
     box_pitching_order = box_pitching_order or {}
 
-    # Batting order = the first 9 rows of each team's Batters table (dict
-    # insertion order == document row order, per identity.py); every row
-    # after that is a non-batting-order pitching-staff bookkeeping entry.
+    # `slot_occupant` is seeded from the first 9 Batters rows in document
+    # order, which is WRONG -- see PASS 2 at the end of this function, which
+    # corrects it once `events` exists. It is left wrong here because the
+    # correction needs the fold's output.
+    #
+    # The PITCHING seed does not have that problem and is not left wrong.
+    # `ids[9:]` inherits the same document-order defect (a nested substitute
+    # pushes real pitchers around), but the boxscore publishes its own
+    # Pitchers table, already in appearance order, and `parse_game` parses it
+    # BEFORE calling this function -- so the right answer is available at
+    # seed time and the fix belongs here rather than in a second pass. It has
+    # to be here: `current_pitcher` is both read (the `pitcher` written onto
+    # every plate appearance) and mutated (on each pitching change) DURING
+    # the fold, so a post-hoc pass could not reach the events it already
+    # stamped.
+    #
+    # Measured against two oracles independent of this seed, both read from
+    # that separate Pitchers table:
+    #
+    #   pitcher sequence matches the box's order   37.7% -> 92.4%
+    #   starting pitcher matches the box's first   38.3% -> 99.6%
+    #   innings-pitched reconciles to outs exactly 76.1% -> 87.8%
+    #   total absolute IP-outs error               27,596 -> 2,360
+    #
+    # It rewrites `pitcher` on 41,602 of 125,749 plate appearances across
+    # 1,238 games, which is a large blast radius -- and is the point, because
+    # those values were wrong. Every change is one resolved pitcher to a
+    # different resolved pitcher; none add or remove an attribution. Replay
+    # is untouched (0 verdict changes, warning sets byte-identical), since no
+    # check reads `pitcher`.
     slot_occupant: Dict[str, Dict[int, str]] = {}
     pitching_pool: Dict[str, List[str]] = {}
     current_pitcher: Dict[str, Optional[str]] = {}
     for team in (player_table.home, player_table.away):
         ids = list(team.players.keys())
-        batting_ids, pitcher_ids = ids[:9], ids[9:]
+        batting_ids = ids[:9]
+        pitcher_ids = (box_pitching_order or {}).get(team.team_id) or ids[9:]
         slot_occupant[team.team_id] = {i + 1: pid for i, pid in enumerate(batting_ids)}
         pitching_pool[team.team_id] = pitcher_ids
         current_pitcher[team.team_id] = pitcher_ids[0] if pitcher_ids else None
@@ -435,13 +467,20 @@ def build_events(
         # SAME runner on this line chains off it. -1 (retired) is kept so a
         # subsequent clause doesn't re-place an out runner on a base.
         event_pos[pid] = -1 if rm.out else to_base
-        # Update the live cross-event base occupancy: vacate the base this
-        # clause left (only if the runner still holds it), and occupy the
-        # destination (unless out, scored, or off the bases).
-        if from_base in base_occ and base_occ[from_base] == pid:
-            del base_occ[from_base]
-        if not rm.out and to_base not in (-1, 4):
-            base_occ[to_base] = pid
+        # Cross-event base occupancy is deliberately NOT written here. Writing
+        # it per CLAUSE let one runner's transient intermediate stop clobber a
+        # DIFFERENT runner's live entry for the same numbered base on the same
+        # line: "P. Howard advanced to second, advanced to third ...; T.
+        # Fontenot advanced to third, scored ..." parks Howard on third, then
+        # Fontenot's own pass THROUGH third overwrites him, and Fontenot's
+        # score vacates it -- leaving Howard untracked. The next line's clause
+        # for him then falls back to `from` = 4, which replay's clear pass
+        # ignores (its _BASE_INDEXES is (1, 2, 3)), so he phantom-occupies
+        # third for the rest of the half.
+        #
+        # See `_apply_occupancy`, called once per LINE against the MERGED
+        # records -- the pattern the BATTER path below already established and
+        # the runner path never got (issue #33).
         return record
 
     def _merge_same_runner(records: List[dict]) -> List[dict]:
@@ -457,8 +496,13 @@ def build_events(
         second emitted entry with `from` = the intermediate base (2), which
         was NOT occupied before the event, reads as an illegal transition. The
         runner only ever HAD one net move this event (1 -> 3), so we emit one
-        record for it; cross-event occupancy is unaffected (base_occ was
-        already folded hop-by-hop inside _resolve_runner)."""
+        record for it.
+
+        Cross-event occupancy is applied FROM this merged output, by
+        `_apply_occupancy`. It used to be folded hop-by-hop inside
+        `_resolve_runner` instead, and that immediacy was the bug: an
+        intermediate stop is not an end-of-line position, so writing it could
+        evict a different runner genuinely standing there (issue #33)."""
         order: List[str] = []
         grouped: Dict[str, List[dict]] = {}
         for rec in records:
@@ -490,6 +534,33 @@ def build_events(
                         net[key] = rec[key]
             merged.append(net)
         return merged
+
+    def _apply_occupancy(records: List[dict]) -> None:
+        """Fold every named participant's NET end-of-line position into the
+        cross-event base occupancy, read from the MERGED records.
+
+        A base a runner merely passes THROUGH on the way to a further
+        destination, or to being retired, is never an end-of-line occupant,
+        so it must not reach `base_occ` even momentarily. Deferring every
+        write until the whole line is merged is what stops two runners whose
+        clauses transiently compute the same numbered base from clobbering
+        each other.
+
+        This is the batter's own established pattern, generalized to every
+        participant. It was previously applied to the batter alone, with a
+        comment explaining exactly why reading the merged record matters --
+        and the runner path, which needed it for the same reason, wrote
+        hop-by-hop instead. One rule in two places, the shape this codebase
+        keeps rediscovering (issue #33).
+        """
+        for rec in records:
+            pid = rec["player_id"]
+            final_base = rec["to"]
+            for base, occupant in list(base_occ.items()):
+                if occupant == pid and base != final_base:
+                    del base_occ[base]
+            if not rec["out"] and final_base not in (-1, 4):
+                base_occ[final_base] = pid
 
     for line in lines:
         half_key = (line.inning, line.half)
@@ -860,6 +931,8 @@ def build_events(
             if not ok:
                 _unparsed(line, "runner clause name did not resolve uniquely")
                 continue
+            merged_runners = _merge_same_runner(runners)
+            _apply_occupancy(merged_runners)
             _note_inferred_runners(line, cg)
             events.append(
                 {
@@ -871,7 +944,7 @@ def build_events(
                     "fielding_team": fielding_team_id,
                     "narrative": _display_narrative(line.text),
                     "scoring_play": line.is_strong,
-                    "runners": _merge_same_runner(runners),
+                    "runners": merged_runners,
                 }
             )
             seq += 1
@@ -933,63 +1006,124 @@ def build_events(
         # silently. Never a guess.
         if p.forced_out_at is not None:
             out_base = _DEST_BASE[p.forced_out_at]
-            forced_pid = line_snapshot.get(out_base - 1)
-            if forced_pid is None:
-                _unparsed(
+
+            # The stated base can CONTRADICT the line's own fielding chain,
+            # and when it does the chain is right. "out at second ss to 1b"
+            # ends the throw at the FIRST BASEMAN, who does not record an out
+            # at second; the out was made at first, and on a fielder's choice
+            # the runner going to first is the BATTER. So the source's
+            # "reached" is the error, not the out.
+            #
+            # This matters twice over, because the same mislabelled line
+            # lands in two different places depending on who happens to be
+            # standing on first:
+            #
+            #   base 1 EMPTY    -- no force exists, so the line was refused
+            #                      whole. 4 games, and the refusal looked
+            #                      principled ("names no runner").
+            #   base 1 OCCUPIED -- far worse. The block below pins the out on
+            #                      whoever stood there, and _merge_same_runner
+            #                      then folds that fabricated out together
+            #                      with the SAME player's explicitly narrated
+            #                      safe advance, keeping the out. 6 games
+            #                      where the line says "J. Daly advanced to
+            #                      second" and the record says Daly was out.
+            #                      Three of them parse clean AND replay, so
+            #                      nothing anywhere reported it.
+            #
+            # Measured: 11 lines in the corpus state an out base while their
+            # chain ends at 1b, and all 11 are this defect. Every fielder's-
+            # choice line whose chain AGREES with its stated base is left
+            # alone -- the rule fires on the contradiction, not on the shape.
+            chain_end = (p.forced_out_chain or "").split(" to ")[-1].strip()
+
+            # A second reading of the same defect. The unattributed out can
+            # name a base at which a runner the line NAMES is already out:
+            #
+            #   "N. Marcelo reached on a fielder's choice to shortstop, out
+            #    at second 1b to 2b; M. O'Hara out at second ss to 2b."
+            #
+            # Two runners cannot both be retired at second base on one play,
+            # so the unattributed out is not a second runner -- it is the
+            # batter, and "reached" is again the part that is wrong. One line
+            # states it twice over: 20240530_ufps repeats the identical chain
+            # ("3b to 2b") in both clauses.
+            #
+            # 3 corpus lines, and the argument is logical rather than
+            # statistical: the base is already spoken for. Each reconciles on
+            # TWO independent oracles at once -- the half goes from 2 outs to
+            # its expected 3, and the folded LOB goes from 1 to the box's 0,
+            # which only happens if the batter is off the bases.
+            named_out_at_same_base = any(
+                rm.out
+                and rm.destination is not None
+                and _DEST_BASE.get(rm.destination) == out_base
+                for rm in cg.runners
+            )
+
+            if named_out_at_same_base or (
+                chain_end == "1b" and p.forced_out_at != "first"
+            ):
+                batter_runner["to"] = -1
+                batter_runner["out"] = True
+                batter_runner["cause"] = "force_out"
+                batter_runner.pop("earned", None)
+                batter_runner.pop("rbi", None)
+                _inferred(
                     line,
-                    "line records an out at "
-                    f"{p.forced_out_at} but names no runner, and base "
-                    f"{out_base - 1} was empty at the start of the play so "
-                    "the force does not identify one",
+                    "out_base_contradicts_fielding_chain",
+                    (
+                        f"line says the out was at {p.forced_out_at} but a "
+                        "runner it NAMES is already out there, and two "
+                        "runners cannot be retired at one base on one play; "
+                        "the out is the batter's"
+                    )
+                    if named_out_at_same_base
+                    else (
+                        f"line says the out was at {p.forced_out_at} but its "
+                        f"own chain {p.forced_out_chain!r} ends at the first "
+                        "baseman, who cannot record one there; the out is the "
+                        "batter's at first, and no runner is retired"
+                    ),
                 )
-                continue
-            runner_records.append(
-                {
-                    "player_id": forced_pid,
-                    "from": out_base - 1,
-                    "to": -1,
-                    "cause": "force_out",
-                    "out": True,
-                    "scored": False,
-                }
-            )
-            base_occ.pop(out_base - 1, None)
-            _inferred(
-                line,
-                "unattributed_force_out",
-                f"out at {p.forced_out_at} attributed to {forced_pid}, the "
-                f"runner occupying base {out_base - 1} before the play; the "
-                "line records the out but names no runner",
-            )
+            else:
+                forced_pid = line_snapshot.get(out_base - 1)
+                if forced_pid is None:
+                    _unparsed(
+                        line,
+                        "line records an out at "
+                        f"{p.forced_out_at} but names no runner, and base "
+                        f"{out_base - 1} was empty at the start of the play "
+                        "so the force does not identify one",
+                    )
+                    continue
+                runner_records.append(
+                    {
+                        "player_id": forced_pid,
+                        "from": out_base - 1,
+                        "to": -1,
+                        "cause": "force_out",
+                        "out": True,
+                        "scored": False,
+                    }
+                )
+                base_occ.pop(out_base - 1, None)
+                _inferred(
+                    line,
+                    "unattributed_force_out",
+                    f"out at {p.forced_out_at} attributed to {forced_pid}, "
+                    f"the runner occupying base {out_base - 1} before the "
+                    "play; the line records the out but names no runner",
+                )
 
         runner_records = _merge_same_runner(runner_records)
 
-        # Apply the batter's own base-occupancy update (runner clauses
-        # already updated themselves inside _resolve_runner).
-        #
-        # Read from the MERGED record, not from the primary verb's own
-        # destination: when the batter carries a chained self-advance
-        # ("reached on a fielder's choice, advanced to second on the throw")
-        # the merge is what knows he finished on second, while the primary
-        # verb alone says first. Setting occupancy from the primary put him
-        # back on a base he had already left, and the next line's clause for
-        # him then read the stale base -- surfacing as an illegal_transition
-        # two events later, nowhere near its cause (issue #40).
-        batter_final = next(
-            (
-                r
-                for r in runner_records
-                if r["player_id"] == batter_pid and r["from"] == 0
-            ),
-            None,
-        )
-        if batter_final is not None and not batter_final["out"]:
-            final_base = batter_final["to"]
-            for b, pid in list(base_occ.items()):
-                if pid == batter_pid and b != final_base:
-                    base_occ.pop(b, None)
-            if final_base not in (-1, 4):
-                base_occ[final_base] = batter_pid
+        # Apply EVERY named participant's base-occupancy update -- batter and
+        # runners alike -- from the MERGED records. This subsumes what used to
+        # be a batter-only block whose comment already explained why merged
+        # records are the right source; the runner path now gets the identical
+        # treatment instead of writing hop-by-hop (issue #33).
+        _apply_occupancy(runner_records)
         # Schema: "Outs THIS event adds." Read that off the MERGED runner
         # records -- the same primitives g6 replay folds -- not off the
         # primary verb's `out_flag`, which describes the verb rather than the
@@ -1052,6 +1186,57 @@ def build_events(
             }
         )
         seq += 1
+
+    # PASS 2. `slot_occupant` is seeded above from `list(players)[:9]` -- the
+    # same naive slice `_reconstruct_starting_order` measures at 44.3%, and
+    # it drives every `substitution.slot`. It has to be seeded BEFORE the fold
+    # loop, while the corrected order needs `events`, so the correction can
+    # only happen afterwards: recompute the order, then re-walk ONLY the
+    # substitution chronology.
+    #
+    # Nothing else moves. Batter and runner resolution never read
+    # `slot_occupant` -- its only readers are the seed above and the
+    # substitution branch -- so pass 2 cannot disturb `events`. Measured over
+    # the whole corpus: 0 replay-verdict changes, 0 unparsed-count changes,
+    # events[] byte-identical apart from `substitution.slot`.
+    if box_batting is not None:
+        for team in (player_table.home, player_table.away):
+            subs = subs_by_team.get(team.team_id, [])
+            fixed = _reconstruct_starting_order(
+                box_batting.get(team.team_id, []), subs, events, team.team_id
+            )
+            if fixed is None:
+                fixed = list(team.players.keys())[:9]
+            occupant = {i + 1: pid for i, pid in enumerate(fixed)}
+            for sub in subs:
+                out_pid, in_pid = sub.get("player_out"), sub.get("player_in")
+                slot = None
+                if out_pid is not None:
+                    slot = next(
+                        (s for s, pid in occupant.items() if pid == out_pid), None
+                    )
+                if slot is not None:
+                    # A player cannot hold two batting slots at once. When
+                    # `player_in` already occupies a DIFFERENT one, this line
+                    # realigns someone already in the lineup rather than
+                    # changing it, and transferring would overwrite his real
+                    # slot.
+                    #
+                    # The guard and the seed MUST land together. Measured on
+                    # an oracle that needs no narrative -- a player recorded
+                    # entering two different slots in one game, which is
+                    # impossible -- the corrected seed ALONE makes things
+                    # worse (57 -> 67), because the two defects were
+                    # partially masking each other. Together: 57 -> 25, over
+                    # 45 -> 21 team-games, while slot coverage RISES from
+                    # 3,615 to 4,016 substitutions.
+                    if any(
+                        s != slot and pid == in_pid for s, pid in occupant.items()
+                    ):
+                        slot = None
+                    else:
+                        occupant[slot] = in_pid
+                sub["slot"] = slot
 
     return events, unparsed, subs_by_team, inferred
 
@@ -1261,9 +1446,24 @@ def _parse_box_batting(root: Node, player_table: identity.PlayerTable) -> Dict[s
                 for c in row.children
                 if isinstance(c, Node) and c.tag == "td"
             ]
-            if len(cells) < 8:
+            # AVG is the only OPTIONAL stat column. One game in the corpus
+            # (20240521_gq1b) has a Batters header of "Hitters AB R H RBI BB
+            # SO LOB" with no AVG at all, so every one of its 33 rows renders
+            # 7 cells and this guard dropped the entire boxscore for BOTH
+            # teams -- silently, since a short row is indistinguishable here
+            # from a layout row. The game shipped with an empty box and a
+            # linescore reading 14-9, and the damage ran a whole season: 18
+            # players' cumulative averages are permanently short because
+            # their at-bats from this game were never recorded.
+            #
+            # Requiring the 7 stats that always exist, and treating AVG as
+            # absent rather than mandatory, keeps the rows. An absent AVG is
+            # recorded as "" -- what the source said, rather than a rate
+            # invented to fill a column.
+            if len(cells) < 7:
                 continue
-            ab, r, h, rbi, bb, so, lob, avg = cells[:8]
+            ab, r, h, rbi, bb, so, lob, *optional = cells[:8]
+            avg = optional[0] if optional else ""
             lines.append(
                 {
                     "player_id": pid,
@@ -1325,17 +1525,95 @@ def _parse_box_pitching(root: Node, player_table: identity.PlayerTable) -> Dict[
     return out
 
 
+def _reconstruct_starting_order(
+    box_rows: List[dict],
+    subs: List[dict],
+    events: List[dict],
+    team_id: str,
+) -> Optional[List[str]]:
+    """The first nine GENUINE starters, from boxscore row order.
+
+    StatCrew nests a slot's substitutes immediately UNDER that slot's
+    starter, so taking the first nine rows in document order pulls bench
+    players into the starting nine and pushes real starters past index 9.
+    Measured against the first nine distinct batters each team's own
+    narrative shows, plain `[:9]` slicing agrees on only 1,309 of 2,957
+    team-games -- 44.3%. It is not a small error; the field was wrong more
+    often than it was right, and nothing validated it.
+
+    A row is a fresh ENTRANT, and so not a starter, only when its player's
+    earliest substitution mention that NAMES a player_out is an entry, and
+    that entry comes before the player's own first plate appearance. Both
+    halves of that test earn their place:
+
+      - A bare `player_out: None` announcement is not evidence of entry. It
+        as often means "starter X moves to a different position" as "bench
+        player X comes in" (20240821_e0zj: Dondrei Hubbard's bare "to dh"
+        line lands AFTER his first plate appearance).
+      - A player already batting before his first named entry is a
+        defensive swap between two men both already in the lineup, each
+        naming the other as outgoing -- not an arrival.
+
+    Scored the same way: 2,860 of 2,952 team-games, 96.9%, against an
+    independent third source. The two losses are a disclosed blind spot,
+    not a new failure mode: a starter who went 0-for-0 can be omitted from
+    the Batters table altogether, leaving no row to keep.
+
+    MEASURED NEGATIVE, so it is not retried: excluding a row whose position
+    duplicates the row above it -- on the theory that a substitute inherits
+    the position of the man he replaced -- scores only 54.8%. Substitutes
+    frequently take a different position.
+
+    Returns None when fewer than nine rows survive, leaving the caller to
+    decide rather than guessing.
+    """
+    first_pa: Dict[str, int] = {}
+    for event in events:
+        if event["kind"] == "plate_appearance" and event["batting_team"] == team_id:
+            first_pa.setdefault(event["batter"]["player_id"], event["seq"])
+
+    first_named_entry: Dict[str, int] = {}
+    for sub in subs:
+        if sub["player_in"] is not None and sub["player_out"] is not None:
+            seq = sub["after_event_seq"]
+            pid = sub["player_in"]
+            if seq < first_named_entry.get(pid, seq + 1):
+                first_named_entry[pid] = seq
+
+    starters = [
+        row["player_id"]
+        for row in box_rows
+        if not (
+            row["player_id"] in first_named_entry
+            and first_pa.get(row["player_id"], float("inf"))
+            >= first_named_entry[row["player_id"]]
+        )
+    ]
+    return starters[:9] if len(starters) >= 9 else None
+
+
 def _build_lineups(
-    player_table: identity.PlayerTable, subs_by_team: Dict[str, List[dict]]
+    player_table: identity.PlayerTable,
+    subs_by_team: Dict[str, List[dict]],
+    box_batting: Dict[str, List[dict]],
+    events: List[dict],
 ) -> Dict[str, dict]:
     lineups: Dict[str, dict] = {}
     for team in (player_table.home, player_table.away):
-        batting_ids = list(team.players.keys())[:9]
+        subs = subs_by_team.get(team.team_id, [])
+        batting_ids = _reconstruct_starting_order(
+            box_batting.get(team.team_id, []), subs, events, team.team_id
+        )
+        if batting_ids is None:
+            # Fewer than nine rows survived -- 5 team-games in 2,968. Keep
+            # the old behaviour rather than raise, so the shortfall stays
+            # visible in the field instead of killing the parse.
+            batting_ids = list(team.players.keys())[:9]
         lineups[team.team_id] = {
             "batting_order": [
                 {"slot": i + 1, "player_id": pid} for i, pid in enumerate(batting_ids)
             ],
-            "substitutions": subs_by_team.get(team.team_id, []),
+            "substitutions": subs,
         }
     return lineups
 
@@ -1405,10 +1683,12 @@ def parse_game(
     id_overrides: Optional[Dict[Tuple[str, str], str]] = None,
     person_ids: Optional[Dict[str, Optional[str]]] = None,
     career_ids: Optional[Dict[str, Optional[str]]] = None,
+    errata_entries: Optional[Sequence[dict]] = None,
 ) -> dict:
     """Parse raw boxscore HTML into a full schema-valid ``final`` game dict.
 
-    Raises ``NonFinalPageError`` if the page has no PBP panes (the negative-
+    Raises ``NonFinalPageError`` if the page has no PBP panes, or if it has
+    panes but yields no plate appearance and no unparsed line (the negative-
     path contract) -- never fabricates a `final` file from such a page.
 
     ``person_ids`` (schema 1.7.0, issue #41) maps this game's SYNTHETIC
@@ -1434,6 +1714,17 @@ def parse_game(
 
     player_table = identity.build_player_table(root, id_overrides=id_overrides)
     lines = _iter_halves(root)
+    # Authored corrections to DEFECTIVE SOURCE LINES, applied to the raw line
+    # text BEFORE the grammar sees it -- so a corrected line is parsed by
+    # exactly the same rules as every other line, and no rule is relaxed
+    # anywhere to accommodate a one-off. See bc_pipeline.errata for the
+    # admissibility bar. Defaults to the COMMITTED errata file so that every
+    # caller (reparse, backfill, fetch) parses a game identically; pass an
+    # empty sequence to disable.
+    lines, erratum_applications = errata_mod.apply_to_lines(
+        errata_mod.for_game(game_id) if errata_entries is None else errata_entries,
+        lines,
+    )
     # The boxscore is parsed BEFORE the events because build_events needs the
     # Pitchers table's appearance order (issue #40's blank-incoming-pitcher
     # rule). Neither box parser reads events, so the reorder is inert.
@@ -1449,8 +1740,48 @@ def parse_game(
             team_id: [row["player_id"] for row in rows]
             for team_id, rows in box["pitching"].items()
         },
+        box_batting=box["batting"],
     )
-    lineups = _build_lineups(player_table, subs_by_team)
+
+    # A page can carry PBP panes and still describe no baseball. 20260809_3555
+    # is marked final, has a 0-0 linescore, twenty boxscore rows totalling
+    # ZERO at-bats, and exactly two events -- a substitution and an inning
+    # summary claiming one runner left on base by a side that never batted.
+    #
+    # It is refused here rather than downstream because every replay oracle
+    # passes VACUOUSLY on a game with nothing in it: no half to count outs
+    # for, no runner to leave on base, no plate appearance to reconcile. It
+    # scored as fully validated for the life of the corpus, which is this
+    # repository's oldest failure mode wearing its plainest disguise -- an
+    # empty parse hiding behind a clean replay.
+    #
+    # The guard requires BOTH counts to be zero. A game whose lines all FAILED
+    # to parse has unparsed[] entries and stays committed and visible; only a
+    # page that yields no batting content at all is refused.
+    if not any(ev.get("kind") == "plate_appearance" for ev in events) and not unparsed:
+        raise NonFinalPageError(
+            "page has PBP panes but describes no plate appearance and no "
+            "unparsed line; not a final boxscore"
+        )
+    # Disclose every applied correction alongside the parser's own
+    # inferences, under the same contract: a consumer that wants only what
+    # the source actually said can drop the events these entries name.
+    # Prepended because a correction happened BEFORE any rule fired on the
+    # line, so `inferred[]` reads in the order the assertions were made.
+    inferred = [
+        {
+            "location": app["location"],
+            "raw": app["raw"],
+            "rule": "erratum",
+            "asserted": (
+                f"erratum {app['erratum_id']} ({app['class']}): read as "
+                f"{' '.join(app['corrected'].split())!r}. {app['evidence']}"
+            ),
+        }
+        for app in erratum_applications
+    ] + inferred
+
+    lineups = _build_lineups(player_table, subs_by_team, box["batting"], events)
     players = _players_table(player_table, person_ids, career_ids)
 
     parsed_at_iso = parsed_at or datetime.now(timezone.utc).strftime(
