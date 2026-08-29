@@ -5265,8 +5265,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "M. Austin",
-        "player_id": "4jf1wpxr7r3ua3dc",
+        "name_raw": "C. Harrison",
+        "player_id": "avpsx2qaduubvx7h",
         "resolved": true
       },
       "batting_team": "4hgc4se23g09mrqm",
@@ -5275,7 +5275,7 @@
       "half": "top",
       "inning": 7,
       "kind": "plate_appearance",
-      "narrative": "M. Austin struck out swinging.",
+      "narrative": "C. Harrison struck out swinging.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -5294,7 +5294,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "4jf1wpxr7r3ua3dc",
+          "player_id": "avpsx2qaduubvx7h",
           "scored": false,
           "to": -1
         }
@@ -5857,8 +5857,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "T. Rogers",
-        "player_id": "e70l07jap433trbp",
+        "name_raw": "K. Johnson",
+        "player_id": "ymk57n88vcjs40at",
         "resolved": true
       },
       "batting_team": "4hgc4se23g09mrqm",
@@ -5867,7 +5867,7 @@
       "half": "top",
       "inning": 8,
       "kind": "plate_appearance",
-      "narrative": "T. Rogers singled to third base.",
+      "narrative": "K. Johnson singled to third base.",
       "outcome": {
         "fielders": [
           "3b"
@@ -5888,7 +5888,7 @@
           "cause": "batted_ball",
           "from": 0,
           "out": false,
-          "player_id": "e70l07jap433trbp",
+          "player_id": "ymk57n88vcjs40at",
           "scored": false,
           "to": 1
         }
@@ -5934,8 +5934,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "M. Austin",
-        "player_id": "4jf1wpxr7r3ua3dc",
+        "name_raw": "C. Harrison",
+        "player_id": "avpsx2qaduubvx7h",
         "resolved": true
       },
       "batting_team": "4hgc4se23g09mrqm",
@@ -5944,7 +5944,7 @@
       "half": "top",
       "inning": 8,
       "kind": "plate_appearance",
-      "narrative": "M. Austin grounded out to 2b; T. Rogers out at second ss to 2b.",
+      "narrative": "C. Harrison grounded out to 2b; K. Johnson out at second ss to 2b.",
       "outcome": {
         "fielders": [
           "2b"
@@ -5965,7 +5965,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "4jf1wpxr7r3ua3dc",
+          "player_id": "avpsx2qaduubvx7h",
           "scored": false,
           "to": -1
         },
@@ -5973,7 +5973,7 @@
           "cause": "force_out",
           "from": 1,
           "out": true,
-          "player_id": "e70l07jap433trbp",
+          "player_id": "ymk57n88vcjs40at",
           "scored": false,
           "to": 2
         }
@@ -6761,7 +6761,38 @@
     }
   ],
   "game_id": "20240616_utqn",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240616_utqn-2 (misidentified_batter): read as 'C. Harrison struck out swinging. (3 out)'. The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument.",
+      "location": {
+        "half": "top",
+        "inning": 7,
+        "line_index": 4
+      },
+      "raw": "M. Austin struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20240616_utqn-1 (misidentified_batter): read as 'K. Johnson singled to third base.'. The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument.",
+      "location": {
+        "half": "top",
+        "inning": 8,
+        "line_index": 2
+      },
+      "raw": "T. Rogers singled to third base.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20240616_utqn-3 (misidentified_batter): read as 'C. Harrison grounded out to 2b; K. Johnson out at second ss to 2b. (2 out)'. The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument.",
+      "location": {
+        "half": "top",
+        "inning": 8,
+        "line_index": 5
+      },
+      "raw": "M. Austin grounded out to 2b; T. Rogers out at second ss to 2b.\n                                                                                                                                                                                                                \t\t\t\t\t(2 out)",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7132,22 +7163,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T18:11:34Z",
     "parse": {
       "events_count": 139,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 3,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player ymk57n88vcjs40at events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player e70l07jap433trbp events PA 4 != box-implied PA 3 (AB=2 BB=1 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player avpsx2qaduubvx7h events PA 0 != box-implied PA 2 (AB=2 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player 4jf1wpxr7r3ua3dc events PA 2 != box-implied PA 0 (AB=0 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:45Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:56:27Z",
+    "parser_version": "0.26.0",
     "source_sha256": "513f8deff8cffadfc530c5f21526392bea1d1cafd7d49fea0c5caa3121f67234",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240616_utqn.xml"
   },
