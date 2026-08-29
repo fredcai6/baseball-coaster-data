@@ -152,6 +152,21 @@
       "evidence": "The half's own plays leave 2 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 3. Runners who reached base in this half: Chad Castillo, Gavin Tonkel, JD McLaughlin, Trevor Sheehan. The last plate appearance was \"J. McLaughli singled to third base, RBI; G. Tonkel advanced to second; T. Sheehan advanced\", after which 2 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240528_6w90-1",
+      "game_id": "20240528_6w90",
+      "location": {
+        "inning": 7,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "0d5264bb28128f7fc5db83b84763a819a383c464e6d0f3d2fcdb9f8bb796f5c3",
+      "raw_excerpt": "Inning Summary: 2 Runs , 1 Hits , 0 Errors , 1 LOB",
+      "replace": "1 LOB",
+      "with": "0 LOB",
+      "class": "inflated_inning_summary_lob",
+      "evidence": "An ordinary member of the adopted class, in the game's FINAL half-inning -- the game was called with the visitors batting and two out. The half's own plays leave nobody on base: Jenkins and Jablonski struck out, Monroe walked, and T. Rogers then homered with 2 RBI, scoring Monroe ahead of him and emptying the bases. The tag claims 1, one more than the fold supports, counting the batter who completed that plate appearance. Held out of the original 34-entry batch because outs_per_half was also failing this half; that failure was the curtailed ending, now covered by check_outs_per_half's called-game exception, so the half's own account is trustworthy and the LOB tag is the only thing left disagreeing with it."
+    },
+    {
       "erratum_id": "20240602_zf00-1",
       "game_id": "20240602_zf00",
       "location": {
