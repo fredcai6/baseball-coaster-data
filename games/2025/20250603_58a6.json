@@ -1717,8 +1717,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "A. Barranca",
-        "player_id": "o7yhvm7622kxgs3m",
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
         "resolved": true
       },
       "batting_team": "93ghf5gj458jgt7g",
@@ -1727,7 +1727,7 @@
       "half": "bottom",
       "inning": 2,
       "kind": "plate_appearance",
-      "narrative": "A. Barranca walked; E. Manzo advanced to second.",
+      "narrative": "L. Beard walked; E. Manzo advanced to second.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -1746,7 +1746,7 @@
           "cause": "advance",
           "from": 0,
           "out": false,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "scored": false,
           "to": 1
         },
@@ -2708,8 +2708,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "A. Barranca",
-        "player_id": "o7yhvm7622kxgs3m",
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
         "resolved": true
       },
       "batting_team": "93ghf5gj458jgt7g",
@@ -2718,7 +2718,7 @@
       "half": "bottom",
       "inning": 4,
       "kind": "plate_appearance",
-      "narrative": "A. Barranca struck out swinging.",
+      "narrative": "L. Beard struck out swinging.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -2737,7 +2737,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "scored": false,
           "to": -1
         }
@@ -4210,8 +4210,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "A. Barranca",
-        "player_id": "o7yhvm7622kxgs3m",
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
         "resolved": true
       },
       "batting_team": "93ghf5gj458jgt7g",
@@ -4220,7 +4220,7 @@
       "half": "bottom",
       "inning": 6,
       "kind": "plate_appearance",
-      "narrative": "A. Barranca struck out swinging.",
+      "narrative": "L. Beard struck out swinging.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -4239,7 +4239,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "scored": false,
           "to": -1
         }
@@ -5999,8 +5999,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "A. Barranca",
-        "player_id": "o7yhvm7622kxgs3m",
+        "name_raw": "L. Beard",
+        "player_id": "vui2grvaoogibo28",
         "resolved": true
       },
       "batting_team": "93ghf5gj458jgt7g",
@@ -6009,7 +6009,7 @@
       "half": "bottom",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "A. Barranca struck out swinging, reached first on a passed ball.",
+      "narrative": "L. Beard struck out swinging, reached first on a passed ball.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -6028,7 +6028,7 @@
           "cause": "putout",
           "from": 0,
           "out": false,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "scored": false,
           "to": 1
         }
@@ -6067,7 +6067,7 @@
       "half": "bottom",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "A. Mendoza grounded out to ss; A. Barranca advanced to second.",
+      "narrative": "A. Mendoza grounded out to ss; L. Beard advanced to second.",
       "outcome": {
         "fielders": [
           "ss"
@@ -6096,7 +6096,7 @@
           "cause": "advance",
           "from": 1,
           "out": false,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "scored": false,
           "to": 2
         }
@@ -6135,7 +6135,7 @@
       "half": "bottom",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "J. McLaughli tripled to left center, RBI; A. Barranca scored, unearned.",
+      "narrative": "J. McLaughli tripled to left center, RBI; L. Beard scored, unearned.",
       "outcome": {
         "fielders": [
           "lf",
@@ -6168,7 +6168,7 @@
           "earned": false,
           "from": 2,
           "out": false,
-          "player_id": "o7yhvm7622kxgs3m",
+          "player_id": "vui2grvaoogibo28",
           "rbi": true,
           "scored": true,
           "to": 4
@@ -6313,7 +6313,68 @@
     }
   ],
   "game_id": "20250603_58a6",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20250603_58a6-1 (misidentified_batter): read as 'L. Beard walked; E. Manzo advanced to second.'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 2,
+        "line_index": 1
+      },
+      "raw": "A. Barranca walked; E. Manzo advanced to second.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20250603_58a6-2 (misidentified_batter): read as 'L. Beard struck out swinging. (1 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 4,
+        "line_index": 1
+      },
+      "raw": "A. Barranca struck out swinging.\n                                                                                                                                \t\t\t\t\t(1 out)",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20250603_58a6-3 (misidentified_batter): read as 'L. Beard struck out swinging. (2 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 6,
+        "line_index": 2
+      },
+      "raw": "A. Barranca struck out swinging.\n                                                                                                                                \t\t\t\t\t(2 out)",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20250603_58a6-4 (misidentified_batter): read as 'L. Beard struck out swinging, reached first on a passed ball.'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "A. Barranca struck out swinging, reached first on a passed ball.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20250603_58a6-5 (misidentified_runner): read as 'A. Mendoza grounded out to ss; L. Beard advanced to second. (2 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 3
+      },
+      "raw": "A. Mendoza grounded out to ss; A. Barranca advanced to second.\n                                                                                                                                                                                    \t\t\t\t\t(2 out)",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20250603_58a6-6 (misidentified_runner): read as 'J. McLaughli tripled to left center, RBI; L. Beard scored, unearned.'. The boxscore and the narrative disagree about who occupies one batting slot. Antonio Barranca is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Logan Beard with fewer (AB=3 BB=1 H=0 SO=3). Moving these lines to Logan Beard is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man; every one of this slot's plate appearances is affected, not just one.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 4
+      },
+      "raw": "J. McLaughli tripled to left center, RBI; A. Barranca scored, unearned.",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6523,20 +6584,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T16:06:05Z",
     "parse": {
       "events_count": 116,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 6,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player vui2grvaoogibo28 events PA 0 != box-implied PA 4 (AB=3 BB=1 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player o7yhvm7622kxgs3m events PA 4 != box-implied PA 0 (AB=0 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:04Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:49:09Z",
+    "parser_version": "0.25.0",
     "source_sha256": "f52d4441ccb22c37696dbff8044a2a027d165fa887bf01e84b07101b4742a43f",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2025/boxscores/20250603_58a6.xml"
   },

@@ -6034,12 +6034,12 @@
         "home_score_before": 3,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "J. Huntzinge",
-        "player_id": "uy12pt249g1owsts",
+        "name_raw": "J. McLaughlin",
+        "player_id": "mlgwg524sgj5ed9k",
         "resolved": true
       },
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -6048,7 +6048,7 @@
       "half": "bottom",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "J. Huntzinge struck out looking.",
+      "narrative": "J. McLaughlin struck out looking.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -6067,7 +6067,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "uy12pt249g1owsts",
+          "player_id": "mlgwg524sgj5ed9k",
           "scored": false,
           "to": -1
         }
@@ -6212,6 +6212,16 @@
   ],
   "game_id": "20240728_6ptb",
   "inferred": [
+    {
+      "asserted": "erratum 20240728_6ptb-1 (misidentified_batter): read as 'J. McLaughlin struck out looking. (1 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Jerome Huntzinger is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=0 SO=1), and JD McLaughlin with fewer (AB=1 BB=0 H=0 SO=1). Moving these lines to JD McLaughlin is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: J. McLaughli to p for R. Supple (top 8th) and to cf (top 9th).",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 1
+      },
+      "raw": "J. Huntzinge struck out looking.\n                                                                                                                                \t\t\t\t\t(1 out)",
+      "rule": "erratum"
+    },
     {
       "asserted": "incoming pitcher 7ta8lyaitqov5yq3 read from the boxscore pitching order as the successor to mlgwg524sgj5ed9k",
       "location": {
@@ -6439,20 +6449,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T19:00:38Z",
     "parse": {
       "events_count": 117,
-      "inferred_count": 1,
-      "replayable": false,
+      "inferred_count": 2,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player uy12pt249g1owsts events PA 4 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player mlgwg524sgj5ed9k events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:55Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:49:01Z",
+    "parser_version": "0.25.0",
     "source_sha256": "c8fddcb26975d76930219d3565fabb19ada78c84dd695d06f9cf76a3ff6115e9",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240728_6ptb.xml"
   },

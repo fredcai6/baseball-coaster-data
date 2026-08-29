@@ -1638,8 +1638,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "T. Baker",
-        "player_id": "i23dsq9yhkrvvl6c",
+        "name_raw": "J. Daly",
+        "player_id": "0kspizc11s5t8o6h",
         "resolved": true
       },
       "batting_team": "z7y9gph0l9ltq3lq",
@@ -1648,7 +1648,7 @@
       "half": "bottom",
       "inning": 3,
       "kind": "plate_appearance",
-      "narrative": "T. Baker doubled to center field.",
+      "narrative": "J. Daly doubled to center field.",
       "outcome": {
         "fielders": [
           "cf"
@@ -1669,7 +1669,7 @@
           "cause": "batted_ball",
           "from": 0,
           "out": false,
-          "player_id": "i23dsq9yhkrvvl6c",
+          "player_id": "0kspizc11s5t8o6h",
           "scored": false,
           "to": 2
         }
@@ -1824,7 +1824,7 @@
       "half": "bottom",
       "inning": 3,
       "kind": "plate_appearance",
-      "narrative": "A. Atwood singled to pitcher; T. Baker advanced to third.",
+      "narrative": "A. Atwood singled to pitcher; J. Daly advanced to third.",
       "outcome": {
         "fielders": [
           "p"
@@ -1853,7 +1853,7 @@
           "cause": "advance",
           "from": 2,
           "out": false,
-          "player_id": "i23dsq9yhkrvvl6c",
+          "player_id": "0kspizc11s5t8o6h",
           "scored": false,
           "to": 3
         }
@@ -3304,7 +3304,7 @@
         "home_score_before": 0,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 1,
+        "pa_number_of_batter": 2,
         "runs_on_play": 0
       },
       "batter": {
@@ -4529,7 +4529,7 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 2,
+        "pa_number_of_batter": 3,
         "runs_on_play": 1
       },
       "batter": {
@@ -5773,7 +5773,7 @@
         "home_score_before": 6,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6345,7 +6345,28 @@
     }
   ],
   "game_id": "20240602_zf00",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240602_zf00-1 (misidentified_batter): read as 'J. Daly doubled to center field.'. The boxscore and the narrative disagree about who occupies one batting slot. Trevor Baker is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and John Daly with fewer (AB=4 BB=0 H=4 SO=0). Moving these lines to John Daly is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man before this line; the boxscore is the whole of the evidence.",
+      "location": {
+        "half": "bottom",
+        "inning": 3,
+        "line_index": 0
+      },
+      "raw": "T. Baker doubled to center field.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20240602_zf00-2 (misidentified_runner): read as 'A. Atwood singled to pitcher; J. Daly advanced to third.'. The boxscore and the narrative disagree about who occupies one batting slot. Trevor Baker is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and John Daly with fewer (AB=4 BB=0 H=4 SO=0). Moving these lines to John Daly is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: no substitution names either man before this line; the boxscore is the whole of the evidence.",
+      "location": {
+        "half": "bottom",
+        "inning": 3,
+        "line_index": 3
+      },
+      "raw": "A. Atwood singled to pitcher; T. Baker advanced to third.",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6569,20 +6590,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T17:55:21Z",
     "parse": {
       "events_count": 121,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 2,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player 0kspizc11s5t8o6h events PA 3 != box-implied PA 4 (AB=4 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player i23dsq9yhkrvvl6c events PA 1 != box-implied PA 0 (AB=0 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:42Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:48:49Z",
+    "parser_version": "0.25.0",
     "source_sha256": "7e953e7e4734556803f038e522261f8ef7f76970dc2316bc49c0a89878824e3c",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240602_zf00.xml"
   },

@@ -7749,12 +7749,12 @@
         "home_score_before": 1,
         "outs_after": 1,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "C. Steele",
-        "player_id": "eq89p3afqc3lxnjt",
+        "name_raw": "N. Adgar",
+        "player_id": "d8kutj6ov7hqoby9",
         "resolved": true
       },
       "batting_team": "56cu2zsze70qcfrx",
@@ -7763,7 +7763,7 @@
       "half": "bottom",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "C. Steele flied out to cf.",
+      "narrative": "N. Adgar flied out to cf.",
       "outcome": {
         "fielders": [
           "cf"
@@ -7784,7 +7784,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "eq89p3afqc3lxnjt",
+          "player_id": "d8kutj6ov7hqoby9",
           "scored": false,
           "to": -1
         }
@@ -8025,6 +8025,16 @@
   ],
   "game_id": "20240524_91ql",
   "inferred": [
+    {
+      "asserted": "erratum 20240524_91ql-2 (misidentified_batter): read as 'N. Adgar flied out to cf. (1 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Chuck Steele is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Nick Adgar with fewer (AB=1 BB=0 H=0 SO=0). Moving these lines to Nick Adgar is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: N. Adgar pinch hit for L. Barns, the line immediately before this one, after L. Barns and C. Steele had exchanged slots in the top of the 9th.",
+      "location": {
+        "half": "bottom",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "C. Steele flied out to cf.\n                                                                                                                                \t\t\t\t\t(1 out)",
+      "rule": "erratum"
+    },
     {
       "asserted": "erratum 20240524_91ql-1 (inflated_inning_summary_lob): read as 'Inning Summary: 0 Runs , 1 Hits , 0 Errors , 1 LOB'. The half's own plays leave 1 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 2. Runners who reached base in this half: Landen Barns. The last plate appearance was \"N. Ultsch grounded out to p.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal.",
       "location": {
@@ -8343,20 +8353,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T17:44:26Z",
     "parse": {
       "events_count": 153,
-      "inferred_count": 1,
-      "replayable": false,
+      "inferred_count": 2,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player d8kutj6ov7hqoby9 events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player eq89p3afqc3lxnjt events PA 4 != box-implied PA 3 (AB=3 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:57:58Z",
-    "parser_version": "0.20.0",
+    "parsed_at": "2026-08-29T03:48:47Z",
+    "parser_version": "0.25.0",
     "source_sha256": "bede64992eb1c148c9a51499338987287782404312d4a63a18c4afe0eb7ec73a",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240524_91ql.xml"
   },

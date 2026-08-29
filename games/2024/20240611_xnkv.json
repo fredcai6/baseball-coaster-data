@@ -4405,8 +4405,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "A. Martinez",
-        "player_id": "i932tnj9zga9mdcv",
+        "name_raw": "Z. Martinez",
+        "player_id": "kpyafixbkakvgy9n",
         "resolved": true
       },
       "batting_team": "j2s5i8avme57snyy",
@@ -4415,7 +4415,7 @@
       "half": "top",
       "inning": 7,
       "kind": "plate_appearance",
-      "narrative": "A. Martinez struck out swinging.",
+      "narrative": "Z. Martinez struck out swinging.",
       "outcome": {
         "fielders": [],
         "location": null,
@@ -4434,7 +4434,7 @@
           "cause": "putout",
           "from": 0,
           "out": true,
-          "player_id": "i932tnj9zga9mdcv",
+          "player_id": "kpyafixbkakvgy9n",
           "scored": false,
           "to": -1
         }
@@ -6044,7 +6044,18 @@
     }
   ],
   "game_id": "20240611_xnkv",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20240611_xnkv-1 (misidentified_batter): read as 'Z. Martinez struck out swinging. (3 out)'. The boxscore and the narrative disagree about who occupies one batting slot. Andrew Martinez is credited by the events with more plate appearances than his boxscore row supports (AB=0 BB=0 H=0 SO=0), and Zach Martinez with fewer (AB=1 BB=0 H=0 SO=1). Moving these lines to Zach Martinez is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Z. Martinez to p for F. Racioppo (bottom 5th); the two men share a surname and the narrative differs from the boxscore only in the initial.",
+      "location": {
+        "half": "top",
+        "inning": 7,
+        "line_index": 3
+      },
+      "raw": "A. Martinez struck out swinging.\n                                                                                                                                \t\t\t\t\t(3 out)",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6233,20 +6244,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T18:05:18Z",
     "parse": {
       "events_count": 112,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player kpyafixbkakvgy9n events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player i932tnj9zga9mdcv events PA 1 != box-implied PA 0 (AB=0 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:37:44Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:48:51Z",
+    "parser_version": "0.25.0",
     "source_sha256": "9295a41be69be18c4613c3ca5c4325cd7c68d40b317effee3fe75c1013fbfb87",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2024/boxscores/20240611_xnkv.xml"
   },

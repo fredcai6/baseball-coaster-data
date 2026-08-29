@@ -6203,12 +6203,12 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 6,
+        "pa_number_of_batter": 1,
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "Mitchell Sanford",
-        "player_id": "f2g0dgtvhc3mm3q3",
+        "name_raw": "Esai Santos",
+        "player_id": "syn:away:4",
         "resolved": true
       },
       "batting_team": "gnd7gosh9l5fc5us",
@@ -6220,7 +6220,7 @@
       "half": "top",
       "inning": 9,
       "kind": "plate_appearance",
-      "narrative": "Mitchell Sanford singled to shortstop (3-2 BBFFB).",
+      "narrative": "Esai Santos singled to shortstop (3-2 BBFFB).",
       "outcome": {
         "fielders": [
           "ss"
@@ -6241,7 +6241,7 @@
           "cause": "batted_ball",
           "from": 0,
           "out": false,
-          "player_id": "f2g0dgtvhc3mm3q3",
+          "player_id": "syn:away:4",
           "scored": false,
           "to": 1
         }
@@ -6611,7 +6611,18 @@
     }
   ],
   "game_id": "20260729_n8h9",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260729_n8h9-1 (misidentified_batter): read as 'Esai Santos singled to shortstop (3-2 BBFFB).'. The boxscore and the narrative disagree about who occupies one batting slot. Mitchell Sanford is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=2 H=0 SO=0), and Esai Santos with fewer (AB=1 BB=0 H=1 SO=0). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to cf for Mitchell Sanford (bottom 7th, repeated bottom 8th).",
+      "location": {
+        "half": "top",
+        "inning": 9,
+        "line_index": 2
+      },
+      "raw": "Mitchell Sanford singled to shortstop (3-2 BBFFB).",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -6849,20 +6860,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-08-27T14:50:21Z",
     "parse": {
       "events_count": 120,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 1,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player f2g0dgtvhc3mm3q3 events PA 6 != box-implied PA 5 (AB=3 BB=2 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player syn:away:4 events PA 0 != box-implied PA 1 (AB=1 BB=0 HBP=0 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:40Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:49:43Z",
+    "parser_version": "0.25.0",
     "source_sha256": "7e5294abf7cd81edada0de4b7a94082a80d89f55a1fdf820e511298ceed2fb75",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260729_n8h9.xml"
   },

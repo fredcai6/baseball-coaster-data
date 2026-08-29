@@ -3594,8 +3594,8 @@
         "runs_on_play": 0
       },
       "batter": {
-        "name_raw": "Myles Beale",
-        "player_id": "b9rvuohpqkybze8a",
+        "name_raw": "Esai Santos",
+        "player_id": "pockxe9pfd6nua32",
         "resolved": true
       },
       "batting_team": "gnd7gosh9l5fc5us",
@@ -3607,7 +3607,7 @@
       "half": "top",
       "inning": 5,
       "kind": "plate_appearance",
-      "narrative": "Myles Beale singled to right field (2-1 BBF).",
+      "narrative": "Esai Santos singled to right field (2-1 BBF).",
       "outcome": {
         "fielders": [
           "rf"
@@ -3628,7 +3628,7 @@
           "cause": "batted_ball",
           "from": 0,
           "out": false,
-          "player_id": "b9rvuohpqkybze8a",
+          "player_id": "pockxe9pfd6nua32",
           "scored": false,
           "to": 1
         }
@@ -3670,7 +3670,7 @@
       "half": "top",
       "inning": 5,
       "kind": "plate_appearance",
-      "narrative": "Jaden Collura singled to center field (1-0 B); Myles Beale advanced to second.",
+      "narrative": "Jaden Collura singled to center field (1-0 B); Esai Santos advanced to second.",
       "outcome": {
         "fielders": [
           "cf"
@@ -3699,7 +3699,7 @@
           "cause": "advance",
           "from": 1,
           "out": false,
-          "player_id": "b9rvuohpqkybze8a",
+          "player_id": "pockxe9pfd6nua32",
           "scored": false,
           "to": 2
         }
@@ -3794,13 +3794,13 @@
       "half": "top",
       "inning": 5,
       "kind": "runner_event",
-      "narrative": "Myles Beale advanced to third.",
+      "narrative": "Esai Santos advanced to third.",
       "runners": [
         {
           "cause": "advance",
           "from": 2,
           "out": false,
-          "player_id": "b9rvuohpqkybze8a",
+          "player_id": "pockxe9pfd6nua32",
           "scored": false,
           "to": 3
         }
@@ -3903,7 +3903,7 @@
       "half": "top",
       "inning": 5,
       "kind": "plate_appearance",
-      "narrative": "Paul Winland singled to center field, RBI (1-1 BF); Jaden Collura advanced to second; Myles Beale scored.",
+      "narrative": "Paul Winland singled to center field, RBI (1-1 BF); Jaden Collura advanced to second; Esai Santos scored.",
       "outcome": {
         "fielders": [
           "cf"
@@ -3943,7 +3943,7 @@
           "earned": true,
           "from": 3,
           "out": false,
-          "player_id": "b9rvuohpqkybze8a",
+          "player_id": "pockxe9pfd6nua32",
           "rbi": true,
           "scored": true,
           "to": 4
@@ -4503,7 +4503,7 @@
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 3,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -5559,7 +5559,7 @@
         "home_score_before": 4,
         "outs_after": 0,
         "outs_before": 0,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 3,
         "runs_on_play": 0
       },
       "batter": {
@@ -5760,7 +5760,7 @@
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 1,
-        "pa_number_of_batter": 4,
+        "pa_number_of_batter": 5,
         "runs_on_play": 0
       },
       "batter": {
@@ -6457,7 +6457,7 @@
         "home_score_before": 4,
         "outs_after": 1,
         "outs_before": 1,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 4,
         "runs_on_play": 0
       },
       "batter": {
@@ -6690,7 +6690,7 @@
         "home_score_before": 4,
         "outs_after": 2,
         "outs_before": 2,
-        "pa_number_of_batter": 5,
+        "pa_number_of_batter": 6,
         "runs_on_play": 0
       },
       "batter": {
@@ -7149,7 +7149,48 @@
     }
   ],
   "game_id": "20260704_913e",
-  "inferred": [],
+  "inferred": [
+    {
+      "asserted": "erratum 20260704_913e-1 (misidentified_batter): read as 'Esai Santos singled to right field (2-1 BBF).'. The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half.",
+      "location": {
+        "half": "top",
+        "inning": 5,
+        "line_index": 0
+      },
+      "raw": "Myles Beale singled to right field (2-1 BBF).",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20260704_913e-2 (misidentified_runner): read as 'Jaden Collura singled to center field (1-0 B); Esai Santos advanced to second.'. The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half.",
+      "location": {
+        "half": "top",
+        "inning": 5,
+        "line_index": 1
+      },
+      "raw": "Jaden Collura singled to center field (1-0 B); Myles Beale advanced to second.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20260704_913e-3 (misidentified_batter): read as 'Esai Santos advanced to third.'. The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half.",
+      "location": {
+        "half": "top",
+        "inning": 5,
+        "line_index": 3
+      },
+      "raw": "Myles Beale advanced to third.",
+      "rule": "erratum"
+    },
+    {
+      "asserted": "erratum 20260704_913e-4 (misidentified_runner): read as 'Paul Winland singled to center field, RBI (1-1 BF); Jaden Collura advanced to second; Esai Santos scored.'. The boxscore and the narrative disagree about who occupies one batting slot. Myles Beale is credited by the events with more plate appearances than his boxscore row supports (AB=3 BB=0 H=1 SO=2), and Esai Santos with fewer (AB=5 BB=1 H=1 SO=1). Moving these lines to Esai Santos is the ONLY reassignment that reconciles BOTH men on all of hits, strikeouts and walks -- columns no replay check reads -- while also satisfying two constraints the boxscore cannot express: a batter may not bat twice in a row, and may not bat before he enters. Corroborating substitution: Esai Santos to 2b for Myles Beale (bottom 4th), and Jake Allgeyer pinch hit for Myles Beale later in this same half.",
+      "location": {
+        "half": "top",
+        "inning": 5,
+        "line_index": 5
+      },
+      "raw": "Paul Winland singled to center field, RBI (1-1 BF); Jaden Collura advanced to second; Myles Beale scored.",
+      "rule": "erratum"
+    }
+  ],
   "linescore": {
     "innings": {
       "away": [
@@ -7373,20 +7414,17 @@
     }
   },
   "meta": {
-    "derived_replayer_version": "0.4.0",
+    "derived_replayer_version": "0.5.0",
     "fetched_at": "2026-07-12T15:39:37Z",
     "parse": {
       "events_count": 129,
-      "inferred_count": 0,
-      "replayable": false,
+      "inferred_count": 4,
+      "replayable": true,
       "unparsed_count": 0,
-      "warnings": [
-        "[pa_counts] pa_counts: player pockxe9pfd6nua32 events PA 5 != box-implied PA 6 (AB=5 BB=1 HBP=0 SAC=0 INT=0)",
-        "[pa_counts] pa_counts: player b9rvuohpqkybze8a events PA 5 != box-implied PA 4 (AB=3 BB=0 HBP=1 SAC=0 INT=0)"
-      ]
+      "warnings": []
     },
-    "parsed_at": "2026-08-28T20:38:34Z",
-    "parser_version": "0.19.0",
+    "parsed_at": "2026-08-29T03:49:37Z",
+    "parser_version": "0.25.0",
     "source_sha256": "afd04d2cc2eeacacc41cb07780fd4c3a0a00dc78255f58cbd1bc2f31651869d0",
     "source_url": "https://www.pioneerleague.com/sports/bsb/2026/boxscores/20260704_913e.xml"
   },
