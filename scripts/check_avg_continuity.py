@@ -23,9 +23,38 @@ When many players on one team first diverge in the SAME game, the games
 missing are the ones immediately before it. That is how the two known gaps
 below were found; neither was visible to any within-game check.
 
-This is a DIAGNOSTIC, not a gate. It is expected to report the known gaps,
-and it exits 0 unless --strict is passed. Use it after a fetch to find out
-what the fetch missed.
+WHAT CHANGED, 2026-08-28 -- READ THIS BEFORE ACTING ON THE OUTPUT. A live
+schedule walk on that date discovered exactly 1,486 boxscore URLs across the
+three seasons (2024: 498, 2025: 490, 2026: 498), and the raw archive holds
+all 1,486 of them: 1,484 committed, plus 20250520_iiqj and 20250521_jyjy,
+which the site still publishes with a boxscore and ZERO play-by-play panes
+(refetched that day to confirm, still empty) and which are disclosed in
+artifacts/latest/completeness.json under `non_final_games`.
+
+So the corpus is COMPLETE with respect to what the source publishes, and a
+divergence here no longer implies a missing game. Two measurements say the
+same thing from inside this check:
+
+  - 30 person-seasons fail on the player's FIRST row, where by construction
+    there is nothing earlier to be missing.
+  - 2025 looked 10 games short beside its neighbours. It is not. The league
+    published 490 games that year.
+
+The reading of the column is not the problem either: taken as CUMULATIVE
+INCLUDING this game, 84.05% of 29,953 checkable rows reconcile; taken as
+"entering this game", 9.85% do. The first is plainly the right reading and
+the residual is something else -- most likely person_id splits and merges,
+which this check has no way to see.
+
+Do not use a cluster here as a reason to fetch. That mistake has already
+been made once on this corpus: roughly 35 games were called missing, and the
+refetch found 6 of those dates had no scheduled game at all and 20 were
+already committed.
+
+This is a DIAGNOSTIC, not a gate, and it exits 0 unless --strict is passed.
+What it is still good for: catching a person_id that should have been two
+people or two that should have been one, and re-proving completeness cheaply
+if the fetch story ever changes again.
 """
 
 from __future__ import annotations
@@ -223,19 +252,26 @@ def main() -> int:
     if clusters:
         print()
         print(
-            f"SUSPECTED CORPUS GAPS -- {len(clusters)} game(s) where "
+            f"CLUSTERED DIVERGENCES -- {len(clusters)} game(s) where "
             f"{args.min_cluster}+ person-seasons first diverge."
         )
-        print("The missing games are the ones immediately BEFORE each of these.")
+        print(
+            "NOT evidence of a missing game. The corpus is complete against "
+            "the source's own schedule (see this module's docstring); these "
+            "are unexplained, and person_id splits are the leading suspect."
+        )
         for game_id, n in clusters:
             date, teams = meta.get(game_id, (None, []))
             print(f"  {n:4d} person-seasons first diverge at {game_id}  {date}")
+            # The schedule-gap lines below describe the calendar only. A date
+            # with no game is an ordinary league off-day -- every season in
+            # this corpus has several -- not a hole in the corpus.
             for team_id, name in teams:
                 prior = [d for d in schedule.get(team_id, []) if d < date]
                 gap = _gap_before(prior[-1] if prior else None, date)
                 if gap:
                     print(f"         {name:28s} plays {prior[-1]}, then {date}"
-                          f"  -- MISSING {', '.join(gap)}")
+                          f"  -- no game on {', '.join(gap)}")
                 elif not prior:
                     print(f"         {name:28s} has no earlier game -- season "
                           "opener is later than the rest of the league")
