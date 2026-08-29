@@ -141,5 +141,5 @@ def test_the_real_corpus_residual_is_the_2025_cluster_not_a_rounding_artifact():
     diverging = [k for k, rows in seasons.items() if mod._first_divergence(rows)]
     assert len(diverging) == 90, (
         f"{len(diverging)} diverging person-seasons, expected 90 -- the AVG "
-        f"residual moved; see issue for the 2025 May-27/Jun-21 cluster"
+        f"residual moved; see issue #42 for the 2025 May-27/Jun-21 cluster"
     )
