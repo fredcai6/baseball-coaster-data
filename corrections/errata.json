@@ -242,6 +242,51 @@
       "evidence": "The half's own plays leave 3 runner(s) on base at the end of its last plate appearance, and its Inning Summary claims 4. Runners who reached base in this half: Alec Sanchez, Cameron Thompson, Mike Rosario, Roberto Pena. The last plate appearance was \"C. Gordon struck out swinging.\", after which 3 out(s) had been recorded. The excess is exactly one, which is the batter who had just completed that plate appearance. This is the FINAL half-inning of the game. Measured corpus-wide: final half-innings carry this defect at 2.01% (29 of 1,445) against 0.030% (7 of 23,486) everywhere else -- a 67x concentration -- spread evenly across all 12 home clubs (0.8%-4.1%) and all three seasons, so it is a close-out artifact of the scoring software rather than one scorer or a parser fault. Ruled out by measurement: summary tags are not misaligned by a half (99.80% match in place), walk-offs explain only 5 of 35, and the play type ending the half shows no signal."
     },
     {
+      "erratum_id": "20240616_utqn-2",
+      "game_id": "20240616_utqn",
+      "location": {
+        "inning": 7,
+        "half": "top",
+        "line_index": 4
+      },
+      "raw_sha256": "55c1e8e07a5835a111a3908bbb8296c507e80101d4bb21bf2554e61b159ba722",
+      "raw_excerpt": "M. Austin struck out swinging. (3 out)",
+      "replace": "M. Austin",
+      "with": "C. Harrison",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument."
+    },
+    {
+      "erratum_id": "20240616_utqn-1",
+      "game_id": "20240616_utqn",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 2
+      },
+      "raw_sha256": "42f0f1624a3dee4a342b8af8b02e1b22ecdcf6dabea4d8640ac8edf0b02a2884",
+      "raw_excerpt": "T. Rogers singled to third base.",
+      "replace": "T. Rogers",
+      "with": "K. Johnson",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument."
+    },
+    {
+      "erratum_id": "20240616_utqn-3",
+      "game_id": "20240616_utqn",
+      "location": {
+        "inning": 8,
+        "half": "top",
+        "line_index": 5
+      },
+      "raw_sha256": "b7b53dea2868eb884ab80a973a55a6563957226e37b83ddfac9ab741336a487f",
+      "raw_excerpt": "M. Austin grounded out to 2b; T. Rogers out at second ss to 2b. (2 out)",
+      "replace": "M. Austin grounded out to 2b; T. Rogers out at second ss to 2b.",
+      "with": "C. Harrison grounded out to 2b; K. Johnson out at second ss to 2b.",
+      "class": "misidentified_batter",
+      "evidence": "The boxscore and the narrative disagree about two batting slots. Before the correction Kevin Johnson's row (AB=4 H=2) is credited with 3 plate appearances and 1 hit, Trevor Rogers (AB=2 H=1 SO=1 BB=1) with 4 and 2, Connor Harrison (AB=2 SO=1) with none at all, and Myles Austin (AB=0 H=0 SO=0) with 2 and a strikeout he does not have. Moving these lines is the only reassignment that reconciles all four men on hits, strikeouts and walks -- columns no replay check reads -- and afterwards EVERY batting row in the game reconciles on all three. It also satisfies the two constraints the boxscore cannot express: no batter bats twice in a row, and K. Johnson does not bat before 'K. Johnson to dh' in the bottom of the 7th. The scorer's slot bookkeeping in this game is visibly unreliable -- 'M. Austin' is written to p, rf, lf, 1b, 3b and c -- which is why the boxscore columns, not the substitution lines, carry the argument."
+    },
+    {
       "erratum_id": "20240619_gssr-1",
       "game_id": "20240619_gssr",
       "location": {
