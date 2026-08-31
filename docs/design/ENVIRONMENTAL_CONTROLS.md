@@ -375,6 +375,30 @@ in `events[].outcome.type`. Prefer one multinomial over eight independent binomi
 mutually exclusive categories of a single plate appearance, and separate binomials do not constrain
 them to sum to one. That is DRC+'s structure minus the terms our data cannot support.
 
+**Split "home" in two: batting last is structural, playing at your own park is not.** A neutral-site
+game separates them, and they behave differently there -- the designated home club still bats last,
+but gets none of the familiarity. Bundling them into one `home` flag asserts a venue effect at a
+neutral site, which is wrong.
+
+The structural half is real and measurable here. Home clubs take **3.17% fewer plate appearances**
+(61,901 vs 63,926, a 2,025-PA deficit) because **42.6% of games never bat the bottom of the 9th** --
+the home side was ahead. That is an *opportunity* effect, not a rate effect: it leaves per-PA rates
+untouched but systematically shortchanges the home club on any counting stat. Any impact metric
+expressed as a total rather than a rate inherits it, and it has nothing to do with the ballpark.
+
+The familiarity half is what should carry a venue condition. So:
+
+- `bats_last` -- a global fixed effect, true wherever the game is played, including a neutral site.
+- `at_own_venue` -- **not** `is_home_team`. A team deviation, structurally zero for a neutral-site
+  game and for a club with no home park.
+
+In this corpus the two are **perfectly confounded**, because we cannot detect a neutral-site game
+(§6, finding 1) and so `designated home == at own venue` by assumption. That is the third distinct
+thing blocked on the missing `venue` field, and the reason to write the term as `at_own_venue` now:
+when venue arrives, neutral-site games get the right treatment without a restructure. Worth noting
+the walk advantage is not concentrated in late innings (+0.049 early vs +0.069 from the 7th on), so
+it is not a last-licks leverage artifact -- it sits in the half that should carry the venue condition.
+
 **Home advantage is a team term, not a venue term, and the two cannot both be fitted.** Because each
 franchise maps 1:1 to its park within a season, a `venue x side` effect and a `team x home` effect are
 the same column of the design matrix wearing different labels; fitting both leaves the model
@@ -388,8 +412,18 @@ leaving a hole. Add a global home fixed effect too -- small but real for several
 so the league constant is the least useful part of it.
 
 **Venue x handedness is a genuine venue property** and is the interaction to add once `bats_side` is
-populated -- it is asymmetric-geometry physics, unrelated to the home-away split above, and it drops
-in without restructuring.
+populated -- asymmetric-geometry physics, unrelated to the home-away split above.
+
+**Nest every one of these as a deviation, never as a free-standing effect.** Written as
+`(1 | venue) + (1 | venue:bat_side)`, the interaction has its own variance component and is shrunk
+toward zero, so it only picks up what the venue main effect leaves behind; the two are not competing
+on equal footing, and the pair cannot thrash. The main effect is estimated from every PA at the venue,
+the deviation only from the handedness contrast within it. The same discipline applies to the home
+terms (`bats_last` fixed, `at_own_venue` as a team deviation) and it buys a useful safety property:
+where a split carries no signal its variance component collapses to roughly zero and the term
+self-disables, rather than absorbing noise the main effect had already explained. That is the
+mechanism that lets us include a term like `venue:bat_side` before knowing whether these parks are
+asymmetric at all -- if they are not, the model says so by shrinking it away.
 
 Konaka's pairwise-comparison formulation is the fallback if the full mixed model proves too heavy:
 it delivers the simultaneous park-and-opponent estimation that §3b and §3c demand, at logistic-
