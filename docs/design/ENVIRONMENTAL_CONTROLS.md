@@ -329,6 +329,37 @@ Also noted, not defects: 42 doubleheader dates, and roughly 120 games shortened 
 affect per-game denominators but not per-PA rates, so they are harmless to rate-based adjustment and
 should simply not be pooled into any per-game measure.
 
+### 2d. Two different objects, not two venue properties
+
+Splitting each venue's effect by which side was batting, with the home-vs-visiting *difference*
+tested directly (full game-clustered covariance between the two sides, since they share games), gives
+20 real gaps out of 112 park x outcome tests after Benjamini-Hochberg at 10% FDR -- against about 6
+expected by chance. Where they fall inverts the park-effect ranking:
+
+| Outcome | park spread ÷ CI | real home-away gaps | home advantage persists across seasons? |
+|---|---|---|---|
+| home_run | 4.8x | **0 / 14** | -- |
+| strikeout | 4.8x | 3 / 14 | no (r 0.38, 0.13, -0.45) |
+| popout | 4.0x | 5 / 14 | **yes (r 0.43, 0.73, 0.25)** |
+| groundout | 2.3x | 3 / 14 | weak |
+| walk | 1.7x | **6 / 14** | **no (r 0.08, 0.21, 0.14)** |
+
+Home runs have the largest venue effect in the corpus and **not one park favours a dugout** -- exactly
+how a physical property of a building should behave. Walks are the mirror image: no venue effect worth
+modelling, the most home-away gaps, and those gaps **do not replicate across seasons**. Per-season
+estimates are noisy but not that noisy: with a true between-club sd near 0.18 and a per-season standard
+error near 0.09, a stable effect would still correlate around 0.8 across years. Observing 0.1 means the
+walk home-advantage is a team-season transient, not a standing property of a club or its park.
+
+**These are therefore two different kinds of object, and only one of them is a venue property.**
+
+The exception is `popout`, the one outcome whose home-away split *does* persist year over year while
+its roster turns over. A park-attached, home-favouring, season-stable effect on the single outcome most
+exposed to scorer discretion (popout vs. flyout is a judgement call, and a park's scoring crew is the
+same people each year) is far better explained as observer bias than as baseball. It is the strongest
+reason to treat the `popout` column as a data-quality finding rather than a park factor, and it would
+survive every statistical control in this note.
+
 ---
 
 ## 7. Recommended shape
@@ -339,10 +370,26 @@ Not sequential ratio adjustments. Park, opponent, and season are **correlated wi
 ratio corrections would double-count the overlap.
 
 The right v1 is a **mixed-effects model over plate-appearance outcomes**: random intercepts for
-batter, pitcher, and park; fixed effect for season; outcome as the multinomial event taxonomy already
-in `events[].outcome.type`. That is DRC+'s structure minus the terms our data cannot support, and it
-degrades gracefully -- when `bats_side` is eventually populated, the park x handedness interaction
-drops straight in without restructuring.
+batter, pitcher, and venue; fixed effect for season; outcome as the multinomial event taxonomy already
+in `events[].outcome.type`. Prefer one multinomial over eight independent binomials -- the outcomes are
+mutually exclusive categories of a single plate appearance, and separate binomials do not constrain
+them to sum to one. That is DRC+'s structure minus the terms our data cannot support.
+
+**Home advantage is a team term, not a venue term, and the two cannot both be fitted.** Because each
+franchise maps 1:1 to its park within a season, a `venue x side` effect and a `team x home` effect are
+the same column of the design matrix wearing different labels; fitting both leaves the model
+unidentified. Choose `team-season x home`, for four reasons: §2d shows the split is a team-season
+transient rather than a venue property; a club plays road games at many parks, so its home effect is
+identified against the venue main effect, which `venue x side` is not; a relocating franchise then
+keeps its home effect while the park keeps its venue effect (the reason `reference/venues.json` is
+keyed per season); and a travelling club with no home games simply shrinks to the prior instead of
+leaving a hole. Add a global home fixed effect too -- small but real for several outcomes (walks
++0.049 log-odds, 95% CI [+0.024, +0.074]) -- while remembering the between-club sd is about 4x that,
+so the league constant is the least useful part of it.
+
+**Venue x handedness is a genuine venue property** and is the interaction to add once `bats_side` is
+populated -- it is asymmetric-geometry physics, unrelated to the home-away split above, and it drops
+in without restructuring.
 
 Konaka's pairwise-comparison formulation is the fallback if the full mixed model proves too heavy:
 it delivers the simultaneous park-and-opponent estimation that §3b and §3c demand, at logistic-
