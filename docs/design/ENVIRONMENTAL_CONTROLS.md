@@ -111,6 +111,73 @@ factors (at minimum HR / BABIP / K / BB) are required here, notwithstanding that
 aggregate factor for MLB -- our component spread is much wider than theirs, so the usual argument
 that components add variance faster than precision does not hold at this effect size.
 
+### 2b. How the effect actually manifests, outcome by outcome
+
+The park index in §2 is a run-value summary. Underneath it, the park is moving specific plate-appearance
+outcomes, and not uniformly. Every outcome in the taxonomy was indexed within-batter, then re-indexed
+**within-pitcher** as a control (see below), and checked for split-half reliability.
+
+| Outcome | % of PA | index spread | reliability | batter-ctl vs pitcher-ctl |
+|---|---|---|---|---|
+| home_run | 3.32 | 1.169 | 0.94 | 0.97 |
+| foul_out | 0.88 | 1.647 | 0.95 | 0.98 |
+| popout | 3.00 | 1.221 | 0.92 | 0.98 |
+| lineout | 2.60 | 1.160 | 0.90 | 0.96 |
+| reached_on_error | 1.71 | 0.836 | 0.77 | 0.95 |
+| strikeout_looking | 4.84 | 0.490 | 0.78 | 0.83 |
+| double | 5.12 | 0.485 | 0.73 | 0.96 |
+| strikeout_swinging | 13.80 | 0.470 | 0.82 | 0.94 |
+| groundout | 15.35 | 0.360 | 0.81 | 0.87 |
+| flyout | 12.78 | 0.323 | 0.84 | 0.97 |
+| single | 17.40 | 0.311 | 0.85 | 0.90 |
+| walk | 11.95 | 0.277 | 0.51 | 0.95 |
+
+Read `spread` with care: it is max-minus-min of a *ratio*, so a rare outcome shows a wider spread for the
+same absolute effect. The frequency column is there to keep that honest. Three outcomes are omitted as
+unusable: bare `strikeout` (0.09% of PA, reliability 0.06), `fielders_choice` (reliability -0.23), and
+`sacrifice` -- the last has a spectacular 22x spread on roughly 40 events corpus-wide, which is a warning
+about small denominators, not a park effect.
+
+**It is the park, not the home roster.** The obvious rival explanation is that a park's "effect" is really
+its home team's batters and pitchers leaking through, since they play half their games there. The test that
+separates these: compute each index twice, once holding the **batter** fixed and once holding the
+**pitcher** fixed. Roster leakage would make the two disagree. They agree at **r = 0.83 to 0.98 on every
+usable outcome** (0.94 for strikeout_swinging, 0.97 for home runs). These are properties of the venue.
+
+This also corrected an earlier reading. Splitting the strikeout index by whether the batting side was home
+or away gave only r = 0.55 between the two, which looked like roster contamination. The two-control test
+says it is not; the home/away split is simply the noisier instrument.
+
+### 2c. Stability across and within a season
+
+A park factor is only useful if it holds still. Correlating each park's index across seasons, and across
+thirds of a season (May-June / July / August):
+
+| Outcome | across seasons | within season | verdict |
+|---|---|---|---|
+| home_run | 0.60 | 0.86 | stable both ways |
+| foul_out | 0.72 | 0.71 | stable both ways |
+| groundout | 0.64 | 0.65 | stable both ways |
+| double | 0.75 | 0.55 | stable across years, noisy in-season |
+| lineout | 0.71 | 0.56 | stable across years, noisy in-season |
+| strikeout_looking | 0.70 | 0.20 | stable across years, noisy in-season |
+| single | 0.59 | 0.62 | drifts across years |
+| strikeout_swinging | 0.42 | 0.63 | drifts across years |
+| walk | 0.02 | 0.06 | unstable -- no park effect |
+
+Only home runs, foul outs and groundouts are dependable on both axes. **Walks are the clean negative
+result**: smallest spread, weakest reliability, and no stability on either axis. That is a real finding
+rather than a gap -- a walk is the outcome least mediated by the physical environment, so a walk-rate park
+adjustment would be fitting noise. It also matches the published MLB pattern.
+
+The two strikeout flavours split in an interesting way: *looking* is stable across years but not within
+one, *swinging* is the reverse. Worth noting, not yet worth explaining -- with 14 parks per correlation
+these coefficients carry wide error bars, and the split should be re-checked on more seasons before anyone
+builds on it.
+
+The practical consequence: pooled three-season factors are the right unit. Only a few components earn a
+per-season factor, and walks should not get a park factor at all.
+
 ---
 
 ## 3. Measured: three structural confounds specific to this league
