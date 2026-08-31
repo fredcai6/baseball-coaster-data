@@ -56,8 +56,14 @@ Absent:
   Handedness and platoon control are therefore data-blocked today. This matters more than it looks:
   handedness-split park factors are the single most-recommended refinement in the modern literature.
 
-`franchise_id` is a clean park key: no franchise changed name or relocated across the three seasons,
-so a franchise-keyed park factor is stable by construction.
+`franchise_id` is a stable *identity* key: no franchise changed name across the three seasons. It is
+**not** established as a stable *park* key. The corpus has no venue field, so a relocation is
+invisible to it by construction -- a club that moved parks mid-corpus would look identical to one
+that did not. External research on one club (`franchise:4e7dd733f635c973`, Yuba-Sutter Freebirds)
+turned up a possible 2024 -> 2025 relocation that the corpus cannot confirm or deny; the run
+environment is essentially unchanged across that boundary (11.9 R/G both years), while the club's
+real environment shift is 2025 -> 2026. Unresolved. See `reference/venues.json`, which assigns a park
+per *season* rather than per franchise precisely so this cannot be assumed away.
 
 ---
 
@@ -206,8 +212,9 @@ What does **not** transfer:
 9. Temperature, wind, humidity, altitude -- no fields. Altitude is the cheapest to add (a static
    per-franchise constant) and would let us test whether park effects are altitude-driven.
 10. Umpire, catcher framing, defensive positioning -- no pitch-location data.
-11. Extra-innings context -- **not modelable, and not merely missing.** No plate appearances exist
-    beyond the 9th inning anywhere in the corpus. See §6.
+11. Extra-innings context -- **there are no extra innings in this league.** A tied game is settled by
+    a home-run derby, which is not baseball played under the run-expectancy model and must never be
+    binned as a 10th inning. See §6.
 
 ---
 
@@ -221,11 +228,35 @@ Three items found while measuring, each arguably its own issue:
 2. **`bats_side` is null in 100% of records** (41,713 of 41,713) despite being in the schema.
    Populating it unlocks the handedness-split park factors that the modern literature treats as the
    default refinement.
-3. **A phantom 10th inning.** 27 games carry inning-10 events, but *only* `substitution` and
-   `inning_summary` -- zero plate appearances league-wide past the 9th. The summaries are internally
-   inconsistent (one reads `0 Runs, 0 Hits, 0 Errors, 1 LOB`, and 1 LOB with no plate appearances is
-   impossible). This looks like a parser inning-boundary artifact rather than a real rule, and it
-   should be confirmed against source before anyone builds an extra-innings run-expectancy bin.
+3. **The 10th inning is a home-run derby, and it is not parsed.** This league settles a tie with a
+   home-run derby rather than extra innings (repo owner, 2026-08-31), and the parser does not yet
+   handle it. What lands in the data instead: **60 games carry a 10th linescore column, and all 60
+   are tied after regulation.** The 10th column is `0` for both clubs in every one of them, and the
+   linescore innings always sum to the recorded totals -- so the derby result is nowhere in the run
+   data. A subset of those games also carries stray inning-10 `substitution` and `inning_summary`
+   events (one reads `0 Runs, 0 Hits, 0 Errors, 1 LOB`, which is the derby being mangled into an
+   inning shape), but **zero plate appearances exist past the 9th anywhere in the corpus.**
+
+   Two consequences, and the second is the one that bites:
+
+   - *For rate work, the data is clean.* Derby outcomes never enter the run totals or the PA stream,
+     so per-PA and per-game run environments are uncontaminated. The park factors in §2 are safe.
+   - *For any win-based player-impact model, 82 games have no recoverable winner.* Across the corpus
+     **82 games end with equal runs** (26 in 2024, 27 in 2025, 29 in 2026 -- 5.5% of all games), and
+     the derby that actually decided them is not represented. A model keyed on wins will silently
+     treat these as ties or drop them. They should be explicitly excluded, or the derby captured at
+     parse time, before anyone fits on game outcomes.
+
+   Note the derby is also a *player* event -- someone hit those home runs -- so parsing it would add
+   real signal, not just tidy the record. But it is a fundamentally different skill sample than a
+   plate appearance and must not be pooled into ordinary batting lines.
+
+A venue reference table now exists at `reference/venues.json` (validated by
+`scripts/build_venues.py`), keyed franchise -> season -> park, carrying city, coordinates, elevation
+and an approximate field orientation. It does **not** close finding 1: it records which park a club
+called home, not where a given game was played, so it still cannot see a neutral-site game. Each
+season row flags via `park_season_link` whether its park was researched for that specific year or
+carried forward unverified.
 
 Also noted, not defects: 42 doubleheader dates, and roughly 120 games shortened to 7 innings. These
 affect per-game denominators but not per-PA rates, so they are harmless to rate-based adjustment and
