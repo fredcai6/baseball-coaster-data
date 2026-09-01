@@ -30,7 +30,10 @@ from __future__ import annotations
 import csv
 import json
 import os
+from collections import Counter, defaultdict
 from pathlib import Path
+
+from . import venue as venue_mod
 
 TABLE_VERSION = "0.1.0"
 
@@ -230,8 +233,13 @@ COLUMNS = [
     # identity -- career/person join, pid for traceability only
     "batter_career", "batter_person", "batter_pid", "batter_name",
     "pitcher_career", "pitcher_person", "pitcher_pid", "pitcher_name",
-    # sides
+    # sides. `batting_is_home` is BATTING ORDER (the designated home team bats
+    # in the bottom half) and is NOT a proxy for home-field advantage --
+    # `batting_at_home_park` is. See rows_for_game.
     "batting_team", "fielding_team", "home_team", "batting_is_home",
+    # venue (schema 1.13.0). `venue` is raw, exactly as the source wrote it;
+    # `venue_canonical` is the fold onto a physical ballpark.
+    "venue", "venue_canonical", "batting_at_home_park",
     # matchup context
     "inning", "half", "tto", "pitcher_bf", "pitcher_is_starter",
     "order_slot", "pa_number_of_batter",
@@ -246,14 +254,49 @@ COLUMNS = [
 ]
 
 
-def rows_for_game(game):
-    """Yield one dict per plate appearance in a single game file."""
+def venue_canonical_of(game):
+    """This game's ballpark, folded onto its physical park. None if unknown."""
+    return venue_mod.canonicalize(((game.get("venue") or {}).get("raw")))
+
+
+def home_park_index(games):
+    """(team_id, season) -> the park that team played most of its HOME games in.
+
+    Taken as the MODE over a team-season's own home games rather than assumed,
+    because the assumption is false: the 2025 Colorado Springs Sky Sox played
+    only 11 of 37 designated-home games at their own park. The mode still
+    recovers the right answer there (11 beats any single opponent's 6), and
+    the 26 exceptions then fall out as exceptions instead of redefining the
+    team's home park to whatever it visited most.
+    """
+    counts = defaultdict(Counter)
+    for game in games:
+        park = venue_canonical_of(game)
+        if park is None:
+            continue
+        team_id = ((game.get("teams") or {}).get("home") or {}).get("team_id")
+        if team_id:
+            counts[(team_id, game["season"])][park] += 1
+    return {k: c.most_common(1)[0][0] for k, c in counts.items()}
+
+
+def rows_for_game(game, home_park=None):
+    """Yield one dict per plate appearance in a single game file.
+
+    ``home_park`` is the ``home_park_index`` mapping. Without it,
+    ``batting_at_home_park`` degrades to ``batting_is_home`` -- the
+    designated-home assumption, which this corpus shows is right 1,457 times
+    in 1,485 and wrong for a whole team-season.
+    """
     gid = game["game_id"]
     season = game["season"]
     date = game["date"]
     players = game["players"]
     teams = game.get("teams") or {}
     home_team = (teams.get("home") or {}).get("team_id")
+    venue_raw = ((game.get("venue") or {}).get("raw"))
+    venue_canon = venue_canonical_of(game)
+    home_park = home_park or {}
 
     # Starting batting order, by team. Substitutions carry a null slot often
     # enough that only the starting nine are trusted here; a sub gets None.
@@ -313,6 +356,9 @@ def rows_for_game(game):
             "pitcher_name": prec.get("name") or pitcher.get("name_raw"),
             "batting_team": bt, "fielding_team": ft, "home_team": home_team,
             "batting_is_home": batting_is_home,
+            "venue": venue_raw, "venue_canonical": venue_canon,
+            "batting_at_home_park": _at_home_park(
+                venue_canon, home_park.get((bt, season)), batting_is_home),
             "inning": e["inning"], "half": e["half"],
             "tto": tto_count[(ppid, bpid)],
             "pitcher_bf": bf_count[ppid],
@@ -338,18 +384,45 @@ def rows_for_game(game):
         yield row
 
 
+def _at_home_park(venue_canon, batting_teams_park, batting_is_home):
+    """Was the BATTING team playing in its own ballpark?
+
+    This is the covariate a model wants when it reaches for "home-field
+    advantage"; `batting_is_home` only says who batted last. The two differ on
+    2,345 plate appearances -- the 26 games the 2025 Sky Sox were the
+    designated home team for while standing in the opponent's park. Note both
+    sides flip in such a game: the nominal AWAY team really was at home.
+
+    Falls back to `batting_is_home` when the venue or the team's own park is
+    unknown (2 games of 1,485 state no venue), which is the old behaviour and
+    right far more often than not -- but it is a fallback, and it is recorded
+    as one here rather than silently blended into the true readings.
+    """
+    if venue_canon is None or batting_teams_park is None:
+        return batting_is_home
+    return venue_canon == batting_teams_park
+
+
 def iter_game_files(games_dir):
     for path in sorted(Path(games_dir).glob("*/*.json")):
         yield path
 
 
 def build(games_dir):
-    """Walk the corpus and return every plate-appearance row, in file order."""
+    """Walk the corpus and return every plate-appearance row, in file order.
+
+    Two passes: `batting_at_home_park` needs each team-season's home park,
+    which is a corpus-level fact no single game file states.
+    """
+    def games():
+        for path in iter_game_files(games_dir):
+            with open(path) as fh:
+                yield json.load(fh)
+
+    home_park = home_park_index(games())
     rows = []
-    for path in iter_game_files(games_dir):
-        with open(path) as fh:
-            game = json.load(fh)
-        rows.extend(rows_for_game(game))
+    for game in games():
+        rows.extend(rows_for_game(game, home_park))
     return rows
 
 

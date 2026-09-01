@@ -392,6 +392,63 @@ of 41,122 player-games; `H`, `BB` and `SO` were perfect. Nothing but an oracle
 parsed from elsewhere on the page would have found it, and the fold had a green
 test suite in every other respect. *Whatever has no oracle turns out to be wrong.*
 
+## Venue, and the home-field covariate it corrects (`bc_pipeline.venue`)
+
+Venue sat unread in the archive for the corpus's whole life. Every source page
+carries an "Other Information" table — `Location`, `Stadium`, `Attendance`,
+`Duration`, `Weather`, `Umpires` — and the parser had never looked at it.
+Reading it cost **zero fetches**; schema 1.13.0 puts it on every game.
+
+It is stored **raw**, exactly as the page wrote it, next to the labelled row it
+came from:
+
+```json
+"venue": { "raw": "Dehler Park", "field": "Stadium" }
+```
+
+`Stadium` (1,030 games) is a ballpark name. `Location` (453 games) is sometimes
+a ballpark, sometimes a street address, sometimes only "Boise, ID" — so which
+row the value came from is recorded rather than left for the caller to infer.
+Two games of 1,485 state no venue at all and say so with nulls.
+
+The fold from raw string onto a physical ballpark — **81 distinct strings
+reduce to 16 parks**, through typos (`Lindquist FIeld`), case variants
+(`DEHLER PARK`), addresses and bare city/state — is JUDGMENT, and judgment
+stays out of a write-once corpus: every revision of it would otherwise force a
+full labeled re-parse. It lives in `bc_pipeline.venue.CANONICAL_VENUE` and is
+applied by derived consumers.
+
+### Why it is not decoration
+
+**The designated home team is not always the team playing at its own park.**
+The 2025 Colorado Springs Sky Sox played **26 of their 37 designated-home games
+in the opponent's ballpark**, whole series at a time, and shared Blocktickets
+Park with the Rocky Mountain Vibes for the other 11. Every other team-season in
+the corpus maps to one park; home-team-agrees-with-actual-park holds on **1,457
+of 1,485** games and every exception is that one club.
+
+So `half == "bottom"` is a fact about **batting order** and is not a proxy for
+home-field advantage. Before this field nothing in the corpus could tell the
+two apart — and every model on the board had been using one for the other.
+`pa_table` now emits both:
+
+  - `batting_is_home` — did this team bat last (unchanged, still correct);
+  - `batting_at_home_park` — was it in **its own** ballpark.
+
+They differ on **2,770 plate appearances across 37 games (2.20%)**. Note the
+correction is not "take the Sky Sox's home advantage away": in a game they
+hosted at Dehler Park, *Billings really was at home*, so **both sides flip**.
+The remaining 11 games are the shared-park case, where two clubs each have a
+legitimate claim to the same field. Where venue is unknown (2 games) the column
+falls back to `batting_is_home` — the old reading, recorded as a fallback
+rather than blended silently into the true ones.
+
+`tests/test_venue.py` pins all of these counts, including a guard on the one
+genuinely fragile spot: the canonicalization map is season-blind, and
+`Colorado Springs` (the Vibes' 2024 home) and `Colorado Springs, CO` (their
+2025 home, after the move) resolve to *different* parks — safe only while each
+string stays inside one season.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
