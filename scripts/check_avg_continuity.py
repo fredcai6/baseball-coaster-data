@@ -48,13 +48,55 @@ WHAT CHANGED, 2026-08-29. 114 of the then-215 reported divergences were this
 check's own rounding, not the corpus's -- see TOLERANCE. After the fix, 90 of
 1,895 person-seasons diverge (95.3% reconcile) and the residual is SHARPER
 rather than merely smaller: 69 of the 90 fall in eight games, all in 2025,
-all between May 27 and June 21. That is the shape worth attacking, and it is
-not one this check can explain by itself.
+all between May 27 and June 21.
+
+WHAT CHANGED, 2026-09-01 -- THE 90 ARE EXPLAINED. Issue #42, closed. The
+residual is a SOURCE-SIDE artifact and needs no corpus action; nothing in
+games/** is wrong, and every file matches its published page exactly.
+
+The mechanism is the one this docstring already predicted two paragraphs up:
+a CONSTANT shortfall that dilutes as the denominator grows. What was missing
+was proof that the missing at-bats are UNOBTAINABLE rather than a game we
+could still fetch. Both halves are now measured:
+
+  - A paced refetch of two clustered games (20250531_txx5, 20250527_glxj)
+    against their 2026-07-12 archived copies found the batting box, linescore
+    and Other Information byte-identical across 51 days, once randomized
+    `component-nav*` / `dropdownId` render ids are normalized. Nothing was
+    retroactively rewritten, so the divergence is not a scoring correction we
+    fetched on the wrong side of.
+
+  - Walking A.J. Shaver's 2025 season, a fixed +1 H / +4 AB applied from
+    20250531_txx5 onward reproduces the published AVG on 52 of 55 games
+    (against 22 of 55 at zero offset); 2 of the 3 misses are the known
+    doubleheader-ordering artifact. That offset is exactly one game's worth of
+    batting -- a 1-for-4 the source's season-to-date carries and NO published
+    boxscore contains. He has no career split (one record, 64 games), so it is
+    not an identity artifact either.
+
+So the source's stats database holds at-bats that were never published as a
+boxscore. We cannot obtain them, and we should not try.
+
+NOT ESTABLISHED, deliberately: that every one of the 90 has this shape. A
+quick re-walk of all 2025 person-seasons found 146 divergences where this
+check finds 90, which makes that walk a DIFFERENT diagnostic, not this one --
+its counts mean nothing until the two are reconciled. Offsets did cluster at
++4/+5 AB, one game's worth, which is suggestive and no more. Recorded as a
+lead. This check has been wrong about its own arithmetic before, which is
+exactly why the stronger claim is not made here.
+
+If the 90 ever get in someone's way, the fix is a CLASSIFIER IN THIS CHECK,
+not a corpus change: fit the minimal (dH, dAB) per divergence and report
+"N of known one-game-offset shape / M of unknown shape". The value would be
+discrimination -- as it stands the 90 are camouflage, and a genuinely new
+parsing defect would land in the same undifferentiated pile unnoticed. Low
+priority while this stays a diagnostic that gates nothing.
 
 Do not use a cluster here as a reason to fetch. That mistake has already
 been made once on this corpus: roughly 35 games were called missing, and the
 refetch found 6 of those dates had no scheduled game at all and 20 were
-already committed.
+already committed. The 2026-09-01 refetch above is the second and last time
+this needs paying for -- it returned byte-identical pages.
 
 This is a DIAGNOSTIC, not a gate, and it exits 0 unless --strict is passed.
 What it is still good for: catching a person_id that should have been two
@@ -285,9 +327,14 @@ def main() -> int:
             f"{args.min_cluster}+ person-seasons first diverge."
         )
         print(
-            "NOT evidence of a missing game. The corpus is complete against "
-            "the source's own schedule (see this module's docstring); these "
-            "are unexplained, and person_id splits are the leading suspect."
+            "NOT evidence of a missing game, and no longer unexplained (issue "
+            "#42, closed 2026-09-01). The corpus is complete against the "
+            "source's own schedule, and these are a SOURCE-SIDE artifact: the "
+            "league's season-to-date carries about one game's worth of AB/H "
+            "that no published boxscore holds, so the shortfall is constant "
+            "and merely dilutes. A paced refetch found the pages byte-"
+            "identical across 51 days. Nothing here needs fixing, and this is "
+            "not a reason to fetch -- see this module's docstring."
         )
         for game_id, n in clusters:
             date, teams = meta.get(game_id, (None, []))

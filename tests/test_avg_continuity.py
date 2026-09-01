@@ -141,5 +141,11 @@ def test_the_real_corpus_residual_is_the_2025_cluster_not_a_rounding_artifact():
     diverging = [k for k, rows in seasons.items() if mod._first_divergence(rows)]
     assert len(diverging) == 90, (
         f"{len(diverging)} diverging person-seasons, expected 90 -- the AVG "
-        f"residual moved; see issue #42 for the 2025 May-27/Jun-21 cluster"
+        f"residual moved. The 90 are EXPLAINED (issue #42, closed 2026-09-01): "
+        f"a source-side constant offset of about one game's worth of AB/H that "
+        f"the league's season-to-date carries and no published boxscore holds. "
+        f"Not a corpus defect, and a paced refetch confirmed the pages are "
+        f"byte-identical across 51 days -- so a MOVE in this number is new "
+        f"information about our own parsing, not more of the known artifact. "
+        f"Read the check's docstring before believing the new value."
     )
