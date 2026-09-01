@@ -86,7 +86,10 @@ def load_pa(with_handedness=True):
                 "y": CAT_INDEX[cat], "cat": cat,
                 "tto": int(r["tto"]), "pitcher_bf": int(r["pitcher_bf"]),
                 "is_starter": _b(r["pitcher_is_starter"]),
+                # batting ORDER (who bats last). NOT home-field advantage --
+                # see batting_at_home_park below and analyze.structural.
                 "batting_is_home": _b(r["batting_is_home"]),
+                "batting_at_home_park": _b(r["batting_at_home_park"]),
                 "home_team": r["home_team"], "inning": int(r["inning"]),
                 "bats": bats.get((season, r["batter_person"])),
                 "throws": throws.get((season, r["pitcher_person"])),

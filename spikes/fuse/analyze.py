@@ -83,7 +83,14 @@ def hand_state(bats, throws):
 def structural(rows, season_idx):
     p = 3 + (len(season_idx) - 1)
     Xs = np.zeros((len(rows), p))
-    Xs[:, 0] = [1.0 if r["batting_is_home"] else 0.0 for r in rows]
+    # Home-field advantage is "was the batting team in its OWN ballpark",
+    # not "did it bat last". Those differ on 2,345 PAs (1.86%): the 2025
+    # Colorado Springs Sky Sox were the designated home team for 26 games
+    # played in the opponent's park, and in every one of them BOTH sides were
+    # mislabelled -- the nominal away team really was at home. Using
+    # batting_is_home here was a real defect, corrected in schema 1.13.0 once
+    # the corpus could finally tell the two apart.
+    Xs[:, 0] = [1.0 if r["batting_at_home_park"] else 0.0 for r in rows]
     hs = [hand_state(r["bats"], r["throws"]) for r in rows]
     Xs[:, 1] = [1.0 if h == "opposite" else 0.0 for h in hs]
     Xs[:, 2] = [1.0 if h == "unknown" else 0.0 for h in hs]
