@@ -1,0 +1,28 @@
+{
+ "fold_seed": 20260830,
+ "n_folds": 5,
+ "sanity": {
+  "in_sample": 3.851550925599231,
+  "oof": 3.9494803575521256,
+  "frozen_test": 3.947290322901378,
+  "passed": true,
+  "matches_step3_oof": true
+ },
+ "fully_crossfit": {
+  "base": 3.9634366624035455,
+  "additive": 3.9602695803051478,
+  "joint": 3.959703599516222,
+  "gap": -0.0005659807889255575,
+  "best_round": 149
+ },
+ "oof_offset_insample_coords": {
+  "base": 3.9634366624035455,
+  "additive": 3.9223330710678677,
+  "joint": 3.9058044401081666,
+  "gap": -0.01652863095970103,
+  "best_round": 300
+ },
+ "contamination_delta": -0.015962650170775472,
+ "verdict": "fully cross-fit gap is near zero: the interaction was contamination all the way down",
+ "runtime_sec": 1013.9772062301636
+}

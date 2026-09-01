@@ -1,0 +1,122 @@
+{
+  "model": "gllvm_hybrid",
+  "test_pa": 25382,
+  "deviance": 3.955630232577624,
+  "null_deviance": 4.0117174362118915,
+  "d": 5,
+  "penalty": {
+    "lambda_L": 50.0,
+    "lambda_F": 50.0,
+    "lambda_struct": 0.001,
+    "tied": true
+  },
+  "runtime_sec": 451.29989552497864,
+  "n_restarts": 5,
+  "restart_deviance_spread": 2.9736100798150034e-05,
+  "restart_test_deviances": [
+    3.955659968678422,
+    3.955639216527056,
+    3.955630232577624,
+    3.9556360325238193,
+    3.9556338836256484
+  ],
+  "structural_only_test_deviance": 4.006914112988586,
+  "cv_grid": [
+    {
+      "d": 1,
+      "lambda": 8.0,
+      "val_deviance": 3.9829783146389084,
+      "fit_sec": 44.645874977111816
+    },
+    {
+      "d": 1,
+      "lambda": 20.0,
+      "val_deviance": 3.977165608466917,
+      "fit_sec": 30.44975781440735
+    },
+    {
+      "d": 1,
+      "lambda": 50.0,
+      "val_deviance": 3.9794566724491833,
+      "fit_sec": 16.9451003074646
+    },
+    {
+      "d": 2,
+      "lambda": 8.0,
+      "val_deviance": 3.9744308869147558,
+      "fit_sec": 42.301026582717896
+    },
+    {
+      "d": 2,
+      "lambda": 20.0,
+      "val_deviance": 3.964729196543621,
+      "fit_sec": 18.901129245758057
+    },
+    {
+      "d": 2,
+      "lambda": 50.0,
+      "val_deviance": 3.966278131639549,
+      "fit_sec": 11.523935794830322
+    },
+    {
+      "d": 3,
+      "lambda": 8.0,
+      "val_deviance": 3.9722041754467825,
+      "fit_sec": 29.525015115737915
+    },
+    {
+      "d": 3,
+      "lambda": 20.0,
+      "val_deviance": 3.958585425273559,
+      "fit_sec": 23.290321350097656
+    },
+    {
+      "d": 3,
+      "lambda": 50.0,
+      "val_deviance": 3.9614288408431926,
+      "fit_sec": 15.092435359954834
+    },
+    {
+      "d": 4,
+      "lambda": 8.0,
+      "val_deviance": 3.9744525888700775,
+      "fit_sec": 30.080824851989746
+    },
+    {
+      "d": 4,
+      "lambda": 20.0,
+      "val_deviance": 3.955261892984256,
+      "fit_sec": 24.121339321136475
+    },
+    {
+      "d": 4,
+      "lambda": 50.0,
+      "val_deviance": 3.955172739701022,
+      "fit_sec": 13.55581521987915
+    },
+    {
+      "d": 5,
+      "lambda": 8.0,
+      "val_deviance": 3.9770181163143503,
+      "fit_sec": 29.85129165649414
+    },
+    {
+      "d": 5,
+      "lambda": 20.0,
+      "val_deviance": 3.955230354481238,
+      "fit_sec": 24.001523971557617
+    },
+    {
+      "d": 5,
+      "lambda": 50.0,
+      "val_deviance": 3.9550295347305053,
+      "fit_sec": 14.514124870300293
+    }
+  ],
+  "canonical_restart_seed": 2,
+  "alternation": "block coordinate descent (L given F, then F+alpha+beta given L); joint one-shot L-BFGS-B over all params was tried first and collapsed L,F to ~0 (see fit.py module docstring)",
+  "inner_cv": {
+    "method": "single 80/20 game-level split within train",
+    "seed": 13
+  }
+}

@@ -1,0 +1,33 @@
+[    0.0s] loading data
+[    1.3s] train=100445 test=25382
+[    1.3s] null deviance on test = 4.01172
+[    1.3s] n_bat(train)=758 n_pit(train)=1181 seasons=[2024, 2025, 2026]
+[    1.5s] inner split: itrain=80299 ival=20146
+[    6.1s] [inner CV] structural-only (no latent) val deviance = 4.00120
+[   50.7s] [inner CV] d=1 lambda=8 val_dev=3.98298 (44.6s)
+[   81.2s] [inner CV] d=1 lambda=20 val_dev=3.97717 (30.4s)
+[   98.1s] [inner CV] d=1 lambda=50 val_dev=3.97946 (16.9s)
+[  140.4s] [inner CV] d=2 lambda=8 val_dev=3.97443 (42.3s)
+[  159.3s] [inner CV] d=2 lambda=20 val_dev=3.96473 (18.9s)
+[  170.9s] [inner CV] d=2 lambda=50 val_dev=3.96628 (11.5s)
+[  200.4s] [inner CV] d=3 lambda=8 val_dev=3.97220 (29.5s)
+[  223.7s] [inner CV] d=3 lambda=20 val_dev=3.95859 (23.3s)
+[  238.8s] [inner CV] d=3 lambda=50 val_dev=3.96143 (15.1s)
+[  268.8s] [inner CV] d=4 lambda=8 val_dev=3.97445 (30.1s)
+[  293.0s] [inner CV] d=4 lambda=20 val_dev=3.95526 (24.1s)
+[  306.5s] [inner CV] d=4 lambda=50 val_dev=3.95517 (13.6s)
+[  336.4s] [inner CV] d=5 lambda=8 val_dev=3.97702 (29.9s)
+[  360.4s] [inner CV] d=5 lambda=20 val_dev=3.95523 (24.0s)
+[  374.9s] [inner CV] d=5 lambda=50 val_dev=3.95503 (14.5s)
+[  374.9s] selected d*=5 lambda*=50 (val_dev=3.95503)
+[  379.4s] structural-only (home/hand/season, no player latent) test deviance = 4.00691
+[  398.3s] [final restart 0] train_dev=3.90398 test_dev=3.95566 penalized_train_loss=197652.41 (18.9s)
+[  411.0s] [final restart 1] train_dev=3.90397 test_dev=3.95564 penalized_train_loss=197652.09 (12.7s)
+[  425.2s] [final restart 2] train_dev=3.90392 test_dev=3.95563 penalized_train_loss=197651.16 (14.2s)
+[  439.0s] [final restart 3] train_dev=3.90394 test_dev=3.95564 penalized_train_loss=197651.56 (13.8s)
+[  451.3s] [final restart 4] train_dev=3.90394 test_dev=3.95563 penalized_train_loss=197651.49 (12.3s)
+[  451.3s] restart test-deviance spread: min=3.95563 max=3.95566 spread=0.00003
+[  451.3s] canonical restart (best train loss) = seed 2, test_dev=3.95563
+[  451.3s] wrote result.json
+[  451.3s] wrote latent.npz
+[  451.3s] wrote residuals.npz

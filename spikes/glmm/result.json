@@ -1,0 +1,76 @@
+{
+  "model": "ridge-penalized multinomial logistic (additive GLMM baseline)",
+  "test_pa": 25382,
+  "deviance": 3.9554952020090535,
+  "null_deviance": 4.0117174362118915,
+  "lambda": 10.0,
+  "lambda_selection": "5-fold GroupKFold-by-game CV on the full model, grid=[1.0, 3.0, 10.0, 30.0, 100.0, 300.0], mean deviance={1.0: 4.007364476157564, 3.0: 3.972076611115213, 10.0: 3.956629315894786, 30.0: 3.9629821837016133, 100.0: 3.9801073597024272, 300.0: 3.9924007043982592}",
+  "runtime_sec": 759.4,
+  "n_params": 17532,
+  "reference_category": "F",
+  "ablation_ladder": [
+    {
+      "model": "null",
+      "test_pa": 25382,
+      "deviance": 4.0117174362118915
+    },
+    {
+      "model": "intercept+season",
+      "test_pa": 25382,
+      "deviance": 4.009002865119482,
+      "runtime_sec": 0.6,
+      "n_params": 27,
+      "converged": true
+    },
+    {
+      "model": "+batter",
+      "test_pa": 25382,
+      "deviance": 3.9808908605788553,
+      "runtime_sec": 2.1,
+      "n_params": 6849,
+      "converged": true
+    },
+    {
+      "model": "+pitcher",
+      "test_pa": 25382,
+      "deviance": 3.9853862709394106,
+      "runtime_sec": 12.5,
+      "n_params": 10656,
+      "converged": true
+    },
+    {
+      "model": "+both(batter+pitcher)",
+      "test_pa": 25382,
+      "deviance": 3.9578562212408213,
+      "runtime_sec": 15.1,
+      "n_params": 17478,
+      "converged": true
+    },
+    {
+      "model": "+home+handedness",
+      "test_pa": 25382,
+      "deviance": 3.9566641503598,
+      "runtime_sec": 14.0,
+      "n_params": 17505,
+      "converged": true
+    },
+    {
+      "model": "+TTO (full model)",
+      "test_pa": 25382,
+      "deviance": 3.9554952020090535,
+      "runtime_sec": 24.7,
+      "n_params": 17532,
+      "converged": true
+    }
+  ],
+  "sanity_check": {
+    "corr_batter_K_coef_vs_observed_Kpct": 0.8846456845342421,
+    "corr_pitcher_K_coef_vs_observed_Kpct": 0.908031674481107,
+    "n_batters_used": 610,
+    "n_pitchers_used": 841
+  },
+  "n_batters_train": 758,
+  "n_pitchers_train": 1181,
+  "n_batters_test_unseen_in_train": 14,
+  "n_pitchers_test_unseen_in_train": 39
+}

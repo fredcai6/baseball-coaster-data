@@ -10,3 +10,19 @@ __pycache__/
 venv/
 *.egg-info/
 run_full_backfill.py
+
+# Derived analysis caches: regenerable from games/** in seconds, so they are
+# built not committed -- the same argument that keeps `_derived` out of
+# semantic equality.
+artifacts/derived/
+
+# Spike intermediates: per-row OOF prediction / residual matrices over ~100k
+# plate appearances. Regenerable by re-running the fit that wrote them, read
+# only by sibling spikes at runtime, and 34 MB between them -- an order of
+# magnitude more than the entire rest of the modelling line. The small
+# latent.npz / core.npz / effects.npz ARE committed: they are the fitted model
+# state a board number is pinned to, not a cache.
+spikes/pitch/step3_oof.npz
+spikes/npmr/residuals.npz
+spikes/gllvm/residuals.npz
+spikes/glmm/residuals.npz

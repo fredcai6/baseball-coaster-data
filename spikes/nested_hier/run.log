@@ -1,0 +1,66 @@
+[    0.0s] loading data
+[    0.5s] train=100445 test=25382
+[    0.5s] null deviance on test = 4.01172
+[    0.5s] n_bat(train)=758 n_pit(train)=1181 seasons=[2024, 2025, 2026]
+[    0.6s] gate root     train_rows= 100445 test_rows= 25382 branches=2
+[    0.6s] gate tto      train_rows=  33128 test_rows=  8523 branches=3
+[    0.6s] gate contact  train_rows=  67317 test_rows= 16859 branches=3
+[    0.6s] gate out      train_rows=  36639 test_rows=  9012 branches=2
+[    0.6s] gate hit      train_rows=  26390 test_rows=  6805 branches=4
+[    0.7s] inner split: itrain=80299 ival=20146
+[    1.1s] selecting d via shared_only proxy sweep
+[    5.2s]   d=1 val_dev=3.98256 (4.0s)
+[   11.6s]   d=2 val_dev=3.98501 (6.4s)
+[   19.2s]   d=3 val_dev=3.99536 (7.6s)
+[   28.1s]   d=4 val_dev=4.01496 (8.8s)
+[   28.1s] selected d*=1
+[   28.1s] selecting lambda_shared via shared_only
+[   31.6s]   lambda_shared=10 val_dev=3.98157 (3.6s)
+[   35.7s]   lambda_shared=30 val_dev=3.98256 (4.1s)
+[   40.1s]   lambda_shared=80 val_dev=3.98434 (4.4s)
+[   40.1s] selected lambda_shared*=10 (val_dev=3.98157)
+[   40.1s] fitting separate_only reference (own lambda_gate CV)
+[   44.4s]   separate_only lambda_gate=5 val_dev=4.02691 (4.3s)
+[   49.4s]   separate_only lambda_gate=20 val_dev=4.04001 (5.0s)
+[   54.5s]   separate_only lambda_gate=80 val_dev=4.05960 (5.1s)
+[   58.3s]   separate_only lambda_gate=300 val_dev=4.07047 (3.8s)
+[   62.2s]   separate_only lambda_gate=1000 val_dev=4.06733 (3.9s)
+[   62.2s] selected separate_only lambda*=5 (val_dev=4.02691)
+[   62.2s] sweeping lambda_gate for the hierarchical (hier) model -- THE headline result
+[   77.7s]   lambda_gate=0.001 val_dev=4.06488 (15.5s)
+[   93.4s]   lambda_gate=0.01 val_dev=4.04413 (15.7s)
+[  106.7s]   lambda_gate=0.1 val_dev=4.02433 (13.2s)
+[  126.6s]   lambda_gate=1 val_dev=4.01875 (20.0s)
+[  141.2s]   lambda_gate=5 val_dev=4.01670 (14.6s)
+[  157.0s]   lambda_gate=20 val_dev=4.00670 (15.8s)
+[  171.3s]   lambda_gate=80 val_dev=3.98425 (14.3s)
+[  186.3s]   lambda_gate=300 val_dev=3.97949 (15.0s)
+[  202.1s]   lambda_gate=1500 val_dev=3.98105 (15.8s)
+[  214.9s]   lambda_gate=8000 val_dev=3.98132 (12.8s)
+[  228.3s]   lambda_gate=50000 val_dev=3.98106 (13.4s)
+[  240.1s]   lambda_gate=1e+06 val_dev=3.98091 (11.8s)
+[  240.1s] selected lambda_gate*=300 (val_dev=3.97949)
+[  240.1s] limit check: hier@lambda_gate=0.001 val_dev=4.06488 vs separate_only val_dev=4.02691 (diff=+0.03797)
+[  240.1s] limit check: hier@lambda_gate=1e+06 val_dev=3.98091 vs shared_only val_dev=3.98157 (diff=-0.00066)
+[  240.5s] structural-only (no player latent) test deviance = 4.00693
+[  240.5s] final HIER fit: d=1 lambda_shared=10 lambda_gate=300, 3 restarts
+[  279.7s]   [restart 0] train_dev=3.86198 test_dev=3.98080 penalized_loss=193958.79 (39.2s)
+[  319.9s]   [restart 1] train_dev=3.86619 test_dev=3.97934 penalized_loss=194170.43 (40.2s)
+[  354.1s]   [restart 2] train_dev=3.87978 test_dev=3.97744 penalized_loss=194852.46 (34.2s)
+[  354.1s] restart spread: min=3.97744 max=3.98080 spread=0.00336
+[  354.1s] canonical = seed 0 test_dev=3.98080
+[  354.1s] per-gate test deviance: {'root': 1.2566043921567829, 'tto': 1.7012358992488, 'contact': 1.7526479155650065, 'out': 1.3713365171210756, 'hit': 1.872082986250277}
+[  354.1s] final refit: shared_only reference on full train
+[  361.7s] shared_only (Variant B stand-in) test deviance = 3.98125
+[  361.7s] final refit: separate_only reference on full train
+[  379.9s] separate_only (Variant A stand-in) test deviance = 4.01572
+[  379.9s] DIPS ladder: per-gate batter-only / pitcher-only / both
+[  385.0s]   gate=root     batter_only=1.26644 pitcher_only=1.26447 both=1.25652
+[  387.1s]   gate=tto      batter_only=1.70823 pitcher_only=1.70858 both=1.70837
+[  392.4s]   gate=contact  batter_only=1.75169 pitcher_only=1.76034 both=1.76681
+[  394.0s]   gate=out      batter_only=1.38117 pitcher_only=1.38147 both=1.39397
+[  396.4s]   gate=hit      batter_only=1.86755 pitcher_only=1.92876 both=1.91879
+[  396.4s] DIPS ladder struct-only floor: {'root': 1.2763671548808824, 'tto': 1.7168491284684213, 'contact': 1.7466637505700036, 'out': 1.3778984410701463, 'hit': 1.8824227653538272}
+[  396.4s] wrote result.json
+[  396.4s] wrote latent.npz
+[  396.4s] TOTAL RUNTIME 396.4s
