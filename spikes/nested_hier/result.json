@@ -1,0 +1,269 @@
+{
+  "model": "nested_hier (Variant C: shared + per-gate-shrunk-deviation latents)",
+  "test_pa": 25382,
+  "joint_test_deviance": 3.980800050163884,
+  "null_deviance": 4.0117174362118915,
+  "structural_only_test_deviance": 4.006932790447544,
+  "per_gate_deviance": {
+    "root": 1.2566043921567829,
+    "tto": 1.7012358992488,
+    "contact": 1.7526479155650065,
+    "out": 1.3713365171210756,
+    "hit": 1.872082986250277
+  },
+  "d": 1,
+  "lambda_shared": 10.0,
+  "lambda_gate": 300.0,
+  "lambda_gate_curve": [
+    {
+      "lambda_gate": 0.001,
+      "val_deviance": 4.064880680714255,
+      "fit_sec": 15.531025409698486
+    },
+    {
+      "lambda_gate": 0.01,
+      "val_deviance": 4.044132951125835,
+      "fit_sec": 15.701372623443604
+    },
+    {
+      "lambda_gate": 0.1,
+      "val_deviance": 4.024334109838119,
+      "fit_sec": 13.242340803146362
+    },
+    {
+      "lambda_gate": 1.0,
+      "val_deviance": 4.018747986663507,
+      "fit_sec": 19.97827672958374
+    },
+    {
+      "lambda_gate": 5.0,
+      "val_deviance": 4.01669710005,
+      "fit_sec": 14.595892906188965
+    },
+    {
+      "lambda_gate": 20.0,
+      "val_deviance": 4.0066994847257345,
+      "fit_sec": 15.810283660888672
+    },
+    {
+      "lambda_gate": 80.0,
+      "val_deviance": 3.9842532987038117,
+      "fit_sec": 14.25701642036438
+    },
+    {
+      "lambda_gate": 300.0,
+      "val_deviance": 3.979488297210401,
+      "fit_sec": 15.00534462928772
+    },
+    {
+      "lambda_gate": 1500.0,
+      "val_deviance": 3.981053083466351,
+      "fit_sec": 15.827319622039795
+    },
+    {
+      "lambda_gate": 8000.0,
+      "val_deviance": 3.981323119525083,
+      "fit_sec": 12.759506225585938
+    },
+    {
+      "lambda_gate": 50000.0,
+      "val_deviance": 3.981058919307474,
+      "fit_sec": 13.433163166046143
+    },
+    {
+      "lambda_gate": 1000000.0,
+      "val_deviance": 3.9809054647835547,
+      "fit_sec": 11.76224398612976
+    }
+  ],
+  "n_params": 11746,
+  "runtime_sec": 396.38737201690674,
+  "restart_spread": 0.0033643025682041916,
+  "restart_test_deviances": [
+    3.980800050163884,
+    3.97934040479969,
+    3.97743574759568
+  ],
+  "canonical_restart_seed": 0,
+  "d_selection": [
+    {
+      "d": 1,
+      "val_deviance": 3.982558855597626,
+      "fit_sec": 4.034059047698975
+    },
+    {
+      "d": 2,
+      "val_deviance": 3.985014702441035,
+      "fit_sec": 6.438640117645264
+    },
+    {
+      "d": 3,
+      "val_deviance": 3.9953610225315415,
+      "fit_sec": 7.632487058639526
+    },
+    {
+      "d": 4,
+      "val_deviance": 4.014963269531715,
+      "fit_sec": 8.821540355682373
+    }
+  ],
+  "lambda_shared_selection": [
+    {
+      "lambda_shared": 10.0,
+      "val_deviance": 3.981568253201405,
+      "fit_sec": 3.5577199459075928
+    },
+    {
+      "lambda_shared": 30.0,
+      "val_deviance": 3.982558855597626,
+      "fit_sec": 4.098510026931763
+    },
+    {
+      "lambda_shared": 80.0,
+      "val_deviance": 3.9843414803062327,
+      "fit_sec": 4.408407211303711
+    }
+  ],
+  "sibling_reference": {
+    "shared_only": {
+      "description": "Variant B stand-in: delta frozen at 0, one L per player reused at every gate",
+      "lambda_shared": 10.0,
+      "val_deviance": 3.981568253201405,
+      "test_deviance": 3.981250009532077
+    },
+    "separate_only": {
+      "description": "Variant A stand-in: L_shared frozen at 0, independent per-gate latents. NOTE: superseded the original coarse grid (5..1000), which never beat null even at its weakest point -- see resweep_separate.py docstring.",
+      "lambda_gate": 0.5,
+      "val_deviance": 4.0192072520234,
+      "test_deviance": 4.015640459326156,
+      "lambda_grid": [
+        {
+          "lambda_gate": 0.05,
+          "val_deviance": 4.029369116659089,
+          "fit_sec": 3.6512413024902344
+        },
+        {
+          "lambda_gate": 0.2,
+          "val_deviance": 4.021276196403144,
+          "fit_sec": 3.316128730773926
+        },
+        {
+          "lambda_gate": 0.5,
+          "val_deviance": 4.0192072520234,
+          "fit_sec": 2.768899440765381
+        },
+        {
+          "lambda_gate": 1.0,
+          "val_deviance": 4.0194703582336695,
+          "fit_sec": 2.711738109588623
+        },
+        {
+          "lambda_gate": 2.0,
+          "val_deviance": 4.021401266901993,
+          "fit_sec": 2.9138386249542236
+        },
+        {
+          "lambda_gate": 5.0,
+          "val_deviance": 4.026914964822021,
+          "fit_sec": 3.6410768032073975
+        },
+        {
+          "lambda_gate": 20.0,
+          "val_deviance": 4.040013430575364,
+          "fit_sec": 3.966973066329956
+        },
+        {
+          "lambda_gate": 80.0,
+          "val_deviance": 4.059595537420245,
+          "fit_sec": 4.216399669647217
+        },
+        {
+          "lambda_gate": 300.0,
+          "val_deviance": 4.070466111764988,
+          "fit_sec": 3.8007030487060547
+        },
+        {
+          "lambda_gate": 1000.0,
+          "val_deviance": 4.067328827324682,
+          "fit_sec": 4.083422422409058
+        }
+      ],
+      "original_coarse_grid": [
+        {
+          "lambda_gate": 5.0,
+          "val_deviance": 4.026914964822021,
+          "fit_sec": 4.306142807006836
+        },
+        {
+          "lambda_gate": 20.0,
+          "val_deviance": 4.040013430575364,
+          "fit_sec": 4.983849048614502
+        },
+        {
+          "lambda_gate": 80.0,
+          "val_deviance": 4.059595537420245,
+          "fit_sec": 5.065086603164673
+        },
+        {
+          "lambda_gate": 300.0,
+          "val_deviance": 4.070466111764988,
+          "fit_sec": 3.7901229858398438
+        },
+        {
+          "lambda_gate": 1000.0,
+          "val_deviance": 4.067328827324682,
+          "fit_sec": 3.9128544330596924
+        }
+      ]
+    }
+  },
+  "limit_check": {
+    "lo_end_lambda_gate": 0.001,
+    "lo_end_val_deviance": 4.064880680714255,
+    "separate_only_val_deviance": 4.0192072520234,
+    "lo_end_minus_separate_only": 0.04567342869085511,
+    "hi_end_lambda_gate": 1000000.0,
+    "hi_end_val_deviance": 3.9809054647835547,
+    "shared_only_val_deviance": 3.981568253201405,
+    "hi_end_minus_shared_only": -0.0006627884178502796
+  },
+  "dips_ladder": {
+    "root": {
+      "batter_only": 1.2664357111828732,
+      "pitcher_only": 1.2644719037733192,
+      "both": 1.2565226729718721
+    },
+    "tto": {
+      "batter_only": 1.7082253286064482,
+      "pitcher_only": 1.7085780202743457,
+      "both": 1.7083658777262511
+    },
+    "contact": {
+      "batter_only": 1.751686361724347,
+      "pitcher_only": 1.76034306263111,
+      "both": 1.7668105567829921
+    },
+    "out": {
+      "batter_only": 1.3811725094040963,
+      "pitcher_only": 1.3814689944607657,
+      "both": 1.3939727813525442
+    },
+    "hit": {
+      "batter_only": 1.867551109572125,
+      "pitcher_only": 1.9287645489970806,
+      "both": 1.9187929156414607
+    }
+  },
+  "dips_ladder_struct_only_floor": {
+    "root": 1.2763671548808824,
+    "tto": 1.7168491284684213,
+    "contact": 1.7466637505700036,
+    "out": 1.3778984410701463,
+    "hit": 1.8824227653538272
+  },
+  "alternation": "block coordinate descent: block 1 solves L_shared + all per-gate deltas jointly across gates (convex given F); block 2 solves F/alpha/beta per gate independently (convex given L). One-shot joint L-BFGS-B was not attempted here -- gllvm/fit.py already demonstrated it collapses L,F to 0, and this parameterization is MORE prone to it (L_shared, delta additively confounded).",
+  "inner_cv": {
+    "method": "single 80/20 game-level split within train",
+    "seed": 13
+  }
+}

@@ -1,0 +1,50 @@
+[    0.0s] loading data
+[    0.7s] train=100445 test=25382
+[    0.7s] null deviance on test = 4.01172
+[    0.7s] n_bat(train)=758 n_pit(train)=1181 seasons=[2024, 2025, 2026]
+[    0.9s]   gate root     n_branch=2 train_rows=100445 test_rows=25382
+[    0.9s]   gate tto      n_branch=3 train_rows=33128 test_rows=8523
+[    0.9s]   gate contact  n_branch=3 train_rows=67317 test_rows=16859
+[    0.9s]   gate out      n_branch=2 train_rows=36639 test_rows=9012
+[    0.9s]   gate hit      n_branch=4 train_rows=26390 test_rows=6805
+[    0.9s] gates.saturated_check on TRAIN y: nested=4.010647 flat=4.010647 diff=0.00e+00
+[    0.9s] inner split: itrain=80299 ival=20146
+[    1.4s] [inner CV] structural-only (no latent) val deviance = 4.00118
+[    5.3s] [inner CV] d=1 lambda=10 val_dev=3.97815 (3.9s)
+[    8.8s] [inner CV] d=1 lambda=20 val_dev=3.97550 (3.5s)
+[   11.6s] [inner CV] d=1 lambda=40 val_dev=3.97386 (2.8s)
+[   13.9s] [inner CV] d=1 lambda=60 val_dev=3.97450 (2.4s)
+[   19.7s] [inner CV] d=2 lambda=10 val_dev=3.97369 (5.8s)
+[   27.1s] [inner CV] d=2 lambda=20 val_dev=3.96625 (7.4s)
+[   34.7s] [inner CV] d=2 lambda=40 val_dev=3.96288 (7.6s)
+[   40.0s] [inner CV] d=2 lambda=60 val_dev=3.96587 (5.4s)
+[   54.2s] [inner CV] d=3 lambda=10 val_dev=3.97130 (14.1s)
+[   66.8s] [inner CV] d=3 lambda=20 val_dev=3.95999 (12.7s)
+[   76.5s] [inner CV] d=3 lambda=40 val_dev=3.95484 (9.7s)
+[   84.6s] [inner CV] d=3 lambda=60 val_dev=3.96086 (8.1s)
+[  101.3s] [inner CV] d=4 lambda=10 val_dev=3.98108 (16.7s)
+[  113.1s] [inner CV] d=4 lambda=20 val_dev=3.95913 (11.7s)
+[  118.0s] [inner CV] d=4 lambda=40 val_dev=3.94919 (4.9s)
+[  122.0s] [inner CV] d=4 lambda=60 val_dev=3.95519 (4.0s)
+[  129.5s] [inner CV] d=5 lambda=10 val_dev=3.97632 (7.5s)
+[  139.0s] [inner CV] d=5 lambda=20 val_dev=3.95530 (9.4s)
+[  149.4s] [inner CV] d=5 lambda=40 val_dev=3.94845 (10.4s)
+[  154.8s] [inner CV] d=5 lambda=60 val_dev=3.95493 (5.4s)
+[  154.8s] selected d*=5 lambda*=40 (val_dev=3.94845)
+[  155.1s] structural-only (home/hand/season, no player latent) test deviance = 4.00693
+[  166.8s] [final restart 0] train_dev=3.87059 test_dev=3.95105 penalized_train_loss=196062.91 (11.7s)
+[  179.0s] [final restart 1] train_dev=3.87060 test_dev=3.95108 penalized_train_loss=196063.40 (12.2s)
+[  193.2s] [final restart 2] train_dev=3.87071 test_dev=3.95108 penalized_train_loss=196066.72 (14.2s)
+[  207.9s] [final restart 3] train_dev=3.87056 test_dev=3.95105 penalized_train_loss=196062.19 (14.7s)
+[  219.4s] [final restart 4] train_dev=3.87293 test_dev=3.95116 penalized_train_loss=196126.47 (11.5s)
+[  219.4s] restart test-deviance spread: min=3.95105 max=3.95116 spread=0.000103
+[  219.4s] canonical restart (best train loss) = seed 3, test_dev=3.95105
+[  219.4s] per-gate test deviance: {'root': 1.2490672298887773, 'tto': 1.6768322955219097, 'contact': 1.745185442062308, 'out': 1.352206472031722, 'hit': 1.8636280658313593}
+[  219.4s] running DIPS ladder (per-gate bat-only / pit-only / both)
+[  226.0s] [DIPS] gate=root     none=1.27637 bat=1.26453 pit=1.26099 both=1.24918
+[  228.0s] [DIPS] gate=tto      none=1.71685 bat=1.69642 pit=1.69221 both=1.67418
+[  233.8s] [DIPS] gate=contact  none=1.74666 bat=1.74621 pit=1.74679 both=1.74669
+[  235.3s] [DIPS] gate=out      none=1.37790 bat=1.36802 pit=1.36363 both=1.35259
+[  237.0s] [DIPS] gate=hit      none=1.88242 bat=1.86700 pit=1.88279 both=1.86702
+[  237.0s] wrote result.json
+[  237.0s] wrote latent.npz

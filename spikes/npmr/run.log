@@ -1,0 +1,38 @@
+Loading data via spikes/common.py ...
+train PA=100445  test PA=25382
+NULL deviance on test: 4.01172
+
+Cross-validating lambda x pooling-threshold (3-fold, by game)...
+  pool=  0  lambda=  10.0  cv_dev=4.05098 (+-0.00835)  [43.3s]
+  pool=  0  lambda=  20.0  cv_dev=3.99869 (+-0.00813)  [49.7s]
+  pool=  0  lambda=  40.0  cv_dev=3.96325 (+-0.00736)  [26.0s]
+  pool=  0  lambda=  80.0  cv_dev=3.96184 (+-0.00653)  [31.2s]
+  pool=  0  lambda= 120.0  cv_dev=3.97580 (+-0.00588)  [20.1s]
+  pool=  0  lambda= 160.0  cv_dev=3.99338 (+-0.00507)  [19.0s]
+  pool=  0  lambda= 240.0  cv_dev=4.00654 (+-0.00536)  [15.1s]
+  pool=  0  lambda= 320.0  cv_dev=4.00655 (+-0.00535)  [18.5s]
+  pool= 20  lambda=  10.0  cv_dev=4.02042 (+-0.00774)  [31.4s]
+  pool= 20  lambda=  20.0  cv_dev=3.98514 (+-0.00803)  [22.7s]
+  pool= 20  lambda=  40.0  cv_dev=3.95933 (+-0.00747)  [19.1s]
+  pool= 20  lambda=  80.0  cv_dev=3.95949 (+-0.00664)  [16.6s]
+  pool= 20  lambda= 120.0  cv_dev=3.97300 (+-0.00572)  [18.4s]
+  pool= 20  lambda= 160.0  cv_dev=3.98885 (+-0.00496)  [19.2s]
+  pool= 20  lambda= 240.0  cv_dev=4.00370 (+-0.00461)  [19.3s]
+  pool= 20  lambda= 320.0  cv_dev=4.00644 (+-0.00519)  [18.7s]
+
+Best by CV: lambda=40.0  pool_threshold=20  cv_dev=3.95933
+Best CV deviance per pooling setting:
+  pool_threshold=0: lambda=80.0 cv_dev=3.96184
+  pool_threshold=20: lambda=40.0 cv_dev=3.95933
+
+Final fit: lambda=40.0  pool_threshold=20 on full train (100445 PA), 600 iterations...
+    iter    0  s=(5.18e-05,1.58e-02,5.45e-03)  smooth/obs=2.02460  pen=887.10  rank_bat=9  rank_pit=9
+    iter   50  s=(4.92e-05,3.76e-03,2.59e-03)  smooth/obs=1.91331  pen=3820.31  rank_bat=8  rank_pit=8
+final fit took 17.0s, 84 iters, rank_bat=8 rank_pit=8
+
+TEST deviance = 3.95424  (null = 4.01172)
+
+rank_batter (final, effective)=8  rank_pitcher (final, effective)=8
+
+Building latent.md interpretation report...
+Total runtime: 406.1s

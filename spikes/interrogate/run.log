@@ -1,0 +1,41 @@
+[    0.8s] PART 1 -- interaction gap, gate by gate
+[    8.7s]   root     rows=100445 br=2  base=1.21505 add=1.21505 joint=1.21408  GAP=-0.00098
+[   14.2s]   tto      rows= 33128 br=3  base=1.63740 add=1.63701 joint=1.63035  GAP=-0.00665
+[   31.8s]   contact  rows= 67317 br=3  base=1.72891 add=1.72685 joint=1.71873  GAP=-0.00812
+[   36.1s]   out      rows= 36639 br=2  base=1.30984 add=1.30804 joint=1.29977  GAP=-0.00827
+[   43.3s]   hit      rows= 26390 br=4  base=1.76338 add=1.76215 joint=1.75382  GAP=-0.00833
+[   43.3s]   PA-weighted total gap across gates = -0.01382
+[   43.3s] PART 2 -- interrogating the trees fit on the FULL sequential offset
+[  174.0s]   joint model val deviance = 3.84156, 1690 trees kept
+[  174.1s]   feature importance:
+[  174.1s]     P2   0.1317
+[  174.1s]     P4   0.1195
+[  174.1s]     P3   0.1122
+[  174.1s]     B2   0.1073
+[  174.1s]     P5   0.1063
+[  174.1s]     B4   0.0958
+[  174.1s]     B1   0.0919
+[  174.1s]     P1   0.0900
+[  174.1s]     B5   0.0794
+[  174.1s]     B3   0.0658
+[  174.1s]   co-occurring pairs on a path: 72772 CROSS-side (true interaction) vs 52787 within-side
+[  174.1s]   top cross-side axis pairs:
+[  174.1s]     B4   x P5   : 4973
+[  174.1s]     B1   x P5   : 4845
+[  174.1s]     B5   x P4   : 4285
+[  174.1s]     B2   x P5   : 4066
+[  174.1s]     B1   x P2   : 3750
+[  174.1s]     B2   x P4   : 3620
+[  174.1s]     B5   x P5   : 3334
+[  174.1s]     B4   x P3   : 3257
+[  176.4s]   interaction surface over B4 x P5:
+[  176.4s]     K     range 0.050  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.058 -0.021 -0.066 -0.046
+[  176.4s]     BB    range 0.098  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.081 -0.033 -0.103 -0.020
+[  176.4s]     HBP   range 0.127  corners(lo/lo,lo/hi,hi/lo,hi/hi) = +0.050 -0.066 -0.009 -0.074
+[  176.4s]     F     range 0.310  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.180 -0.033 -0.044 +0.130
+[  176.4s]     G     range 0.151  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.120 -0.072 -0.007 +0.030
+[  176.4s]     1B    range 0.286  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.087 +0.091 -0.196 -0.125
+[  176.4s]     2B    range 0.249  corners(lo/lo,lo/hi,hi/lo,hi/hi) = +0.078 -0.055 +0.063 -0.155
+[  176.4s]     HR    range 0.176  corners(lo/lo,lo/hi,hi/lo,hi/hi) = +0.126 +0.049 +0.002 -0.046
+[  176.4s]     OTHER range 0.068  corners(lo/lo,lo/hi,hi/lo,hi/hi) = -0.021 -0.089 -0.037 -0.089
+[  176.4s] wrote result.json

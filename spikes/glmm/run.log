@@ -1,0 +1,64 @@
+train PA 100445  test PA 25382  batters 758  pitchers 1181  seasons [2024, 2025, 2026]
+
+=== null ===
+  test PA        : 25382
+  deviance       : 4.01172
+
+--- cross-validating ridge strength (grouped by game) ---
+  fold 1/5 done (123s elapsed)
+  fold 2/5 done (276s elapsed)
+  fold 3/5 done (401s elapsed)
+  fold 4/5 done (557s elapsed)
+  fold 5/5 done (689s elapsed)
+CV mean deviance by lambda: {1.0: 4.00736, 3.0: 3.97208, 10.0: 3.95663, 30.0: 3.96298, 100.0: 3.98011, 300.0: 3.9924}
+chosen lambda = 10.0  (CV time 689s)
+
+--- ablation ladder ---
+
+=== intercept+season ===
+  test PA        : 25382
+  deviance       : 4.00900
+  runtime_sec    : 0.6
+  n_params       : 27
+  converged      : True
+
+=== +batter ===
+  test PA        : 25382
+  deviance       : 3.98089
+  runtime_sec    : 2.1
+  n_params       : 6849
+  converged      : True
+
+=== +pitcher ===
+  test PA        : 25382
+  deviance       : 3.98539
+  runtime_sec    : 12.5
+  n_params       : 10656
+  converged      : True
+
+=== +both(batter+pitcher) ===
+  test PA        : 25382
+  deviance       : 3.95786
+  runtime_sec    : 15.1
+  n_params       : 17478
+  converged      : True
+
+=== +home+handedness ===
+  test PA        : 25382
+  deviance       : 3.95666
+  runtime_sec    : 14.0
+  n_params       : 17505
+  converged      : True
+
+=== +TTO (full model) ===
+  test PA        : 25382
+  deviance       : 3.95550
+  runtime_sec    : 24.7
+  n_params       : 17532
+  converged      : True
+
+sanity check: corr(fitted batter K coef, observed K% | n>=20) = 0.885  (n=610)
+sanity check: corr(fitted pitcher K coef, observed K% | n>=20) = 0.908  (n=841)
+
+Total runtime: 759s
+Wrote result.json, effects.npz, ids.json, residuals.npz to /home/tommy/projects/baseball-coaster-data/spikes/glmm

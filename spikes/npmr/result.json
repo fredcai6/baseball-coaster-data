@@ -1,0 +1,194 @@
+{
+  "model": "NPMR (block-coordinate accelerated proximal gradient, nuclear norm, separate batter/pitcher blocks)",
+  "test_pa": 25382,
+  "deviance": 3.9542439211884517,
+  "null_deviance": 4.0117174362118915,
+  "lambda": 40.0,
+  "pool_threshold": 20,
+  "rank_batter": 8,
+  "rank_pitcher": 8,
+  "runtime_sec": 406.07609272003174,
+  "cv_results": [
+    {
+      "lambda": 10.0,
+      "pool_threshold": 0,
+      "cv_deviance": 4.050977498631206,
+      "cv_sd": 0.008350421588508667,
+      "seconds": 43.313963651657104
+    },
+    {
+      "lambda": 20.0,
+      "pool_threshold": 0,
+      "cv_deviance": 3.998690444470238,
+      "cv_sd": 0.00813110189753559,
+      "seconds": 49.70224475860596
+    },
+    {
+      "lambda": 40.0,
+      "pool_threshold": 0,
+      "cv_deviance": 3.963252173621185,
+      "cv_sd": 0.007362442213304134,
+      "seconds": 26.035045385360718
+    },
+    {
+      "lambda": 80.0,
+      "pool_threshold": 0,
+      "cv_deviance": 3.961837484396382,
+      "cv_sd": 0.006530274687086711,
+      "seconds": 31.196197509765625
+    },
+    {
+      "lambda": 120.0,
+      "pool_threshold": 0,
+      "cv_deviance": 3.9757983084420516,
+      "cv_sd": 0.0058759832624793295,
+      "seconds": 20.10438299179077
+    },
+    {
+      "lambda": 160.0,
+      "pool_threshold": 0,
+      "cv_deviance": 3.99337904703275,
+      "cv_sd": 0.005066731951446413,
+      "seconds": 18.97100830078125
+    },
+    {
+      "lambda": 240.0,
+      "pool_threshold": 0,
+      "cv_deviance": 4.006538560742598,
+      "cv_sd": 0.00535916141231471,
+      "seconds": 15.113965511322021
+    },
+    {
+      "lambda": 320.0,
+      "pool_threshold": 0,
+      "cv_deviance": 4.006550477419076,
+      "cv_sd": 0.005345429041357991,
+      "seconds": 18.539599895477295
+    },
+    {
+      "lambda": 10.0,
+      "pool_threshold": 20,
+      "cv_deviance": 4.020418936355058,
+      "cv_sd": 0.007744535223533674,
+      "seconds": 31.359256267547607
+    },
+    {
+      "lambda": 20.0,
+      "pool_threshold": 20,
+      "cv_deviance": 3.9851440933501805,
+      "cv_sd": 0.008030558573302073,
+      "seconds": 22.675773859024048
+    },
+    {
+      "lambda": 40.0,
+      "pool_threshold": 20,
+      "cv_deviance": 3.9593327077989735,
+      "cv_sd": 0.007471204175688206,
+      "seconds": 19.0539710521698
+    },
+    {
+      "lambda": 80.0,
+      "pool_threshold": 20,
+      "cv_deviance": 3.9594858683299123,
+      "cv_sd": 0.006635487157048545,
+      "seconds": 16.637441158294678
+    },
+    {
+      "lambda": 120.0,
+      "pool_threshold": 20,
+      "cv_deviance": 3.972998815502727,
+      "cv_sd": 0.005717357539302996,
+      "seconds": 18.447304248809814
+    },
+    {
+      "lambda": 160.0,
+      "pool_threshold": 20,
+      "cv_deviance": 3.9888515627505687,
+      "cv_sd": 0.0049578542030339024,
+      "seconds": 19.22374200820923
+    },
+    {
+      "lambda": 240.0,
+      "pool_threshold": 20,
+      "cv_deviance": 4.003698578178775,
+      "cv_sd": 0.00461359216721359,
+      "seconds": 19.345720529556274
+    },
+    {
+      "lambda": 320.0,
+      "pool_threshold": 20,
+      "cv_deviance": 4.00643920802452,
+      "cv_sd": 0.005193420632810929,
+      "seconds": 18.747090578079224
+    }
+  ],
+  "n_batter_ids": 611,
+  "n_pitcher_ids": 842,
+  "n_iter": 84,
+  "rank_ladder_diagnostic": {
+    "note": "NOT used for lambda selection (CV already picked lambda=40, pool=20). Full-train refits at higher lambda, evaluated on test, purely to quantify the accuracy cost of forcing lower rank -- reported because the paper's headline finding is rank 3 and our CV optimum is rank 8.",
+    "points": [
+      {
+        "lambda": 40.0,
+        "rank_batter": 8,
+        "rank_pitcher": 8,
+        "test_deviance": 3.95424
+      },
+      {
+        "lambda": 80.0,
+        "rank_batter": 6,
+        "rank_pitcher": 5,
+        "test_deviance": 3.95012
+      },
+      {
+        "lambda": 120.0,
+        "rank_batter": 5,
+        "rank_pitcher": 4,
+        "test_deviance": 3.95862
+      },
+      {
+        "lambda": 140.0,
+        "rank_batter": 4,
+        "rank_pitcher": 4,
+        "test_deviance": 3.9643
+      },
+      {
+        "lambda": 160.0,
+        "rank_batter": 4,
+        "rank_pitcher": 3,
+        "test_deviance": 3.97025
+      },
+      {
+        "lambda": 180.0,
+        "rank_batter": 3,
+        "rank_pitcher": 3,
+        "test_deviance": 3.9765255696833437
+      },
+      {
+        "lambda": 200.0,
+        "rank_batter": 3,
+        "rank_pitcher": 3,
+        "test_deviance": 3.98257
+      },
+      {
+        "lambda": 240.0,
+        "rank_batter": 1,
+        "rank_pitcher": 3,
+        "test_deviance": 3.99352
+      }
+    ]
+  },
+  "rank3_forced": {
+    "lambda": 180.0,
+    "rank_batter": 3,
+    "rank_pitcher": 3,
+    "test_deviance": 3.9765255696833437,
+    "latent_file": "latent_rank3.md (supplementary; latent.md/latent.npz are the CV-optimal rank-8 solution, per spec)"
+  },
+  "sibling_comparison": {
+    "ridge_glmm_test_deviance": 3.9554952020090535,
+    "npmr_test_deviance": 3.9542439211884517,
+    "npmr_minus_ridge": -0.0012512808206017745,
+    "note": "NPMR narrowly beats the ridge/GLMM sibling spike (spikes/glmm/result.json), consistent with the paper's own finding that the gap between NPMR and ridge is small."
+  }
+}
