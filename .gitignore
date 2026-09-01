@@ -10,3 +10,8 @@ __pycache__/
 venv/
 *.egg-info/
 run_full_backfill.py
+
+# Derived analysis caches: regenerable from games/** in seconds, so they are
+# built not committed -- the same argument that keeps `_derived` out of
+# semantic equality.
+artifacts/derived/

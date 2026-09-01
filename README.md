@@ -337,6 +337,61 @@ reported as a clean SKIP rather than an error; write-once is checked on the next
 python scripts/check_write_once.py --base <sha> --head <sha>
 ```
 
+## Analysis: the plate-appearance table (`bc_pipeline.pa_table`)
+
+The corpus's `events[]` spine is the play-by-play, and every analysis consumer
+would otherwise re-walk 1,485 files and re-derive the same columns — which is
+where a shared bug hides. `bc_pipeline.pa_table` is that walk, done once:
+**one row per plate appearance, 125,827 of them, built in about two seconds.**
+
+```bash
+python scripts/build_pa_table.py            # -> artifacts/derived/pa_table.csv (38 MB)
+python scripts/build_pa_table.py --check    # summarize without writing
+python scripts/check_pa_table_vs_box.py     # reconcile against the boxscore
+```
+
+The output is a **cache, not an artifact**: regenerable from committed inputs in
+seconds, so it lives under `artifacts/derived/` and is gitignored, by the same
+argument that keeps `_derived` out of semantic equality. It is not one of the
+four artifacts and `check_artifacts_current.py` does not know about it.
+
+**The table encodes two rules so the caller does not have to remember them.**
+
+  - **`player_id` does not join across games** (see person_map, above). The join
+    keys are `batter_career` / `pitcher_career` and `batter_person` /
+    `pitcher_person`; the raw `*_pid` columns are traceability back to the source
+    file and are explicitly not join keys. One row in 125,827 lacks a career id.
+  - **`outcome` is an object.** Reading it as a scalar yields nothing and raises
+    nothing — which is a real failure mode, not a hypothetical one.
+
+Beyond the flattening it folds three things the spine implies but does not state:
+the counting-stat primitives (`is_ab`, `is_hit`, `is_k`, `is_bb`, `is_sac`, …),
+matchup context (`tto` — times this batter has faced this pitcher in this game —
+plus `pitcher_bf`, `pitcher_is_starter`, `order_slot`), and a coarse absolute
+spray field folded from `fielders[0]` or the prose `location`, populated on 89%
+of balls in play. Note that **`bats_side` is null on all 41,713 player records**,
+so handedness is unavailable and pull/oppo cannot be derived — only direction.
+
+### The boxscore is the oracle
+
+The box is parsed from a different region of the source page than the narrative,
+so per-player AB/H/BB/SO folded from `events[]` and the same totals read from the
+box are two independent readings of one truth. `tests/test_pa_table.py` reconciles
+them across the corpus: **41,122 of 41,122 clean player-games agree on all four
+fields.** The 37 residual disagreements all fall in games
+`corrections/dispositions.json` already discloses as dropping or misattributing
+plate appearances — and `oracle_residual`, the class meaning our check is wrong
+rather than the source, shows zero.
+
+**That check earned its keep on its first run.** The fold scored `AB` from the
+outcome *type*, and the corpus records only **36 of its 1,895 sacrifices** as
+`type: "sacrifice"` — the other 1,859 are ordinary flyouts, groundouts, lineouts,
+foul outs, popouts, fielders' choices and reached-on-errors carrying a `SAC` or
+`sacrifice fly` **modifier**, spanning eight types. AB was over-counted on 1,749
+of 41,122 player-games; `H`, `BB` and `SO` were perfect. Nothing but an oracle
+parsed from elsewhere on the page would have found it, and the fold had a green
+test suite in every other respect. *Whatever has no oracle turns out to be wrong.*
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
