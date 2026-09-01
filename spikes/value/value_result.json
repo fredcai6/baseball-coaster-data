@@ -1,0 +1,436 @@
+{
+ "step0_calibration": {
+  "fold_seed": 20260830,
+  "n_folds": 5,
+  "in_sample": 3.851221646887286,
+  "oof": 3.9485758328792375,
+  "frozen_test": 3.945354644674089,
+  "fold_deviances": [
+   3.9509865083567433,
+   3.9495289351622254,
+   3.946408675175957,
+   3.9244848992286894,
+   3.9711510283969638
+  ],
+  "sanity_passed": true,
+  "all_folds_converged": true,
+  "decision": "CALIBRATED",
+  "gain": -0.000831017385312105,
+  "cal_test": 3.9445236272887767,
+  "category_scale_a": {
+   "K": 1.0281680250656136,
+   "BB": 0.9584587978785515,
+   "HBP": 0.901157254727376,
+   "F": 0.936639544785835,
+   "G": 0.8599905426553227,
+   "1B": 1.0274734043642402,
+   "2B": 0.7313486740016515,
+   "3B": 1.286402837230133,
+   "HR": 0.7979256406559506,
+   "OTHER": 0.9858041180878401
+  },
+  "category_offset_b": {
+   "K": 0.11890740355060438,
+   "BB": -0.016644425273892174,
+   "HBP": -0.2859731848083238,
+   "F": -0.02900882167825156,
+   "G": -0.17624653689139846,
+   "1B": 0.12180162305970808,
+   "2B": -0.7258178227308526,
+   "3B": 1.5389007696582269,
+   "HR": -0.5742947997308567,
+   "OTHER": 0.027174632454065182
+  }
+ },
+ "step1_season_weights": {
+  "2024": {
+   "K": -0.0015748097723187748,
+   "BB": 0.9193596384653812,
+   "HBP": 0.9423303266963657,
+   "F": 0.007684735446932489,
+   "G": -0.00580901127443556,
+   "1B": 1.0692497446792009,
+   "2B": 1.3558681439201201,
+   "3B": 1.5792947392162917,
+   "HR": 1.890769242061105,
+   "OTHER": 0.42087380098365534
+  },
+  "2025": {
+   "K": 0.00773007630607464,
+   "BB": 0.9638870094373456,
+   "HBP": 0.998977347820095,
+   "F": 0.014985936224120977,
+   "G": -0.02664851467052809,
+   "1B": 1.1127042197430996,
+   "2B": 1.4146193772130702,
+   "3B": 1.5971688059071192,
+   "HR": 1.9554559202288315,
+   "OTHER": 0.4479940456524183
+  },
+  "2026": {
+   "K": 0.003113852710106557,
+   "BB": 1.0612061685874306,
+   "HBP": 1.0915266690247367,
+   "F": 0.016043015569157548,
+   "G": -0.02299132970130624,
+   "1B": 1.189247607109384,
+   "2B": 1.5029076701216897,
+   "3B": 1.7031196160250754,
+   "HR": 1.9651507424112233,
+   "OTHER": 0.4732360595441387
+  }
+ },
+ "step1_season_weights_raw": {
+  "2024": {
+   "K": -0.4702728989398959,
+   "BB": 0.45066154929780405,
+   "HBP": 0.47363223752878864,
+   "F": -0.4610133537206446,
+   "G": -0.47450710044201266,
+   "1B": 0.6005516555116238,
+   "2B": 0.887170054752543,
+   "3B": 1.1105966500487146,
+   "HR": 1.422071152893528,
+   "OTHER": -0.04782428818392174
+  },
+  "2025": {
+   "K": -0.4954249148001045,
+   "BB": 0.4607320183311665,
+   "HBP": 0.49582235671391583,
+   "F": -0.48816905488205814,
+   "G": -0.5298035057767072,
+   "1B": 0.6095492286369206,
+   "2B": 0.911464386106891,
+   "3B": 1.0940138148009402,
+   "HR": 1.4523009291226525,
+   "OTHER": -0.05516094545376085
+  },
+  "2026": {
+   "K": -0.555923469377183,
+   "BB": 0.502168846500141,
+   "HBP": 0.5324893469374472,
+   "F": -0.542994306518132,
+   "G": -0.5820286517885958,
+   "1B": 0.6302102850220945,
+   "2B": 0.9438703480344001,
+   "3B": 1.144082293937786,
+   "HR": 1.4061134203239338,
+   "OTHER": -0.0858012625431508
+  }
+ },
+ "step1_season_generic_out": {
+  "2024": -0.4686980891675771,
+  "2025": -0.5031549911061791,
+  "2026": -0.5590373220872895
+ },
+ "all_data_fit_converged": true,
+ "n_batter_seasons_total": 860,
+ "n_batter_seasons_qualified": 356,
+ "n_pitcher_seasons_starters_qualified": 207,
+ "n_pitcher_seasons_relievers_qualified": 356,
+ "qualifiers": {
+  "batter_pa": 150,
+  "starter_bf": 150,
+  "reliever_bf": 50
+ },
+ "baselines": {
+  "all_pa": {
+   "2024": 0.46129306590222996,
+   "2025": 0.4973174253119715,
+   "2026": 0.5499595889925356
+  },
+  "qualified_only": {
+   "2024": 0.4728867896589351,
+   "2025": 0.5093640212210528,
+   "2026": 0.5667254939401366
+  },
+  "offset_runs_per_350pa": {
+   "2024": 4.0578033148468,
+   "2025": 4.2163085681784755,
+   "2026": 5.868066731660349
+  },
+  "overall_pa_weighted_offset_runs_per_350pa": 4.733110288756607
+ },
+ "batter_leaderboard_top15": [
+  {
+   "batter_id": "career:33d074ed01d48e61",
+   "name": "Adam Fogel",
+   "season": 2024,
+   "pa": 373,
+   "raa_350": 40.54443117908866
+  },
+  {
+   "batter_id": "career:33d074ed01d48e61",
+   "name": "Adam Fogel",
+   "season": 2025,
+   "pa": 352,
+   "raa_350": 36.466737738763804
+  },
+  {
+   "batter_id": "career:e90cc7c0808c5504",
+   "name": "Kelly Dugan",
+   "season": 2024,
+   "pa": 268,
+   "raa_350": 26.031144359786683
+  },
+  {
+   "batter_id": "career:007be5a10348c01a",
+   "name": "Taylor Darden",
+   "season": 2025,
+   "pa": 383,
+   "raa_350": 25.977496505348576
+  },
+  {
+   "batter_id": "career:0ce97d6e3453ab5a",
+   "name": "Trevor Rogers",
+   "season": 2024,
+   "pa": 347,
+   "raa_350": 25.24808471648487
+  },
+  {
+   "batter_id": "career:fff8e30c8a329bf4",
+   "name": "Dillon Tatum",
+   "season": 2025,
+   "pa": 230,
+   "raa_350": 23.684079721643826
+  },
+  {
+   "batter_id": "career:51dfc0ad56da5fc9",
+   "name": "Troy Viola",
+   "season": 2024,
+   "pa": 382,
+   "raa_350": 23.46493835192548
+  },
+  {
+   "batter_id": "career:365e9c20a95282eb",
+   "name": "Dario Gomez",
+   "season": 2024,
+   "pa": 322,
+   "raa_350": 23.45001005096704
+  },
+  {
+   "batter_id": "career:7aaf184d81b91103",
+   "name": "Roberto Pena",
+   "season": 2024,
+   "pa": 389,
+   "raa_350": 22.843137552056692
+  },
+  {
+   "batter_id": "career:7a0fca4dd81a83fa",
+   "name": "Patrick Chung",
+   "season": 2024,
+   "pa": 370,
+   "raa_350": 22.251617917457178
+  },
+  {
+   "batter_id": "career:063c5477a050e1c6",
+   "name": "Benjamin Rosengard",
+   "season": 2025,
+   "pa": 253,
+   "raa_350": 21.590794207658455
+  },
+  {
+   "batter_id": "career:d0754b82f8c4b168",
+   "name": "Jose Gonzalez",
+   "season": 2024,
+   "pa": 333,
+   "raa_350": 21.080400770486463
+  },
+  {
+   "batter_id": "career:0ce97d6e3453ab5a",
+   "name": "Trevor Rogers",
+   "season": 2025,
+   "pa": 365,
+   "raa_350": 20.488901704674774
+  },
+  {
+   "batter_id": "career:f2c62afe8b4797b5",
+   "name": "Mike Rosario",
+   "season": 2024,
+   "pa": 365,
+   "raa_350": 20.245034693934084
+  },
+  {
+   "batter_id": "career:7717ec7387847f41",
+   "name": "Christopher Sargent Jr.",
+   "season": 2025,
+   "pa": 393,
+   "raa_350": 20.124569201020496
+  }
+ ],
+ "batter_leaderboard_bottom5": [
+  {
+   "batter_id": "career:57396404d4750b81",
+   "name": "Joe McLaughlin",
+   "season": 2026,
+   "pa": 238,
+   "raa_350": -22.900478129210605
+  },
+  {
+   "batter_id": "career:5c5befc081330c33",
+   "name": "Parker Depasquale",
+   "season": 2026,
+   "pa": 152,
+   "raa_350": -23.440560662468524
+  },
+  {
+   "batter_id": "career:450af2bfcc0b47bb",
+   "name": "Spence Coffman",
+   "season": 2026,
+   "pa": 306,
+   "raa_350": -24.336500168465154
+  },
+  {
+   "batter_id": "career:391e8d172a34633b",
+   "name": "Devon Dixon",
+   "season": 2026,
+   "pa": 278,
+   "raa_350": -24.61122876745952
+  },
+  {
+   "batter_id": "career:4eca8c4a85cbe6c3",
+   "name": "Jake Millan",
+   "season": 2026,
+   "pa": 304,
+   "raa_350": -28.640810527462264
+  }
+ ],
+ "pitcher_leaderboard_top15": [
+  {
+   "pitcher_id": "career:f7d7b34295f1631d",
+   "name": "Matthew Taubensee",
+   "season": 2026,
+   "bf": 182,
+   "role": "reliever",
+   "raa_100": -12.688054612496098
+  },
+  {
+   "pitcher_id": "career:902f14296be453b7",
+   "name": "Julien Hernandez",
+   "season": 2026,
+   "bf": 67,
+   "role": "reliever",
+   "raa_100": -11.566943402324704
+  },
+  {
+   "pitcher_id": "career:22ff49b3f800a622",
+   "name": "Reese Miller",
+   "season": 2025,
+   "bf": 171,
+   "role": "reliever",
+   "raa_100": -11.3659857998482
+  },
+  {
+   "pitcher_id": "career:e416ef10566408f7",
+   "name": "Rane Pfeifer",
+   "season": 2026,
+   "bf": 87,
+   "role": "reliever",
+   "raa_100": -10.375628692413269
+  },
+  {
+   "pitcher_id": "career:f7d7b34295f1631d",
+   "name": "Matthew Taubensee",
+   "season": 2025,
+   "bf": 138,
+   "role": "reliever",
+   "raa_100": -10.140016492065417
+  },
+  {
+   "pitcher_id": "career:91f4a96f9dbc02c1",
+   "name": "Johan Castillo",
+   "season": 2026,
+   "bf": 259,
+   "role": "reliever",
+   "raa_100": -9.93980233321816
+  },
+  {
+   "pitcher_id": "career:dd2c7f8a3c834c44",
+   "name": "Noah Millikan",
+   "season": 2025,
+   "bf": 289,
+   "role": "starter",
+   "raa_100": -9.757328783641467
+  },
+  {
+   "pitcher_id": "career:639da49bd375cbbf",
+   "name": "Omar Serrano",
+   "season": 2026,
+   "bf": 440,
+   "role": "starter",
+   "raa_100": -9.500796520718586
+  },
+  {
+   "pitcher_id": "career:597f384a1cb15941",
+   "name": "Zach Voelker",
+   "season": 2026,
+   "bf": 196,
+   "role": "reliever",
+   "raa_100": -8.677959004571479
+  },
+  {
+   "pitcher_id": "career:f572d9b2c2f748bc",
+   "name": "Zac Lampton",
+   "season": 2025,
+   "bf": 190,
+   "role": "reliever",
+   "raa_100": -8.627351050160726
+  },
+  {
+   "pitcher_id": "career:87a1964e833c0bc4",
+   "name": "Jack Maruskin",
+   "season": 2026,
+   "bf": 102,
+   "role": "reliever",
+   "raa_100": -8.546529737827196
+  },
+  {
+   "pitcher_id": "career:aed0f7465d3d920f",
+   "name": "Will Rogers",
+   "season": 2026,
+   "bf": 249,
+   "role": "starter",
+   "raa_100": -8.281071051179383
+  },
+  {
+   "pitcher_id": "career:a18ea7f1da80e401",
+   "name": "Nathan Hemmerling",
+   "season": 2026,
+   "bf": 363,
+   "role": "starter",
+   "raa_100": -8.21870328144541
+  },
+  {
+   "pitcher_id": "career:e6f43571252e3e1e",
+   "name": "Zach Longshore",
+   "season": 2026,
+   "bf": 416,
+   "role": "starter",
+   "raa_100": -8.163467092322058
+  },
+  {
+   "pitcher_id": "career:bdefffce33e5fc40",
+   "name": "Jonah Jenkins",
+   "season": 2026,
+   "bf": 404,
+   "role": "starter",
+   "raa_100": -8.091081959088603
+  }
+ ],
+ "bootstrap": {
+  "n_reps_attempted": 20,
+  "n_reps_converged": 20,
+  "n_reps_dropped": 0,
+  "mean_abs_rank_change_top20": 15.0825,
+  "top5_preserved_fraction": 0.0,
+  "top1_batter": {
+   "name": "Adam Fogel",
+   "season": 2024,
+   "original_raa_350": 40.54443117908866,
+   "ci90_raa_350": [
+    31.271727251061364,
+    49.735063610810954
+   ]
+  }
+ }
+}
