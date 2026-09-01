@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.parse import urlparse
 
-from . import career_map, errata as errata_mod, identity, team_map
+from . import career_map, errata as errata_mod, identity, team_map, venue as venue_mod
 from .grammar import (
     BATTER_OUTCOME_CAUSE,
     GrammarMiss,
@@ -45,8 +45,8 @@ from .html_struct import (
     text_of,
 )
 
-PARSER_VERSION = "0.30.0"
-SCHEMA_VERSION = "1.12.0"
+PARSER_VERSION = "0.31.0"
+SCHEMA_VERSION = "1.13.0"
 DERIVED_REPLAYER_VERSION_PLACEHOLDER = "unreplayed"
 
 
@@ -1672,6 +1672,23 @@ def _players_table(
     return players
 
 
+def _venue_block(html: str) -> dict:
+    """The schema 1.13.0 `venue` block: the raw venue string and which
+    labelled row of the page's "Other Information" table it came from.
+
+    Never canonicalized here. `Stadium` wins over `Location` when the page
+    carries both, because `Location` is sometimes a street address and
+    sometimes only a city and state -- which is exactly why the field it came
+    from is recorded rather than discarded. Both keys are null when the page
+    states no venue at all (2 of 1,485 archived games).
+    """
+    info = venue_mod.extract_other_info(html)
+    raw = venue_mod.venue_raw(info)
+    if raw is None:
+        return {"raw": None, "field": None}
+    return {"raw": raw, "field": "Stadium" if info.get("Stadium") else "Location"}
+
+
 def parse_game(
     html: str,
     *,
@@ -1846,6 +1863,18 @@ def parse_game(
         # states rather than one the reader derives.
         "record_shape": "boxscore_only" if boxscore_only else "play_by_play",
         "date": date_iso,
+        # schema 1.13.0. Read from the page's "Other Information" table, which
+        # the parser had never looked at, and stored RAW with the labelled row
+        # it came from. The fold onto physical ballparks is judgment and lives
+        # in `bc_pipeline.venue`, deliberately outside the write-once corpus.
+        #
+        # It is required because the designated home team is not always the
+        # team at its own park: the 2025 Colorado Springs Sky Sox played 26 of
+        # their 37 designated-home games at the opponent's field, whole series
+        # at a time. `half == "bottom"` is therefore a fact about batting
+        # order and NOT a proxy for home-field advantage, and before this
+        # field nothing in the corpus could tell the two apart.
+        "venue": _venue_block(html),
         "source": {
             "provider": provider,
             "league_id": league_id,
