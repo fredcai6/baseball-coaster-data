@@ -1,0 +1,54 @@
+[    0.0s] loading full PA rows...
+[    0.8s] rows=125827 train_games=1185 test_games=298 train_pa=100445 test_pa=25382 seasons=[2024, 2025, 2026]
+[    0.8s] TRAIN vocab: batters=758 pitchers=1181
+[    0.8s] loaded shape D hyperparameters from step6_result.json (reference frozen-test deviance 3.94526, fit on train+test split there; we refit params fresh on TRAIN only, same hyperparameters, no search)
+[    1.2s]   root       n=100445 rate=0.3298 lam_bat=10      lam_pit=10      psi=1     train_dev(in-sample)=1.21852
+[    1.3s]   tto_K      n= 33128 rate=0.5629 lam_bat=10      lam_pit=3       psi=1.4   train_dev(in-sample)=1.27179
+[    1.4s]   tto_BB     n= 14480 rate=0.8441 lam_bat=3       lam_pit=3       psi=1     train_dev(in-sample)=0.74714
+[    1.6s]   con_HR     n= 67317 rate=0.0491 lam_bat=1       lam_pit=10      psi=10    train_dev(in-sample)=0.36626
+[    1.7s]   con_OTH    n= 64015 rate=0.0670 lam_bat=30      lam_pit=30      psi=0.7   train_dev(in-sample)=0.48323
+[    1.9s]   con_OUT    n= 59727 rate=0.6134 lam_bat=100     lam_pit=100     psi=0.5   train_dev(in-sample)=1.32194
+[    2.0s]   out_F      n= 36639 rate=0.5312 lam_bat=3       lam_pit=10      psi=1.4   train_dev(in-sample)=1.31139
+[    2.1s]   hit_1B     n= 23088 rate=0.7550 lam_bat=30      lam_pit=100     psi=1.4   train_dev(in-sample)=1.10185
+[    2.1s]   hit_2B     n=  5657 rate=0.9003 lam_bat=3       lam_pit=100     psi=1.4   train_dev(in-sample)=0.61228
+[    2.1s] node fitting done
+[    2.1s] generic reliever built for 36 teams, relief-PA counts min=942 max=1708 mean=1291.4
+[    2.2s] naive params (TRAIN): dp_prob=0.5625 (n=3248)  other_reach_prob=0.4389 (n=4288)  other_sac_prob=0.6881 (n=420)  single_2nd_scores_prob=0.6129 (n=3299)
+[    2.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/sim/shaped_train.npz
+[    0.0s] train games=1185 disposed(total)=17
+[    0.7s] games used=1173  halves clean=20240 dirty=0  PAs seen=99316  end-of-half transitions=20240
+[    0.7s] cells with >= 30 obs: 206/240  backed off to category marginal: 34/240
+[    0.7s] max distinct outcomes for any key/marginal: 72
+[    0.7s] wrote /home/tommy/projects/baseball-coaster-data/spikes/sim/empirical_transitions.npz
+[    0.0s] loading PA rows + split...
+[    0.7s] train_games=1185 test_games=298 disposed=17
+[    1.4s] TRAIN baselines built on 1173 games: home_wins=579 away_wins=525 ties=69  const_home_win_rate=0.5245
+[    1.4s]   season 2024: league avg runs/team-game = 7.51
+[    1.4s]   season 2025: league avg runs/team-game = 8.03
+[    1.4s]   season 2026: league avg runs/team-game = 9.04
+[    1.4s] loading SimModel (shaped_train.npz + empirical_transitions.npz)...
+[    1.4s] test games after excluding 4 disposed: 294
+[    1.6s] usable test games: 289  (skipped 5 for incomplete/missing lineup data)
+[    1.6s] non-9-inning test games simulated at their real length: 19 (innings histogram: [6, 7])
+[    1.8s] final validation set: 289 games
+[    1.8s] of these, 12 (4.2%) are tied after regulation (HR-derby winner unrecoverable) -- excluded from win-probability scoring below, included in run-total scoring.
+[    1.8s] === simulating advancement model: naive ===
+[   12.1s]   naive: simulated 289 games in 10.4s (35.9 ms/game for 2000 sims)
+[   12.1s]   naive RUN TOTALS: bias=-1.362  MAE=3.759  coverage50=0.540 (nominal .50)  coverage90=0.898 (nominal .90)  n=578 team-games
+[   12.1s]   naive WIN PROB (n=277 non-tied games):
+[   12.1s]     sim:          brier=0.2316  logloss=0.6555
+[   12.1s]     const base:   brier=0.2491  logloss=0.6913  (p=0.5245)
+[   12.1s]     pythag base:  brier=0.2388  logloss=0.6698
+[   12.1s] === simulating advancement model: empirical ===
+[   19.9s]   empirical: simulated 289 games in 7.8s (26.9 ms/game for 2000 sims)
+[   19.9s]   empirical RUN TOTALS: bias=-0.287  MAE=3.738  coverage50=0.503 (nominal .50)  coverage90=0.889 (nominal .90)  n=578 team-games
+[   19.9s]   empirical WIN PROB (n=277 non-tied games):
+[   19.9s]     sim:          brier=0.2303  logloss=0.6526
+[   19.9s]     const base:   brier=0.2491  logloss=0.6913  (p=0.5245)
+[   19.9s]     pythag base:  brier=0.2388  logloss=0.6698
+[   19.9s] === NAIVE vs EMPIRICAL gap (empirical minus naive; negative = empirical better) ===
+[   19.9s]   run_total_bias_gap: +1.0749
+[   19.9s]   run_total_mae_gap: -0.0210
+[   19.9s]   win_brier_gap: -0.0012
+[   19.9s]   win_logloss_gap: -0.0028
+[   19.9s] wrote result.json

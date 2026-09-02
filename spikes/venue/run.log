@@ -1,0 +1,112 @@
+[    0.9s] n_ven=16 n_vs=32
+[    0.9s] theta dim = 593  (venue rows in sample: known venue=399, unknown=1; known vs=395, unknown=5)
+[    0.9s] ||analytic grad|| = 40.2547
+[    0.9s] check_grad error (epsilon=1e-05) = 1.000e-03  (relative to ||grad||: 2.484e-05)
+[    0.9s] check_grad error (epsilon=1e-06) = 1.000e-04  (relative to ||grad||: 2.484e-06)
+[    1.0s] check_grad error (epsilon=1e-07) = 1.211e-05  (relative to ||grad||: 3.009e-07)
+[    1.0s] REPORTED check_grad error (epsilon=1e-7): absolute=1.211e-05  relative=3.009e-07
+[    1.0s] gradient check PASSED
+[    0.0s] inherited shape D hyperparameters from step6_result.json (total_deviance=3.94526)
+[    1.0s] train 100445 test 25382  batters 772 pitchers 1220  venues 16 venue x stance 32  LAM_GRID=[0.1, 0.3, 1.0, 3.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0]
+[    1.0s] === fitting node root ===
+[   27.0s] root      n=100445 rate=0.3298  lam_ven=1       lam_vs=3       (inherited lam_bat=10 lam_pit=10 psi=1)  dev=1.24874
+[   27.0s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node root done)
+[   27.0s] === fitting node tto_K ===
+[   32.9s] tto_K     n= 33128 rate=0.5629  lam_ven=0.1     lam_vs=1000    (inherited lam_bat=10 lam_pit=3 psi=1.4)  dev=0.44246  <<< EDGE lam_ven=0.1
+[   32.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node tto_K done)
+[   32.9s] === fitting node tto_BB ===
+[   35.5s] tto_BB    n= 14480 rate=0.8441  lam_ven=30      lam_vs=100     (inherited lam_bat=3 lam_pit=3 psi=1)  dev=0.11613
+[   35.5s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node tto_BB done)
+[   35.5s] === fitting node con_HR ===
+[   46.5s] con_HR    n= 67317 rate=0.0491  lam_ven=10      lam_vs=100     (inherited lam_bat=1 lam_pit=10 psi=10)  dev=0.26132
+[   46.5s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node con_HR done)
+[   46.5s] === fitting node con_OTH ===
+[   52.9s] con_OTH   n= 64015 rate=0.0670  lam_ven=100     lam_vs=10      (inherited lam_bat=30 lam_pit=30 psi=0.7)  dev=0.30364
+[   52.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node con_OTH done)
+[   52.9s] === fitting node con_OUT ===
+[   59.9s] con_OUT   n= 59727 rate=0.6134  lam_ven=0.1     lam_vs=300     (inherited lam_bat=100 lam_pit=100 psi=0.5)  dev=0.78915  <<< EDGE lam_ven=0.1
+[   59.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node con_OUT done)
+[   59.9s] === fitting node out_F ===
+[   66.9s] out_F     n= 36639 rate=0.5312  lam_ven=300     lam_vs=300     (inherited lam_bat=3 lam_pit=10 psi=1.4)  dev=0.48078
+[   66.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node out_F done)
+[   66.9s] === fitting node hit_1B ===
+[   69.2s] hit_1B    n= 23088 rate=0.7550  lam_ven=300     lam_vs=1000    (inherited lam_bat=30 lam_pit=100 psi=1.4)  dev=0.26260
+[   69.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node hit_1B done)
+[   69.2s] === fitting node hit_2B ===
+[   70.3s] hit_2B    n=  5657 rate=0.9003  lam_ven=0.1     lam_vs=1000    (inherited lam_bat=3 lam_pit=100 psi=1.4)  dev=0.03494  <<< EDGE lam_ven=0.1
+[   70.3s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/result.json (node hit_2B done)
+[   70.3s] ALL 9 NODES DONE. total_deviance = 3.93976 (shape D reference 3.94526, delta -0.00550)
+[   70.3s] done.
+[    0.0s] loading value_result.json (baseline_a, season weights, calibration) and spikes/venue/result.json (selected lam_ven/lam_vs per node)
+[    0.9s] rows=125827 batters=772 pitchers=1220 venues=16
+[    1.4s] qualified batter-seasons: 356
+[    1.4s] fitting BASELINE shape D on ALL data (sanity replication of player_value.py steps 2-3)
+[    1.7s]   baseline fit root      n=125827 converged=True
+[    1.9s]   baseline fit tto_K     n= 41651 converged=True
+[    1.9s]   baseline fit tto_BB    n= 18109 converged=True
+[    2.2s]   baseline fit con_HR    n= 84176 converged=True
+[    2.4s]   baseline fit con_OTH   n= 79999 converged=True
+[    2.5s]   baseline fit con_OUT   n= 74669 converged=True
+[    2.6s]   baseline fit out_F     n= 45651 converged=True
+[    2.7s]   baseline fit hit_1B    n= 29018 converged=True
+[    2.7s]   baseline fit hit_2B    n=  7143 converged=True
+[    2.8s] BASELINE top10 (sanity check vs value_result.json batter_leaderboard_top15):
+[    2.8s]   Adam Fogel                2024  PA= 373   +40.48
+[    2.8s]   Adam Fogel                2025  PA= 352   +36.40
+[    2.8s]   Kelly Dugan               2024  PA= 268   +26.03
+[    2.8s]   Taylor Darden             2025  PA= 383   +25.94
+[    2.8s]   Trevor Rogers             2024  PA= 347   +25.23
+[    2.8s]   Dillon Tatum              2025  PA= 230   +23.81
+[    2.8s]   Troy Viola                2024  PA= 382   +23.50
+[    2.8s]   Dario Gomez               2024  PA= 322   +23.48
+[    2.8s]   Roberto Pena              2024  PA= 389   +22.84
+[    2.8s]   Patrick Chung             2024  PA= 370   +22.19
+[    2.8s] SANITY: my baseline top10 == stored top10 order: True
+[    2.8s] fitting VENUE-augmented shape D on ALL data at selected (lam_ven, lam_vs)
+[    3.6s]   venue fit    root      n=125827 lam_ven=1 lam_vs=3
+[    3.9s]   venue fit    tto_K     n= 41651 lam_ven=0.1 lam_vs=1000
+[    3.9s]   venue fit    tto_BB    n= 18109 lam_ven=30 lam_vs=100
+[    4.3s]   venue fit    con_HR    n= 84176 lam_ven=10 lam_vs=100
+[    4.5s]   venue fit    con_OTH   n= 79999 lam_ven=100 lam_vs=10
+[    4.8s]   venue fit    con_OUT   n= 74669 lam_ven=0.1 lam_vs=300
+[    5.0s]   venue fit    out_F     n= 45651 lam_ven=300 lam_vs=300
+[    5.1s]   venue fit    hit_1B    n= 29018 lam_ven=300 lam_vs=1000
+[    5.1s]   venue fit    hit_2B    n=  7143 lam_ven=0.1 lam_vs=1000
+[    5.2s] venue_offset by node: {'root': np.float64(-0.23276), 'tto_K': np.float64(-0.18874), 'tto_BB': np.float64(-0.00934), 'con_HR': np.float64(0.105), 'con_OTH': np.float64(0.00347), 'con_OUT': np.float64(-0.34896), 'out_F': np.float64(0.00689), 'hit_1B': np.float64(-0.00549), 'hit_2B': np.float64(-0.24952)}
+[    5.2s] vs_offset by node:    {'root': np.float64(-0.04117), 'tto_K': np.float64(0.00109), 'tto_BB': np.float64(-0.00199), 'con_HR': np.float64(0.00508), 'con_OTH': np.float64(0.02718), 'con_OUT': np.float64(-0.00157), 'out_F': np.float64(0.00225), 'hit_1B': np.float64(-0.00084), 'hit_2B': np.float64(6e-05)}
+[    5.3s] VENUE-adjusted top10:
+[    5.3s]   Adam Fogel                2024  PA= 373   +38.41
+[    5.3s]   Adam Fogel                2025  PA= 352   +34.24
+[    5.3s]   Taylor Darden             2025  PA= 383   +26.25
+[    5.3s]   Dillon Tatum              2025  PA= 230   +26.17
+[    5.3s]   Troy Viola                2024  PA= 382   +25.89
+[    5.3s]   Patrick Chung             2024  PA= 370   +22.52
+[    5.3s]   Jose Gonzalez             2024  PA= 333   +20.76
+[    5.3s]   Noah Martinez             2024  PA= 353   +20.68
+[    5.3s]   Roberto Pena              2024  PA= 389   +20.67
+[    5.3s]   Mike Rosario              2024  PA= 365   +20.64
+[    5.3s] rank correlation (spearman) baseline vs venue-adjusted: rho=0.93742 (p=2.9e-164)
+[    5.3s] sd of per-player-season change in raa_350: 3.575  (pre-registered expectation from raw within-player estimator: 6.65)
+[    5.3s] top 10 movers UP under venue compensation:
+[    5.3s]   Osiris Johnson            2026  base= +10.03 -> venue= +19.29  delta= +9.25
+[    5.3s]   Cuba Bess                 2026  base=  -7.73 -> venue=  +1.16  delta= +8.88
+[    5.3s]   Emilio Corona             2026  base=  -0.91 -> venue=  +7.82  delta= +8.74
+[    5.3s]   Jacob Jablonski           2026  base=  -7.12 -> venue=  +1.56  delta= +8.68
+[    5.3s]   Justin Boyd               2026  base= -12.24 -> venue=  -4.64  delta= +7.60
+[    5.3s]   Jacob Lojewski            2026  base=  -3.02 -> venue=  +4.20  delta= +7.22
+[    5.3s]   Matthew Bardowell         2026  base=  -0.64 -> venue=  +6.44  delta= +7.08
+[    5.3s]   Cooper Vest               2026  base=  -5.71 -> venue=  +0.62  delta= +6.33
+[    5.3s]   Logan Sutter              2026  base= -10.39 -> venue=  -4.13  delta= +6.26
+[    5.3s]   Bryce Cannon              2026  base=  +2.01 -> venue=  +8.18  delta= +6.17
+[    5.3s] top 10 movers DOWN under venue compensation:
+[    5.3s]   Tyler Wyatt               2026  base=  +5.90 -> venue=  -3.11  delta= -9.01
+[    5.3s]   Tyler Wyatt               2025  base= +12.45 -> venue=  +3.92  delta= -8.53
+[    5.3s]   Tyler Wyatt               2024  base= +17.60 -> venue=  +9.37  delta= -8.23
+[    5.3s]   Justin Trimble            2026  base= +10.65 -> venue=  +2.47  delta= -8.18
+[    5.3s]   Mason Minzey              2025  base= +10.87 -> venue=  +2.80  delta= -8.07
+[    5.3s]   Evan Scavotto             2025  base=  +9.77 -> venue=  +2.39  delta= -7.38
+[    5.3s]   Wesley Mitchell           2026  base= -12.48 -> venue= -19.80  delta= -7.32
+[    5.3s]   Ty Dooley                 2026  base= -10.93 -> venue= -18.24  delta= -7.31
+[    5.3s]   Spence Coffman            2025  base=  +5.41 -> venue=  -1.88  delta= -7.29
+[    5.3s]   Sam Canton                2026  base= +13.11 -> venue=  +5.88  delta= -7.23
+[    5.3s] wrote /home/tommy/projects/baseball-coaster-data/spikes/venue/leaderboard_result.json

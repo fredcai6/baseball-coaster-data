@@ -1,0 +1,139 @@
+======================================================================
+Loading PA records (spikes/advance/records_cache.json) ...
+{
+  "n_games_used": 1469,
+  "n_halves_clean": 25313,
+  "n_halves_dirty": 0,
+  "n_pa_records": 124390,
+  "n_half_summaries": 25313
+}
+train PA=99316 test PA=25074
+train halves=20240 test halves=5073
+
+naive_v1 fitted params (TRAIN):
+{
+  "p_score_from_2nd_on_1b": 0.6565349544072948,
+  "p_score_from_2nd_on_1b_n": 1645,
+  "p_dp_on_groundout": 0.5614906832298137,
+  "p_dp_on_groundout_n": 3220
+}
+
+======================================================================
+TASK 1: half-inning replay (TEST)
+half-innings used: 5073
+  naive_v0   half-inning (pred-actual): bias=-0.2988 MAE=0.3233 sd=0.7259 n=5073
+  naive_v1   half-inning (pred-actual): bias=-0.2521 MAE=0.2946 sd=0.6944 n=5073
+  empirical  half-inning (pred-actual): bias=-0.0681 MAE=0.2697 sd=0.5481 n=5073
+
+games used: 294
+  naive_v0   per-game    (pred-actual): bias=-5.1565 MAE=5.1769 sd=3.0309 n=294
+  naive_v1   per-game    (pred-actual): bias=-4.3492 MAE=4.3897 sd=2.9880 n=294
+  empirical  per-game    (pred-actual): bias=-1.1745 MAE=1.8537 sd=2.2182 n=294
+
+======================================================================
+TASK 2: within-PA vs between-PA decomposition (TEST, vs naive_v0)
+n TEST PA: 25074
+sum within-PA gap (runs) : +1610.0
+sum between-PA gap (runs): +205.0
+share within (net)  : 0.887
+share between (net) : 0.113
+share within (abs)  : 0.889
+share between (abs) : 0.111
+
+by category (net share within):
+  K      n=  4846  within=    +5.0  between=   +23.0  share_within_net=+0.179
+  BB     n=  3046  within=    +8.0  between=   +48.0  share_within_net=+0.143
+  HBP    n=   543  within=    +0.0  between=    +4.0  share_within_net=+0.000
+  F      n=  4731  within=  +247.0  between=   +15.0  share_within_net=+0.943
+  G      n=  4149  within=  +186.0  between=   +12.0  share_within_net=+0.939
+  1B     n=  4389  within=  +762.0  between=   +58.0  share_within_net=+0.929
+  2B     n=  1339  within=  +185.0  between=   +23.0  share_within_net=+0.889
+  3B     n=   136  within=    +1.0  between=    +3.0  share_within_net=+0.250
+  OTHER  n=  1034  within=  +216.0  between=   +19.0  share_within_net=+0.919
+
+======================================================================
+TASK 3: RE24 recomputation vs re_result.json pooled table
+TRAIN category frequencies: {'K': 0.1856, 'BB': 0.1214, 'HBP': 0.0225, 'F': 0.1941, 'G': 0.1713, '1B': 0.1735, '2B': 0.0508, '3B': 0.0056, 'HR': 0.0326, 'OTHER': 0.0426}
+P(is_sac | OTHER) on TRAIN = 0.0151 (n=4232)
+
+  naive_v0: converged in 42 iters. max|diff|=0.7850  mean|diff|=0.3591
+    worst states: [('011|0', -0.7850101093264936), ('101|0', -0.641087152158663), ('111|0', -0.6209843466422709), ('011|1', -0.6061932676902446), ('001|0', -0.5529246982253919), ('110|0', -0.5253652183134752)]
+
+  naive_v1: converged in 42 iters. max|diff|=0.7220  mean|diff|=0.3169
+    worst states: [('101|0', -0.7219749637786039), ('011|0', -0.6850975278676406), ('111|0', -0.6840651139649316), ('001|0', -0.5506298950240904), ('110|0', -0.5382477785242221), ('111|1', -0.4893847281511272)]
+
+  empirical: converged in 42 iters. max|diff|=0.1997  mean|diff|=0.0794
+    worst states: [('111|1', -0.19965044329560477), ('101|0', -0.19317871404455067), ('111|0', -0.18807682552672267), ('011|0', -0.17633002173375445), ('110|1', -0.13909229229849185), ('101|1', -0.13853728651227604)]
+
+======================================================================
+TASK 4: cross-season / cross-team stability
+cells with >= 30 obs in all 3 seasons: 164 / 240
+mean season-to-season spread (runs): 0.0337
+median season-to-season spread (runs): 0.0152
+top 10 cells by season spread:
+  111|2 OTHER  spread=0.289  means={2024: 0.2459016393442623, 2025: 0.3829787234042553, 2026: 0.5344827586206896}
+  111|0 OTHER  spread=0.226  means={2024: 0.8484848484848485, 2025: 0.9523809523809523, 2026: 1.0740740740740742}
+  111|0 G      spread=0.187  means={2024: 0.8823529411764706, 2025: 0.7906976744186046, 2026: 0.9777777777777777}
+  011|0 G      spread=0.171  means={2024: 0.6956521739130435, 2025: 0.6585365853658537, 2026: 0.8297872340425532}
+  011|0 1B     spread=0.150  means={2024: 1.5789473684210527, 2025: 1.4285714285714286, 2026: 1.5614035087719298}
+  110|0 1B     spread=0.133  means={2024: 0.4431137724550898, 2025: 0.5760869565217391, 2026: 0.5052631578947369}
+  111|1 G      spread=0.132  means={2024: 0.3924050632911392, 2025: 0.2608695652173913, 2026: 0.37755102040816324}
+  111|0 1B     spread=0.125  means={2024: 1.617283950617284, 2025: 1.635135135135135, 2026: 1.5104166666666667}
+  101|1 OTHER  spread=0.118  means={2024: 0.8222222222222222, 2025: 0.9111111111111111, 2026: 0.94}
+  011|0 F      spread=0.114  means={2024: 0.7391304347826086, 2025: 0.6491228070175439, 2026: 0.625}
+
+  target=on1_1B:
+    season 2024: n_teams= 12  spread(max-min)=0.074  sd=0.019185990638720368
+    season 2025: n_teams= 12  spread(max-min)=0.050  sd=0.013776272743748843
+    season 2026: n_teams= 12  spread(max-min)=0.059  sd=0.017644565906417053
+
+  target=on2_1B:
+    season 2024: n_teams= 12  spread(max-min)=0.280  sd=0.07803948089606337
+    season 2025: n_teams= 12  spread(max-min)=0.220  sd=0.06206558144503336
+    season 2026: n_teams= 12  spread(max-min)=0.257  sd=0.07629418732446595
+
+  target=on3_F_lt2outs:
+    season 2024: n_teams=  7  spread(max-min)=0.123  sd=0.03734924028864741
+    season 2025: n_teams=  7  spread(max-min)=0.367  sd=0.1272651034103886
+    season 2026: n_teams=  9  spread(max-min)=0.376  sd=0.1025662578996903
+
+======================================================================
+TASK 5: cell sizes (TRAIN empirical table, 24 states x 10 outcomes = 240 cells)
+cells with < 30 TRAIN obs: 34 / 240 (0 have zero obs)
+  101|0 3B     n=2
+  011|0 3B     n=2
+  111|0 3B     n=2
+  001|0 HBP    n=6
+  001|0 3B     n=6
+  001|1 3B     n=6
+  110|0 3B     n=7
+  011|2 3B     n=7
+  101|1 3B     n=9
+  011|1 3B     n=9
+  001|0 HR     n=10
+  010|0 3B     n=11
+  110|1 3B     n=11
+  101|2 3B     n=11
+  001|0 OTHER  n=12
+  001|2 3B     n=16
+  101|0 HBP    n=16
+  111|2 3B     n=16
+  001|0 2B     n=18
+  111|0 HR     n=18
+  111|1 3B     n=20
+  100|0 3B     n=21
+  011|0 HBP    n=21
+  001|1 HBP    n=22
+  110|2 3B     n=22
+  101|0 HR     n=23
+  010|1 3B     n=24
+  011|0 OTHER  n=26
+  100|1 3B     n=27
+  011|0 HR     n=27
+  011|2 OTHER  n=27
+  010|2 3B     n=28
+  100|2 3B     n=29
+  101|2 HBP    n=29
+
+======================================================================
+wrote /home/tommy/projects/baseball-coaster-data/spikes/advance/result.json

@@ -1,0 +1,122 @@
+[    0.7s] halves split: seed=130917 halfA=592 games halfB=593 games (train total 1185)
+[    0.7s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/halves_split.json
+[    0.0s] ======================================================================
+[    0.0s] STAGE: full.npz -- canonical arm1 fit on ALL training games
+[    0.5s] train PA = 100445  batters=772 pitchers=1220
+[    1.9s]   [full] node_free_fits done (1.0s)
+[   15.8s]   [full] restart 0: train_loss=197402.37 (13.9s)
+[   32.2s]   [full] restart 1: train_loss=197402.37 (16.4s)
+[   47.9s]   [full] restart 2: train_loss=197402.37 (15.7s)
+[   47.9s]   [full] canonical seed=1  train_loss spread=0.0000
+[   47.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/full.npz
+[   47.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] STAGE: halfA.npz -- canonical arm1 fit on half A (592 games, seed 130917)
+[    0.5s] half A PA = 50035
+[    1.0s]   [halfA] node_free_fits done (0.3s)
+[    5.9s]   [halfA] restart 0: train_loss=98448.52 (4.9s)
+[   10.9s]   [halfA] restart 1: train_loss=98448.52 (5.0s)
+[   16.2s]   [halfA] restart 2: train_loss=98448.52 (5.3s)
+[   16.2s]   [halfA] canonical seed=2  train_loss spread=0.0001
+[   16.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/halfA.npz
+[   16.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] STAGE: halfB.npz -- canonical arm1 fit on half B (593 games, seed 130917)
+[    0.6s] half B PA = 50410
+[    1.2s]   [halfB] node_free_fits done (0.4s)
+[    6.5s]   [halfB] restart 0: train_loss=99550.03 (5.3s)
+[   13.2s]   [halfB] restart 1: train_loss=99550.03 (6.7s)
+[   19.7s]   [halfB] restart 2: train_loss=99550.03 (6.5s)
+[   19.7s]   [halfB] canonical seed=2  train_loss spread=0.0001
+[   19.7s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/halfB.npz
+[   19.7s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] TEST 1: split-half reliability
+[    0.0s]   [batters] players with >=30 in BOTH halves: 405 / 772
+[    0.0s]   [batters] axis 0: split-half r=0.616  Spearman-Brown r_full=0.762
+[    0.0s]   [batters] axis 1: split-half r=0.477  Spearman-Brown r_full=0.646
+[    0.0s]   [batters] axis 2: split-half r=0.227  Spearman-Brown r_full=0.370
+[    0.0s]   [batters] node root      predicted-effect split-half r=0.633  Spearman-Brown r_full=0.775
+[    0.0s]   [batters] node tto_K     predicted-effect split-half r=0.472  Spearman-Brown r_full=0.641
+[    0.0s]   [batters] node tto_BB    predicted-effect split-half r=0.182  Spearman-Brown r_full=0.308
+[    0.0s]   [batters] node con_HR    predicted-effect split-half r=0.554  Spearman-Brown r_full=0.713
+[    0.0s]   [batters] node con_OTH   predicted-effect split-half r=0.539  Spearman-Brown r_full=0.700
+[    0.0s]   [batters] node con_OUT   predicted-effect split-half r=0.108  Spearman-Brown r_full=0.195
+[    0.0s]   [batters] node out_F     predicted-effect split-half r=0.509  Spearman-Brown r_full=0.674
+[    0.0s]   [batters] node hit_1B    predicted-effect split-half r=0.500  Spearman-Brown r_full=0.667
+[    0.0s]   [batters] node hit_2B    predicted-effect split-half r=-0.324  Spearman-Brown r_full=-0.957
+[    0.0s]   [pitchers] players with >=30 in BOTH halves: 394 / 1220
+[    0.0s]   [pitchers] axis 0: split-half r=0.397  Spearman-Brown r_full=0.568
+[    0.0s]   [pitchers] axis 1: split-half r=0.420  Spearman-Brown r_full=0.592
+[    0.0s]   [pitchers] axis 2: split-half r=0.606  Spearman-Brown r_full=0.755
+[    0.0s]   [pitchers] node root      predicted-effect split-half r=0.617  Spearman-Brown r_full=0.763
+[    0.0s]   [pitchers] node tto_K     predicted-effect split-half r=0.348  Spearman-Brown r_full=0.516
+[    0.0s]   [pitchers] node tto_BB    predicted-effect split-half r=-0.001  Spearman-Brown r_full=-0.002
+[    0.0s]   [pitchers] node con_HR    predicted-effect split-half r=0.396  Spearman-Brown r_full=0.567
+[    0.0s]   [pitchers] node con_OTH   predicted-effect split-half r=0.376  Spearman-Brown r_full=0.546
+[    0.0s]   [pitchers] node con_OUT   predicted-effect split-half r=0.319  Spearman-Brown r_full=0.483
+[    0.0s]   [pitchers] node out_F     predicted-effect split-half r=0.415  Spearman-Brown r_full=0.587
+[    0.0s]   [pitchers] node hit_1B    predicted-effect split-half r=0.432  Spearman-Brown r_full=0.604
+[    0.0s]   [pitchers] node hit_2B    predicted-effect split-half r=-0.457  Spearman-Brown r_full=-1.683
+[    0.0s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] TEST 2: external validity
+[    0.0s] ======================================================================
+[    0.0s] TEST 2: external validity
+[    1.3s] -- batters --
+[    1.3s]   [batters] qualified (>= 100 training PA/BF): 346 / 772
+[    1.3s]     pull_score               n= 346  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    1.4s]     gb_rate                  n= 346  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    1.5s]     pitches_per_pa           n= 346  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    1.5s]     swing_miss_rate          n= 346  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    1.6s]     called_strike_rate       n= 346  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    1.7s]     first_pitch_strike_rate  n= 346  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    1.7s]     height_in                n= 346  latent3 R2=-0.008  free9 R2=-0.008  pca3 R2=-0.007
+[    1.7s]     weight_lb                n= 346  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    1.8s]     position                 n= 314  latent3 R2=-0.010  free9 R2=+0.009  pca3 R2=-0.011
+[    1.8s]     bats                     n= 324  latent3 R2=+0.024  free9 R2=+0.015  pca3 R2=+0.002
+[    1.8s] -- pitchers --
+[    1.8s]   [pitchers] qualified (>= 100 training PA/BF): 355 / 1220
+[    1.8s]     gb_rate                  n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    1.9s]     pitches_per_pa           n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    2.0s]     swing_miss_rate          n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    2.1s]     called_strike_rate       n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    2.1s]     first_pitch_strike_rate  n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.006
+[    2.2s]     height_in                n= 355  latent3 R2=-0.007  free9 R2=-0.007  pca3 R2=-0.007
+[    2.2s]     weight_lb                n= 355  latent3 R2=-0.006  free9 R2=-0.006  pca3 R2=-0.007
+[    2.2s]     throws                   n= 336  latent3 R2=-0.007  free9 R2=-0.020  pca3 R2=-0.013
+[    2.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] TEST 2: external validity
+[    1.3s] -- batters --
+[    1.3s]   [batters] qualified (>= 100 training PA/BF): 346 / 772
+[    1.3s]     pull_score               n= 310  latent3 R2=+0.003  free9 R2=+0.046  pca3 R2=+0.050
+[    1.3s]     gb_rate                  n= 346  latent3 R2=+0.725  free9 R2=+0.931  pca3 R2=+0.930
+[    1.3s]     pitches_per_pa           n= 140  latent3 R2=+0.282  free9 R2=+0.325  pca3 R2=+0.036
+[    1.3s]     swing_miss_rate          n= 140  latent3 R2=+0.411  free9 R2=+0.382  pca3 R2=+0.147
+[    1.4s]     called_strike_rate       n= 140  latent3 R2=+0.026  free9 R2=+0.040  pca3 R2=+0.003
+[    1.4s]     first_pitch_strike_rate  n= 140  latent3 R2=+0.098  free9 R2=+0.052  pca3 R2=-0.008
+[    1.4s]     height_in                n= 262  latent3 R2=+0.039  free9 R2=+0.128  pca3 R2=+0.088
+[    1.4s]     weight_lb                n= 305  latent3 R2=+0.061  free9 R2=+0.152  pca3 R2=+0.145
+[    1.4s]     position                 n= 314  latent3 R2=-0.010  free9 R2=+0.009  pca3 R2=-0.011
+[    1.5s]     bats                     n= 324  latent3 R2=+0.024  free9 R2=+0.015  pca3 R2=+0.002
+[    1.5s] -- pitchers --
+[    1.5s]   [pitchers] qualified (>= 100 training PA/BF): 355 / 1220
+[    1.5s]     gb_rate                  n= 355  latent3 R2=+0.890  free9 R2=+0.897  pca3 R2=-0.017
+[    1.5s]     pitches_per_pa           n= 136  latent3 R2=+0.240  free9 R2=+0.204  pca3 R2=+0.273
+[    1.5s]     swing_miss_rate          n= 136  latent3 R2=+0.459  free9 R2=+0.488  pca3 R2=+0.503
+[    1.5s]     called_strike_rate       n= 136  latent3 R2=-0.033  free9 R2=-0.024  pca3 R2=-0.029
+[    1.6s]     first_pitch_strike_rate  n= 136  latent3 R2=+0.137  free9 R2=+0.128  pca3 R2=+0.180
+[    1.6s]     height_in                n= 255  latent3 R2=+0.011  free9 R2=-0.013  pca3 R2=-0.024
+[    1.6s]     weight_lb                n= 299  latent3 R2=+0.010  free9 R2=-0.004  pca3 R2=-0.009
+[    1.6s]     throws                   n= 336  latent3 R2=-0.007  free9 R2=-0.020  pca3 R2=-0.013
+[    1.6s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json
+[    0.0s] ======================================================================
+[    0.0s] PRESENTATION: canonical rotation, axis loadings, top/bottom players
+[    0.9s]   [batters] axis 0 (sv=10.24): run-value corr=-0.022 -> STYLE (not quality)
+[    0.9s]   [batters] axis 1 (sv=8.21): run-value corr=+0.531 -> QUALITY-aligned
+[    0.9s]   [batters] axis 2 (sv=6.46): run-value corr=+0.288 -> weak/QUALITY-leaning
+[    0.9s]   [pitchers] axis 0 (sv=13.51): run-value corr=+0.548 -> QUALITY-aligned
+[    0.9s]   [pitchers] axis 1 (sv=11.63): run-value corr=-0.511 -> QUALITY-aligned
+[    0.9s]   [pitchers] axis 2 (sv=10.12): run-value corr=+0.003 -> STYLE (not quality)
+[    0.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent_style/result.json

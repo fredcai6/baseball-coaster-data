@@ -1,0 +1,259 @@
+[    0.0s] gradient check (arm1/arm2 objective, obj_shared): error = 2.546e-06
+[    0.0s] gradient check (arm3 objective, obj_arm3):        error = 4.944e-06
+[    0.0s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent2/result.json
+[    1.3s] train 100445 test 25382  nodes 9  ps 5  batters 772 pitchers 1220  n_val 20146
+[    1.3s] shape D reference total (frozen test, from step6_result.json) = 3.94526
+[    1.6s] structural-only (no player terms) frozen-test deviance = 4.00313
+[    1.6s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent2/result.json
+[    1.6s] ======================================================================
+[    1.6s] ARM 1: shared latent, per-side lambda
+[   20.9s]   [arm1 diag] d=1 lam=15      val=3.99529 (18.7s)
+[   31.5s]   [arm1 diag] d=1 lam=25      val=3.99247 (10.6s)
+[   41.2s]   [arm1 diag] d=1 lam=40      val=3.99020 (9.6s)
+[   50.1s]   [arm1 diag] d=1 lam=60      val=3.98903 (8.9s)
+[   56.9s]   [arm1 diag] d=1 lam=90      val=3.98961 (6.8s)
+[   62.5s]   [arm1 diag] d=1 lam=130     val=3.99306 (5.6s)
+[   66.3s]   [arm1 diag] d=1 lam=190     val=4.00164 (3.9s)
+[   69.9s]   [arm1 diag] d=1 lam=280     val=4.01620 (3.6s)
+[   78.4s]   [arm1 diag] d=2 lam=15      val=3.98074 (8.4s)
+[   83.9s]   [arm1 diag] d=2 lam=25      val=3.97546 (5.6s)
+[   90.1s]   [arm1 diag] d=2 lam=40      val=3.97400 (6.2s)
+[   99.1s]   [arm1 diag] d=2 lam=60      val=3.98039 (9.0s)
+[  103.1s]   [arm1 diag] d=2 lam=90      val=3.98554 (4.0s)
+[  106.3s]   [arm1 diag] d=2 lam=130     val=3.99171 (3.1s)
+[  108.4s]   [arm1 diag] d=2 lam=190     val=4.00164 (2.2s)
+[  109.5s]   [arm1 diag] d=2 lam=280     val=4.01620 (1.0s)
+[  117.3s]   [arm1 diag] d=3 lam=15      val=3.97939 (7.8s)
+[  122.1s]   [arm1 diag] d=3 lam=25      val=3.97047 (4.8s)
+[  127.4s]   [arm1 diag] d=3 lam=40      val=3.96622 (5.3s)
+[  135.6s]   [arm1 diag] d=3 lam=60      val=3.97003 (8.2s)
+[  143.0s]   [arm1 diag] d=3 lam=90      val=3.97936 (7.4s)
+[  147.5s]   [arm1 diag] d=3 lam=130     val=3.99128 (4.5s)
+[  150.1s]   [arm1 diag] d=3 lam=190     val=4.00164 (2.6s)
+[  151.1s]   [arm1 diag] d=3 lam=280     val=4.01620 (1.1s)
+[  162.8s]   [arm1 diag] d=4 lam=15      val=3.99050 (11.6s)
+[  168.4s]   [arm1 diag] d=4 lam=25      val=3.97824 (5.6s)
+[  172.7s]   [arm1 diag] d=4 lam=40      val=3.96983 (4.4s)
+[  176.3s]   [arm1 diag] d=4 lam=60      val=3.96811 (3.6s)
+[  179.3s]   [arm1 diag] d=4 lam=90      val=3.97581 (3.0s)
+[  184.4s]   [arm1 diag] d=4 lam=130     val=3.99128 (5.1s)
+[  187.5s]   [arm1 diag] d=4 lam=190     val=4.00164 (3.0s)
+[  188.9s]   [arm1 diag] d=4 lam=280     val=4.01620 (1.4s)
+[  188.9s]   arm1 stage A: best diagonal d*=3 lam=40 val=3.96622
+[  196.5s]   [arm1 side] lam_L=15      lam_M=25      val=3.97286 (7.6s)
+[  201.2s]   [arm1 side] lam_L=15      lam_M=40      val=3.96883 (4.7s)
+[  206.0s]   [arm1 side] lam_L=15      lam_M=60      val=3.96896 (4.8s)
+[  210.8s]   [arm1 side] lam_L=15      lam_M=90      val=3.97427 (4.8s)
+[  216.2s]   [arm1 side] lam_L=15      lam_M=130     val=3.98070 (5.4s)
+[  220.0s]   [arm1 side] lam_L=15      lam_M=190     val=3.98581 (3.9s)
+[  222.7s]   [arm1 side] lam_L=15      lam_M=280     val=3.99276 (2.7s)
+[  229.6s]   [arm1 side] lam_L=25      lam_M=15      val=3.97686 (6.9s)
+[  234.4s]   [arm1 side] lam_L=25      lam_M=40      val=3.96656 (4.8s)
+[  238.8s]   [arm1 side] lam_L=25      lam_M=60      val=3.96673 (4.5s)
+[  243.4s]   [arm1 side] lam_L=25      lam_M=90      val=3.97207 (4.6s)
+[  249.0s]   [arm1 side] lam_L=25      lam_M=130     val=3.97859 (5.6s)
+[  252.5s]   [arm1 side] lam_L=25      lam_M=190     val=3.98370 (3.5s)
+[  254.8s]   [arm1 side] lam_L=25      lam_M=280     val=3.99064 (2.3s)
+[  263.5s]   [arm1 side] lam_L=40      lam_M=15      val=3.97643 (8.8s)
+[  269.2s]   [arm1 side] lam_L=40      lam_M=25      val=3.97013 (5.7s)
+[  274.5s]   [arm1 side] lam_L=40      lam_M=60      val=3.96627 (5.2s)
+[  279.0s]   [arm1 side] lam_L=40      lam_M=90      val=3.97159 (4.6s)
+[  284.0s]   [arm1 side] lam_L=40      lam_M=130     val=3.97825 (4.9s)
+[  287.1s]   [arm1 side] lam_L=40      lam_M=190     val=3.98339 (3.1s)
+[  289.2s]   [arm1 side] lam_L=40      lam_M=280     val=3.99033 (2.1s)
+[  298.7s]   [arm1 side] lam_L=60      lam_M=15      val=3.97908 (9.5s)
+[  302.8s]   [arm1 side] lam_L=60      lam_M=25      val=3.97311 (4.1s)
+[  308.3s]   [arm1 side] lam_L=60      lam_M=40      val=3.96962 (5.5s)
+[  317.1s]   [arm1 side] lam_L=60      lam_M=90      val=3.97626 (8.9s)
+[  327.0s]   [arm1 side] lam_L=60      lam_M=130     val=3.98260 (9.8s)
+[  336.3s]   [arm1 side] lam_L=60      lam_M=190     val=3.98788 (9.3s)
+[  340.9s]   [arm1 side] lam_L=60      lam_M=280     val=3.99480 (4.7s)
+[  349.2s]   [arm1 side] lam_L=90      lam_M=15      val=3.98264 (8.2s)
+[  354.0s]   [arm1 side] lam_L=90      lam_M=25      val=3.97674 (4.8s)
+[  358.8s]   [arm1 side] lam_L=90      lam_M=40      val=3.97329 (4.8s)
+[  364.2s]   [arm1 side] lam_L=90      lam_M=60      val=3.97364 (5.3s)
+[  370.9s]   [arm1 side] lam_L=90      lam_M=130     val=3.98656 (6.7s)
+[  375.1s]   [arm1 side] lam_L=90      lam_M=190     val=3.99184 (4.3s)
+[  378.6s]   [arm1 side] lam_L=90      lam_M=280     val=3.99879 (3.4s)
+[  385.4s]   [arm1 side] lam_L=130     lam_M=15      val=3.98757 (6.8s)
+[  389.2s]   [arm1 side] lam_L=130     lam_M=25      val=3.98170 (3.8s)
+[  392.7s]   [arm1 side] lam_L=130     lam_M=40      val=3.97826 (3.5s)
+[  396.5s]   [arm1 side] lam_L=130     lam_M=60      val=3.97853 (3.8s)
+[  400.7s]   [arm1 side] lam_L=130     lam_M=90      val=3.98402 (4.1s)
+[  403.2s]   [arm1 side] lam_L=130     lam_M=190     val=3.99659 (2.6s)
+[  404.3s]   [arm1 side] lam_L=130     lam_M=280     val=4.00358 (1.1s)
+[  411.0s]   [arm1 side] lam_L=190     lam_M=15      val=3.99271 (6.7s)
+[  414.9s]   [arm1 side] lam_L=190     lam_M=25      val=3.98682 (3.9s)
+[  418.8s]   [arm1 side] lam_L=190     lam_M=40      val=3.98337 (3.9s)
+[  422.7s]   [arm1 side] lam_L=190     lam_M=60      val=3.98364 (3.9s)
+[  426.4s]   [arm1 side] lam_L=190     lam_M=90      val=3.98912 (3.7s)
+[  430.6s]   [arm1 side] lam_L=190     lam_M=130     val=3.99633 (4.1s)
+[  432.7s]   [arm1 side] lam_L=190     lam_M=280     val=4.00870 (2.1s)
+[  439.9s]   [arm1 side] lam_L=280     lam_M=15      val=3.99961 (7.2s)
+[  443.7s]   [arm1 side] lam_L=280     lam_M=25      val=3.99374 (3.9s)
+[  447.3s]   [arm1 side] lam_L=280     lam_M=40      val=3.99032 (3.6s)
+[  451.0s]   [arm1 side] lam_L=280     lam_M=60      val=3.99063 (3.7s)
+[  454.8s]   [arm1 side] lam_L=280     lam_M=90      val=3.99616 (3.8s)
+[  459.0s]   [arm1 side] lam_L=280     lam_M=130     val=4.00344 (4.2s)
+[  461.2s]   [arm1 side] lam_L=280     lam_M=190     val=4.00886 (2.2s)
+[  461.2s]   arm1 SELECTED: d*=3 lam_L*=40 lam_M*=40 inner_val=3.96622  (interior)
+[  461.2s]   NULL GUARD: inner-val 3.96622 vs null 4.01172  PASS
+[  461.7s]   [psi check] root      inherited=1 reselected=3 CHANGED
+[  461.8s]   [psi check] tto_K     inherited=1.4 reselected=2 CHANGED
+[  461.9s]   [psi check] tto_BB    inherited=1 reselected=1 same
+[  462.0s]   [psi check] con_HR    inherited=10 reselected=0.05 CHANGED
+[  462.2s]   [psi check] con_OTH   inherited=0.7 reselected=0.05 CHANGED
+[  462.3s]   [psi check] con_OUT   inherited=0.5 reselected=3 CHANGED
+[  462.5s]   [psi check] out_F     inherited=1.4 reselected=1.4 same
+[  462.5s]   [psi check] hit_1B    inherited=1.4 reselected=0.7 CHANGED
+[  462.6s]   [psi check] hit_2B    inherited=1.4 reselected=10 CHANGED
+[  462.6s]   psi check TOTAL inner-val: inherited=3.96622 reselected=3.96324 delta=-0.002988
+[  487.1s]     restart 0: train_loss=197402.37 (21.5s)
+[  507.8s]     restart 1: train_loss=197402.37 (20.7s)
+[  526.1s]     restart 2: train_loss=197402.37 (18.4s)
+[  558.5s]     restart 3: train_loss=197402.37 (32.4s)
+[  578.9s]     restart 4: train_loss=197402.37 (20.3s)
+[  578.9s]   arm1 FINAL frozen-test deviance (canonical restart) = 3.95109  (restart spread 0.000001, min 3.95109 max 3.95110)
+[  578.9s]   vs shape D target 3.94526  vs null 4.01172
+[  578.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent2/result.json
+[  578.9s] ======================================================================
+[  578.9s] ARM 2: arm 1 + per-node loading multipliers (staged, greedy)
+[  586.8s]   arm2 base (arm1's config, c_f=c_g=1): inner_val=3.96622
+[  608.4s]   [arm2 pass1 c_f] root      c_f*=2 val=3.96599
+[  625.3s]   [arm2 pass1 c_f] tto_K     c_f*=1 val=3.96599
+[  646.5s]   [arm2 pass1 c_f] tto_BB    c_f*=2 val=3.96588
+[  670.4s]   [arm2 pass1 c_f] con_HR    c_f*=0.25 val=3.96489
+[  690.7s]   [arm2 pass1 c_f] con_OTH   c_f*=0.5 val=3.96477
+[  709.9s]   [arm2 pass1 c_f] con_OUT   c_f*=4 val=3.96344
+[  729.9s]   [arm2 pass1 c_f] out_F     c_f*=0.25 val=3.96316
+[  748.9s]   [arm2 pass1 c_f] hit_1B    c_f*=0.5 val=3.96301
+[  756.0s]   [arm2 pass1 c_f] hit_2B    c_f*=1 val=3.96301
+[  770.1s]   [arm2 pass2 c_g] root      c_g*=4 val=3.96103
+[  793.9s]   [arm2 pass2 c_g] tto_K     c_g*=1 val=3.96103
+[  803.7s]   [arm2 pass2 c_g] tto_BB    c_g*=1 val=3.96103
+[  818.2s]   [arm2 pass2 c_g] con_HR    c_g*=1 val=3.96103
+[  837.2s]   [arm2 pass2 c_g] con_OTH   c_g*=1 val=3.96103
+[  861.2s]   [arm2 pass2 c_g] con_OUT   c_g*=2 val=3.96082
+[  880.0s]   [arm2 pass2 c_g] out_F     c_g*=1 val=3.96082
+[  891.0s]   [arm2 pass2 c_g] hit_1B    c_g*=1 val=3.96082
+[  895.0s]   [arm2 pass2 c_g] hit_2B    c_g*=1 val=3.96082
+[  895.0s]   arm2 SELECTED multipliers: c_f=[2.0, 1.0, 2.0, 0.25, 0.5, 4.0, 0.25, 0.5, 1.0] c_g=[4.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0]
+[  895.0s]   arm2 inner_val after staged sweep = 3.96082  (base was 3.96622, delta -0.005399)
+[  895.0s]   arm2 GRID EDGE HITS: ['con_HR:c_f=0.25', 'con_OUT:c_f=4', 'out_F:c_f=0.25', 'root:c_g=4']
+[  895.0s]   NULL GUARD: inner-val 3.96082 vs null 4.01172  PASS
+[  917.1s]     restart 0: train_loss=197662.23 (19.7s)
+[  937.7s]     restart 1: train_loss=197662.23 (20.7s)
+[  964.1s]     restart 2: train_loss=197662.23 (26.4s)
+[  986.2s]     restart 3: train_loss=197662.23 (22.1s)
+[ 1007.2s]     restart 4: train_loss=197662.23 (21.0s)
+[ 1007.2s]   arm2 FINAL frozen-test deviance (canonical restart) = 3.95072  (restart spread 0.000004)
+[ 1007.2s]   vs shape D target 3.94526  vs null 4.01172
+[ 1007.2s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent2/result.json
+[ 1007.2s] ======================================================================
+[ 1007.2s] ARM 3: hybrid -- free per-node effects + low-rank channel on top
+[ 1142.3s]   [arm3 diag] d=1 lam=15      val=3.96697 (134.7s)
+[ 1259.2s]   [arm3 diag] d=1 lam=25      val=3.96417 (116.9s)
+[ 1314.9s]   [arm3 diag] d=1 lam=40      val=3.96056 (55.7s)
+[ 1356.6s]   [arm3 diag] d=1 lam=60      val=3.95768 (41.7s)
+[ 1393.9s]   [arm3 diag] d=1 lam=90      val=3.95576 (37.2s)
+[ 1418.5s]   [arm3 diag] d=1 lam=130     val=3.95549 (24.6s)
+[ 1419.5s]   [arm3 diag] d=1 lam=190     val=3.95549 (1.0s)
+[ 1420.0s]   [arm3 diag] d=1 lam=280     val=3.95549 (0.5s)
+[ 1488.1s]   [arm3 diag] d=2 lam=15      val=3.97468 (68.0s)
+[ 1531.3s]   [arm3 diag] d=2 lam=25      val=3.96837 (43.3s)
+[ 1565.7s]   [arm3 diag] d=2 lam=40      val=3.96226 (34.4s)
+[ 1597.8s]   [arm3 diag] d=2 lam=60      val=3.95811 (32.1s)
+[ 1618.0s]   [arm3 diag] d=2 lam=90      val=3.95576 (20.1s)
+[ 1631.7s]   [arm3 diag] d=2 lam=130     val=3.95549 (13.8s)
+[ 1631.9s]   [arm3 diag] d=2 lam=190     val=3.95549 (0.2s)
+[ 1632.1s]   [arm3 diag] d=2 lam=280     val=3.95549 (0.1s)
+[ 1703.8s]   [arm3 diag] d=3 lam=15      val=3.98187 (71.7s)
+[ 1745.9s]   [arm3 diag] d=3 lam=25      val=3.97167 (42.1s)
+[ 1785.6s]   [arm3 diag] d=3 lam=40      val=3.96268 (39.7s)
+[ 1821.1s]   [arm3 diag] d=3 lam=60      val=3.95800 (35.5s)
+[ 1843.4s]   [arm3 diag] d=3 lam=90      val=3.95576 (22.3s)
+[ 1859.0s]   [arm3 diag] d=3 lam=130     val=3.95549 (15.5s)
+[ 1859.1s]   [arm3 diag] d=3 lam=190     val=3.95549 (0.2s)
+[ 1859.3s]   [arm3 diag] d=3 lam=280     val=3.95549 (0.2s)
+[ 1934.9s]   [arm3 diag] d=4 lam=15      val=3.98892 (75.5s)
+[ 1985.3s]   [arm3 diag] d=4 lam=25      val=3.97431 (50.5s)
+[ 2027.8s]   [arm3 diag] d=4 lam=40      val=3.96304 (42.5s)
+[ 2065.5s]   [arm3 diag] d=4 lam=60      val=3.95800 (37.7s)
+[ 2090.0s]   [arm3 diag] d=4 lam=90      val=3.95576 (24.4s)
+[ 2105.5s]   [arm3 diag] d=4 lam=130     val=3.95549 (15.5s)
+[ 2105.6s]   [arm3 diag] d=4 lam=190     val=3.95549 (0.2s)
+[ 2105.8s]   [arm3 diag] d=4 lam=280     val=3.95549 (0.2s)
+[ 2105.8s]   arm3 stage A: best diagonal d*=3 lam=190 val=3.95549
+[ 2175.1s]   [arm3 side] lam_L=15      lam_M=25      val=3.97557 (69.3s)
+[ 2212.8s]   [arm3 side] lam_L=15      lam_M=40      val=3.97007 (37.7s)
+[ 2250.1s]   [arm3 side] lam_L=15      lam_M=60      val=3.96693 (37.3s)
+[ 2273.6s]   [arm3 side] lam_L=15      lam_M=90      val=3.96537 (23.5s)
+[ 2288.1s]   [arm3 side] lam_L=15      lam_M=130     val=3.96520 (14.4s)
+[ 2288.2s]   [arm3 side] lam_L=15      lam_M=190     val=3.96520 (0.2s)
+[ 2288.4s]   [arm3 side] lam_L=15      lam_M=280     val=3.96520 (0.1s)
+[ 2352.6s]   [arm3 side] lam_L=25      lam_M=15      val=3.97800 (64.2s)
+[ 2395.1s]   [arm3 side] lam_L=25      lam_M=40      val=3.96616 (42.5s)
+[ 2429.1s]   [arm3 side] lam_L=25      lam_M=60      val=3.96303 (34.1s)
+[ 2453.8s]   [arm3 side] lam_L=25      lam_M=90      val=3.96149 (24.6s)
+[ 2465.8s]   [arm3 side] lam_L=25      lam_M=130     val=3.96132 (12.0s)
+[ 2466.3s]   [arm3 side] lam_L=25      lam_M=190     val=3.96132 (0.6s)
+[ 2466.5s]   [arm3 side] lam_L=25      lam_M=280     val=3.96132 (0.1s)
+[ 2530.9s]   [arm3 side] lam_L=40      lam_M=15      val=3.97448 (64.4s)
+[ 2566.8s]   [arm3 side] lam_L=40      lam_M=25      val=3.96816 (35.9s)
+[ 2605.4s]   [arm3 side] lam_L=40      lam_M=60      val=3.95958 (38.6s)
+[ 2627.3s]   [arm3 side] lam_L=40      lam_M=90      val=3.95806 (21.9s)
+[ 2640.4s]   [arm3 side] lam_L=40      lam_M=130     val=3.95791 (13.1s)
+[ 2640.6s]   [arm3 side] lam_L=40      lam_M=190     val=3.95791 (0.2s)
+[ 2641.2s]   [arm3 side] lam_L=40      lam_M=280     val=3.95791 (0.6s)
+[ 2703.6s]   [arm3 side] lam_L=60      lam_M=15      val=3.97280 (62.4s)
+[ 2741.1s]   [arm3 side] lam_L=60      lam_M=25      val=3.96651 (37.5s)
+[ 2777.3s]   [arm3 side] lam_L=60      lam_M=40      val=3.96107 (36.2s)
+[ 2810.3s]   [arm3 side] lam_L=60      lam_M=90      val=3.95652 (33.0s)
+[ 2824.1s]   [arm3 side] lam_L=60      lam_M=130     val=3.95637 (13.8s)
+[ 2824.3s]   [arm3 side] lam_L=60      lam_M=190     val=3.95637 (0.1s)
+[ 2824.4s]   [arm3 side] lam_L=60      lam_M=280     val=3.95637 (0.1s)
+[ 2890.0s]   [arm3 side] lam_L=90      lam_M=15      val=3.97188 (65.5s)
+[ 2926.7s]   [arm3 side] lam_L=90      lam_M=25      val=3.96563 (36.7s)
+[ 2957.7s]   [arm3 side] lam_L=90      lam_M=40      val=3.96023 (31.1s)
+[ 2991.2s]   [arm3 side] lam_L=90      lam_M=60      val=3.95720 (33.4s)
+[ 3015.0s]   [arm3 side] lam_L=90      lam_M=130     val=3.95562 (23.9s)
+[ 3015.2s]   [arm3 side] lam_L=90      lam_M=190     val=3.95562 (0.1s)
+[ 3015.3s]   [arm3 side] lam_L=90      lam_M=280     val=3.95562 (0.1s)
+[ 3081.4s]   [arm3 side] lam_L=130     lam_M=15      val=3.97167 (66.1s)
+[ 3119.6s]   [arm3 side] lam_L=130     lam_M=25      val=3.96543 (38.2s)
+[ 3153.1s]   [arm3 side] lam_L=130     lam_M=40      val=3.96005 (33.5s)
+[ 3184.0s]   [arm3 side] lam_L=130     lam_M=60      val=3.95705 (30.9s)
+[ 3206.4s]   [arm3 side] lam_L=130     lam_M=90      val=3.95562 (22.4s)
+[ 3216.5s]   [arm3 side] lam_L=130     lam_M=190     val=3.95549 (10.2s)
+[ 3216.7s]   [arm3 side] lam_L=130     lam_M=280     val=3.95549 (0.1s)
+[ 3242.8s]   [arm3 side] lam_L=190     lam_M=15      val=3.97167 (26.1s)
+[ 3257.8s]   [arm3 side] lam_L=190     lam_M=25      val=3.96544 (15.1s)
+[ 3271.9s]   [arm3 side] lam_L=190     lam_M=40      val=3.96005 (14.1s)
+[ 3284.9s]   [arm3 side] lam_L=190     lam_M=60      val=3.95705 (12.9s)
+[ 3293.3s]   [arm3 side] lam_L=190     lam_M=90      val=3.95562 (8.4s)
+[ 3299.3s]   [arm3 side] lam_L=190     lam_M=130     val=3.95549 (6.0s)
+[ 3299.6s]   [arm3 side] lam_L=190     lam_M=280     val=3.95549 (0.3s)
+[ 3324.3s]   [arm3 side] lam_L=280     lam_M=15      val=3.97168 (24.7s)
+[ 3339.8s]   [arm3 side] lam_L=280     lam_M=25      val=3.96544 (15.5s)
+[ 3354.2s]   [arm3 side] lam_L=280     lam_M=40      val=3.96005 (14.4s)
+[ 3367.9s]   [arm3 side] lam_L=280     lam_M=60      val=3.95705 (13.7s)
+[ 3376.6s]   [arm3 side] lam_L=280     lam_M=90      val=3.95562 (8.8s)
+[ 3382.5s]   [arm3 side] lam_L=280     lam_M=130     val=3.95549 (5.9s)
+[ 3382.7s]   [arm3 side] lam_L=280     lam_M=190     val=3.95549 (0.1s)
+[ 3382.7s]   arm3 SELECTED: d*=3 lam_L*=130 lam_M*=130 inner_val=3.95549  (interior)
+[ 3382.7s]   NULL GUARD: inner-val 3.95549 vs null 4.01172  PASS
+[ 3453.9s]     restart 0: train_loss=195462.12 (68.4s)
+[ 3525.0s]     restart 1: train_loss=195462.12 (71.1s)
+[ 3594.4s]     restart 2: train_loss=195462.12 (69.3s)
+[ 3665.8s]     restart 3: train_loss=195462.12 (71.4s)
+[ 3736.9s]     restart 4: train_loss=195462.12 (71.1s)
+[ 3736.9s]   arm3 FINAL frozen-test deviance (canonical restart) = 3.94526  (restart spread 0.000000)
+[ 3736.9s]   vs shape D target 3.94526  vs null 4.01172
+[ 3736.9s]   canonical fit: ||L||*||f||+||M||*||g|| = 0.000  ||b||+||q|| = 42.116
+[ 3736.9s] wrote /home/tommy/projects/baseball-coaster-data/spikes/latent2/result.json
+[ 3736.9s] 
+[ 3736.9s] ======================================================================
+[ 3736.9s] SUMMARY  null=4.01172  shape D target=3.94526
+[ 3736.9s]   arm1: test=3.95109  (delta vs shape D +0.00583)  spread=0.000001
+[ 3736.9s]   arm2: test=3.95072  (delta vs shape D +0.00546)  spread=0.000004
+[ 3736.9s]   arm3: test=3.94526  (delta vs shape D +0.00000)  spread=0.000000
