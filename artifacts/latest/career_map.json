@@ -797,6 +797,7 @@
     "gfbrir339s062ucq": "career:b2fc60c0fd806105",
     "gftggv0lmgfrq93t": "career:08fdd0608bef34a1",
     "ggsejo5bktvtyfxg": "career:b679fb425b4b98e5",
+    "gh68ntm63y9waarm": "career:2caddbd65d623c8a",
     "ghm09i6tfggvalui": "career:38a1556538bd61d0",
     "ght12mhlwq3ej345": "career:4018b7dc779a814f",
     "gi9twadcf5allnl2": "career:956e641a74fce131",
@@ -1640,6 +1641,7 @@
     "u28h192ihhns2zhd": "career:ac82fb4744cb5cf4",
     "u29il71zgkmgm69i": "career:28e4093c17f82233",
     "u2qlqon19x6c6w3h": "career:02b8a7af23ab7b29",
+    "u43ecbo6u4pby6fe": "career:46b211d8cff08c19",
     "u4ez913apwkdp86i": "career:75308d8ed94a4a1a",
     "u4g697iezy47tc83": "career:1e03e19be9c080fb",
     "u584ghd1jozncvgr": "career:a6d0b81273a80c26",
@@ -1964,7 +1966,7 @@
     },
     "2026": {
       "in_a_multi_season_career": 76,
-      "persons": 680
+      "persons": 682
     }
   },
   "careers": {
@@ -8708,6 +8710,25 @@
         2026
       ]
     },
+    "career:2caddbd65d623c8a": {
+      "aliases": [
+        "Tyler Blankenship"
+      ],
+      "career_id": "career:2caddbd65d623c8a",
+      "franchises": [
+        "franchise:77c71ea258687edf"
+      ],
+      "name": "Tyler Blankenship",
+      "person_ids": [
+        [
+          2026,
+          "gh68ntm63y9waarm"
+        ]
+      ],
+      "seasons": [
+        2026
+      ]
+    },
     "career:2d34e001d4d3fae6": {
       "aliases": [
         "Kenny Oyama"
@@ -12117,6 +12138,25 @@
       ],
       "seasons": [
         2024
+      ]
+    },
+    "career:46b211d8cff08c19": {
+      "aliases": [
+        "Trevor Rogers"
+      ],
+      "career_id": "career:46b211d8cff08c19",
+      "franchises": [
+        "franchise:c2f90de4f03e9e53"
+      ],
+      "name": "Trevor Rogers",
+      "person_ids": [
+        [
+          2026,
+          "u43ecbo6u4pby6fe"
+        ]
+      ],
+      "seasons": [
+        2026
       ]
     },
     "career:46bc102acdad77be": {
@@ -36638,20 +36678,20 @@
     }
   },
   "league": {
-    "careers": 1779,
+    "careers": 1781,
     "careers_by_season_span": {
-      "1": 1619,
+      "1": 1621,
       "2": 147,
       "3": 13
     },
     "links": 173,
     "multi_season_careers": 160,
-    "persons": 1952,
+    "persons": 1954,
     "refused_by_reason": {
       "ambiguous_within_season": 55,
-      "franchise_changed": 98
+      "franchise_changed": 99
     },
-    "refused_pairs": 153
+    "refused_pairs": 154
   },
   "meta": {
     "career_map_version": "1.0.0",
@@ -36700,25 +36740,25 @@
         "proven_same_name_different_people": 3
       },
       "signal_strength": {
-        "different_name_pairs_null": 837270,
+        "different_name_pairs_null": 838543,
         "franchise_continuity": {
-          "fires_on_null": 0.0704,
-          "fires_on_same_name": 0.5169,
-          "likelihood_ratio": 7.34,
+          "fires_on_null": 0.0703,
+          "fires_on_same_name": 0.5155,
+          "likelihood_ratio": 7.33,
           "used": true
         },
         "position_overlap": {
-          "fires_on_null": 0.4492,
-          "fires_on_same_name": 0.9636,
-          "likelihood_ratio": 2.15,
+          "fires_on_null": 0.4497,
+          "fires_on_same_name": 0.9637,
+          "likelihood_ratio": 2.14,
           "note": "NOT used. It fires on a large share of the null -- people who are definitively not each other -- so it barely separates the cases it is meant to decide. Kept here as a measured negative so the choice stays visible and will change if the data ever changes.",
           "used": false
         },
-        "same_name_pairs": 385
+        "same_name_pairs": 386
       }
     },
-    "games": 1485,
-    "generated_at": "2026-09-01T09:02:32Z",
+    "games": 1532,
+    "generated_at": "2026-09-02T22:58:21Z",
     "not_attempted": {
       "franchise_changed": {
         "note": "A player who changed clubs between seasons is NOT linked. This is the honest cost of the rule: it is exactly the shape of every proven-different pair above, and nothing else in the data separates the two cases. Enumerated in `unlinked` so the population stays visible and countable."
@@ -36727,7 +36767,7 @@
         "note": "person_map deliberately does not merge a player across teams WITHIN a season (a measured error floor: of the same-season same-name cross-franchise cases, some are proven to be two people). That ambiguity is inherited here as `ambiguous_within_season` rather than papered over."
       }
     },
-    "persons": 1952,
+    "persons": 1954,
     "scope": "CROSS-SEASON player identity, one level above person_id. Two persons in consecutive seasons are linked iff their display names are exactly equal, that name resolves to exactly one person in EACH season, and they share a franchise. Careers are the connected components."
   },
   "unlinked": [
@@ -38599,6 +38639,19 @@
         ],
         "2026": [
           "hme44hsriwdi2r0x"
+        ]
+      },
+      "reason": "franchise_changed",
+      "season_pair": "2025->2026"
+    },
+    {
+      "name": "Trevor Rogers",
+      "person_ids": {
+        "2025": [
+          "84wm5lv44s4j767f"
+        ],
+        "2026": [
+          "u43ecbo6u4pby6fe"
         ]
       },
       "reason": "franchise_changed",
