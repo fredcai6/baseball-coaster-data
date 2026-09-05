@@ -1,0 +1,822 @@
+{
+ "meta": {
+  "purpose": "Static venue/park reference table keyed on franchise_id, for downstream park-factor work.",
+  "not_derived_from_games": true,
+  "note": "Unlike artifacts/latest/**, this file is NOT a pure function of games/**. It is hand-researched from external sources (mostly Wikipedia and Pioneer League / local-news coverage, fetched via WebSearch/WebFetch on 2026-08-31) because meta.source_url in every game file 403s from this container (CloudFront block) and the raw scraped HTML is deliberately not committed (see README, caller contract clause 3). It therefore does NOT carry a `generated_at` in the sense scripts/check_artifacts_current.py checks for, and is intentionally kept outside artifacts/latest/ so that script's fixed (module, builder) list never has to know about it. See scripts/build_venues.py for the one thing that IS mechanically checked: that every franchise_id appearing in games/** has an entry here, and that `seasons_in_corpus` matches the corpus.",
+  "confidence_values": {
+   "verified": "a specific claim (park name/address/coords/elevation/orientation) was read directly off a source fetched during this research pass",
+   "probable": "inferred rather than read directly -- most commonly a CITY elevation used as a stand-in for the park's (unsurveyed) elevation, or a park identity carried over from adjacent, consistent reporting rather than a single authoritative page",
+   "unknown": "not established; field is null rather than guessed"
+  },
+  "orientation_caveat": "Ballpark 'orientation' sources almost universally describe alignment as a coarse compass label (e.g. 'aligned northeast, home plate to second base'), not a surveyed azimuth. field_orientation_deg_approx maps that label onto the nearest 32-point compass heading (NE=45, SE=135, ...; 'north by east' = 11.25) and is explicitly an approximation of an approximation -- do not treat it as a precise home-to-center-field azimuth. Home-to-second-base is used as a proxy for home-to-center-field, which is the standard ballpark-alignment convention in these sources (the two lines coincide by construction of the diamond).",
+  "neutral_site_and_relocation_finding": "A static franchise_id -> venue table CANNOT see a neutral-site game, and this research surfaced at least one concrete case where a naive corpus-wide mapping would be wrong: the real-world club behind franchise:4e7dd733f635c973 (corpus name 'Yuba-Sutter Freebirds' in ALL of 2024/2025/2026) played its actual 2024 season as the 'Yolo High Wheelers' at Phil Swimley Field / Dobbins Stadium in Davis, CA, then relocated to Bryant Field in Marysville, CA starting in 2025, and only took the 'Freebirds' name in Feb 2026. That is a real venue change mid-corpus that a single venues.json franchises.<id>.home_park field would hide -- which is why this file gives 'venues' as a LIST of {years, park...} entries per franchise rather than one park per franchise. No other evidence of a neutral-site or mid-corpus relocated game was found for the other 14 franchises in 2024-2026 -- but that is an absence-of-evidence finding (general news searches, not a play-by-play audit), not a guarantee. See the accompanying report for the full discussion.",
+  "redpocket_mobiles_finding": "franchise:5252121b77b845ba (RedPocket Mobiles) plays 0 of 83 2026 games at a home park BY DESIGN, not because of a delayed stadium: it is a deliberate barnstorming/travelling club (sponsor-named, all-road-games concept) confirmed by the Pioneer League's own announcement and independent coverage. Represented here as travelling: true, home_park: null rather than as missing data.",
+  "keyed_by": "franchise_id -> season -> venue. One explicit row per (franchise, season) actually present in games/**. Venues are NOT expressed as year ranges: independent-league clubs change stadia more often than a range implies, so continuity is never inferred silently -- each season states its own park and says, via park_season_link, whether that link was researched for that specific year.",
+  "park_season_link_values": {
+   "evidenced": "the park<->season link was researched for THIS specific season (the club's year-by-year venue history was checked, not assumed).",
+   "assumed": "the park was established for the club generally, then carried to this season without year-specific verification. NOT a claim that the club is known to have played there that year. Downgrade to a researched value before relying on it for a season-specific park factor."
+  },
+  "data_cross_check": "The corpus itself can corroborate or contradict a claimed relocation, because a park change should move the run environment. One check was run: franchise:4e7dd733f635c973 (Yuba-Sutter Freebirds) is recorded here as Dobbins Stadium (Davis) in 2024 and Bryant Field (Marysville) from 2025. The play-by-play does NOT support that boundary -- 2024 and 2025 are nearly identical (11.9 R/G in both; within-player park index 0.912 vs 0.859), while the franchise's large environment shift is 2025->2026 (index 0.859 -> 1.032, 11.9 -> 18.8 R/G). Either the two parks play alike, or the relocation year is wrong. Treat these two rows as unresolved."
+ },
+ "franchises": {
+  "franchise:77c71ea258687edf": {
+   "corpus_name": "Billings Mustangs",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Dehler Park",
+     "former_names": [],
+     "address": "2611 9th Ave N",
+     "city": "Billings",
+     "state": "MT",
+     "latitude": 45.79028,
+     "longitude": -108.51111,
+     "elevation_ft": 3150,
+     "field_orientation_text": "aligned north by east (home plate to second base)",
+     "field_orientation_deg_approx": 11.25,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Dehler_Park",
+     "note": "Elevation is the article's own approximate figure for the park ('approximately 3,150 feet above sea level'), not a surveyed spot elevation.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Dehler Park",
+     "former_names": [],
+     "address": "2611 9th Ave N",
+     "city": "Billings",
+     "state": "MT",
+     "latitude": 45.79028,
+     "longitude": -108.51111,
+     "elevation_ft": 3150,
+     "field_orientation_text": "aligned north by east (home plate to second base)",
+     "field_orientation_deg_approx": 11.25,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Dehler_Park",
+     "note": "Elevation is the article's own approximate figure for the park ('approximately 3,150 feet above sea level'), not a surveyed spot elevation.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Dehler Park",
+     "former_names": [],
+     "address": "2611 9th Ave N",
+     "city": "Billings",
+     "state": "MT",
+     "latitude": 45.79028,
+     "longitude": -108.51111,
+     "elevation_ft": 3150,
+     "field_orientation_text": "aligned north by east (home plate to second base)",
+     "field_orientation_deg_approx": 11.25,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Dehler_Park",
+     "note": "Elevation is the article's own approximate figure for the park ('approximately 3,150 feet above sea level'), not a surveyed spot elevation.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:90a3be9c4ea14687": {
+   "corpus_name": "Boise Hawks",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Memorial Stadium",
+     "former_names": [],
+     "address": "5600 N. Glenwood St",
+     "city": "Boise",
+     "state": "ID",
+     "latitude": 43.656,
+     "longitude": -116.279,
+     "elevation_ft": 2610,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Memorial_Stadium_(Boise)",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Memorial Stadium",
+     "former_names": [],
+     "address": "5600 N. Glenwood St",
+     "city": "Boise",
+     "state": "ID",
+     "latitude": 43.656,
+     "longitude": -116.279,
+     "elevation_ft": 2610,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Memorial_Stadium_(Boise)",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Memorial Stadium",
+     "former_names": [],
+     "address": "5600 N. Glenwood St",
+     "city": "Boise",
+     "state": "ID",
+     "latitude": 43.656,
+     "longitude": -116.279,
+     "elevation_ft": 2610,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Memorial_Stadium_(Boise)",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:31f91b72d320809e": {
+   "corpus_name": "Colorado Springs Sky Sox",
+   "seasons_in_corpus": [
+    2024,
+    2025
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Blocktickets Park",
+     "former_names": [
+      "Sky Sox Stadium (1988-2005)",
+      "Security Service Field (2005-2019)",
+      "UCHealth Park (2019-2025)"
+     ],
+     "address": "4385 Tutt Boulevard",
+     "city": "Colorado Springs",
+     "state": "CO",
+     "latitude": 38.8941722,
+     "longitude": -104.7103111,
+     "elevation_ft": 6531,
+     "field_orientation_text": "aligned southeast (home plate to second base) -- non-standard; differs from the 'recommended ballpark alignment' of northeast by east",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Blocktickets_Park",
+     "note": "The 2024-2025 Pioneer League 'Colorado Springs Sky Sox' is a modern independent-league club, unrelated to the 1988-2018 Triple-A club of the same name that left for San Antonio. This modern Sky Sox club and Rocky Mountain Vibes shared this same Colorado Springs park (the league's only park in that city) across 2024-2025; pioneerleague.com's own 2024 schedule confirms a Sky Sox game on 2024-05-21. Not independently confirmed against an archived boxscore from this container (source blocked, see meta.note).",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Blocktickets Park",
+     "former_names": [
+      "Sky Sox Stadium (1988-2005)",
+      "Security Service Field (2005-2019)",
+      "UCHealth Park (2019-2025)"
+     ],
+     "address": "4385 Tutt Boulevard",
+     "city": "Colorado Springs",
+     "state": "CO",
+     "latitude": 38.8941722,
+     "longitude": -104.7103111,
+     "elevation_ft": 6531,
+     "field_orientation_text": "aligned southeast (home plate to second base) -- non-standard; differs from the 'recommended ballpark alignment' of northeast by east",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Blocktickets_Park",
+     "note": "The 2024-2025 Pioneer League 'Colorado Springs Sky Sox' is a modern independent-league club, unrelated to the 1988-2018 Triple-A club of the same name that left for San Antonio. This modern Sky Sox club and Rocky Mountain Vibes shared this same Colorado Springs park (the league's only park in that city) across 2024-2025; pioneerleague.com's own 2024 schedule confirms a Sky Sox game on 2024-05-21. Not independently confirmed against an archived boxscore from this container (source blocked, see meta.note).",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:fb7516653ea0a2d0": {
+   "corpus_name": "Glacier Range Riders",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Glacier Bank Park",
+     "former_names": [
+      "Flathead Field"
+     ],
+     "address": "25 McDermott Lane",
+     "city": "Kalispell",
+     "state": "MT",
+     "latitude": 48.2974,
+     "longitude": -114.3378,
+     "elevation_ft": 3084,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Glacier_Bank_Park",
+     "note": "Elevation is Kalispell's CITY elevation (per https://en.wikipedia.org/wiki/Kalispell,_Montana), not a figure stated for the park itself -- park page gives no elevation. Orientation not found in any fetched source.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Glacier Bank Park",
+     "former_names": [
+      "Flathead Field"
+     ],
+     "address": "25 McDermott Lane",
+     "city": "Kalispell",
+     "state": "MT",
+     "latitude": 48.2974,
+     "longitude": -114.3378,
+     "elevation_ft": 3084,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Glacier_Bank_Park",
+     "note": "Elevation is Kalispell's CITY elevation (per https://en.wikipedia.org/wiki/Kalispell,_Montana), not a figure stated for the park itself -- park page gives no elevation. Orientation not found in any fetched source.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Glacier Bank Park",
+     "former_names": [
+      "Flathead Field"
+     ],
+     "address": "25 McDermott Lane",
+     "city": "Kalispell",
+     "state": "MT",
+     "latitude": 48.2974,
+     "longitude": -114.3378,
+     "elevation_ft": 3084,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Glacier_Bank_Park",
+     "note": "Elevation is Kalispell's CITY elevation (per https://en.wikipedia.org/wiki/Kalispell,_Montana), not a figure stated for the park itself -- park page gives no elevation. Orientation not found in any fetched source.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:77945f65a19f7f70": {
+   "corpus_name": "Grand Junction Jackalopes",
+   "seasons_in_corpus": [
+    2024,
+    2025
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Suplizio Field",
+     "former_names": [],
+     "address": "12th Street and North Avenue (U.S. Route 6)",
+     "city": "Grand Junction",
+     "state": "CO",
+     "latitude": 39.077,
+     "longitude": -108.55,
+     "elevation_ft": 4610,
+     "field_orientation_text": "aligned southeast (home plate to second base)",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Suplizio_Field",
+     "note": "Franchise last appears in the corpus in 2025; team_map.json's 2026 continuity data shows this club departed.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Suplizio Field",
+     "former_names": [],
+     "address": "12th Street and North Avenue (U.S. Route 6)",
+     "city": "Grand Junction",
+     "state": "CO",
+     "latitude": 39.077,
+     "longitude": -108.55,
+     "elevation_ft": 4610,
+     "field_orientation_text": "aligned southeast (home plate to second base)",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Suplizio_Field",
+     "note": "Franchise last appears in the corpus in 2025; team_map.json's 2026 continuity data shows this club departed.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:24135a2b104c523f": {
+   "corpus_name": "Great Falls Voyagers",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Centene Stadium",
+     "former_names": [
+      "Legion Park (1940-2007)"
+     ],
+     "address": "1015 25th St N",
+     "city": "Great Falls",
+     "state": "MT",
+     "latitude": 47.5169194,
+     "longitude": -111.2594667,
+     "elevation_ft": 3400,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Centene_Stadium_(Great_Falls,_Montana)",
+     "note": "One secondary source (intheballparks.com, not independently fetched here) refers to it as 'Voyager Stadium'; treated as an alias/rebrand rumor, not confirmed, so not recorded as the primary name.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Centene Stadium",
+     "former_names": [
+      "Legion Park (1940-2007)"
+     ],
+     "address": "1015 25th St N",
+     "city": "Great Falls",
+     "state": "MT",
+     "latitude": 47.5169194,
+     "longitude": -111.2594667,
+     "elevation_ft": 3400,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Centene_Stadium_(Great_Falls,_Montana)",
+     "note": "One secondary source (intheballparks.com, not independently fetched here) refers to it as 'Voyager Stadium'; treated as an alias/rebrand rumor, not confirmed, so not recorded as the primary name.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Centene Stadium",
+     "former_names": [
+      "Legion Park (1940-2007)"
+     ],
+     "address": "1015 25th St N",
+     "city": "Great Falls",
+     "state": "MT",
+     "latitude": 47.5169194,
+     "longitude": -111.2594667,
+     "elevation_ft": 3400,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Centene_Stadium_(Great_Falls,_Montana)",
+     "note": "One secondary source (intheballparks.com, not independently fetched here) refers to it as 'Voyager Stadium'; treated as an alias/rebrand rumor, not confirmed, so not recorded as the primary name.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:604743020f19421e": {
+   "corpus_name": "Idaho Falls Chukars",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Melaleuca Field",
+     "former_names": [],
+     "address": "568 West Elva",
+     "city": "Idaho Falls",
+     "state": "ID",
+     "latitude": 43.505,
+     "longitude": -112.038,
+     "elevation_ft": 4700,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Melaleuca_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Melaleuca Field",
+     "former_names": [],
+     "address": "568 West Elva",
+     "city": "Idaho Falls",
+     "state": "ID",
+     "latitude": 43.505,
+     "longitude": -112.038,
+     "elevation_ft": 4700,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Melaleuca_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Melaleuca Field",
+     "former_names": [],
+     "address": "568 West Elva",
+     "city": "Idaho Falls",
+     "state": "ID",
+     "latitude": 43.505,
+     "longitude": -112.038,
+     "elevation_ft": 4700,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Melaleuca_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:adebae368f98fdac": {
+   "corpus_name": "Missoula PaddleHeads",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Ogren Park at Allegiance Field",
+     "former_names": [],
+     "address": "700 Cregg Lane",
+     "city": "Missoula",
+     "state": "MT",
+     "latitude": 46.873,
+     "longitude": -114.007,
+     "elevation_ft": 3200,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Ogren_Park_at_Allegiance_Field",
+     "note": "Elevation is the article's own approximate figure for the park.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Ogren Park at Allegiance Field",
+     "former_names": [],
+     "address": "700 Cregg Lane",
+     "city": "Missoula",
+     "state": "MT",
+     "latitude": 46.873,
+     "longitude": -114.007,
+     "elevation_ft": 3200,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Ogren_Park_at_Allegiance_Field",
+     "note": "Elevation is the article's own approximate figure for the park.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Ogren Park at Allegiance Field",
+     "former_names": [],
+     "address": "700 Cregg Lane",
+     "city": "Missoula",
+     "state": "MT",
+     "latitude": 46.873,
+     "longitude": -114.007,
+     "elevation_ft": 3200,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Ogren_Park_at_Allegiance_Field",
+     "note": "Elevation is the article's own approximate figure for the park.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:7c24b388b3355cb4": {
+   "corpus_name": "Oakland Ballers",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Raimondi Park",
+     "former_names": [],
+     "address": "1800 Wood St",
+     "city": "Oakland",
+     "state": "CA",
+     "latitude": 37.8161,
+     "longitude": -122.2939,
+     "elevation_ft": 43,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Raimondi_Park",
+     "note": "Elevation is Oakland's average CITY elevation (per https://en.wikipedia.org/wiki/Oakland,_California), not a figure stated for the park; West Oakland is flat and near the estuary, so this is a reasonable stand-in but not park-specific. Orientation not found.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Raimondi Park",
+     "former_names": [],
+     "address": "1800 Wood St",
+     "city": "Oakland",
+     "state": "CA",
+     "latitude": 37.8161,
+     "longitude": -122.2939,
+     "elevation_ft": 43,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Raimondi_Park",
+     "note": "Elevation is Oakland's average CITY elevation (per https://en.wikipedia.org/wiki/Oakland,_California), not a figure stated for the park; West Oakland is flat and near the estuary, so this is a reasonable stand-in but not park-specific. Orientation not found.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Raimondi Park",
+     "former_names": [],
+     "address": "1800 Wood St",
+     "city": "Oakland",
+     "state": "CA",
+     "latitude": 37.8161,
+     "longitude": -122.2939,
+     "elevation_ft": 43,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Raimondi_Park",
+     "note": "Elevation is Oakland's average CITY elevation (per https://en.wikipedia.org/wiki/Oakland,_California), not a figure stated for the park; West Oakland is flat and near the estuary, so this is a reasonable stand-in but not park-specific. Orientation not found.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:dd12e63cac78a71e": {
+   "corpus_name": "Ogden Raptors",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Lindquist Field",
+     "former_names": [],
+     "address": "2330 Lincoln Avenue",
+     "city": "Ogden",
+     "state": "UT",
+     "latitude": 41.224,
+     "longitude": -111.975,
+     "elevation_ft": 4300,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Lindquist_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Lindquist Field",
+     "former_names": [],
+     "address": "2330 Lincoln Avenue",
+     "city": "Ogden",
+     "state": "UT",
+     "latitude": 41.224,
+     "longitude": -111.975,
+     "elevation_ft": 4300,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Lindquist_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2026": {
+     "park_name": "Lindquist Field",
+     "former_names": [],
+     "address": "2330 Lincoln Avenue",
+     "city": "Ogden",
+     "state": "UT",
+     "latitude": 41.224,
+     "longitude": -111.975,
+     "elevation_ft": 4300,
+     "field_orientation_text": "aligned northeast (home plate to second base)",
+     "field_orientation_deg_approx": 45,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Lindquist_Field",
+     "note": null,
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:a702466a990451c6": {
+   "corpus_name": "Rocky Mountain Vibes",
+   "seasons_in_corpus": [
+    2024,
+    2025
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Blocktickets Park",
+     "former_names": [
+      "Sky Sox Stadium (1988-2005)",
+      "Security Service Field (2005-2019)",
+      "UCHealth Park (2019-2025)"
+     ],
+     "address": "4385 Tutt Boulevard",
+     "city": "Colorado Springs",
+     "state": "CO",
+     "latitude": 38.8941722,
+     "longitude": -104.7103111,
+     "elevation_ft": 6531,
+     "field_orientation_text": "aligned southeast (home plate to second base) -- non-standard; differs from the 'recommended ballpark alignment' of northeast by east",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Blocktickets_Park",
+     "note": "Same physical park as franchise:31f91b72d320809e (Colorado Springs Sky Sox) -- confirmed by https://www.cpr.org/2025/10/30/rocky-mountain-vibes-leaving-colorado-springs/, which reports the Vibes leaving Colorado Springs after the 2025 season, matching the corpus's last season for this franchise.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    },
+    "2025": {
+     "park_name": "Blocktickets Park",
+     "former_names": [
+      "Sky Sox Stadium (1988-2005)",
+      "Security Service Field (2005-2019)",
+      "UCHealth Park (2019-2025)"
+     ],
+     "address": "4385 Tutt Boulevard",
+     "city": "Colorado Springs",
+     "state": "CO",
+     "latitude": 38.8941722,
+     "longitude": -104.7103111,
+     "elevation_ft": 6531,
+     "field_orientation_text": "aligned southeast (home plate to second base) -- non-standard; differs from the 'recommended ballpark alignment' of northeast by east",
+     "field_orientation_deg_approx": 135,
+     "confidence": "verified",
+     "source": "https://en.wikipedia.org/wiki/Blocktickets_Park",
+     "note": "Same physical park as franchise:31f91b72d320809e (Colorado Springs Sky Sox) -- confirmed by https://www.cpr.org/2025/10/30/rocky-mountain-vibes-leaving-colorado-springs/, which reports the Vibes leaving Colorado Springs after the 2025 season, matching the corpus's last season for this franchise.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:4e7dd733f635c973": {
+   "corpus_name": "Yuba-Sutter Freebirds",
+   "seasons_in_corpus": [
+    2024,
+    2025,
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2024": {
+     "park_name": "Phil Swimley Field at Dobbins Stadium",
+     "former_names": [],
+     "address": "622 Orchard Road",
+     "city": "Davis",
+     "state": "CA",
+     "latitude": 38.54195,
+     "longitude": -121.75752,
+     "elevation_ft": 52,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Davis,_California",
+     "note": "IMPORTANT: this franchise is called 'Yuba-Sutter Freebirds' for ALL of 2024/2025/2026 in this corpus, but the real-world club played 2024 as the 'Yolo High Wheelers' at UC Davis's Dobbins Stadium in Davis, CA -- a DIFFERENT city and park than the Bryant Field entry below. See meta.neutral_site_and_relocation_finding. Elevation is Davis's city elevation (Dobbins Stadium page gives none); park coordinates/address are from UC Davis Athletics (https://ucdavisaggies.com/facilities/phil-swimley-field-at-dobbins-stadium/7), not independently re-fetched here for coordinates so marked probable overall.",
+     "travelling": false,
+     "park_season_link": "evidenced"
+    },
+    "2025": {
+     "park_name": "Bryant Field",
+     "former_names": [],
+     "address": "1431 C Street",
+     "city": "Marysville",
+     "state": "CA",
+     "latitude": 39.1509,
+     "longitude": -121.5881,
+     "elevation_ft": 62,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Bryant_Field_(stadium)",
+     "note": "Team announced the move to Marysville on 2024-11-22 to play the 2025 season at Bryant Field (https://en.wikipedia.org/wiki/Yuba-Sutter_Freebirds); renamed from High Wheelers to Freebirds 2026-02-12 with no further park change reported. Elevation is Marysville's city elevation, not park-specific.",
+     "travelling": false,
+     "park_season_link": "evidenced"
+    },
+    "2026": {
+     "park_name": "Bryant Field",
+     "former_names": [],
+     "address": "1431 C Street",
+     "city": "Marysville",
+     "state": "CA",
+     "latitude": 39.1509,
+     "longitude": -121.5881,
+     "elevation_ft": 62,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Bryant_Field_(stadium)",
+     "note": "Team announced the move to Marysville on 2024-11-22 to play the 2025 season at Bryant Field (https://en.wikipedia.org/wiki/Yuba-Sutter_Freebirds); renamed from High Wheelers to Freebirds 2026-02-12 with no further park change reported. Elevation is Marysville's city elevation, not park-specific.",
+     "travelling": false,
+     "park_season_link": "evidenced"
+    }
+   }
+  },
+  "franchise:c2f90de4f03e9e53": {
+   "corpus_name": "Long Beach Coast",
+   "seasons_in_corpus": [
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2026": {
+     "park_name": "Blair Field",
+     "former_names": [],
+     "address": "4700 Deukmejian Drive",
+     "city": "Long Beach",
+     "state": "CA",
+     "latitude": 33.77778,
+     "longitude": -118.13833,
+     "elevation_ft": 52,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Blair_Field",
+     "note": "Real 2026 Pioneer League expansion club (inaugural season 2026, historic Blair Field in Recreation Park) -- coordinator's original suspicion that this club was synthetic was checked and found incorrect; see accompanying report. Elevation is Long Beach's city elevation (per https://en.wikipedia.org/wiki/Long_Beach,_California); the Blair Field article itself gives none, so marked probable.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:d37ffacefc1c19f3": {
+   "corpus_name": "Modesto Roadsters",
+   "seasons_in_corpus": [
+    2026
+   ],
+   "travelling": false,
+   "seasons": {
+    "2026": {
+     "park_name": "Modern Woodmen Field",
+     "former_names": [
+      "Del Webb Field (1955-1983)",
+      "John Thurman Field (1983-2026)"
+     ],
+     "address": "601 Neece Drive",
+     "city": "Modesto",
+     "state": "CA",
+     "latitude": 37.622658,
+     "longitude": -121.000814,
+     "elevation_ft": 89,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "probable",
+     "source": "https://en.wikipedia.org/wiki/Modern_Woodmen_Field",
+     "note": "Real 2026 Pioneer League expansion club at Modesto's historic ballpark (formerly John Thurman Field), renamed for the 2026 season under a new naming-rights deal. Elevation is Modesto's city elevation (per https://en.wikipedia.org/wiki/Modesto,_California), not park-specific.",
+     "travelling": false,
+     "park_season_link": "assumed"
+    }
+   }
+  },
+  "franchise:5252121b77b845ba": {
+   "corpus_name": "RedPocket Mobiles",
+   "seasons_in_corpus": [
+    2026
+   ],
+   "travelling": true,
+   "seasons": {
+    "2026": {
+     "park_name": null,
+     "former_names": [],
+     "address": null,
+     "city": null,
+     "state": null,
+     "latitude": null,
+     "longitude": null,
+     "elevation_ft": null,
+     "field_orientation_text": null,
+     "field_orientation_deg_approx": null,
+     "confidence": "verified",
+     "source": "https://www.pioneerleague.com/sports/bsb/2026/releases/20260204jzach4",
+     "note": "Real 2026 Pioneer League club, deliberately built as a sponsor-named barnstorming/travelling team with NO home ballpark -- all 96 scheduled games (83 of which are in this corpus, all recorded as 'away') are on the road, by design, not due to a delayed or unready stadium. Confirmed by the league's own announcement and independent coverage (Yahoo Finance headline: 'A Team With No Home: RedPocket Mobiles To Launch All-Access Baseball Docuseries'; quote from team lead Dmitri Young: 'We're a barnstorming team... going back to the grass roots of what baseball is'). No home city/base is reported anywhere found. This matches the corpus exactly: 0 of 83 2026 games are home games for this franchise_id.  OPEN QUESTION (repo owner, 2026-08-31): the club may simply be a TEMPORARY placeholder holding a schedule slot until a permanent expansion franchise takes it -- the punning sponsor name ('Mobiles' = mobile/no fixed home) reads as deliberate on that theory. That is compatible with the sourced 'barnstorming by design' framing and with the corpus (0 home games in 83), but it changes the downstream reading: a placeholder that disappears after 2026 should not be carried forward as a standing franchise. Unresolved -- do not encode either reading as fact.",
+     "travelling": true,
+     "park_season_link": "evidenced"
+    }
+   }
+  }
+ }
+}
